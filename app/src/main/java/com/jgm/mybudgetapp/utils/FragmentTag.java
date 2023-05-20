@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp.navUtils;
+package com.jgm.mybudgetapp.utils;
 
 import androidx.fragment.app.Fragment;
 

@@ -2,34 +2,34 @@ package com.jgm.mybudgetapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
-import com.jgm.mybudgetapp.adapters.TextTabsAdapter;
-import com.jgm.mybudgetapp.navUtils.FragmentTag;
+import com.jgm.mybudgetapp.utils.FragmentTag;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainInterface {
 
     // Logs
     private static final String LOG_NAV = "debug-nav";
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
+
+    // Params
+    private static final String PARAM_OUT = "OUT";
+    private static final String PARAM_IN = "IN";
+    private static final String PARAM_IN_ADD = "IN_ADD";
+    private static final String PARAM_IN_EDIT = "IN_EDIT";
+    private static final String PARAM_OUT_ADD = "OUT_ADD";
+    private static final String PARAM_OUT_EDIT = "OUT_EDIT";
 
     // FRAGMENTS
     private AccountsFragment mAccounts;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private SettingsFragment mSettings;
     private TransactionFormFragment mTransactionForm;
     private TransactionsFragment mTransactions;
+    private YearFragment mYear;
 
     // Fragment Tags
     private static final String accountsTag = "ACCOUNTS";
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String settingsTag = "SETTINGS";
     private static final String transactionFormTag = "TRANSACTION_FORM";
     private static final String transactionsTag = "TRANSACTIONS";
+    private static final String yearTag = "YEAR";
 
     // Vars
     private final ArrayList<FragmentTag> mFragmentList = new ArrayList<>();
@@ -88,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
         setBinding();
 
         initBottomBar();
-        setFragment(mHome, homeTag);
+        setFragment(mHome, homeTag, null);
         currentFragment = homeTag;
 
-        settingsButton.setOnClickListener(v -> openSettings());
-        fab.setOnClickListener(v -> openTransactionsForm());
+        initFab();
+        settingsButton.setOnClickListener(v -> openFragment(mSettings, settingsTag, null));
 
     }
 
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
         Main fragments => home, cards, accounts, settings, categories, transactions form, transactions
-        Secondary fragments => card form, card details, account form, account details
+        Secondary fragments => card form, card details, account form, account details, year
 
         * Main fragments are not destroyed => only show/hide
 
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         * Secondary fragments are destroyed after leaving a main fragment
           - card form and card details are destroyed after leaving cards
           - account form and account details are destroyed after leaving accounts
+          - year is destroyed when closed
      */
 
     private void resetFragmentStack() {
@@ -128,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
         if (!tag.equals(cardFormTag)
                 || !tag.equals(cardDetailsTag)
                 || !tag.equals(accountDetailsTag)
-                || !tag.equals(accountFormTag)) mFragmentList.add(new FragmentTag(fragment, tag));
+                || !tag.equals(accountFormTag)
+                || !tag.equals(yearTag)) mFragmentList.add(new FragmentTag(fragment, tag));
 
         Log.d(LOG_NAV, "Fragment loaded: " + tag);
     }
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_NAV, "Fragment removed: " + tag);
     }
 
-    private void setFragment(Fragment fragment, String tag) {
+    private void setFragment(Fragment fragment, String tag, String param) {
         if (fragment == null) {
             Log.d(LOG_NAV, "Fragment is null => init: " + tag);
             switch (tag) {
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = mAccountDetails;
                     break;
                 case categoriesTag:
-                    mCategories = new CategoriesFragment();
+                    mCategories = CategoriesFragment.newInstance(param);
                     fragment = mCategories;
                     break;
                 case categoriesListTag:
@@ -192,12 +196,16 @@ public class MainActivity extends AppCompatActivity {
                     fragment = mSettings;
                     break;
                 case transactionsTag:
-                    mTransactions = new TransactionsFragment();
+                    mTransactions = TransactionsFragment.newInstance(param);
                     fragment = mTransactions;
                     break;
                 case transactionFormTag:
-                    mTransactionForm = new TransactionFormFragment();
+                    mTransactionForm = TransactionFormFragment.newInstance(param);
                     fragment = mTransactionForm;
+                    break;
+                case yearTag:
+                    mYear = new YearFragment();
+                    fragment = mYear;
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + tag);
@@ -213,8 +221,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFragmentVisibilities(String tag){
-
-        Log.d(LOG_NAV, "Set visibility for: " + tag);
 
         for(int i = 0; i < mFragmentList.size(); i++){
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -242,6 +248,8 @@ public class MainActivity extends AppCompatActivity {
             mFragmentTagList.remove(topFragmentTag);
             Log.d(LOG_NAV, "Back to: " + newTopFragmentTag);
 
+            if (topFragmentTag.equals(yearTag)) destroyFragment(mYear, yearTag);
+
             // Update toolbar and bottom nav
             updateBottomNav(newTopFragmentTag);
 
@@ -263,22 +271,22 @@ public class MainActivity extends AppCompatActivity {
         MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
 
         itemHome.setOnMenuItemClickListener(item -> {
-            openHome();
+            openFragment(mHome, homeTag, null);
             return false;
         });
 
         itemAccounts.setOnMenuItemClickListener(item -> {
-            openAccounts();
+            openFragment(mAccounts, accountsTag, null);
             return false;
         });
 
         itemCards.setOnMenuItemClickListener(item -> {
-            openCreditCards();
+            openFragment(mCreditCards, cardsTag, null);
             return false;
         });
 
         itemCategories.setOnMenuItemClickListener(item -> {
-            openCategories();
+            openFragment(mCategories, categoriesTag, PARAM_OUT);
             return false;
         });
 
@@ -301,62 +309,72 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void initFab() {
+        fab.setOnClickListener(v -> {
+            switch (currentFragment) {
+                case homeTag:
+                    openFragment(mTransactionForm, transactionFormTag, PARAM_OUT_ADD);
+                    break;
+                case accountsTag:
+                    //todo: openAccountForm(false);
+                    break;
+                case cardsTag:
+                    // todo: openCreditCardForm(false);
+                    break;
+            }
+        });
+    }
+
     /* ===============================================================================
                                      FRAGMENT NAVIGATION
      =============================================================================== */
 
-    private void openHome() {
-        if (!currentFragment.equals(homeTag)) {
-            Log.d(LOG_NAV, "OPEN HOME");
-            resetFragmentStack();
-            currentFragment = homeTag;
-            setFragment(mHome, homeTag);
-            updateBottomNav(homeTag);
+    private void openFragment(Fragment fragment, String tag, String param) {
+        if (!currentFragment.equals(tag)) {
+            Log.d(LOG_NAV, "OPEN " + tag);
+            if (tag.equals(homeTag)) resetFragmentStack();
+            currentFragment = tag;
+            setFragment(fragment, tag, param);
+            updateBottomNav(tag);
         }
     }
 
-    private void openCategories() {
-        if (!currentFragment.equals(categoriesTag)) {
-            Log.d(LOG_NAV, "OPEN CREDIT CATEGORIES");
-            currentFragment = categoriesTag;
-            setFragment(mCategories, categoriesTag);
-            updateBottomNav(categoriesTag);
-        }
+    /* ===============================================================================
+                                     INTERFACE NAVIGATION
+     =============================================================================== */
+
+    @Override
+    public void openExpenses() {
+        if (mTransactions != null) mTransactions.setTypeParam(PARAM_OUT);
+        openFragment(mTransactions, transactionsTag, null);
     }
 
-    private void openCreditCards() {
-        if (!currentFragment.equals(cardsTag)) {
-            Log.d(LOG_NAV, "OPEN CREDIT CARDS");
-            currentFragment = cardsTag;
-            setFragment(mCreditCards, cardsTag);
-            updateBottomNav(cardsTag);
-        }
+    @Override
+    public void openIncome() {
+        if (mTransactions != null) mTransactions.setTypeParam(PARAM_IN);
+        openFragment(mTransactions, transactionsTag, null);
     }
 
-    private void openAccounts() {
-        if (!currentFragment.equals(accountsTag)) {
-            Log.d(LOG_NAV, "OPEN ACCOUNTS");
-            currentFragment = accountsTag;
-            setFragment(mAccounts, accountsTag);
-            updateBottomNav(accountsTag);
-        }
+    @Override
+    public void openExpensesCategories() {
+        if (mCategories != null) mCategories.setInitialTab(PARAM_OUT);
+        openFragment(mCategories, categoriesTag, PARAM_OUT);
     }
 
-    private void openSettings() {
-        if (!currentFragment.equals(settingsTag)) {
-            Log.d(LOG_NAV, "OPEN SETTINGS");
-            currentFragment = settingsTag;
-            setFragment(mSettings, settingsTag);
-            updateBottomNav(settingsTag);
-        }
+    @Override
+    public void openIncomeCategories() {
+        if (mCategories != null) mCategories.setInitialTab(PARAM_IN);
+        openFragment(mCategories, categoriesTag, PARAM_IN);
     }
 
-    private void openTransactionsForm() {
-        if (!currentFragment.equals(transactionFormTag)) {
-            Log.d(LOG_NAV, "OPEN TRANSACTIONS FORM");
-            currentFragment = transactionFormTag;
-            setFragment(mTransactionForm, transactionFormTag);
-        }
+    @Override
+    public void openAccounts() {
+        openFragment(mAccounts, accountsTag, null);
+    }
+
+    @Override
+    public void openYear() {
+        openFragment(mYear, yearTag, null);
     }
 
 }

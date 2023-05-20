@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,27 @@ import java.util.List;
 
 public class CategoriesFragment extends Fragment {
 
+    private static final String ARG_TAB = "OUT";
+    private String mParamTab;
+
     public CategoriesFragment() {
         // Required empty public constructor
+    }
+
+    public static CategoriesFragment newInstance(String paramTab) {
+        CategoriesFragment fragment = new CategoriesFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_TAB, paramTab);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParamTab = getArguments().getString(ARG_TAB);
+        }
     }
 
     // Fragments
@@ -69,6 +89,7 @@ public class CategoriesFragment extends Fragment {
 
         prepareTabs();
         setTabs();
+        setInitialTab(mParamTab);
 
     }
 
@@ -89,8 +110,13 @@ public class CategoriesFragment extends Fragment {
 
     private void setTabs() {
         viewPager.setAdapter(tabsAdapter);
-        viewPager.setCurrentItem(1);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void setInitialTab(String param) {
+        Log.d("debug-categories", "PARAM => " + param);
+        if (param.equals("OUT")) viewPager.setCurrentItem(1);
+        else viewPager.setCurrentItem(0);
     }
 }
