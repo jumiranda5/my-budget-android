@@ -59,7 +59,7 @@ public class CategoriesFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    private void bindViews() {
+    private void setBinding() {
         viewPager = binding.categoriesViewPager;
         tabLayout = binding.categoriesTabs;
     }
@@ -79,7 +79,7 @@ public class CategoriesFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCategoriesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        bindViews();
+        setBinding();
         return view;
     }
 

@@ -9,5 +9,14 @@ public interface MainInterface {
     void openIncomeCategories();
     void openAccounts();
     void openYear();
+    void openCardDetails();
+    void openCardForm(boolean isEdit);
+    void openTransactionForm();
+    void navigateBack();
+
+    // Dialogs
+    void showConfirmationDialog(String message, int id);
+    void handleConfirmation(int id);
+    void showTransactionDialog();
 
 }

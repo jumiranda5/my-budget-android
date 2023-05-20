@@ -3,6 +3,7 @@ package com.jgm.mybudgetapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
+import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.utils.FragmentTag;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private static final String PARAM_IN_EDIT = "IN_EDIT";
     private static final String PARAM_OUT_ADD = "OUT_ADD";
     private static final String PARAM_OUT_EDIT = "OUT_EDIT";
+    private static final String PARAM_ADD = "ADD";
+    private static final String PARAM_EDIT = "EDIT";
 
     // FRAGMENTS
     private AccountsFragment mAccounts;
@@ -144,6 +149,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         mFragmentTagList.remove(tag);
 
+        switch (tag) {
+            case cardDetailsTag: mCreditCardDetails = null; break;
+            case cardFormTag: mCreditCardForm = null; break;
+            case yearTag: mYear = null; break;
+        }
+
         Log.d(LOG_NAV, "Fragment removed: " + tag);
     }
 
@@ -180,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     fragment = mCreditCards;
                     break;
                 case cardFormTag:
-                    mCreditCardForm = new CreditCardFormFragment();
+                    mCreditCardForm = CreditCardFormFragment.newInstance(param);
                     fragment = mCreditCardForm;
                     break;
                 case cardDetailsTag:
@@ -249,6 +260,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             Log.d(LOG_NAV, "Back to: " + newTopFragmentTag);
 
             if (topFragmentTag.equals(yearTag)) destroyFragment(mYear, yearTag);
+            else if (topFragmentTag.equals(cardsTag)) {
+                if (mCreditCardDetails != null) destroyFragment(mCreditCardDetails, cardDetailsTag);
+                if (mCreditCardForm != null) destroyFragment(mCreditCardForm, cardFormTag);
+            }
 
             // Update toolbar and bottom nav
             updateBottomNav(newTopFragmentTag);
@@ -319,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     //todo: openAccountForm(false);
                     break;
                 case cardsTag:
-                    // todo: openCreditCardForm(false);
+                    openCardForm(false);
                     break;
             }
         });
@@ -377,4 +392,52 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         openFragment(mYear, yearTag, null);
     }
 
+    @Override
+    public void openCardDetails() {
+        openFragment(mCreditCardDetails, cardDetailsTag, null);
+    }
+
+    @Override
+    public void openCardForm(boolean isEdit) {
+        String param;
+        if (isEdit) param = PARAM_EDIT;
+        else param = PARAM_ADD;
+        if (mCreditCardForm != null) mCreditCardForm.setFormType(isEdit);
+        openFragment(mCreditCardForm, cardFormTag, param);
+    }
+
+    @Override
+    public void openTransactionForm() {
+        // todo: add param (IN/OUT && ADD/EDIT)
+        setFragment(mTransactionForm, transactionFormTag, null);
+    }
+
+    @Override
+    public void navigateBack() {
+        onBackPressed();
+    }
+
+    /* ===============================================================================
+                                     INTERFACE DIALOGS
+     =============================================================================== */
+
+    @Override
+    public void showConfirmationDialog(String message, int id) {
+        FragmentManager fm = getSupportFragmentManager();
+        ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message, id);
+        confirmationDialog.show(fm, "CONFIRMATION_DIALOG");
+    }
+
+    @Override
+    public void handleConfirmation(int id) {
+        // todo => update item on db...
+        Log.d("debug-dialog", "Id to be updated: " + id);
+    }
+
+    @Override
+    public void showTransactionDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        TransactionDialog transactionDialog = new TransactionDialog();
+        transactionDialog.show(fm, "TRANSACTION DIALOG");
+    }
 }
