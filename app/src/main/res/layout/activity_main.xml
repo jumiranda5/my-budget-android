@@ -5,17 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_background"
     tools:context=".MainActivity">
 
     <!-- Toolbar -->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        app:contentInsetStart="0dp"
-        android:background="@color/grey"
+        style="@style/MainToolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,20 +20,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_toolbar_content"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/settings_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:contentDescription="Settings"
+                style="@style/IconButton"
+                android:contentDescription="@string/nav_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_android_black_24dp" />
+                app:srcCompat="@drawable/ic_app_settings_fill" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -54,12 +47,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/white"
-        app:itemPaddingBottom="10dp"
-        app:itemPaddingTop="10dp"
-        app:elevation="8dp"
+        style="@style/BottomNav"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,9 +58,9 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         app:fabCustomSize="48dp"
-        app:elevation="9dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_android_black_24dp"
+        app:elevation="0dp"
+        android:contentDescription="@string/action_add_transaction"
+        android:src="@drawable/ic_app_add"
         app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"

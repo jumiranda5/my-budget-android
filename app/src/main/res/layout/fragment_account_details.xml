@@ -4,35 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="100dp"
     tools:context=".AccountDetailsFragment">
 
-    <ImageButton
-        android:id="@+id/account_details_back_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="Back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_android_black_24dp" />
-
-    <ImageButton
-        android:id="@+id/account_details_archive_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="Back"
-        app:layout_constraintEnd_toStartOf="@+id/account_details_edit_button"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_android_black_24dp" />
-
-    <ImageButton
-        android:id="@+id/account_details_edit_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="Back"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/account_details_toolbar"
+        style="@style/MainToolbar"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_android_black_24dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/account_details_back_button"
+                style="@style/IconButton"
+                android:contentDescription="@string/nav_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_arrow_back" />
+
+            <ImageButton
+                android:id="@+id/account_details_archive_button"
+                style="@style/IconButton"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/action_archive"
+                app:layout_constraintEnd_toStartOf="@+id/account_details_edit_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_archive" />
+
+            <ImageButton
+                android:id="@+id/account_details_edit_button"
+                style="@style/IconButton"
+                android:contentDescription="@string/action_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_edit" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <Button
         android:id="@+id/account_details_transaction"

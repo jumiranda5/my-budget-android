@@ -4,16 +4,16 @@
 
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:contentDescription="Home"
-        android:title="Home"
+        android:icon="@drawable/nav_home"
+        android:contentDescription="@string/nav_home"
+        android:title="@string/nav_home"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_categories"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:contentDescription="Categories"
-        android:title="Categories"
+        android:icon="@drawable/nav_categories"
+        android:contentDescription="@string/nav_categories"
+        android:title="@string/nav_categories"
         app:showAsAction="ifRoom"/>
 
     <item
@@ -23,16 +23,16 @@
 
     <item
         android:id="@+id/menu_cards"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:contentDescription="Credit Cards"
-        android:title="Cards"
+        android:icon="@drawable/nav_credit_cards"
+        android:contentDescription="@string/nav_credit_cards"
+        android:title="@string/nav_credit_cards"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_accounts"
-        android:icon="@drawable/ic_android_black_24dp"
-        android:contentDescription="Accounts"
-        android:title="Accounts"
+        android:icon="@drawable/nav_accounts"
+        android:contentDescription="@string/nav_accounts"
+        android:title="@string/nav_accounts"
         app:showAsAction="ifRoom"/>
 
 </menu>

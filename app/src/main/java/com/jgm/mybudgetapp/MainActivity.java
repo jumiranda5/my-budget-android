@@ -2,6 +2,7 @@ package com.jgm.mybudgetapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -104,6 +106,23 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     /* ===============================================================================
+                                         TOOLBAR
+     =============================================================================== */
+
+    private void setToolbarVisibilities(String tag) {
+
+        if (tag.equals(homeTag) || tag.equals(categoriesTag)) {
+            toolbar.setVisibility(View.VISIBLE);
+            if (tag.equals(homeTag)) settingsButton.setVisibility(View.VISIBLE);
+            else settingsButton.setVisibility(View.GONE);
+        }
+        else {
+            toolbar.setVisibility(View.GONE);
+        }
+
+    }
+
+    /* ===============================================================================
                                         BOTTOM BAR
      =============================================================================== */
 
@@ -136,19 +155,28 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void updateBottomNav(String tag) {
+
+        showBottomNav();
+
         switch (tag) {
             case categoriesTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_categories);
+                hideBottomNav();
                 break;
             case accountsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
+                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add_account));
                 break;
             case cardsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_cards);
+                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add_card));
                 break;
             case homeTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_home);
+                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add));
                 break;
+            default:
+                hideBottomNav();
         }
     }
 
@@ -168,6 +196,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         });
     }
 
+    private void hideBottomNav() {
+        bottomNavigationView.setVisibility(View.GONE);
+        fab.setVisibility(View.GONE);
+    }
+
+    private void showBottomNav() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        fab.setVisibility(View.VISIBLE);
+    }
+
     /* ===============================================================================
                                      FRAGMENT NAVIGATION
      =============================================================================== */
@@ -178,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             if (tag.equals(homeTag)) resetFragmentStack();
             currentFragment = tag;
             setFragment(fragment, tag, param);
+            setToolbarVisibilities(tag);
             updateBottomNav(tag);
         }
     }
@@ -456,6 +495,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             }
 
             // Update toolbar and bottom nav
+            setToolbarVisibilities(newTopFragmentTag);
             updateBottomNav(newTopFragmentTag);
 
         }

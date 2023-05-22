@@ -8,10 +8,9 @@
 
     <ImageButton
         android:id="@+id/account_form_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/ic_android_black_24dp"
+        style="@style/IconButton"
+        android:contentDescription="@string/nav_back"
+        android:src="@drawable/ic_app_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

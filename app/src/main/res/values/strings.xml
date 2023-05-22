@@ -2,4 +2,23 @@
     <string name="app_name">My Budget App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_categories">Categories</string>
+    <string name="nav_credit_cards">Credit Cards</string>
+    <string name="nav_accounts">Accounts</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_back">Back</string>
+
+    <!-- Actions (buttons) -->
+    <string name="action_add_transaction">Add transaction</string>
+    <string name="action_archive">Archive</string>
+    <string name="action_edit">Edit</string>
+
+    <!-- Descriptions -->
+    <string name="desc_categories_tabs">Categories tabs</string>
+
+
+
 </resources>

@@ -3,18 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CreditCardsFragment">
 
     <ImageButton
         android:id="@+id/cards_back_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="Back"
+        style="@style/IconButton"
+        android:contentDescription="@string/nav_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_android_black_24dp" />
+        app:srcCompat="@drawable/ic_app_arrow_back" />
 
     <Button
         android:id="@+id/card_details_button"
