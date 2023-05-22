@@ -104,6 +104,186 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     /* ===============================================================================
+                                        BOTTOM BAR
+     =============================================================================== */
+
+    private void initBottomBar() {
+        MenuItem itemHome = bottomNavigationView.getMenu().getItem(0);
+        MenuItem itemCategories = bottomNavigationView.getMenu().getItem(1);
+        MenuItem itemCards = bottomNavigationView.getMenu().getItem(3);
+        MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
+
+        itemHome.setOnMenuItemClickListener(item -> {
+            openFragment(mHome, homeTag, null);
+            return false;
+        });
+
+        itemAccounts.setOnMenuItemClickListener(item -> {
+            openFragment(mAccounts, accountsTag, null);
+            return false;
+        });
+
+        itemCards.setOnMenuItemClickListener(item -> {
+            openFragment(mCreditCards, cardsTag, null);
+            return false;
+        });
+
+        itemCategories.setOnMenuItemClickListener(item -> {
+            openFragment(mCategories, categoriesTag, PARAM_OUT);
+            return false;
+        });
+
+    }
+
+    private void updateBottomNav(String tag) {
+        switch (tag) {
+            case categoriesTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_categories);
+                break;
+            case accountsTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
+                break;
+            case cardsTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_cards);
+                break;
+            case homeTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_home);
+                break;
+        }
+    }
+
+    private void initFab() {
+        fab.setOnClickListener(v -> {
+            switch (currentFragment) {
+                case homeTag:
+                    openFragment(mTransactionForm, transactionFormTag, PARAM_OUT_ADD);
+                    break;
+                case accountsTag:
+                    openAccountForm(false);
+                    break;
+                case cardsTag:
+                    openCardForm(false);
+                    break;
+            }
+        });
+    }
+
+    /* ===============================================================================
+                                     FRAGMENT NAVIGATION
+     =============================================================================== */
+
+    private void openFragment(Fragment fragment, String tag, String param) {
+        if (!currentFragment.equals(tag)) {
+            Log.d(LOG_NAV, "OPEN " + tag);
+            if (tag.equals(homeTag)) resetFragmentStack();
+            currentFragment = tag;
+            setFragment(fragment, tag, param);
+            updateBottomNav(tag);
+        }
+    }
+
+    /* ===============================================================================
+                                     INTERFACE NAVIGATION
+     =============================================================================== */
+
+    @Override
+    public void openExpenses() {
+        if (mTransactions != null) mTransactions.setTypeParam(PARAM_OUT);
+        openFragment(mTransactions, transactionsTag, null);
+    }
+
+    @Override
+    public void openIncome() {
+        if (mTransactions != null) mTransactions.setTypeParam(PARAM_IN);
+        openFragment(mTransactions, transactionsTag, null);
+    }
+
+    @Override
+    public void openExpensesCategories() {
+        if (mCategories != null) mCategories.setInitialTab(PARAM_OUT);
+        openFragment(mCategories, categoriesTag, PARAM_OUT);
+    }
+
+    @Override
+    public void openIncomeCategories() {
+        if (mCategories != null) mCategories.setInitialTab(PARAM_IN);
+        openFragment(mCategories, categoriesTag, PARAM_IN);
+    }
+
+    @Override
+    public void openAccounts() {
+        openFragment(mAccounts, accountsTag, null);
+    }
+
+    @Override
+    public void openAccountDetails() {
+        openFragment(mAccountDetails, accountDetailsTag, null);
+    }
+
+    @Override
+    public void openAccountForm(boolean isEdit) {
+        String param;
+        if (isEdit) param = PARAM_EDIT;
+        else param = PARAM_ADD;
+        if (mAccountForm != null) mAccountForm.setFormType(isEdit);
+        openFragment(mAccountForm, accountFormTag, param);
+    }
+
+    @Override
+    public void openYear() {
+        openFragment(mYear, yearTag, null);
+    }
+
+    @Override
+    public void openCardDetails() {
+        openFragment(mCreditCardDetails, cardDetailsTag, null);
+    }
+
+    @Override
+    public void openCardForm(boolean isEdit) {
+        String param;
+        if (isEdit) param = PARAM_EDIT;
+        else param = PARAM_ADD;
+        if (mCreditCardForm != null) mCreditCardForm.setFormType(isEdit);
+        openFragment(mCreditCardForm, cardFormTag, param);
+    }
+
+    @Override
+    public void openTransactionForm() {
+        // todo: add param (IN/OUT && ADD/EDIT)
+        setFragment(mTransactionForm, transactionFormTag, null);
+    }
+
+    @Override
+    public void navigateBack() {
+        onBackPressed();
+    }
+
+    /* ===============================================================================
+                                     INTERFACE DIALOGS
+     =============================================================================== */
+
+    @Override
+    public void showConfirmationDialog(String message, int id) {
+        FragmentManager fm = getSupportFragmentManager();
+        ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message, id);
+        confirmationDialog.show(fm, "CONFIRMATION_DIALOG");
+    }
+
+    @Override
+    public void handleConfirmation(int id) {
+        // todo => update item on db...
+        Log.d("debug-dialog", "Id to be updated: " + id);
+    }
+
+    @Override
+    public void showTransactionDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        TransactionDialog transactionDialog = new TransactionDialog();
+        transactionDialog.show(fm, "TRANSACTION DIALOG");
+    }
+
+    /* ===============================================================================
                                          FRAGMENTS
      =============================================================================== */
 
@@ -152,6 +332,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         switch (tag) {
             case cardDetailsTag: mCreditCardDetails = null; break;
             case cardFormTag: mCreditCardForm = null; break;
+            case accountDetailsTag: mAccountDetails = null; break;
+            case accountFormTag: mAccountForm = null; break;
             case yearTag: mYear = null; break;
         }
 
@@ -167,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     fragment = mAccounts;
                     break;
                 case accountFormTag:
-                    mAccountForm = new AccountFormFragment();
+                    mAccountForm = AccountFormFragment.newInstance(param);
                     fragment = mAccountForm;
                     break;
                 case accountDetailsTag:
@@ -259,10 +441,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mFragmentTagList.remove(topFragmentTag);
             Log.d(LOG_NAV, "Back to: " + newTopFragmentTag);
 
-            if (topFragmentTag.equals(yearTag)) destroyFragment(mYear, yearTag);
-            else if (topFragmentTag.equals(cardsTag)) {
-                if (mCreditCardDetails != null) destroyFragment(mCreditCardDetails, cardDetailsTag);
-                if (mCreditCardForm != null) destroyFragment(mCreditCardForm, cardFormTag);
+            switch (topFragmentTag) {
+                case yearTag:
+                    destroyFragment(mYear, yearTag);
+                    break;
+                case cardsTag:
+                    if (mCreditCardDetails != null) destroyFragment(mCreditCardDetails, cardDetailsTag);
+                    if (mCreditCardForm != null) destroyFragment(mCreditCardForm, cardFormTag);
+                    break;
+                case accountsTag:
+                    if (mAccountDetails != null) destroyFragment(mAccountDetails, accountDetailsTag);
+                    if (mAccountForm != null) destroyFragment(mAccountForm, accountFormTag);
+                    break;
             }
 
             // Update toolbar and bottom nav
@@ -275,169 +465,4 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    /* ===============================================================================
-                                        BOTTOM BAR
-     =============================================================================== */
-
-    private void initBottomBar() {
-        MenuItem itemHome = bottomNavigationView.getMenu().getItem(0);
-        MenuItem itemCategories = bottomNavigationView.getMenu().getItem(1);
-        MenuItem itemCards = bottomNavigationView.getMenu().getItem(3);
-        MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
-
-        itemHome.setOnMenuItemClickListener(item -> {
-            openFragment(mHome, homeTag, null);
-            return false;
-        });
-
-        itemAccounts.setOnMenuItemClickListener(item -> {
-            openFragment(mAccounts, accountsTag, null);
-            return false;
-        });
-
-        itemCards.setOnMenuItemClickListener(item -> {
-            openFragment(mCreditCards, cardsTag, null);
-            return false;
-        });
-
-        itemCategories.setOnMenuItemClickListener(item -> {
-            openFragment(mCategories, categoriesTag, PARAM_OUT);
-            return false;
-        });
-
-    }
-
-    private void updateBottomNav(String tag) {
-        switch (tag) {
-            case categoriesTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_categories);
-                break;
-            case accountsTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
-                break;
-            case cardsTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_cards);
-                break;
-            case homeTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_home);
-                break;
-        }
-    }
-
-    private void initFab() {
-        fab.setOnClickListener(v -> {
-            switch (currentFragment) {
-                case homeTag:
-                    openFragment(mTransactionForm, transactionFormTag, PARAM_OUT_ADD);
-                    break;
-                case accountsTag:
-                    //todo: openAccountForm(false);
-                    break;
-                case cardsTag:
-                    openCardForm(false);
-                    break;
-            }
-        });
-    }
-
-    /* ===============================================================================
-                                     FRAGMENT NAVIGATION
-     =============================================================================== */
-
-    private void openFragment(Fragment fragment, String tag, String param) {
-        if (!currentFragment.equals(tag)) {
-            Log.d(LOG_NAV, "OPEN " + tag);
-            if (tag.equals(homeTag)) resetFragmentStack();
-            currentFragment = tag;
-            setFragment(fragment, tag, param);
-            updateBottomNav(tag);
-        }
-    }
-
-    /* ===============================================================================
-                                     INTERFACE NAVIGATION
-     =============================================================================== */
-
-    @Override
-    public void openExpenses() {
-        if (mTransactions != null) mTransactions.setTypeParam(PARAM_OUT);
-        openFragment(mTransactions, transactionsTag, null);
-    }
-
-    @Override
-    public void openIncome() {
-        if (mTransactions != null) mTransactions.setTypeParam(PARAM_IN);
-        openFragment(mTransactions, transactionsTag, null);
-    }
-
-    @Override
-    public void openExpensesCategories() {
-        if (mCategories != null) mCategories.setInitialTab(PARAM_OUT);
-        openFragment(mCategories, categoriesTag, PARAM_OUT);
-    }
-
-    @Override
-    public void openIncomeCategories() {
-        if (mCategories != null) mCategories.setInitialTab(PARAM_IN);
-        openFragment(mCategories, categoriesTag, PARAM_IN);
-    }
-
-    @Override
-    public void openAccounts() {
-        openFragment(mAccounts, accountsTag, null);
-    }
-
-    @Override
-    public void openYear() {
-        openFragment(mYear, yearTag, null);
-    }
-
-    @Override
-    public void openCardDetails() {
-        openFragment(mCreditCardDetails, cardDetailsTag, null);
-    }
-
-    @Override
-    public void openCardForm(boolean isEdit) {
-        String param;
-        if (isEdit) param = PARAM_EDIT;
-        else param = PARAM_ADD;
-        if (mCreditCardForm != null) mCreditCardForm.setFormType(isEdit);
-        openFragment(mCreditCardForm, cardFormTag, param);
-    }
-
-    @Override
-    public void openTransactionForm() {
-        // todo: add param (IN/OUT && ADD/EDIT)
-        setFragment(mTransactionForm, transactionFormTag, null);
-    }
-
-    @Override
-    public void navigateBack() {
-        onBackPressed();
-    }
-
-    /* ===============================================================================
-                                     INTERFACE DIALOGS
-     =============================================================================== */
-
-    @Override
-    public void showConfirmationDialog(String message, int id) {
-        FragmentManager fm = getSupportFragmentManager();
-        ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message, id);
-        confirmationDialog.show(fm, "CONFIRMATION_DIALOG");
-    }
-
-    @Override
-    public void handleConfirmation(int id) {
-        // todo => update item on db...
-        Log.d("debug-dialog", "Id to be updated: " + id);
-    }
-
-    @Override
-    public void showTransactionDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        TransactionDialog transactionDialog = new TransactionDialog();
-        transactionDialog.show(fm, "TRANSACTION DIALOG");
-    }
 }

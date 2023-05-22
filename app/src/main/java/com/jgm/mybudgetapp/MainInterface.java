@@ -8,6 +8,8 @@ public interface MainInterface {
     void openExpensesCategories();
     void openIncomeCategories();
     void openAccounts();
+    void openAccountDetails();
+    void openAccountForm(boolean isEdit);
     void openYear();
     void openCardDetails();
     void openCardForm(boolean isEdit);

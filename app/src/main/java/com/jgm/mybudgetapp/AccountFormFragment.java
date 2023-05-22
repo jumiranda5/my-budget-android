@@ -1,47 +1,35 @@
 package com.jgm.mybudgetapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFormFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.jgm.mybudgetapp.databinding.FragmentAccountFormBinding;
+
 public class AccountFormFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_TYPE = "ADD";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mParamType;
 
     public AccountFormFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFormFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccountFormFragment newInstance(String param1, String param2) {
+    public static AccountFormFragment newInstance(String param) {
         AccountFormFragment fragment = new AccountFormFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_TYPE, param);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,15 +38,53 @@ public class AccountFormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParamType = getArguments().getString(ARG_TYPE);
         }
     }
 
+    // UI
+    private FragmentAccountFormBinding binding;
+    private ImageButton buttonBack;
+    private Button buttonSave;
+
+    private void setBinding() {
+        buttonBack = binding.accountFormBackButton;
+        buttonSave = binding.accountFormSaveButton;
+    }
+
+    // Interfaces
+    private Context mContext;
+    private MainInterface mInterface;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+        mInterface = (MainInterface) context;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_form, container, false);
+        binding = FragmentAccountFormBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        setBinding();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.d("debug-account", "Form type => " + mParamType);
+        buttonBack.setOnClickListener(v -> mInterface.navigateBack());
+        buttonSave.setOnClickListener(v -> mInterface.navigateBack());
+
+    }
+
+    public void setFormType(boolean isEdit) {
+        if (isEdit) Log.d("debug-account", "Form type => EDIT");
+        else Log.d("debug-account", "Form type => ADD");
     }
 }
