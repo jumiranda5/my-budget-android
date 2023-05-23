@@ -27,6 +27,65 @@
     </style>
 
     <!-- ==========================================================
+                            CARD VIEW
+    ============================================================ -->
+
+    <style name="CardContainer" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="CardContainerClickable" parent="CardContainer">
+        <item name="android:clickable">true</item>
+        <item name="android:state_focused">true</item>
+        <item name="android:background">@drawable/bg_card_click</item>
+    </style>
+
+    <!-- ==========================================================
+                              PROGRESS
+    ============================================================ -->
+
+    <style name="HomeExpensesProgress" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progress">70</item>
+        <item name="android:rotation">180</item>
+        <item name="indicatorColor">@color/expense</item>
+        <item name="indicatorInset">0dp</item>
+        <item name="indicatorSize">120dp</item>
+        <item name="trackColor">@color/colorSecondaryContainer</item>
+        <item name="trackCornerRadius">5dp</item>
+        <item name="trackThickness">10dp</item>
+    </style>
+
+    <style name="ProgressPercentageImpact" parent="SecondaryText">
+        <item name="android:fontFamily">@font/overpass_regular</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <!-- ==========================================================
+                                IMAGES
+    ============================================================ -->
+
+    <style name="SmallIcon" parent="AppTheme">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+    </style>
+
+    <style name="IconMedium" parent="AppTheme">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="tint">@color/main_text</item>
+    </style>
+
+    <!-- ==========================================================
                                 BUTTONS
     ============================================================ -->
 
@@ -39,6 +98,68 @@
         <item name="android:stateListAnimator">@null</item>
         <item name="backgroundTint">@null</item>
         <item name="tint">@color/main_text</item>
+    </style>
+
+    <style name="MySwitchButton" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="layout_constraintWidth_min">112dp</item>
+        <item name="layout_constraintWidth_max">160dp</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/red_hat_text_medium</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="track">@drawable/switch_track</item>
+    </style>
+
+    <!-- ==========================================================
+                                 TEXT
+    ============================================================ -->
+
+    <style name="MainText" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="android:fontFamily">@font/red_hat_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="MainTextEllipse" parent="MainText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="SecondaryText" parent="MainText">
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SecondaryTextEllipse" parent="SecondaryText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="ToolbarMonth" parent="MainTextEllipse">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/red_hat_text_semi_bold</item>
+    </style>
+
+    <style name="NumberImpact" parent="MainText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/overpass_semi_bold</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="NumberRegular" parent="MainText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/overpass_regular</item>
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+
+    <style name="NumberMedium" parent="NumberRegular">
+        <item name="android:fontFamily">@font/overpass_medium</item>
     </style>
 
 </resources>

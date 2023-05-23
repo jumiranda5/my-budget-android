@@ -18,7 +18,26 @@
 
     <!-- Descriptions -->
     <string name="desc_categories_tabs">Categories tabs</string>
+    <string name="desc_balance_progress">Expenses progress related to income</string>
+    <string name="desc_income_categories_chart">Income categories chart</string>
+    <string name="desc_expenses_categories_chart">Expenses categories chart</string>
 
+    <!-- Labels -->
+    <string name="label_month_balance">Month Balance</string>
+    <string name="label_accrued">Accrued</string>
+    <string name="label_expected">Expected</string>
+    <string name="label_savings">Savings</string>
+    <string name="label_cash">Cash</string>
+    <string name="label_checking_account">Checking Account</string>
+    <string name="label_income">Income</string>
+    <string name="label_expenses">Expenses</string>
 
+    <!-- Initial values -->
+    <string name="test_month_balance">$5,000.00</string>
+    <string name="test_balance_progress_percent">70%</string>
+    <string name="test_income_value">$8,000.00</string>
+    <string name="test_expenses_value">$3,000.00</string>
+    <string name="desc_year_chart">Year balance chart</string>
+    <string name="test_year">2023</string>
 
 </resources>

@@ -12,8 +12,24 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Bottom bar indicator -->
-        <item name="colorSecondaryContainer">@color/colorAccentLight</item>
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+        <!-- Switch button -->
+        <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
     </style>
+
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <!-- Thumb -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Track -->
+        <item name="colorOutline">@color/secondary_icon</item>
+        <item name="colorPrimaryContainer">@color/colorAccent</item>
+    </style>
+
 
     <style name="AppTheme" parent="Base.Theme.MyBudgetApp" />
 </resources>

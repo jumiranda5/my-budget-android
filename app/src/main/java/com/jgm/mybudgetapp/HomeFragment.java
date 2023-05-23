@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ public class HomeFragment extends Fragment {
 
     // UI
     private FragmentHomeBinding binding;
-    private CardView cardIncome, cardExpenses, cardSavings,
+    private ConstraintLayout cardIncome, cardExpenses, cardSavings,
             cardCash, cardChecking, cardIncomeCategories,
             cardExpensesCategories, cardYear;
 

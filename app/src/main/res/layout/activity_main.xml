@@ -22,6 +22,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/toolbar_month"
+                style="@style/ToolbarMonth"
+                android:layout_width="120dp"
+                android:fontFamily="@font/red_hat_text_semi_bold"
+                android:text="Dezembro"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/toolbar_year"
+                style="@style/MainText"
+                android:fontFamily="@font/red_hat_text_semi_bold"
+                android:layout_marginStart="16dp"
+                android:text="2023"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageButton
+                android:id="@+id/toolbar_prev_month_button"
+                style="@style/IconButton"
+                android:contentDescription="Previous month"
+                android:padding="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/toolbar_month"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_arrow_back_ios"
+                app:tint="@color/secondary_icon" />
+
+            <ImageButton
+                android:id="@+id/toolbar_next_month_button"
+                style="@style/IconButton"
+                android:contentDescription="Next month"
+                android:padding="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/toolbar_month"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_arrow_forward_ios"
+                app:tint="@color/secondary_icon" />
+
             <ImageButton
                 android:id="@+id/settings_button"
                 style="@style/IconButton"
