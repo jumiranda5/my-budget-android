@@ -8,7 +8,6 @@
     android:padding="4dp"
     android:clipToPadding="false"
     android:layout_marginTop="@dimen/toolbar_height"
-    android:background="@color/main_background"
     tools:context=".HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

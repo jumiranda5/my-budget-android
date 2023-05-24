@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -17,16 +18,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
-import com.jgm.mybudgetapp.utils.FragmentTag;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
-    // Logs
+    // Constants
     private static final String LOG_NAV = "debug-nav";
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
+    private static final String STATE_FRAGMENT = "current-fragment";
+    private static final String STATE_TAG_LIST = "fragment-tag-list";
+    private static final String STATE_FRAGMENT_LIST = "fragment-list";
 
     // Params
     private static final String PARAM_OUT = "OUT";
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private static final String yearTag = "YEAR";
 
     // Vars
-    private final ArrayList<FragmentTag> mFragmentList = new ArrayList<>();
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
     private String currentFragment;
 
@@ -96,13 +98,61 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         setContentView(binding.getRoot());
         setBinding();
 
+        Log.d(LOG_LIFECYCLE, "Main Activity onCreate");
+
+        if (savedInstanceState == null) setFragment(homeTag);
+
         initBottomBar();
-        setFragment(mHome, homeTag, null);
-        currentFragment = homeTag;
-
         initFab();
-        settingsButton.setOnClickListener(v -> openFragment(mSettings, settingsTag, null));
+        settingsButton.setOnClickListener(v -> openFragment(settingsTag));
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(LOG_LIFECYCLE, "Main Activity onStart");
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+        currentFragment = savedInstanceState.getString(STATE_FRAGMENT);
+        mFragmentTagList = savedInstanceState.getStringArrayList(STATE_TAG_LIST);
+        Log.d(LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
+        Log.d(LOG_LIFECYCLE, "current fragment => " + currentFragment);
+        reReferenceFragment();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_LIFECYCLE, "Main Activity onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(LOG_LIFECYCLE, "Main Activity onPause");
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
+        outState.putString(STATE_FRAGMENT, currentFragment);
+        outState.putStringArrayList(STATE_TAG_LIST, mFragmentTagList);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(LOG_LIFECYCLE, "Main Activity onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_LIFECYCLE, "Main Activity onDestroy");
     }
 
     /* ===============================================================================
@@ -133,22 +183,22 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
 
         itemHome.setOnMenuItemClickListener(item -> {
-            openFragment(mHome, homeTag, null);
+            openFragment(homeTag);
             return false;
         });
 
         itemAccounts.setOnMenuItemClickListener(item -> {
-            openFragment(mAccounts, accountsTag, null);
+            openFragment(accountsTag);
             return false;
         });
 
         itemCards.setOnMenuItemClickListener(item -> {
-            openFragment(mCreditCards, cardsTag, null);
+            openFragment(cardsTag);
             return false;
         });
 
         itemCategories.setOnMenuItemClickListener(item -> {
-            openFragment(mCategories, categoriesTag, PARAM_OUT);
+            openFragment(categoriesTag);
             return false;
         });
 
@@ -184,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         fab.setOnClickListener(v -> {
             switch (currentFragment) {
                 case homeTag:
-                    openFragment(mTransactionForm, transactionFormTag, PARAM_OUT_ADD);
+                    openFragment(transactionFormTag);
                     break;
                 case accountsTag:
                     openAccountForm(false);
@@ -210,12 +260,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                                      FRAGMENT NAVIGATION
      =============================================================================== */
 
-    private void openFragment(Fragment fragment, String tag, String param) {
+    private void openFragment(String tag) {
         if (!currentFragment.equals(tag)) {
             Log.d(LOG_NAV, "OPEN " + tag);
             if (tag.equals(homeTag)) resetFragmentStack();
             currentFragment = tag;
-            setFragment(fragment, tag, param);
+            setFragment(tag);
             setToolbarVisibilities(tag);
             updateBottomNav(tag);
         }
@@ -228,35 +278,35 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void openExpenses() {
         if (mTransactions != null) mTransactions.setTypeParam(PARAM_OUT);
-        openFragment(mTransactions, transactionsTag, null);
+        openFragment(transactionsTag);
     }
 
     @Override
     public void openIncome() {
         if (mTransactions != null) mTransactions.setTypeParam(PARAM_IN);
-        openFragment(mTransactions, transactionsTag, null);
+        openFragment(transactionsTag);
     }
 
     @Override
     public void openExpensesCategories() {
         if (mCategories != null) mCategories.setInitialTab(PARAM_OUT);
-        openFragment(mCategories, categoriesTag, PARAM_OUT);
+        openFragment(categoriesTag);
     }
 
     @Override
     public void openIncomeCategories() {
         if (mCategories != null) mCategories.setInitialTab(PARAM_IN);
-        openFragment(mCategories, categoriesTag, PARAM_IN);
+        openFragment(categoriesTag);
     }
 
     @Override
     public void openAccounts() {
-        openFragment(mAccounts, accountsTag, null);
+        openFragment(accountsTag);
     }
 
     @Override
     public void openAccountDetails() {
-        openFragment(mAccountDetails, accountDetailsTag, null);
+        openFragment(accountDetailsTag);
     }
 
     @Override
@@ -265,17 +315,17 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (isEdit) param = PARAM_EDIT;
         else param = PARAM_ADD;
         if (mAccountForm != null) mAccountForm.setFormType(isEdit);
-        openFragment(mAccountForm, accountFormTag, param);
+        openFragment(accountFormTag);
     }
 
     @Override
     public void openYear() {
-        openFragment(mYear, yearTag, null);
+        openFragment(yearTag);
     }
 
     @Override
     public void openCardDetails() {
-        openFragment(mCreditCardDetails, cardDetailsTag, null);
+        openFragment(cardDetailsTag);
     }
 
     @Override
@@ -284,13 +334,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (isEdit) param = PARAM_EDIT;
         else param = PARAM_ADD;
         if (mCreditCardForm != null) mCreditCardForm.setFormType(isEdit);
-        openFragment(mCreditCardForm, cardFormTag, param);
+        openFragment(cardFormTag);
     }
 
     @Override
     public void openTransactionForm() {
         // todo: add param (IN/OUT && ADD/EDIT)
-        setFragment(mTransactionForm, transactionFormTag, null);
+        setFragment(transactionFormTag);
     }
 
     @Override
@@ -326,141 +376,171 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                                          FRAGMENTS
      =============================================================================== */
 
-    /*
-        Main fragments => home, cards, accounts, settings, categories, transactions form, transactions
-        Secondary fragments => card form, card details, account form, account details, year
-
-        * Main fragments are not destroyed => only show/hide
-
-        * Secondary fragments are not inserted on the mFragmentList
-        * Secondary fragments are destroyed after leaving a main fragment
-          - card form and card details are destroyed after leaving cards
-          - account form and account details are destroyed after leaving accounts
-          - year is destroyed when closed
-     */
-
     private void resetFragmentStack() {
         mFragmentTagList.clear();
         mFragmentTagList = new ArrayList<>();
         Log.d(LOG_NAV, "Reset fragment stack: " + mFragmentTagList.size());
     }
 
-    private void loadFragment(Fragment fragment, String tag) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.main_content_frame, fragment, tag);
-        transaction.commit();
+    private void setFragment(String tag) {
 
-        mFragmentTagList.add(tag);
+        Log.d(LOG_NAV, "init fragment: " + tag);
 
-        if (!tag.equals(cardFormTag)
-                || !tag.equals(cardDetailsTag)
-                || !tag.equals(accountDetailsTag)
-                || !tag.equals(accountFormTag)
-                || !tag.equals(yearTag)) mFragmentList.add(new FragmentTag(fragment, tag));
-
-        Log.d(LOG_NAV, "Fragment loaded: " + tag);
-    }
-
-    private void destroyFragment(Fragment fragment, String tag) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.remove(fragment);
-        transaction.commit();
-
-        mFragmentTagList.remove(tag);
+        Fragment fragment;
 
         switch (tag) {
-            case cardDetailsTag: mCreditCardDetails = null; break;
-            case cardFormTag: mCreditCardForm = null; break;
-            case accountDetailsTag: mAccountDetails = null; break;
-            case accountFormTag: mAccountForm = null; break;
-            case yearTag: mYear = null; break;
+            case accountsTag:
+                mAccounts = new AccountsFragment();
+                fragment = mAccounts;
+                break;
+            case accountFormTag:
+                mAccountForm = new AccountFormFragment();
+                fragment = mAccountForm;
+                break;
+            case accountDetailsTag:
+                mAccountDetails = new AccountDetailsFragment();
+                fragment = mAccountDetails;
+                break;
+            case categoriesTag:
+                mCategories = new CategoriesFragment();
+                fragment = mCategories;
+                break;
+            case categoriesListTag:
+                mCategoriesList = new CategoriesListFragment();
+                fragment = mCategoriesList;
+                break;
+            case categoriesFormTag:
+                mCategoriesForm = new CategoriesFormFragment();
+                fragment = mCategoriesForm;
+                break;
+            case cardsTag:
+                mCreditCards = new CreditCardsFragment();
+                fragment = mCreditCards;
+                break;
+            case cardFormTag:
+                mCreditCardForm = new CreditCardFormFragment();
+                fragment = mCreditCardForm;
+                break;
+            case cardDetailsTag:
+                mCreditCardDetails = new CreditCardDetailsFragment();
+                fragment = mCreditCardDetails;
+                break;
+            case homeTag:
+                mHome = new HomeFragment();
+                fragment = mHome;
+                break;
+            case settingsTag:
+                mSettings = new SettingsFragment();
+                fragment = mSettings;
+                break;
+            case transactionsTag:
+                mTransactions = new TransactionsFragment();
+                fragment = mTransactions;
+                break;
+            case transactionFormTag:
+                mTransactionForm = new TransactionFormFragment();
+                fragment = mTransactionForm;
+                break;
+            case yearTag:
+                mYear = new YearFragment();
+                fragment = mYear;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + tag);
         }
 
-        Log.d(LOG_NAV, "Fragment removed: " + tag);
+        loadFragment(fragment, tag);
+
     }
 
-    private void setFragment(Fragment fragment, String tag, String param) {
-        if (fragment == null) {
-            Log.d(LOG_NAV, "Fragment is null => init: " + tag);
+    private void loadFragment(Fragment fragment, String tag) {
+
+        Log.d(LOG_NAV, "Fragment to be replaced: " + currentFragment);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.main_content_frame, fragment, tag);
+        transaction.commit();
+
+        // Update custom navigation stack
+        mFragmentTagList.remove(tag);
+        mFragmentTagList.add(tag);
+
+        // Set replaced fragment to null
+        deReferenceFragment(currentFragment);
+
+        // Set current fragment tag
+        currentFragment = tag;
+
+        Log.d(LOG_NAV, "Fragment loaded: " + tag);
+
+    }
+
+    private void reReferenceFragment() {
+        switch (currentFragment) {
+            case accountsTag:
+                mAccounts = (AccountsFragment) getSupportFragmentManager().findFragmentByTag(accountsTag);
+                break;
+            case accountFormTag:
+                mAccountForm = (AccountFormFragment) getSupportFragmentManager().findFragmentByTag(accountFormTag);
+                break;
+            case accountDetailsTag:
+                mAccountDetails = (AccountDetailsFragment) getSupportFragmentManager().findFragmentByTag(accountDetailsTag);
+                break;
+            case categoriesTag:
+                mCategories = (CategoriesFragment) getSupportFragmentManager().findFragmentByTag(categoriesTag);
+                break;
+            case categoriesListTag:
+                mCategoriesList = (CategoriesListFragment) getSupportFragmentManager().findFragmentByTag(categoriesListTag);
+                break;
+            case categoriesFormTag:
+                mCategoriesForm = (CategoriesFormFragment) getSupportFragmentManager().findFragmentByTag(categoriesFormTag);
+                break;
+            case cardsTag:
+                mCreditCards = (CreditCardsFragment) getSupportFragmentManager().findFragmentByTag(cardsTag);
+                break;
+            case cardFormTag:
+                mCreditCardForm = (CreditCardFormFragment) getSupportFragmentManager().findFragmentByTag(cardFormTag);
+                break;
+            case cardDetailsTag:
+                mCreditCardDetails = (CreditCardDetailsFragment) getSupportFragmentManager().findFragmentByTag(cardDetailsTag);
+                break;
+            case homeTag:
+                mHome = (HomeFragment) getSupportFragmentManager().findFragmentByTag(homeTag);
+                break;
+            case settingsTag:
+                mSettings = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(settingsTag);
+                break;
+            case transactionsTag:
+                mTransactions = (TransactionsFragment) getSupportFragmentManager().findFragmentByTag(transactionsTag);
+                break;
+            case transactionFormTag:
+                mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);
+                break;
+            case yearTag:
+                mYear = (YearFragment) getSupportFragmentManager().findFragmentByTag(yearTag);
+                break;
+        }
+    }
+
+    private void deReferenceFragment(String tag) {
+
+        if (tag != null) {
             switch (tag) {
-                case accountsTag:
-                    mAccounts = new AccountsFragment();
-                    fragment = mAccounts;
-                    break;
-                case accountFormTag:
-                    mAccountForm = AccountFormFragment.newInstance(param);
-                    fragment = mAccountForm;
-                    break;
-                case accountDetailsTag:
-                    mAccountDetails = new AccountDetailsFragment();
-                    fragment = mAccountDetails;
-                    break;
-                case categoriesTag:
-                    mCategories = CategoriesFragment.newInstance(param);
-                    fragment = mCategories;
-                    break;
-                case categoriesListTag:
-                    mCategoriesList = new CategoriesListFragment();
-                    fragment = mCategoriesList;
-                    break;
-                case categoriesFormTag:
-                    mCategoriesForm = new CategoriesFormFragment();
-                    fragment = mCategoriesForm;
-                    break;
-                case cardsTag:
-                    mCreditCards = new CreditCardsFragment();
-                    fragment = mCreditCards;
-                    break;
-                case cardFormTag:
-                    mCreditCardForm = CreditCardFormFragment.newInstance(param);
-                    fragment = mCreditCardForm;
-                    break;
-                case cardDetailsTag:
-                    mCreditCardDetails = new CreditCardDetailsFragment();
-                    fragment = mCreditCardDetails;
-                    break;
-                case homeTag:
-                    mHome = new HomeFragment();
-                    fragment = mHome;
-                    break;
-                case settingsTag:
-                    mSettings = new SettingsFragment();
-                    fragment = mSettings;
-                    break;
-                case transactionsTag:
-                    mTransactions = TransactionsFragment.newInstance(param);
-                    fragment = mTransactions;
-                    break;
-                case transactionFormTag:
-                    mTransactionForm = TransactionFormFragment.newInstance(param);
-                    fragment = mTransactionForm;
-                    break;
-                case yearTag:
-                    mYear = new YearFragment();
-                    fragment = mYear;
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + tag);
+                case accountsTag: mAccounts = null; break;
+                case accountFormTag: mAccountForm = null; break;
+                case accountDetailsTag: mAccountDetails = null;break;
+                case categoriesTag: mCategories = null; break;
+                case categoriesListTag: mCategoriesList = null; break;
+                case categoriesFormTag: mCategoriesForm = null; break;
+                case cardsTag: mCreditCards = null; break;
+                case cardFormTag: mCreditCardForm = null; break;
+                case cardDetailsTag: mCreditCardDetails = null; break;
+                case homeTag: mHome = null; break;
+                case settingsTag: mSettings = null; break;
+                case transactionsTag: mTransactions = null; break;
+                case transactionFormTag: mTransactionForm = null; break;
+                case yearTag: mYear = null; break;
             }
-            loadFragment(fragment, tag);
-        }
-        else {
-            Log.d(LOG_NAV, "Fragment not null => update stack: " + tag);
-            mFragmentTagList.remove(tag);
-            mFragmentTagList.add(tag);
-        }
-        setFragmentVisibilities(tag);
-    }
-
-    private void setFragmentVisibilities(String tag){
-
-        for(int i = 0; i < mFragmentList.size(); i++){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-            if(tag.equals(mFragmentList.get(i).getTag())) transaction.show((mFragmentList.get(i).getFragment()));
-            else transaction.hide((mFragmentList.get(i).getFragment()));
-
-            transaction.commit();
         }
 
     }
@@ -476,23 +556,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             String newTopFragmentTag = mFragmentTagList.get(backStackCount - 2);
             currentFragment = newTopFragmentTag;
 
-            setFragmentVisibilities(newTopFragmentTag);
-            mFragmentTagList.remove(topFragmentTag);
             Log.d(LOG_NAV, "Back to: " + newTopFragmentTag);
-
-            switch (topFragmentTag) {
-                case yearTag:
-                    destroyFragment(mYear, yearTag);
-                    break;
-                case cardsTag:
-                    if (mCreditCardDetails != null) destroyFragment(mCreditCardDetails, cardDetailsTag);
-                    if (mCreditCardForm != null) destroyFragment(mCreditCardForm, cardFormTag);
-                    break;
-                case accountsTag:
-                    if (mAccountDetails != null) destroyFragment(mAccountDetails, accountDetailsTag);
-                    if (mAccountForm != null) destroyFragment(mAccountForm, accountFormTag);
-                    break;
-            }
+            mFragmentTagList.remove(topFragmentTag);
+            setFragment(newTopFragmentTag);
 
             // Update toolbar and bottom nav
             setToolbarVisibilities(newTopFragmentTag);

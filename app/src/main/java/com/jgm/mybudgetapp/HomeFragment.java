@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
         // Required empty public constructor
     }
+
+    private static final String LOG_LIFECYCLE = "debug-lifecycle-home";
 
     // UI
     private FragmentHomeBinding binding;
@@ -47,10 +50,11 @@ public class HomeFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
         mInterface = (MainInterface) context;
+        Log.d(LOG_LIFECYCLE, "Home onAttach");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -65,6 +69,42 @@ public class HomeFragment extends Fragment {
 
         initNavigation();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(LOG_LIFECYCLE, "Home onResume");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(LOG_LIFECYCLE, "Home onStart");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(LOG_LIFECYCLE, "Home onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(LOG_LIFECYCLE, "Home onStop");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(LOG_LIFECYCLE, "Home onDetach");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_LIFECYCLE, "Home onDestroy");
     }
 
     /* ===============================================================================
