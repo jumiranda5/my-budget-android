@@ -96,15 +96,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Log.d(LOG_LIFECYCLE, "Main Activity onCreate");
 
         // set dark/light mode
         if (savedInstanceState == null) {
             boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(this, "isDark");
             switchDarkMode(isDark);
         }
+
+        super.onCreate(savedInstanceState);
+
+        Log.d(LOG_LIFECYCLE, "Main Activity onCreate");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
