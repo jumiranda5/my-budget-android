@@ -1,7 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MyBudgetApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:spotShadowAlpha">0.09</item>
+        <item name="android:ambientShadowAlpha">0.09</item>
+        <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/bg_01dp</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Bottom bar indicator -->
+        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+        <!-- Switch button -->
+        <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
     </style>
+
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <!-- Thumb -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <!-- Track -->
+        <item name="colorOutline">@color/secondary_icon</item>
+        <item name="colorPrimaryContainer">@color/colorAccent</item>
+    </style>
+
 </resources>

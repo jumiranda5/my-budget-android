@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#1E1E1E</color>
@@ -7,40 +8,40 @@
     <color name="colorAccent">#3DCC8E</color>
     <color name="colorAccentLight">#C5FFE3</color>
     <color name="colorControlHighlight">#BABABA</color>
-    <color name="colorSecondaryContainer">#EAEAEA</color>
+    <color name="colorSecondaryContainer">#424242</color>
 
     <color name="grey">#dadada</color>
     <color name="dark_grey">#bababa</color>
 
     <!-- Main -->
-    <color name="main_background">#F3F3F3</color>
-    <color name="border">#EAEAEA</color>
+    <color name="main_background">#1E1E1E</color>
+    <color name="border">#2E2E2E</color>
 
     <!-- Backgrounds -->
-    <color name="bg_00dp">#F3F3F3</color>
-    <color name="bg_01dp">#FFFFFF</color>
-    <color name="bg_02dp">#FFFFFF</color>
-    <color name="bg_03dp">#FFFFFF</color>
-    <color name="bg_04dp">#FFFFFF</color>
-    <color name="bg_06dp">#FFFFFF</color>
-    <color name="bg_08dp">#FFFFFF</color>
-    <color name="bg_12dp">#FFFFFF</color>
-    <color name="bg_16dp">#FFFFFF</color>
-    <color name="bg_24dp">#FFFFFF</color>
+    <color name="bg_00dp">#1E1E1E</color>
+    <color name="bg_01dp">#292929</color>
+    <color name="bg_02dp">#2E2E2E</color>
+    <color name="bg_03dp">#303030</color>
+    <color name="bg_04dp">#323232</color>
+    <color name="bg_06dp">#373737</color>
+    <color name="bg_08dp">#393939</color>
+    <color name="bg_12dp">#3D3D3D</color>
+    <color name="bg_16dp">#404040</color>
+    <color name="bg_24dp">#424242</color>
 
     <!-- Text -->
-    <color name="high_emphasis_text">#1E1E1E</color>
-    <color name="medium_emphasis_text">#767676</color>
-    <color name="disabled_text">#9A9A9A</color>
+    <color name="high_emphasis_text">#DEFFFFFF</color>
+    <color name="medium_emphasis_text">#99FFFFFF</color>
+    <color name="disabled_text">#61FFFFFF</color>
     <color name="main_text">#1E1E1E</color>
     <color name="secondary_text">#767676</color>
-    <color name="secondary_icon">#8A8A8A</color>
+    <color name="secondary_icon">#99FFFFFF</color>
 
-    <color name="expense">#D91414</color>
+    <color name="expense">#FF3F8F</color>
     <color name="expense_pressed">#BC1616</color>
-    <color name="income">#0E7C54</color>
+    <color name="income">#2CF0A9</color>
     <color name="income_pressed">#095F40</color>
-    <color name="savings">#720EC1</color>
+    <color name="savings">#9A89FF</color>
     <color name="savings_pressed">#5A0C97</color>
 
     <!-- Inputs -->

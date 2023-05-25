@@ -2,6 +2,7 @@ package com.jgm.mybudgetapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         Log.d(LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
         Log.d(LOG_LIFECYCLE, "current fragment => " + currentFragment);
         reReferenceFragment();
+        updateBottomNav(currentFragment);
+        setToolbarVisibilities(currentFragment);
     }
 
     @Override
@@ -370,6 +373,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         FragmentManager fm = getSupportFragmentManager();
         TransactionDialog transactionDialog = new TransactionDialog();
         transactionDialog.show(fm, "TRANSACTION DIALOG");
+    }
+
+    /* ===============================================================================
+                                    INTERFACE SETTINGS
+     =============================================================================== */
+
+    @Override
+    public void switchDarkMode(boolean isDark) {
+        if (isDark) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     /* ===============================================================================

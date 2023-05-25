@@ -106,11 +106,11 @@
         app:elevation="0dp"
         android:contentDescription="@string/action_add_transaction"
         android:src="@drawable/ic_app_add"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="@color/high_emphasis_text"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
         app:layout_constraintTop_toTopOf="@+id/bottomNavigationView"
-        app:tint="@color/white" />
+        app:tint="@color/bg_00dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

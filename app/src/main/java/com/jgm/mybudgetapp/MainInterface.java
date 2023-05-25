@@ -21,4 +21,7 @@ public interface MainInterface {
     void handleConfirmation(int id);
     void showTransactionDialog();
 
+    // Settings
+    void switchDarkMode(boolean isDark);
+
 }
