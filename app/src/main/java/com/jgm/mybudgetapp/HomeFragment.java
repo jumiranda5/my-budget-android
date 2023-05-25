@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
         mInterface = (MainInterface) context;
-        Log.d(LOG_LIFECYCLE, "Home onAttach");
+        //Log.d(LOG_LIFECYCLE, "Home onAttach");
     }
 
     @Override
@@ -74,37 +74,37 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(LOG_LIFECYCLE, "Home onResume");
+        //Log.d(LOG_LIFECYCLE, "Home onResume");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(LOG_LIFECYCLE, "Home onStart");
+        //Log.d(LOG_LIFECYCLE, "Home onStart");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(LOG_LIFECYCLE, "Home onPause");
+        //Log.d(LOG_LIFECYCLE, "Home onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(LOG_LIFECYCLE, "Home onStop");
+        //Log.d(LOG_LIFECYCLE, "Home onStop");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(LOG_LIFECYCLE, "Home onDetach");
+        //Log.d(LOG_LIFECYCLE, "Home onDetach");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_LIFECYCLE, "Home onDestroy");
+        //Log.d(LOG_LIFECYCLE, "Home onDestroy");
     }
 
     /* ===============================================================================

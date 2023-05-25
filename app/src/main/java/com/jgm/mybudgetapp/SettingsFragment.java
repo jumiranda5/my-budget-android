@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.jgm.mybudgetapp.databinding.FragmentSettingsBinding;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 public class SettingsFragment extends Fragment {
 
@@ -55,8 +55,14 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.d("debug-settings", "onViewCreated");
+
+        boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(mContext, "isDark");
+        switchDarkMode.setChecked(isDark);
+
         switchDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mInterface.switchDarkMode(isChecked);
+            SettingsPrefs.setSettingsPrefsBoolean(mContext, "isDark", isChecked);
         });
     }
 }

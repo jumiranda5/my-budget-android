@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
 
@@ -95,11 +97,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(LOG_LIFECYCLE, "Main Activity onCreate");
+
+        // set dark/light mode
+        if (savedInstanceState == null) {
+            boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(this, "isDark");
+            switchDarkMode(isDark);
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBinding();
-
-        Log.d(LOG_LIFECYCLE, "Main Activity onCreate");
 
         if (savedInstanceState == null) setFragment(homeTag);
 
@@ -381,11 +390,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void switchDarkMode(boolean isDark) {
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (isDark) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            if (currentNightMode != Configuration.UI_MODE_NIGHT_YES)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            if (currentNightMode != Configuration.UI_MODE_NIGHT_NO)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
