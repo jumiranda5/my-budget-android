@@ -99,9 +99,8 @@ public class Category {
             float total1 = c1.getTotal();
             float total2 = c2.getTotal();
 
-            // For ascending order
-            return (int) (total1 - total2);
-
+            // For descending order
+            return (int) (total2 - total1);
         }
     };
 }

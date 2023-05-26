@@ -142,11 +142,12 @@ public class HomeFragment extends Fragment {
             categoriesExpenses.get(i).setPercent(percent);
         }
 
+        categoriesExpenses.sort(Category.CategoryTotalComparator);
+        initCategoriesExpensesList();
+
         // Set expenses chart
         expensesChart.setImageTintList(null);
         Charts.setCategoriesChart(mContext, categoriesExpenses, expensesChart, 100, 10);
-
-        initCategoriesExpensesList();
     }
 
     private void setDummyIncomeList() {
