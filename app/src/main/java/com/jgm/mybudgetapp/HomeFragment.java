@@ -114,68 +114,78 @@ public class HomeFragment extends Fragment {
     private final ArrayList<Category> categoriesExpenses = new ArrayList<>();
     private final ArrayList<Category> categoriesIncome = new ArrayList<>();
     private void setDummyExpensesList() {
-        Category c1 = new Category(0, "Home", R.color.savings, 0, true);
-        Category c2 = new Category(0, "Restaurant", R.color.colorAccent, 0, true);
-        Category c3 = new Category(0, "Groceries", R.color.expense, 0, true);
-        Category c4 = new Category(0, "Clothes", R.color.colorSecondary, 0, true);
-        Category c5 = new Category(0, "Car", R.color.main_text, 0, true);
-        Category c6 = new Category(0, "Gym", R.color.income, 0, true);
 
-        float totalExpenses = 3508.75f;
-        c1.setTotal(2034.80f);
-        c2.setTotal(323.95f);
-        c3.setTotal(200f);
-        c4.setTotal(350f);
-        c5.setTotal(500f);
-        c6.setTotal(100f);
+        expensesChart.post(() -> {
 
-        categoriesExpenses.add(c1);
-        categoriesExpenses.add(c2);
-        categoriesExpenses.add(c3);
-        categoriesExpenses.add(c4);
-        categoriesExpenses.add(c5);
-        categoriesExpenses.add(c6);
+            Category c1 = new Category(0, "Home", R.color.savings, 0, true);
+            Category c2 = new Category(0, "Restaurant", R.color.colorAccent, 0, true);
+            Category c3 = new Category(0, "Groceries", R.color.expense, 0, true);
+            Category c4 = new Category(0, "Clothes", R.color.colorSecondary, 0, true);
+            Category c5 = new Category(0, "Car", R.color.main_text, 0, true);
+            Category c6 = new Category(0, "Gym", R.color.income, 0, true);
 
-        // Set percentage for each category
-        for(int i =0; i < categoriesExpenses.size(); i++){
-            float percent = NumberUtils.roundFloat((categoriesExpenses.get(i).getTotal() * 100) / totalExpenses);
-            categoriesExpenses.get(i).setPercent(percent);
-        }
+            float totalExpenses = 3508.75f;
+            c1.setTotal(2034.80f);
+            c2.setTotal(323.95f);
+            c3.setTotal(200f);
+            c4.setTotal(350f);
+            c5.setTotal(500f);
+            c6.setTotal(100f);
 
-        categoriesExpenses.sort(Category.CategoryTotalComparator);
-        initCategoriesExpensesList();
+            categoriesExpenses.add(c1);
+            categoriesExpenses.add(c2);
+            categoriesExpenses.add(c3);
+            categoriesExpenses.add(c4);
+            categoriesExpenses.add(c5);
+            categoriesExpenses.add(c6);
 
-        // Set expenses chart
-        expensesChart.setImageTintList(null);
-        Charts.setCategoriesChart(mContext, categoriesExpenses, expensesChart, 100, 10);
+            // Set percentage for each category
+            for(int i =0; i < categoriesExpenses.size(); i++){
+                float percent = NumberUtils.roundFloat((categoriesExpenses.get(i).getTotal() * 100) / totalExpenses);
+                categoriesExpenses.get(i).setPercent(percent);
+            }
+
+            categoriesExpenses.sort(Category.CategoryTotalComparator);
+            initCategoriesExpensesList();
+
+            // Set expenses chart
+            int width = expensesChart.getWidth();
+            expensesChart.setImageTintList(null);
+            Charts.setCategoriesChart(mContext, categoriesExpenses, expensesChart, width, 12);
+        });
+
     }
 
     private void setDummyIncomeList() {
-        Category c1 = new Category(0, "Salary", R.color.savings, 0, true);
-        Category c2 = new Category(0, "Rent", R.color.colorAccent, 0, true);
-        Category c3 = new Category(0, "Extras", R.color.expense, 0, true);
 
-        float totalIncome = 5000.0f;
-        c1.setTotal(3000f);
-        c2.setTotal(1000f);
-        c3.setTotal(1000f);
+        incomeChart.post(() -> {
+            Category c1 = new Category(0, "Salary", R.color.savings, 0, true);
+            Category c2 = new Category(0, "Rent", R.color.colorAccent, 0, true);
+            Category c3 = new Category(0, "Extras", R.color.expense, 0, true);
 
-        categoriesIncome.add(c1);
-        categoriesIncome.add(c2);
-        categoriesIncome.add(c3);
+            float totalIncome = 5000.0f;
+            c1.setTotal(3000f);
+            c2.setTotal(1000f);
+            c3.setTotal(1000f);
 
-        // Set percentage for each category
-        for(int i =0; i < categoriesIncome.size(); i++){
-            float percent = NumberUtils.roundFloat((categoriesIncome.get(i).getTotal() * 100) / totalIncome);
-            categoriesIncome.get(i).setPercent(percent);
-        }
+            categoriesIncome.add(c1);
+            categoriesIncome.add(c2);
+            categoriesIncome.add(c3);
 
-        categoriesIncome.sort(Category.CategoryTotalComparator);
-        initCategoriesIncomeList();
+            // Set percentage for each category
+            for(int i =0; i < categoriesIncome.size(); i++){
+                float percent = NumberUtils.roundFloat((categoriesIncome.get(i).getTotal() * 100) / totalIncome);
+                categoriesIncome.get(i).setPercent(percent);
+            }
 
-        // Set expenses chart
-        incomeChart.setImageTintList(null);
-        Charts.setCategoriesChart(mContext, categoriesIncome, incomeChart, 100, 10);
+            categoriesIncome.sort(Category.CategoryTotalComparator);
+            initCategoriesIncomeList();
+
+            // Set expenses chart
+            int width = incomeChart.getWidth();
+            incomeChart.setImageTintList(null);
+            Charts.setCategoriesChart(mContext, categoriesIncome, incomeChart, width, 12);
+        });
     }
 
     private void initCategoriesIncomeList() {

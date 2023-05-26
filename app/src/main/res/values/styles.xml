@@ -34,10 +34,10 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/bg_card</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingStart">@dimen/card_padding</item>
+        <item name="android:paddingTop">@dimen/card_padding</item>
+        <item name="android:paddingEnd">@dimen/card_padding</item>
+        <item name="android:paddingBottom">@dimen/card_padding</item>
     </style>
 
     <style name="CardContainerClickable" parent="CardContainer">
@@ -59,19 +59,31 @@
         <item name="android:rotation">180</item>
         <item name="indicatorColor">@color/expense</item>
         <item name="indicatorInset">0dp</item>
-        <item name="indicatorSize">120dp</item>
+        <item name="indicatorSize">@dimen/progress_indicator</item>
         <item name="trackColor">@color/colorSecondaryContainer</item>
-        <item name="trackCornerRadius">5dp</item>
-        <item name="trackThickness">10dp</item>
+        <item name="trackCornerRadius">@dimen/progress_corners</item>
+        <item name="trackThickness">@dimen/progress_track</item>
     </style>
 
     <style name="ProgressPercentageImpact" parent="SecondaryText">
         <item name="android:fontFamily">@font/overpass_regular</item>
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">@dimen/progress_text_size</item>
     </style>
 
     <!-- ==========================================================
-                                IMAGES
+                               LISTS
+    ============================================================ -->
+
+    <style name="CategoriesListSmall" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:isScrollContainer">false</item>
+        <item name="android:nestedScrollingEnabled">false</item>
+    </style>
+
+    <!-- ==========================================================
+                              IMAGES
     ============================================================ -->
 
     <style name="SmallIcon" parent="AppTheme">
@@ -83,6 +95,22 @@
         <item name="android:layout_width">28dp</item>
         <item name="android:layout_height">28dp</item>
         <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <style name="IconMediumSecondary" parent="IconMedium">
+        <item name="tint">@color/medium_emphasis_text</item>
+    </style>
+
+    <style name="PieChartSmall" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginTop">@dimen/home_pie_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/home_pie_margin</item>
+        <item name="android:layout_marginEnd">@dimen/home_pie_margin</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="tint">@color/colorSecondaryContainer</item>
+        <item name="layout_constraintDimensionRatio">w,1:1</item>
+        <item name="srcCompat">@drawable/ic_app_donut_large</item>
     </style>
 
     <!-- ==========================================================
@@ -149,7 +177,7 @@
     <style name="NumberImpact" parent="MainText">
         <item name="android:layout_width">0dp</item>
         <item name="android:fontFamily">@font/overpass_semi_bold</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">@dimen/number_impact</item>
     </style>
 
     <style name="NumberRegular" parent="MainText">

@@ -26,7 +26,7 @@ public class Charts {
             Context context,
             ArrayList<Category> categories,
             ImageView imageView,
-            int size,
+            int chartSize,
             int indicator) {
 
         ExecutorService canvasService = Executors.newSingleThreadExecutor();
@@ -35,7 +35,6 @@ public class Charts {
 
             // Get screen density to set the canvas size
             int density = (int) context.getResources().getDisplayMetrics().density;
-            int chartSize = size * density;
             int indicatorSize = indicator * density;
             int indicatorBoundaries = chartSize - indicatorSize;
 
@@ -102,14 +101,6 @@ public class Charts {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setTextSize(textSize);
 
-            // Month space vars
-            int start = 0;
-            int monthWidth = (chartWidth / 16);
-            int monthSpace =  (chartWidth - (monthWidth * 12)) / 11;
-            int nextStart = monthWidth + monthSpace;
-
-            // Month bars vars
-
             /*
                 highest bar = 100% = chartHeight
                 1% value = highest bar / 100
@@ -120,8 +111,15 @@ public class Charts {
                 another bar = 500
                 500 / 10 = 50 (incomeBarPercent)
                 height = 50% * chartHeight
-             */
+            */
 
+            // Month space vars
+            int start = density; // (+ 1dp);
+            int monthWidth = (chartWidth / 16);
+            int monthGap =  (chartWidth - (monthWidth * 12)) / 11;
+            int nextStart = monthWidth + monthGap;
+
+            // Month bars vars
             float barPercentValue = NumberUtils.roundFloat(highestBar / 100);
 
             for(int i = 0; i < monthList.size(); i++) {
@@ -130,7 +128,7 @@ public class Charts {
                 paint.setColor(context.getColor(R.color.high_emphasis_text));
                 canvas.drawText(monthName, start, chartHeight - textMarginBottom, paint);
 
-                int barGap = (monthWidth / 2);
+                int barWidth = (monthWidth / 2);
 
                 // draw income bar
                 float income = monthList.get(i).getIncome();
@@ -138,7 +136,7 @@ public class Charts {
                 float incomeHeight = NumberUtils.roundFloat((incomeBarPercent/100) * chartHeight);
                 float incomeBarStart = start + barPadding;
                 float incomeBarTop = chartHeight - incomeHeight;
-                int incomeBarEnd = start + barGap;
+                int incomeBarEnd = start + barWidth;
                 int incomeBarBottom = chartHeight - barMarginBottom;
                 paint.setColor(context.getColor(R.color.income_chart));
                 canvas.drawRect(incomeBarStart, incomeBarTop, incomeBarEnd, incomeBarBottom, paint);

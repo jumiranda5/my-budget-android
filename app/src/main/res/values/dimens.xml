@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Text -->
+    <dimen name="number_impact">30sp</dimen>
+
+    <!-- Containers -->
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="card_corner">6dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_padding_sm">14dp</dimen>
+
+    <!-- Progress -->
+    <dimen name="progress_text_size">26sp</dimen>
+    <dimen name="progress_indicator">104dp</dimen>
+    <dimen name="progress_track">8dp</dimen>
+    <dimen name="progress_corners">4dp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_inner_margin">14dp</dimen>
+    <dimen name="home_progress_margin_top">16dp</dimen>
+    <dimen name="home_progress_margin_start">8dp</dimen>
+    <dimen name="home_progress_margin_bottom">0dp</dimen>
+    <dimen name="home_pie_margin">16dp</dimen>
+    <dimen name="home_pie_margin_top">0dp</dimen>
+    <dimen name="year_chart_height">108dp</dimen>
+
 
 </resources>

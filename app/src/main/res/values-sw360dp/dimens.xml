@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text -->
+    <dimen name="number_impact">32sp</dimen>
+
+    <!-- Progress -->
+    <dimen name="progress_text_size">28sp</dimen>
+    <dimen name="progress_indicator">120dp</dimen>
+    <dimen name="progress_track">10dp</dimen>
+    <dimen name="progress_corners">5dp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_inner_margin">16dp</dimen>
+    <dimen name="home_progress_margin_top">24dp</dimen>
+    <dimen name="home_progress_margin_start">8dp</dimen>
+    <dimen name="home_progress_margin_bottom">2dp</dimen>
+    <dimen name="home_pie_margin">20dp</dimen>
+    <dimen name="home_pie_margin_top">4dp</dimen>
+    <dimen name="year_chart_height">120dp</dimen>
+
+
+</resources>

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
-    android:padding="4dp"
     android:clipToPadding="false"
     android:layout_marginTop="@dimen/toolbar_height"
     tools:context=".HomeFragment">
@@ -19,7 +18,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_month"
             style="@style/CardContainer"
-            android:layout_margin="16dp"
+            android:paddingBottom="@dimen/card_padding_sm"
+            android:layout_margin="@dimen/home_inner_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -42,9 +42,9 @@
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/home_month_progress"
                 style="@style/HomeExpensesProgress"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginTop="@dimen/home_progress_margin_top"
+                android:layout_marginBottom="@dimen/home_progress_margin_start"
+                android:layout_marginStart="@dimen/home_progress_margin_bottom"
                 android:contentDescription="@string/desc_balance_progress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_income"
             style="@style/CardContainerClickable"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/home_inner_margin"
             app:layout_constraintEnd_toStartOf="@+id/home_card_expenses"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/home_card_month"
@@ -120,8 +120,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_expenses"
             style="@style/CardContainerClickable"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            android:layout_marginStart="@dimen/home_inner_margin"
             app:layout_constraintEnd_toEndOf="@+id/home_card_month"
             app:layout_constraintStart_toEndOf="@+id/home_card_income"
             app:layout_constraintTop_toBottomOf="@+id/home_card_month">
@@ -159,7 +159,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_savings"
             style="@style/CardContainerClickable"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/home_inner_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_card_expenses">
@@ -183,7 +183,7 @@
 
             <ImageView
                 android:id="@+id/home_savings_icon"
-                style="@style/IconMedium"
+                style="@style/IconMediumSecondary"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_app_savings"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -195,7 +195,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_cash"
             style="@style/CardContainerClickable"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/home_inner_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_card_savings">
@@ -219,7 +219,7 @@
 
             <ImageView
                 android:id="@+id/home_cash_icon"
-                style="@style/IconMedium"
+                style="@style/IconMediumSecondary"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_app_cash"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -231,7 +231,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_checking"
             style="@style/CardContainerClickable"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/home_inner_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_card_cash">
@@ -255,7 +255,7 @@
 
             <ImageView
                 android:id="@+id/home_checking_icon"
-                style="@style/IconMedium"
+                style="@style/IconMediumSecondary"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_app_account_balance"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -267,8 +267,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_income_categories"
             style="@style/CardContainerClickable"
-            android:layout_marginTop="16dp"
-            android:paddingBottom="8dp"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            android:paddingBottom="12dp"
             app:layout_constraintEnd_toStartOf="@+id/home_card_expenses_categories"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/home_card_checking"
@@ -276,27 +276,15 @@
 
             <ImageView
                 android:id="@+id/home_categories_in"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:scaleType="fitXY"
+                style="@style/PieChartSmall"
                 android:contentDescription="@string/desc_income_categories_chart"
-                app:tint="@color/colorSecondaryContainer"
-                app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_donut_large" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_income_categories_list"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_marginTop="8dp"
-                android:isScrollContainer="false"
-                android:nestedScrollingEnabled="false"
+                style="@style/CategoriesListSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_categories_in"
@@ -308,36 +296,24 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_expenses_categories"
             style="@style/CardContainerClickable"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:paddingBottom="8dp"
+            android:layout_marginStart="@dimen/home_inner_margin"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            android:paddingBottom="12dp"
             app:layout_constraintEnd_toEndOf="@+id/home_card_checking"
             app:layout_constraintStart_toEndOf="@+id/home_card_income_categories"
             app:layout_constraintTop_toBottomOf="@+id/home_card_checking">
 
             <ImageView
                 android:id="@+id/home_categories_out"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:scaleType="fitXY"
+                style="@style/PieChartSmall"
                 android:contentDescription="@string/desc_expenses_categories_chart"
-                app:tint="@color/colorSecondaryContainer"
-                app:layout_constraintDimensionRatio="w,1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_donut_large" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_expenses_categories_list"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_marginTop="8dp"
-                android:isScrollContainer="false"
-                android:nestedScrollingEnabled="false"
+                style="@style/CategoriesListSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/home_categories_out"
@@ -349,7 +325,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_year"
             style="@style/CardContainerClickable"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/home_inner_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -374,7 +350,7 @@
             <ImageView
                 android:id="@+id/home_year_chart"
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="@dimen/year_chart_height"
                 android:layout_marginTop="24dp"
                 android:contentDescription="@string/desc_year_chart"
                 android:src="@drawable/ic_bar_chart"
