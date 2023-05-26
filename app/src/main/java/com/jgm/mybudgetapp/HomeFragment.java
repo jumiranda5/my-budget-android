@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,9 @@ import android.widget.ImageView;
 import com.jgm.mybudgetapp.adapters.HomeCategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentHomeBinding;
 import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.MonthTotal;
 import com.jgm.mybudgetapp.utils.Charts;
+import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.ArrayList;
@@ -84,11 +87,12 @@ public class HomeFragment extends Fragment {
         initNavigation();
         setDummyExpensesList();
         setDummyIncomeList();
+        setDummyYear();
 
     }
 
     /* ===============================================================================
-                                           NAVIGATION
+                                        NAVIGATION
      =============================================================================== */
 
     private void initNavigation() {
@@ -193,6 +197,48 @@ public class HomeFragment extends Fragment {
         expensesCategoryListView.setHasFixedSize(true);
         HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
         expensesCategoryListView.setAdapter(adapter);
+    }
+
+
+    /* ===============================================================================
+                                          YEAR
+     =============================================================================== */
+
+    private void setDummyYear() {
+
+        yearChart.post(() -> {
+
+            ArrayList<MonthTotal> year = new ArrayList<>();
+            float[] expenses = {4000f, 6200f, 4900f, 5000f, 6500f, 5100f, 4600f, 4800f, 5500f, 5600f, 4500f, 5000f};
+            float[] income = {5000f, 5200f, 5100f, 6000f, 7000f, 4900f, 5000f, 5300f, 5200f, 5000f, 5100f, 5200f};
+
+            int month = 0;
+            float higherBar = 0f;
+            while (month < 12) {
+                String[] monthName = MyDateUtils.getMonthName(mContext, month, 2023);
+                float monthExpenses = NumberUtils.roundFloat(expenses[month]);
+                float monthIncome = NumberUtils.roundFloat(income[month]);
+
+                MonthTotal monthTotal = new MonthTotal(
+                        2023, month,
+                        monthName[0],
+                        monthName[1],
+                        monthExpenses,
+                        monthIncome);
+
+                year.add(monthTotal);
+
+                if (monthExpenses > higherBar) higherBar = monthExpenses;
+                if (monthIncome > higherBar) higherBar = monthIncome;
+
+                month++;
+            }
+
+            int width = yearChart.getWidth();
+            int height = yearChart.getHeight();
+            yearChart.setImageTintList(null);
+            Charts.setYearTotalChart(mContext, yearChart, year, higherBar, width, height);
+        });
     }
 
 }

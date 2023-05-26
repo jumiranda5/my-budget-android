@@ -39,8 +39,12 @@
 
     <color name="expense">#FF3F8F</color>
     <color name="expense_pressed">#BC1616</color>
+    <color name="expense_chart">#CCFF3F8F</color>
+
     <color name="income">#2CF0A9</color>
     <color name="income_pressed">#095F40</color>
+    <color name="income_chart">#CC2CF0A9</color>
+
     <color name="savings">#9A89FF</color>
     <color name="savings_pressed">#5A0C97</color>
 

@@ -7,10 +7,12 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.MonthTotal;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -73,6 +75,93 @@ public class Charts {
                 canvasService.shutdown();
             });
         });
+    }
+
+    public static void setYearTotalChart(Context context, ImageView imageView,
+                                         ArrayList<MonthTotal> monthList, float highestBar,
+                                         int chartWidth, int chartHeight) {
+
+        ExecutorService yearCanvasService = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        yearCanvasService.execute(() -> {
+
+            // Get screen density to set the canvas size
+            int density = (int) context.getResources().getDisplayMetrics().density;
+            int textSize = 12 * density;
+            int textMarginBottom = 4 * density;
+            int barMarginBottom = 20 * density;
+            int barPadding = 2 * density;
+
+            // Create year labels with canvas
+            Bitmap bitmap = Bitmap.createBitmap(chartWidth, chartHeight, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+
+            // Init paint
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            paint.setTextSize(textSize);
+
+            // Month space vars
+            int start = 0;
+            int monthWidth = (chartWidth / 16);
+            int monthSpace =  (chartWidth - (monthWidth * 12)) / 11;
+            int nextStart = monthWidth + monthSpace;
+
+            // Month bars vars
+
+            /*
+                highest bar = 100% = chartHeight
+                1% value = highest bar / 100
+
+                ex:
+                highest bar = 1000
+                1% = 1000/100 = 10 (barPercentValue)
+                another bar = 500
+                500 / 10 = 50 (incomeBarPercent)
+                height = 50% * chartHeight
+             */
+
+            float barPercentValue = NumberUtils.roundFloat(highestBar / 100);
+
+            for(int i = 0; i < monthList.size(); i++) {
+                // draw text
+                String monthName = monthList.get(i).getMonthNameSmall();
+                paint.setColor(context.getColor(R.color.high_emphasis_text));
+                canvas.drawText(monthName, start, chartHeight - textMarginBottom, paint);
+
+                int barGap = (monthWidth / 2);
+
+                // draw income bar
+                float income = monthList.get(i).getIncome();
+                float incomeBarPercent = NumberUtils.roundFloat(income / barPercentValue);
+                float incomeHeight = NumberUtils.roundFloat((incomeBarPercent/100) * chartHeight);
+                float incomeBarStart = start + barPadding;
+                float incomeBarTop = chartHeight - incomeHeight;
+                int incomeBarEnd = start + barGap;
+                int incomeBarBottom = chartHeight - barMarginBottom;
+                paint.setColor(context.getColor(R.color.income_chart));
+                canvas.drawRect(incomeBarStart, incomeBarTop, incomeBarEnd, incomeBarBottom, paint);
+
+                // draw expenses bar
+                float expenses = monthList.get(i).getExpenses();
+                float expensesBarPercent = NumberUtils.roundFloat(expenses / barPercentValue);
+                float expensesHeight = NumberUtils.roundFloat((expensesBarPercent/100) * chartHeight);
+                float expensesBarEnd = (start + monthWidth) - barPadding;
+                float expensesBarTop = chartHeight - expensesHeight;
+                paint.setColor(context.getColor(R.color.expense_chart));
+                canvas.drawRect(incomeBarEnd, expensesBarTop, expensesBarEnd, chartHeight-barMarginBottom, paint);
+
+                // Increase start
+                start += nextStart;
+            }
+
+            handler.post(() -> {
+                imageView.setImageBitmap(bitmap);
+                yearCanvasService.shutdown();
+            });
+        });
+
     }
 
 }
