@@ -12,11 +12,15 @@
     <dimen name="progress_track">10dp</dimen>
     <dimen name="progress_corners">5dp</dimen>
 
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">4dp</dimen>
+    <dimen name="year_chart_margin_top">32dp</dimen>
+
     <!-- Home -->
     <dimen name="home_inner_margin">16dp</dimen>
     <dimen name="home_progress_margin_top">24dp</dimen>
-    <dimen name="home_progress_margin_start">8dp</dimen>
-    <dimen name="home_progress_margin_bottom">2dp</dimen>
+    <dimen name="home_progress_margin_start">4dp</dimen>
+    <dimen name="home_progress_margin_bottom">12dp</dimen>
     <dimen name="home_pie_margin">20dp</dimen>
     <dimen name="home_pie_margin_top">4dp</dimen>
     <dimen name="home_categories_list_margin">16dp</dimen>

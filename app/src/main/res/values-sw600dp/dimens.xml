@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text -->
+    <dimen name="main_text">18sp</dimen>
+    <dimen name="secondary_text">16sp</dimen>
+    <dimen name="number_impact">34sp</dimen>
+
+    <!-- Icons -->
+    <dimen name="icon_medium">32dp</dimen>
+
+    <!-- Containers -->
+    <dimen name="card_padding">20dp</dimen>
+
+    <!-- Progress -->
+    <dimen name="progress_text_size">32sp</dimen>
+    <dimen name="progress_indicator">140dp</dimen>
+    <dimen name="progress_track">10dp</dimen>
+    <dimen name="progress_corners">5dp</dimen>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">24dp</dimen>
+    <dimen name="year_chart_margin_top">48dp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_inner_margin">18dp</dimen>
+    <dimen name="home_padding">16dp</dimen>
+    <dimen name="home_progress_margin_start">8dp</dimen>
+    <dimen name="home_progress_margin_bottom">12dp</dimen>
+    <dimen name="home_currency_margin">24dp</dimen>
+    <dimen name="home_pie_max">120dp</dimen>
+    <dimen name="home_pie_margin_top">8dp</dimen>
+    <dimen name="home_categories_padding_bottom">20dp</dimen>
+    <dimen name="home_categories_list_margin">24dp</dimen>
+
+</resources>

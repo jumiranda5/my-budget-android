@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     android:clipToPadding="false"
+    android:background="@color/main_background"
     android:layout_marginTop="@dimen/toolbar_height"
     android:padding="@dimen/home_padding"
     tools:context=".HomeFragment">
@@ -44,8 +45,8 @@
                 android:id="@+id/home_month_progress"
                 style="@style/HomeExpensesProgress"
                 android:layout_marginTop="@dimen/home_progress_margin_top"
-                android:layout_marginBottom="@dimen/home_progress_margin_start"
-                android:layout_marginStart="@dimen/home_progress_margin_bottom"
+                android:layout_marginBottom="@dimen/home_progress_margin_bottom"
+                android:layout_marginStart="@dimen/home_progress_margin_start"
                 android:contentDescription="@string/desc_balance_progress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +99,7 @@
             <TextView
                 android:id="@+id/home_income"
                 style="@style/NumberMedium"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/home_currency_margin"
                 android:text="@string/test_income_value"
                 android:textAlignment="textStart"
                 android:textColor="@color/income"
@@ -137,7 +138,7 @@
             <TextView
                 android:id="@+id/home_expenses"
                 style="@style/NumberMedium"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/home_currency_margin"
                 android:text="@string/test_expenses_value"
                 android:textAlignment="textStart"
                 android:textColor="@color/expense"
@@ -160,9 +161,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_savings"
             style="@style/CardContainerClickable"
-            android:layout_margin="@dimen/home_inner_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            app:layout_constraintEnd_toEndOf="@+id/home_card_month"
+            app:layout_constraintStart_toStartOf="@+id/home_card_month"
             app:layout_constraintTop_toBottomOf="@+id/home_card_expenses">
 
             <TextView
@@ -175,12 +176,12 @@
             <TextView
                 android:id="@+id/home_savings"
                 style="@style/NumberMedium"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/home_currency_margin"
                 android:text="@string/test_expenses_value"
                 android:textColor="@color/savings"
-                app:layout_constraintTop_toBottomOf="@id/home_savings_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/home_savings_icon" />
+                app:layout_constraintStart_toEndOf="@+id/home_savings_icon"
+                app:layout_constraintTop_toBottomOf="@id/home_savings_label" />
 
             <ImageView
                 android:id="@+id/home_savings_icon"
@@ -196,9 +197,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_cash"
             style="@style/CardContainerClickable"
-            android:layout_margin="@dimen/home_inner_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            app:layout_constraintEnd_toEndOf="@+id/home_card_month"
+            app:layout_constraintStart_toStartOf="@+id/home_card_month"
             app:layout_constraintTop_toBottomOf="@+id/home_card_savings">
 
             <TextView
@@ -211,12 +212,12 @@
             <TextView
                 android:id="@+id/home_cash"
                 style="@style/NumberMedium"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/home_currency_margin"
                 android:text="@string/test_expenses_value"
                 android:textColor="@color/income"
-                app:layout_constraintTop_toBottomOf="@id/home_cash_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/home_cash_icon" />
+                app:layout_constraintStart_toEndOf="@+id/home_cash_icon"
+                app:layout_constraintTop_toBottomOf="@id/home_cash_label" />
 
             <ImageView
                 android:id="@+id/home_cash_icon"
@@ -224,7 +225,7 @@
                 android:contentDescription="@null"
                 android:src="@drawable/ic_app_cash"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -232,9 +233,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_checking"
             style="@style/CardContainerClickable"
-            android:layout_margin="@dimen/home_inner_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            app:layout_constraintEnd_toEndOf="@+id/home_card_month"
+            app:layout_constraintStart_toStartOf="@+id/home_card_month"
             app:layout_constraintTop_toBottomOf="@+id/home_card_cash">
 
             <TextView
@@ -247,12 +248,12 @@
             <TextView
                 android:id="@+id/home_checking"
                 style="@style/NumberMedium"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/home_currency_margin"
                 android:text="@string/test_expenses_value"
                 android:textColor="@color/income"
-                app:layout_constraintTop_toBottomOf="@id/home_checking_label"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/home_checking_icon" />
+                app:layout_constraintStart_toEndOf="@+id/home_checking_icon"
+                app:layout_constraintTop_toBottomOf="@id/home_checking_label" />
 
             <ImageView
                 android:id="@+id/home_checking_icon"
@@ -269,7 +270,7 @@
             android:id="@+id/home_card_income_categories"
             style="@style/CardContainerClickable"
             android:layout_marginTop="@dimen/home_inner_margin"
-            android:paddingBottom="12dp"
+            android:paddingBottom="@dimen/home_categories_padding_bottom"
             app:layout_constraintEnd_toStartOf="@+id/home_card_expenses_categories"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@+id/home_card_checking"
@@ -299,7 +300,7 @@
             style="@style/CardContainerClickable"
             android:layout_marginStart="@dimen/home_inner_margin"
             android:layout_marginTop="@dimen/home_inner_margin"
-            android:paddingBottom="12dp"
+            android:paddingBottom="@dimen/home_categories_padding_bottom"
             app:layout_constraintEnd_toEndOf="@+id/home_card_checking"
             app:layout_constraintStart_toEndOf="@+id/home_card_income_categories"
             app:layout_constraintTop_toBottomOf="@+id/home_card_checking">
@@ -326,9 +327,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_year"
             style="@style/CardContainerClickable"
-            android:layout_margin="@dimen/home_inner_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/home_inner_margin"
+            android:layout_marginBottom="@dimen/home_inner_margin"
+            app:layout_constraintEnd_toEndOf="@id/home_card_month"
+            app:layout_constraintStart_toStartOf="@id/home_card_month"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_card_expenses_categories">
 
@@ -352,7 +354,9 @@
                 android:id="@+id/home_year_chart"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/year_chart_margin_top"
+                android:layout_marginStart="@dimen/year_chart_margin"
+                android:layout_marginEnd="@dimen/year_chart_margin"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/desc_year_chart"
                 android:scaleType="fitCenter"
