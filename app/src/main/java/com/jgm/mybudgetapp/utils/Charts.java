@@ -26,7 +26,7 @@ public class Charts {
             Context context,
             ArrayList<Category> categories,
             ImageView imageView,
-            int chartSize,
+            int size,
             int indicator) {
 
         ExecutorService canvasService = Executors.newSingleThreadExecutor();
@@ -35,6 +35,7 @@ public class Charts {
 
             // Get screen density to set the canvas size
             int density = (int) context.getResources().getDisplayMetrics().density;
+            int chartSize = size * density;
             int indicatorSize = indicator * density;
             int indicatorBoundaries = chartSize - indicatorSize;
 
@@ -78,7 +79,7 @@ public class Charts {
 
     public static void setYearTotalChart(Context context, ImageView imageView,
                                          ArrayList<MonthTotal> monthList, float highestBar,
-                                         int chartWidth, int chartHeight) {
+                                         int width, int height) {
 
         ExecutorService yearCanvasService = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
@@ -86,6 +87,8 @@ public class Charts {
 
             // Get screen density to set the canvas size
             int density = (int) context.getResources().getDisplayMetrics().density;
+            int chartWidth = width * density;
+            int chartHeight = height * density;
             int textSize = 12 * density;
             int textMarginBottom = 4 * density;
             int barMarginBottom = 20 * density;

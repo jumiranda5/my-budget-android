@@ -104,10 +104,11 @@
     <style name="PieChartSmall" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
+        <item name="layout_constraintWidth_max">90dp</item>
         <item name="android:layout_marginTop">@dimen/home_pie_margin_top</item>
         <item name="android:layout_marginStart">@dimen/home_pie_margin</item>
         <item name="android:layout_marginEnd">@dimen/home_pie_margin</item>
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:scaleType">fitCenter</item>
         <item name="tint">@color/colorSecondaryContainer</item>
         <item name="layout_constraintDimensionRatio">w,1:1</item>
         <item name="srcCompat">@drawable/ic_app_donut_large</item>
@@ -121,7 +122,7 @@
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:padding">10dp</item>
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:scaleType">fitCenter</item>
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="backgroundTint">@null</item>
@@ -133,7 +134,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="layout_constraintWidth_min">112dp</item>
         <item name="layout_constraintWidth_max">160dp</item>
-        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/red_hat_text_medium</item>
         <item name="android:thumb">@drawable/switch_thumb</item>

@@ -149,9 +149,8 @@ public class HomeFragment extends Fragment {
             initCategoriesExpensesList();
 
             // Set expenses chart
-            int width = expensesChart.getWidth();
             expensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, categoriesExpenses, expensesChart, width, 12);
+            Charts.setCategoriesChart(mContext, categoriesExpenses, expensesChart, 100, 10);
         });
 
     }
@@ -182,9 +181,8 @@ public class HomeFragment extends Fragment {
             initCategoriesIncomeList();
 
             // Set expenses chart
-            int width = incomeChart.getWidth();
             incomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, categoriesIncome, incomeChart, width, 12);
+            Charts.setCategoriesChart(mContext, categoriesIncome, incomeChart, 100, 10);
         });
     }
 
@@ -245,10 +243,8 @@ public class HomeFragment extends Fragment {
                 month++;
             }
 
-            int width = yearChart.getWidth();
-            int height = yearChart.getHeight();
             yearChart.setImageTintList(null);
-            Charts.setYearTotalChart(mContext, yearChart, year, higherBar, width, height);
+            Charts.setYearTotalChart(mContext, yearChart, year, higherBar, 300, 100);
         });
     }
 

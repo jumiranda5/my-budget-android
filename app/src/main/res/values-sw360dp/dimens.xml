@@ -4,6 +4,8 @@
     <!-- Text -->
     <dimen name="number_impact">32sp</dimen>
 
+    <dimen name="card_padding_sm">16dp</dimen>
+
     <!-- Progress -->
     <dimen name="progress_text_size">28sp</dimen>
     <dimen name="progress_indicator">120dp</dimen>
@@ -17,7 +19,8 @@
     <dimen name="home_progress_margin_bottom">2dp</dimen>
     <dimen name="home_pie_margin">20dp</dimen>
     <dimen name="home_pie_margin_top">4dp</dimen>
-    <dimen name="year_chart_height">120dp</dimen>
+    <dimen name="home_categories_list_margin">16dp</dimen>
+    <dimen name="year_chart_height">128dp</dimen>
 
 
 </resources>

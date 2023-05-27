@@ -7,6 +7,7 @@
     android:fillViewport="true"
     android:clipToPadding="false"
     android:layout_marginTop="@dimen/toolbar_height"
+    android:padding="@dimen/home_padding"
     tools:context=".HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -354,6 +355,7 @@
                 android:layout_marginTop="24dp"
                 android:contentDescription="@string/desc_year_chart"
                 android:src="@drawable/ic_bar_chart"
+                android:scaleType="fitEnd"
                 app:tint="@color/colorSecondaryContainer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
