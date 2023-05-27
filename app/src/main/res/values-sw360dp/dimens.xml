@@ -20,7 +20,6 @@
     <dimen name="home_pie_margin">20dp</dimen>
     <dimen name="home_pie_margin_top">4dp</dimen>
     <dimen name="home_categories_list_margin">16dp</dimen>
-    <dimen name="year_chart_height">128dp</dimen>
 
 
 </resources>
