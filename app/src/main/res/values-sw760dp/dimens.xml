@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">56dp</dimen>
+    <dimen name="year_chart_margin_top">64dp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_padding">24dp</dimen>
+    <dimen name="home_pie_max">160dp</dimen>
+
+</resources>
