@@ -9,16 +9,18 @@
     <!-- Icons -->
     <dimen name="icon_medium">32dp</dimen>
 
-    <!-- Main Activity -->
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">64dp</dimen>
     <dimen name="toolbar_month_text">22sp</dimen>
     <dimen name="toolbar_month_width">140dp</dimen>
-    <dimen name="main_fab_size">50dp</dimen>
+
+    <!-- Main Activity -->
     <dimen name="bottomBar_height">64dp</dimen>
     <dimen name="bottomBar_width">460dp</dimen>
     <dimen name="bottomBar_icon_size">28dp</dimen>
+    <dimen name="main_fab_size">50dp</dimen>
 
-    <!-- Containers -->
-    <dimen name="toolbar_height">64dp</dimen>
+    <!-- Cards -->
     <dimen name="card_padding">20dp</dimen>
 
     <!-- Progress -->

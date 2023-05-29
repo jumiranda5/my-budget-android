@@ -9,7 +9,7 @@
     <dimen name="toolbar_inset_start">72dp</dimen>
     <dimen name="toolbar_inset_end">64dp</dimen>
 
-    <!-- Containers -->
+    <!-- Cards -->
     <dimen name="card_padding">24dp</dimen>
 
     <!-- Progress -->

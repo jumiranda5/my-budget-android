@@ -6,15 +6,17 @@
     <dimen name="secondary_text">14sp</dimen>
     <dimen name="number_impact">30sp</dimen>
 
-    <!-- Main Activity -->
-    <dimen name="toolbar_month_width">200dp</dimen>
-    <dimen name="toolbar_inset_start">8dp</dimen>
-    <dimen name="bottomBar_width">480dp</dimen>
-
     <!-- Icons -->
     <dimen name="icon_medium">28dp</dimen>
 
-    <!-- Containers -->
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">8dp</dimen>
+
+    <!-- Bottom Bar -->
+    <dimen name="bottomBar_width">480dp</dimen>
+
+    <!-- Cards -->
     <dimen name="card_padding">16dp</dimen>
 
     <!-- Progress -->

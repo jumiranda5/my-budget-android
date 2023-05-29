@@ -4,10 +4,10 @@
     <!-- Text -->
     <dimen name="number_impact">32sp</dimen>
 
-    <!-- Containers -->
+    <!-- Cards -->
     <dimen name="card_padding_sm">16dp</dimen>
 
-    <!-- Main Activity -->
+    <!-- Toolbar -->
     <dimen name="toolbar_month_text">18sp</dimen>
     <dimen name="toolbar_month_width">120dp</dimen>
 

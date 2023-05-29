@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Main Activity -->
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">80dp</dimen>
     <dimen name="toolbar_month_text">26sp</dimen>
     <dimen name="toolbar_month_width">200dp</dimen>
     <dimen name="toolbar_inset_start">32dp</dimen>
     <dimen name="toolbar_inset_end">24dp</dimen>
-    <dimen name="bottomBar_height">80dp</dimen>
 
-    <!-- Containers -->
-    <dimen name="toolbar_height">80dp</dimen>
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_height">80dp</dimen>
 
     <!-- Progress -->
     <dimen name="progress_text_size">36sp</dimen>
