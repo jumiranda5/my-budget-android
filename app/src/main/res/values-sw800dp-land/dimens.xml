@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Main Activity -->
+    <dimen name="toolbar_month_text">26sp</dimen>
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">32dp</dimen>
+    <dimen name="toolbar_inset_end">24dp</dimen>
+    <dimen name="bottomBar_height">80dp</dimen>
+
     <!-- Containers -->
     <dimen name="toolbar_height">80dp</dimen>
 
@@ -13,7 +20,7 @@
     <dimen name="year_chart_margin_top">32dp</dimen>
 
     <!-- Home -->
-    <dimen name="home_padding">24dp</dimen>
+    <dimen name="home_padding">20dp</dimen>
     <dimen name="home_month_width_land">500dp</dimen>
     <dimen name="home_account_height_land">140dp</dimen>
     <dimen name="home_currency_margin">32dp</dimen>

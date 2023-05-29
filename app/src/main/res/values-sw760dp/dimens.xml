@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Buttons -->
+    <dimen name="toolbar_button">50dp</dimen>
+
+    <!-- Main Activity -->
+    <dimen name="toolbar_month_text">24sp</dimen>
+    <dimen name="toolbar_month_width">180dp</dimen>
+    <dimen name="toolbar_inset_start">28dp</dimen>
+    <dimen name="toolbar_inset_end">16dp</dimen>
+    <dimen name="bottomBar_height">72dp</dimen>
+    <dimen name="bottomBar_width">500dp</dimen>
+    <dimen name="bottomBar_icon_size">30dp</dimen>
+    <dimen name="main_fab_size">52dp</dimen>
+
     <!-- Containers -->
     <dimen name="toolbar_height">72dp</dimen>
 

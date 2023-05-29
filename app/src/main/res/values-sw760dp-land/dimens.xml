@@ -6,6 +6,19 @@
     <dimen name="secondary_text">16sp</dimen>
     <dimen name="number_impact">34sp</dimen>
 
+    <!-- Buttons -->
+    <dimen name="toolbar_button">50dp</dimen>
+
+    <!-- Main Activity -->
+    <dimen name="toolbar_month_text">24sp</dimen>
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">16dp</dimen>
+    <dimen name="toolbar_inset_end">8dp</dimen>
+    <dimen name="bottomBar_height">72dp</dimen>
+    <dimen name="bottomBar_width">560dp</dimen>
+    <dimen name="bottomBar_icon_size">30dp</dimen>
+    <dimen name="main_fab_size">52dp</dimen>
+
     <!-- Containers -->
     <dimen name="card_padding">18dp</dimen>
 

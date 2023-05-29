@@ -13,6 +13,19 @@
     <!-- Icons -->
     <dimen name="icon_medium">28dp</dimen>
 
+    <!-- Buttons -->
+    <dimen name="toolbar_button">48dp</dimen>
+
+    <!-- Main Activity -->
+    <dimen name="toolbar_month_text">18sp</dimen>
+    <dimen name="toolbar_month_width">100dp</dimen>
+    <dimen name="toolbar_inset_start">0dp</dimen>
+    <dimen name="toolbar_inset_end">0dp</dimen>
+    <dimen name="main_fab_size">48dp</dimen>
+    <dimen name="bottomBar_height">60dp</dimen>
+    <dimen name="bottomBar_width">0dp</dimen>
+    <dimen name="bottomBar_icon_size">26dp</dimen>
+
     <!-- Containers -->
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="card_corner">6dp</dimen>

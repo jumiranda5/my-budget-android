@@ -5,6 +5,10 @@
     <item name="guideline_home_start" format="float" type="dimen">0.06</item>
     <item name="guideline_home_end" format="float" type="dimen">0.94</item>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_inset_start">72dp</dimen>
+    <dimen name="toolbar_inset_end">64dp</dimen>
+
     <!-- Containers -->
     <dimen name="card_padding">24dp</dimen>
 

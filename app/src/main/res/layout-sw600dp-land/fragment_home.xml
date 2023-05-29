@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/toolbar_height"
-    android:layout_marginBottom="@dimen/toolbar_height"
+    android:layout_marginBottom="@dimen/bottomBar_height"
     android:fillViewport="true"
     android:clipToPadding="false"
     android:padding="@dimen/home_padding"

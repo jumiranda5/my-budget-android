@@ -10,17 +10,18 @@
         <item name="android:layout_height">@dimen/toolbar_height</item>
         <item name="android:elevation">0dp</item>
         <item name="android:background">@drawable/bg_toolbar</item>
-        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStart">@dimen/toolbar_inset_start</item>
+        <item name="contentInsetEnd">@dimen/toolbar_inset_end</item>
     </style>
 
     <style name="BottomNav" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">@dimen/bottomBar_width</item>
+        <item name="android:layout_height">@dimen/bottomBar_height</item>
         <item name="android:background">@color/bg_01dp</item>
         <item name="elevation">0dp</item>
         <item name="itemBackground">@drawable/bg_bottom_bar</item>
 <!--        <item name="itemActiveIndicatorStyle"></item>-->
-        <item name="itemIconSize">26dp</item>
+        <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
         <item name="itemIconTint">@color/bottom_nav_icon_color</item>
         <item name="itemTextColor">@color/bottom_nav_icon_color</item>
         <item name="labelVisibilityMode">unlabeled</item>
@@ -141,13 +142,18 @@
         <item name="tint">@color/high_emphasis_text</item>
     </style>
 
+    <style name="ToolbarButton" parent="IconButton">
+        <item name="android:layout_width">@dimen/toolbar_button</item>
+        <item name="android:layout_height">@dimen/toolbar_button</item>
+    </style>
+
     <style name="MySwitchButton" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
         <item name="layout_constraintWidth_min">112dp</item>
         <item name="layout_constraintWidth_max">160dp</item>
         <item name="android:textColor">@color/medium_emphasis_text</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/secondary_text</item>
         <item name="android:fontFamily">@font/red_hat_text_medium</item>
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="track">@drawable/switch_track</item>
@@ -183,7 +189,7 @@
     </style>
 
     <style name="ToolbarMonth" parent="MainTextEllipse">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/toolbar_month_text</item>
         <item name="fontFamily">@font/red_hat_text_semi_bold</item>
     </style>
 

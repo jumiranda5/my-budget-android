@@ -25,9 +25,9 @@
             <TextView
                 android:id="@+id/toolbar_month"
                 style="@style/ToolbarMonth"
-                android:layout_width="120dp"
+                android:layout_width="@dimen/toolbar_month_width"
                 android:fontFamily="@font/red_hat_text_semi_bold"
-                android:text="Dezembro"
+                android:text="@string/test_month"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
                 style="@style/MainText"
                 android:fontFamily="@font/red_hat_text_semi_bold"
                 android:layout_marginStart="16dp"
-                android:text="2023"
+                android:text="@string/test_year"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +48,7 @@
             <ImageButton
                 android:id="@+id/toolbar_prev_month_button"
                 style="@style/IconButton"
-                android:contentDescription="Previous month"
+                android:contentDescription="@string/desc_previous_month"
                 android:padding="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/toolbar_month"
@@ -59,7 +59,7 @@
             <ImageButton
                 android:id="@+id/toolbar_next_month_button"
                 style="@style/IconButton"
-                android:contentDescription="Next month"
+                android:contentDescription="@string/desc_next_month"
                 android:padding="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/toolbar_month"
@@ -69,7 +69,7 @@
 
             <ImageButton
                 android:id="@+id/settings_button"
-                style="@style/IconButton"
+                style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,27 +90,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        style="@style/BottomNav"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_bottom_nav" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:fabCustomSize="48dp"
-        app:elevation="0dp"
-        android:contentDescription="@string/action_add_transaction"
-        android:src="@drawable/ic_app_add"
-        app:backgroundTint="@color/high_emphasis_text"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
-        app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
-        app:layout_constraintTop_toTopOf="@+id/bottomNavigationView"
-        app:tint="@color/bg_00dp" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            style="@style/BottomNav"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/menu_bottom_nav" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="@dimen/main_fab_size"
+            android:layout_height="@dimen/main_fab_size"
+            android:contentDescription="@string/action_add_transaction"
+            android:src="@drawable/ic_app_add"
+            app:backgroundTint="@color/expense"
+            app:elevation="0dp"
+            app:fabCustomSize="@dimen/main_fab_size"
+            app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
+            app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
+            app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
+            app:layout_constraintTop_toTopOf="@+id/bottomNavigationView"
+            app:tint="@color/bg_00dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

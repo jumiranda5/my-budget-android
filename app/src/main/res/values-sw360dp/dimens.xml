@@ -4,7 +4,12 @@
     <!-- Text -->
     <dimen name="number_impact">32sp</dimen>
 
+    <!-- Containers -->
     <dimen name="card_padding_sm">16dp</dimen>
+
+    <!-- Main Activity -->
+    <dimen name="toolbar_month_text">18sp</dimen>
+    <dimen name="toolbar_month_width">120dp</dimen>
 
     <!-- Progress -->
     <dimen name="progress_text_size">28sp</dimen>
