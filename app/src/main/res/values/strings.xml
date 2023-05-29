@@ -22,6 +22,8 @@
     <string name="desc_income_categories_chart">Income categories chart</string>
     <string name="desc_expenses_categories_chart">Expenses categories chart</string>
     <string name="desc_year_chart">Year balance chart</string>
+    <string name="desc_previous_month">Previous month</string>
+    <string name="desc_next_month">Next month</string>
 
     <!-- Labels -->
     <string name="label_month_balance">Month Balance</string>
@@ -41,7 +43,9 @@
     <string name="test_year">2023</string>
     <string name="test_category_value">Category</string>
     <string name="test_month">Dezembro</string>
-    <string name="desc_previous_month">Previous month</string>
-    <string name="desc_next_month">Next month</string>
+    <string name="test_currency_value">3,000.00</string>
+    <string name="test_currency_symbol">$</string>
+    <string name="title_credit_card">Credit Card</string>
+    <string name="test_billing_day_1">Billing day: 1</string>
 
 </resources>

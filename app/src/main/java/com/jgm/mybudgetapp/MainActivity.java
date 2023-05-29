@@ -229,10 +229,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case accountsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
                 fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add_account));
+                fab.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.main_text));
                 break;
             case cardsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_cards);
                 fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add_card));
+                fab.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.main_text));
                 break;
             case homeTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_home);

@@ -47,7 +47,8 @@
     <color name="savings">#720EC1</color>
     <color name="savings_pressed">#5A0C97</color>
 
-    <!-- Inputs -->
+    <!-- Items -->
+    <color name="item_pressed">#F3FFF9</color>
     <color name="item_focused">#F3FFF9</color>
     <color name="item_stroke_focused">#8BEDBE</color>
 

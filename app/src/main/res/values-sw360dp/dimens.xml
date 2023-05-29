@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Guidelines -->
+    <item name="guideline_start" format="float" type="dimen">0.06</item>
+    <item name="guideline_end" format="float" type="dimen">0.94</item>
+
     <!-- Text -->
     <dimen name="number_impact">32sp</dimen>
 
@@ -30,5 +34,14 @@
     <dimen name="home_pie_margin_top">4dp</dimen>
     <dimen name="home_categories_list_margin">16dp</dimen>
 
+    <!-- Cards and Accounts (Main page) -->
+    <dimen name="main_title">18sp</dimen>
+    <dimen name="main_title_space">64dp</dimen>
+
+    <!-- Items Cards and Accounts (Main page) -->
+    <dimen name="main_item_icon_margin">16dp</dimen>
+
+    <!-- Item Card -->
+    <dimen name="item_card_height">70dp</dimen>
 
 </resources>

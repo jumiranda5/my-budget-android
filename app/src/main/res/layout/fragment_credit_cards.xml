@@ -1,27 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:clipToPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CreditCardsFragment">
 
-    <ImageButton
-        android:id="@+id/cards_back_button"
-        style="@style/IconButton"
-        android:contentDescription="@string/nav_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_arrow_back" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/card_details_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Card details"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cards_back_button" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/cards_toolbar"
+            style="@style/MainToolbar"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_toolbar_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/cards_back_button"
+                    style="@style/ToolbarButton"
+                    android:contentDescription="@string/nav_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_app_arrow_back" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cards_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_start" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cards_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+        <TextView
+            android:id="@+id/credit_cards_title"
+            style="@style/MainTitle"
+            android:layout_marginTop="@dimen/main_title_space"
+            android:text="@string/nav_credit_cards"
+            app:layout_constraintEnd_toEndOf="@id/guideline_cards_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_cards_start"
+            app:layout_constraintTop_toBottomOf="@id/cards_toolbar" />
+
+        <TextView
+            android:id="@+id/credit_cards_total"
+            style="@style/NumberImpact"
+            android:text="@string/test_expenses_value"
+            android:textColor="@color/expense"
+            app:layout_constraintEnd_toEndOf="@+id/credit_cards_title"
+            app:layout_constraintStart_toStartOf="@+id/credit_cards_title"
+            app:layout_constraintTop_toBottomOf="@id/credit_cards_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cards_list"
+            style="@style/MainList"
+            android:layout_marginTop="@dimen/main_title_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/credit_cards_total"
+            tools:listitem="@layout/item_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

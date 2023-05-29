@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_card_height"
+    android:id="@+id/item_card_container"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@drawable/bg_list_item"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_card_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/guideline_start" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_card_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+    <ImageView
+        android:id="@+id/item_card_icon"
+        style="@style/Icon"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_card_start"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_credit_card" />
+
+    <TextView
+        android:id="@+id/item_card_name"
+        style="@style/MainText"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/main_item_icon_margin"
+        android:text="@string/title_credit_card"
+        app:layout_constraintBottom_toTopOf="@+id/item_card_billing_day"
+        app:layout_constraintEnd_toStartOf="@+id/item_card_total"
+        app:layout_constraintStart_toEndOf="@+id/item_card_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/item_card_billing_day"
+        style="@style/SecondaryText"
+        android:layout_width="0dp"
+        android:text="@string/test_billing_day_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_card_total"
+        app:layout_constraintStart_toStartOf="@+id/item_card_name"
+        app:layout_constraintTop_toBottomOf="@+id/item_card_name" />
+
+    <TextView
+        android:id="@+id/item_card_total"
+        style="@style/NumberCurrency"
+        android:text="@string/test_currency_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_card_end"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_card_currency_symbol"
+        style="@style/NumberMedium"
+        android:text="@string/test_currency_symbol"
+        android:textSize="@dimen/secondary_text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_card_total"
+        app:layout_constraintStart_toStartOf="@id/item_card_total" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
