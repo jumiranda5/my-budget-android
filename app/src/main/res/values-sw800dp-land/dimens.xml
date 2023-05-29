@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Containers -->
+    <dimen name="toolbar_height">80dp</dimen>
+
+    <!-- Progress -->
+    <dimen name="progress_text_size">36sp</dimen>
+    <dimen name="progress_indicator">180dp</dimen>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">32dp</dimen>
+    <dimen name="year_chart_margin_top">32dp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_padding">24dp</dimen>
+    <dimen name="home_month_width_land">500dp</dimen>
+    <dimen name="home_account_height_land">140dp</dimen>
+    <dimen name="home_currency_margin">32dp</dimen>
+    <dimen name="home_categories_width_land">170dp</dimen>
+    <dimen name="home_pie_margin">16dp</dimen>
+    <dimen name="home_pie_margin_top">12dp</dimen>
+
+</resources>

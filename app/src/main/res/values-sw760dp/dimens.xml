@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Containers -->
+    <dimen name="toolbar_height">72dp</dimen>
+
     <!-- Bar chart -->
     <dimen name="year_chart_margin">56dp</dimen>
     <dimen name="year_chart_margin_top">64dp</dimen>
@@ -8,5 +11,9 @@
     <!-- Home -->
     <dimen name="home_padding">24dp</dimen>
     <dimen name="home_pie_max">160dp</dimen>
+    <dimen name="home_categories_width_land">160dp</dimen>
+
+    <!-- Home categories list item -->
+    <dimen name="category_item_height_small">28dp</dimen>
 
 </resources>

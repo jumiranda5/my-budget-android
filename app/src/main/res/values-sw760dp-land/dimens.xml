@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text -->
+    <dimen name="main_text">18sp</dimen>
+    <dimen name="secondary_text">16sp</dimen>
+    <dimen name="number_impact">34sp</dimen>
+
+    <!-- Containers -->
+    <dimen name="card_padding">18dp</dimen>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">16dp</dimen>
+    <dimen name="year_chart_margin_top">24dp</dimen>
+
+    <!-- Home -->
+    <dimen name="home_padding">8dp</dimen>
+    <dimen name="home_inner_margin">18dp</dimen>
+    <dimen name="home_account_height_land">132dp</dimen>
+    <dimen name="home_currency_margin">24dp</dimen>
+    <dimen name="home_progress_margin_start">4dp</dimen>
+    <dimen name="home_progress_margin_bottom">8dp</dimen>
+    <dimen name="home_pie_margin">12dp</dimen>
+    <dimen name="home_pie_margin_top">8dp</dimen>
+    <dimen name="home_categories_width_land">160dp</dimen>
+
+</resources>

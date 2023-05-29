@@ -27,7 +27,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/home_card_savings"
             app:layout_constraintHeight_min="@dimen/home_home_min_height_land"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_home_start"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed">
 
@@ -169,7 +169,7 @@
             android:layout_marginTop="@dimen/home_inner_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/home_card_cash"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_home_start"
             app:layout_constraintTop_toBottomOf="@+id/home_card_month">
 
             <TextView
@@ -321,11 +321,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_card_income_categories"
             style="@style/CardContainerClickable"
-            android:layout_width="152dp"
+            android:layout_width="@dimen/home_categories_width_land"
             android:layout_height="0dp"
             android:paddingBottom="@dimen/home_categories_padding_bottom"
             app:layout_constraintBottom_toTopOf="@+id/home_card_expenses_categories"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_home_end"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -353,10 +353,11 @@
             android:id="@+id/home_card_expenses_categories"
             style="@style/CardContainerClickable"
             android:layout_height="0dp"
+            android:layout_width="@dimen/home_categories_width_land"
             android:layout_marginTop="@dimen/home_inner_margin"
             android:paddingBottom="@dimen/home_categories_padding_bottom"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_home_end"
             app:layout_constraintStart_toStartOf="@+id/home_card_income_categories"
             app:layout_constraintTop_toBottomOf="@+id/home_card_income_categories">
 
@@ -380,5 +381,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_home_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_home_start" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_home_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_home_end" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.core.widget.NestedScrollView>
