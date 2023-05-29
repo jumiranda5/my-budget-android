@@ -10,6 +10,7 @@
     <dimen name="icon_medium">32dp</dimen>
 
     <!-- Containers -->
+    <dimen name="toolbar_height">64dp</dimen>
     <dimen name="card_padding">20dp</dimen>
 
     <!-- Progress -->
@@ -32,5 +33,8 @@
     <dimen name="home_pie_margin_top">8dp</dimen>
     <dimen name="home_categories_padding_bottom">20dp</dimen>
     <dimen name="home_categories_list_margin">24dp</dimen>
+
+    <!-- Home categories list item -->
+    <dimen name="category_item_height_small">28dp</dimen>
 
 </resources>
