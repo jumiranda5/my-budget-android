@@ -50,7 +50,7 @@
                     app:srcCompat="@drawable/ic_app_arrow_back" />
 
                 <TextView
-                    android:id="@+id/card_form_title"
+                    android:id="@+id/account_form_title"
                     style="@style/ToolbarTitle"
                     android:text="@string/title_add_account"
                     app:layout_constraintBottom_toBottomOf="parent"

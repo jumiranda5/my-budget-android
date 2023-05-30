@@ -395,6 +395,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (currentFragment.equals(cardFormTag) && mCreditCardForm != null) {
             mCreditCardForm.updateColor(color);
         }
+        else if (currentFragment.equals(accountFormTag) && mAccountForm != null) {
+            mAccountForm.updateColor(color);
+        }
     }
 
     /* ===============================================================================
