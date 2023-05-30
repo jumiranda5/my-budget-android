@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -34,11 +35,13 @@ public class CreditCardsFragment extends Fragment {
     // UI
     private FragmentCreditCardsBinding binding;
     private ImageButton mBack;
+    private Button mAddCard;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         mBack = binding.cardsBackButton;
+        mAddCard = binding.buttonAddCreditCard;
         mTotal = binding.creditCardsTotal;
         mRecyclerView = binding.cardsList;
     }
@@ -69,6 +72,7 @@ public class CreditCardsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mBack.setOnClickListener(v -> mInterface.navigateBack());
+        mAddCard.setOnClickListener(v -> mInterface.openCardForm(false));
 
         initDummyList();
         setTotal();

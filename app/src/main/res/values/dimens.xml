@@ -11,6 +11,8 @@
     <dimen name="main_text">16sp</dimen>
     <dimen name="secondary_text">14sp</dimen>
     <dimen name="number_impact">30sp</dimen>
+    <dimen name="currency_width_min">88dp</dimen>
+    <dimen name="currency_width_max">140dp</dimen>
 
     <!-- Icons -->
     <dimen name="icon_medium">28dp</dimen>
@@ -69,6 +71,8 @@
     <!-- Cards and Accounts (Main page) -->
     <dimen name="main_title">18sp</dimen>
     <dimen name="main_title_space">48dp</dimen>
+    <dimen name="main_total">32sp</dimen>
+    <dimen name="main_button_margin">48dp</dimen>
 
     <!-- Items Cards and Accounts (Main page) -->
     <dimen name="main_item_icon_margin">14dp</dimen>

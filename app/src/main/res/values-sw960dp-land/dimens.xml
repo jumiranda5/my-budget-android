@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Guideline -->
+    <item name="guideline_start" format="float" type="dimen">0.1</item>
+    <item name="guideline_end" format="float" type="dimen">0.9</item>
+
     <!-- Guidelines -->
     <item name="guideline_home_start" format="float" type="dimen">0.06</item>
     <item name="guideline_home_end" format="float" type="dimen">0.94</item>

@@ -57,6 +57,7 @@
         android:id="@+id/item_card_total"
         style="@style/NumberCurrency"
         android:text="@string/test_currency_value"
+        android:textColor="@color/expense"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline_card_end"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,6 +67,7 @@
         style="@style/NumberMedium"
         android:text="@string/test_currency_symbol"
         android:textSize="@dimen/secondary_text"
+        android:textColor="@color/expense"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_card_total"
         app:layout_constraintStart_toStartOf="@id/item_card_total" />
 

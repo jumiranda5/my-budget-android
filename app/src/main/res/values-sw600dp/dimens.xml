@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Guidelines -->
+    <item name="guideline_start" format="float" type="dimen">0.08</item>
+    <item name="guideline_end" format="float" type="dimen">0.92</item>
+
     <!-- Text -->
     <dimen name="main_text">18sp</dimen>
     <dimen name="secondary_text">16sp</dimen>
@@ -46,5 +50,13 @@
 
     <!-- Home categories list item -->
     <dimen name="category_item_height_small">28dp</dimen>
+
+    <!-- Cards and Accounts (Main page) -->
+    <dimen name="main_title">20sp</dimen>
+    <dimen name="main_title_space">80dp</dimen>
+    <dimen name="main_total">40sp</dimen>
+
+    <!-- Item Card -->
+    <dimen name="item_card_height">80dp</dimen>
 
 </resources>

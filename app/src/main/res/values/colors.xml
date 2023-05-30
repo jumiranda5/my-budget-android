@@ -9,12 +9,10 @@
     <color name="colorControlHighlight">#BABABA</color>
     <color name="colorSecondaryContainer">#EAEAEA</color>
 
-    <color name="grey">#dadada</color>
-    <color name="dark_grey">#bababa</color>
-
     <!-- Main -->
     <color name="main_background">#F3F3F3</color>
     <color name="border">#EAEAEA</color>
+    <color name="click">#EEEEEE</color>
 
     <!-- Backgrounds -->
     <color name="bg_00dp">#F3F3F3</color>
