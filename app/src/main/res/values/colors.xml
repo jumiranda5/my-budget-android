@@ -59,5 +59,26 @@
     <color name="button_save">#29A56F</color>
     <color name="button_save_pressed">#3DCC8E</color>
     <color name="button_picker_pressed">#C5FFE3</color>
+    <color name="disabled_button">#BABABA</color>
+
+    <!-- Color Picker -->
+    <color name="red">#E41E1E</color>
+    <color name="pink">#EE0055</color>
+    <color name="purple">#9C27B0</color>
+    <color name="deep_purple">#673AB7</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="blue">#2196F3</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="teal">#009688</color>
+    <color name="green">#4CAF50</color>
+    <color name="light_green">#00D76E</color>
+    <color name="lime">#C6FF00</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="amber">#FFC107</color>
+    <color name="orange">#FF9800</color>
+    <color name="deep_orange">#FF5722</color>
+    <color name="brown">#795548</color>
+    <color name="grey">#616161</color>
+
 
 </resources>

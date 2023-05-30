@@ -274,6 +274,17 @@
         <item name="android:drawableTint">@color/white</item>
     </style>
 
+    <style name="ItemButton" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="tint">@color/main_text</item>
+        <item name="layout_constraintDimensionRatio">1:1</item>
+    </style>
+
     <!-- ==========================================================
                                  TEXT
     ============================================================ -->

@@ -17,10 +17,13 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
+import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
@@ -279,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (!currentFragment.equals(tag)) {
             Log.d(LOG_NAV, "OPEN " + tag);
             if (tag.equals(homeTag)) resetFragmentStack();
-            currentFragment = tag;
             setFragment(tag);
             setToolbarVisibilities(tag);
             updateBottomNav(tag);
@@ -326,9 +328,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openAccountForm(boolean isEdit) {
-        String param;
-        if (isEdit) param = PARAM_EDIT;
-        else param = PARAM_ADD;
         if (mAccountForm != null) mAccountForm.setFormType(isEdit);
         openFragment(accountFormTag);
     }
@@ -345,9 +344,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openCardForm(boolean isEdit) {
-        String param;
-        if (isEdit) param = PARAM_EDIT;
-        else param = PARAM_ADD;
         if (mCreditCardForm != null) mCreditCardForm.setFormType(isEdit);
         openFragment(cardFormTag);
     }
@@ -385,6 +381,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         FragmentManager fm = getSupportFragmentManager();
         TransactionDialog transactionDialog = new TransactionDialog();
         transactionDialog.show(fm, "TRANSACTION DIALOG");
+    }
+
+    @Override
+    public void showColorPickerDialog() {
+        Log.d(LOG_NAV, "Show color picker dialog");
+        BottomSheetDialogFragment colorPicker = new ColorPickerDialog();
+        colorPicker.show(getSupportFragmentManager(), "colorPicker");
+    }
+
+    @Override
+    public void handleColorSelection(Color color) {
+        if (currentFragment.equals(cardFormTag) && mCreditCardForm != null) {
+            mCreditCardForm.updateColor(color);
+        }
     }
 
     /* ===============================================================================
