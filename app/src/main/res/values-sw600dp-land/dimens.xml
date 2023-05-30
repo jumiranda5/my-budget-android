@@ -4,6 +4,8 @@
     <!-- Guideline -->
     <item name="guideline_start" format="float" type="dimen">0.04</item>
     <item name="guideline_end" format="float" type="dimen">0.96</item>
+    <item name="guideline_item_start" format="float" type="dimen">0.02</item>
+    <item name="guideline_item_end" format="float" type="dimen">0.98</item>
 
     <!-- Text -->
     <dimen name="main_text">16sp</dimen>
@@ -22,6 +24,9 @@
 
     <!-- Cards -->
     <dimen name="card_padding">16dp</dimen>
+
+    <!-- Lists -->
+    <dimen name="side_list_padding">16dp</dimen>
 
     <!-- Progress -->
     <dimen name="progress_text_size">34sp</dimen>

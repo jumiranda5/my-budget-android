@@ -12,6 +12,9 @@
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">80dp</dimen>
 
+    <!-- Lists -->
+    <dimen name="side_list_padding">20dp</dimen>
+
     <!-- Progress -->
     <dimen name="progress_text_size">36sp</dimen>
     <dimen name="progress_indicator">180dp</dimen>
