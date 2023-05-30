@@ -1,27 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/bottomBar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AccountsFragment">
 
-    <ImageButton
-        android:id="@+id/accounts_back_button"
-        style="@style/IconButton"
-        android:contentDescription="@string/nav_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_arrow_back" />
-
-    <Button
-        android:id="@+id/accounts_details_button"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Account details"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accounts_back_button" />
+        android:paddingBottom="@dimen/main_button_margin">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_accounts_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_start" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_accounts_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/accounts_toolbar"
+            style="@style/MainToolbar"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_toolbar_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/accounts_back_button"
+                    style="@style/ToolbarButton"
+                    android:contentDescription="@string/nav_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_app_arrow_back" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/accounts_icon"
+            style="@style/IconLarge"
+            android:layout_marginTop="@dimen/main_icon_space"
+            android:contentDescription="@null"
+            app:layout_constraintStart_toStartOf="@+id/guideline_accounts_start"
+            app:layout_constraintTop_toBottomOf="@+id/accounts_toolbar"
+            app:srcCompat="@drawable/ic_app_account_balance" />
+
+        <TextView
+            android:id="@+id/accounts_title"
+            style="@style/MainText"
+            android:textSize="@dimen/main_title_large"
+            android:layout_marginTop="8dp"
+            android:text="@string/nav_accounts"
+            app:layout_constraintStart_toStartOf="@+id/guideline_accounts_start"
+            app:layout_constraintTop_toBottomOf="@+id/accounts_icon" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/accounts_list"
+            style="@style/MainList"
+            android:layout_marginTop="@dimen/main_title_space"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accounts_title"
+            tools:listitem="@layout/item_account"
+            tools:itemCount="3"/>
+
+        <Button
+            android:id="@+id/button_add_account"
+            style="@style/BorderButton"
+            android:layout_marginTop="@dimen/main_button_margin"
+            android:text="@string/action_add_credit_card"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_accounts_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_accounts_start"
+            app:layout_constraintTop_toBottomOf="@+id/accounts_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

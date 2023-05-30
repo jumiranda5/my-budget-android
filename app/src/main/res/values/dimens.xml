@@ -6,6 +6,8 @@
     <item name="guideline_home_end" format="float" type="dimen">1</item>
     <item name="guideline_start" format="float" type="dimen">0.04</item>
     <item name="guideline_end" format="float" type="dimen">0.96</item>
+    <item name="guideline_item_start" format="float" type="dimen">0.04</item>
+    <item name="guideline_item_end" format="float" type="dimen">0.96</item>
 
     <!-- Text -->
     <dimen name="main_text">16sp</dimen>
@@ -16,6 +18,7 @@
 
     <!-- Icons -->
     <dimen name="icon_medium">28dp</dimen>
+    <dimen name="icon_large">40dp</dimen>
 
     <!-- Buttons -->
     <dimen name="toolbar_button">48dp</dimen>
@@ -70,14 +73,17 @@
 
     <!-- Cards and Accounts (Main page) -->
     <dimen name="main_title">18sp</dimen>
+    <dimen name="main_title_large">30sp</dimen>
     <dimen name="main_title_space">48dp</dimen>
+    <dimen name="main_icon_space">40dp</dimen>
     <dimen name="main_total">32sp</dimen>
     <dimen name="main_button_margin">48dp</dimen>
 
     <!-- Items Cards and Accounts (Main page) -->
     <dimen name="main_item_icon_margin">14dp</dimen>
 
-    <!-- Item Card -->
+    <!-- Items -->
     <dimen name="item_card_height">70dp</dimen>
+    <dimen name="item_account_height">56dp</dimen>
 
 </resources>

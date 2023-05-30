@@ -48,5 +48,6 @@
     <string name="title_credit_card">Credit Card</string>
     <string name="test_billing_day_1">Billing day: 1</string>
     <string name="action_add_credit_card">Add Credit Card</string>
+    <string name="test_account_name">Account</string>
 
 </resources>

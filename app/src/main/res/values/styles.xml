@@ -124,6 +124,12 @@
         <item name="tint">@color/medium_emphasis_text</item>
     </style>
 
+    <style name="IconLarge" parent="AppTheme">
+        <item name="android:layout_width">@dimen/icon_large</item>
+        <item name="android:layout_height">@dimen/icon_large</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
     <style name="ChartImage" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
