@@ -15,6 +15,14 @@
     <!-- Cards -->
     <dimen name="card_padding_sm">16dp</dimen>
 
+    <!-- Forms -->
+    <dimen name="form_margin">16dp</dimen>
+    <dimen name="form_margin_top">32dp</dimen>
+    <dimen name="input_height">60dp</dimen>
+    <dimen name="input_padding">16dp</dimen>
+    <dimen name="input_margin">14dp</dimen>
+    <dimen name="button_save_height">56dp</dimen>
+
     <!-- Toolbar -->
     <dimen name="toolbar_month_text">18sp</dimen>
     <dimen name="toolbar_month_width">120dp</dimen>

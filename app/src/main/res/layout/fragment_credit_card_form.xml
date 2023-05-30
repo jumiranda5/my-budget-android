@@ -1,27 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingBottom="40dp"
     tools:context=".CreditCardFormFragment">
 
-    <ImageButton
-        android:id="@+id/card_form_back_button"
-        style="@style/IconButton"
-        android:contentDescription="@string/nav_back"
-        android:src="@drawable/ic_app_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/card_form_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_card_form_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_start" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_card_form_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/card_form_toolbar"
+            style="@style/MainToolbar"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/card_form_back_button"
+                    style="@style/ToolbarButton"
+                    android:contentDescription="@string/nav_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_app_arrow_back" />
+
+                <TextView
+                    android:id="@+id/card_form_title"
+                    style="@style/ToolbarTitle"
+                    android:text="@string/title_add_credit_card"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/card_form_back_button"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Nickname Input -->
+
+        <EditText
+            android:id="@+id/card_form_nickname"
+            style="@style/InputWithIcon"
+            android:layout_marginStart="@dimen/form_margin"
+            android:layout_marginTop="@dimen/form_margin_top"
+            android:layout_marginEnd="@dimen/form_margin"
+            android:hint="@string/hint_card_nickname"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_card_form_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_card_form_start"
+            app:layout_constraintTop_toBottomOf="@+id/card_form_toolbar" />
+
+        <ImageView
+            android:id="@+id/card_form_nickname_icon"
+            style="@style/InputIcon"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/card_form_nickname"
+            app:layout_constraintStart_toStartOf="@+id/card_form_nickname"
+            app:layout_constraintTop_toTopOf="@+id/card_form_nickname"
+            app:srcCompat="@drawable/ic_app_description" />
+
+        <!-- Color picker button -->
+
+        <Button
+            android:id="@+id/card_form_color"
+            style="@style/ButtonPicker"
+            android:layout_marginTop="@dimen/input_margin"
+            android:text="@string/label_color"
+            app:layout_constraintEnd_toEndOf="@+id/card_form_nickname"
+            app:layout_constraintStart_toStartOf="@+id/card_form_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/card_form_nickname" />
+
+        <ImageView
+            android:id="@+id/card_form_color_icon"
+            style="@style/InputIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_circle_24"
+            app:layout_constraintBottom_toBottomOf="@+id/card_form_color"
+            app:layout_constraintStart_toStartOf="@+id/card_form_color"
+            app:layout_constraintTop_toTopOf="@+id/card_form_color" />
+
+        <!-- Billing day -->
+
+        <TextView
+            android:id="@+id/card_form_day_label"
+            style="@style/MainText"
+            android:layout_marginEnd="16dp"
+            android:labelFor="@+id/card_form_day"
+            android:text="@string/label_billing_day"
+            app:layout_constraintBottom_toBottomOf="@+id/card_form_day"
+            app:layout_constraintEnd_toStartOf="@+id/card_form_day"
+            app:layout_constraintTop_toTopOf="@+id/card_form_day" />
+
+        <EditText
+            android:id="@+id/card_form_day"
+            style="@style/InputQuantity"
+            android:layout_marginTop="@dimen/input_margin"
+            android:hint="@string/test_1"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            app:layout_constraintEnd_toEndOf="@+id/card_form_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/card_form_color" />
+
+        <!-- Add Button -->
+
+        <Button
+            android:id="@+id/card_form_save_button"
+            style="@style/ButtonSave"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/card_form_nickname"
+            app:layout_constraintStart_toStartOf="@+id/card_form_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/card_form_day" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,27 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:clipToPadding="false"
+    android:paddingBottom="40dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AccountFormFragment">
 
-    <ImageButton
-        android:id="@+id/account_form_back_button"
-        style="@style/IconButton"
-        android:contentDescription="@string/nav_back"
-        android:src="@drawable/ic_app_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/account_form_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_account_form_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_start" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_account_form_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/account_form_toolbar"
+            style="@style/MainToolbar"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/account_form_back_button"
+                    style="@style/ToolbarButton"
+                    android:contentDescription="@string/nav_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_app_arrow_back" />
+
+                <TextView
+                    android:id="@+id/card_form_title"
+                    style="@style/ToolbarTitle"
+                    android:text="@string/title_add_account"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/account_form_back_button"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Nickname Input -->
+
+        <EditText
+            android:id="@+id/account_form_nickname"
+            style="@style/InputWithIcon"
+            android:layout_marginStart="@dimen/form_margin"
+            android:layout_marginTop="@dimen/form_margin_top"
+            android:layout_marginEnd="@dimen/form_margin"
+            android:hint="@string/hint_account_nickname"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="textCapWords"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_account_form_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_account_form_start"
+            app:layout_constraintTop_toBottomOf="@+id/account_form_toolbar" />
+
+        <ImageView
+            android:id="@+id/account_form_nickname_icon"
+            style="@style/InputIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_description"
+            app:layout_constraintBottom_toBottomOf="@+id/account_form_nickname"
+            app:layout_constraintStart_toStartOf="@+id/account_form_nickname"
+            app:layout_constraintTop_toTopOf="@+id/account_form_nickname" />
+
+        <!-- Color picker button -->
+
+        <Button
+            android:id="@+id/account_form_color"
+            style="@style/ButtonPicker"
+            android:layout_marginTop="@dimen/input_margin"
+            android:text="@string/label_color"
+            app:layout_constraintEnd_toEndOf="@+id/account_form_nickname"
+            app:layout_constraintStart_toStartOf="@+id/account_form_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/account_form_nickname" />
+
+        <ImageView
+            android:id="@+id/account_form_color_icon"
+            style="@style/InputIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_circle_24"
+            app:layout_constraintBottom_toBottomOf="@+id/account_form_color"
+            app:layout_constraintStart_toStartOf="@+id/account_form_color"
+            app:layout_constraintTop_toTopOf="@+id/account_form_color" />
+
+
+        <!-- Account type -->
+
+        <RadioGroup
+            android:id="@+id/account_type_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/account_form_color"
+            app:layout_constraintTop_toBottomOf="@+id/account_form_color">
+
+            <RadioButton
+                android:id="@+id/account_option_cash"
+                style="@style/RadioWithIcon"
+                android:checked="true"
+                android:text="@string/label_cash" />
+
+            <RadioButton
+                android:id="@+id/account_option_checking"
+                style="@style/RadioWithIcon"
+                android:text="@string/label_checking_account" />
+
+            <RadioButton
+                android:id="@+id/account_option_savings"
+                style="@style/RadioWithIcon"
+                android:text="@string/label_savings" />
+
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/account_form_cash_icon"
+            style="@style/RadioButtonIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_cash"
+            app:layout_constraintStart_toStartOf="@+id/account_type_radio_group"
+            app:layout_constraintTop_toTopOf="@+id/account_type_radio_group" />
+
+        <ImageView
+            android:id="@+id/account_form_checking_icon"
+            style="@style/RadioButtonIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_account_balance"
+            app:layout_constraintStart_toStartOf="@+id/account_type_radio_group"
+            app:layout_constraintTop_toBottomOf="@+id/account_form_cash_icon" />
+
+        <ImageView
+            android:id="@+id/account_form_savings_icon"
+            style="@style/RadioButtonIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_savings"
+            app:layout_constraintStart_toStartOf="@+id/account_type_radio_group"
+            app:layout_constraintTop_toBottomOf="@+id/account_form_checking_icon" />
+
+
+        <!-- Add Button -->
+
+        <Button
+            android:id="@+id/account_form_save_button"
+            style="@style/ButtonSave"
+            android:layout_width="0dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/account_form_nickname"
+            app:layout_constraintStart_toStartOf="@+id/account_form_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/account_type_radio_group" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

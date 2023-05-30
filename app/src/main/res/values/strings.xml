@@ -15,6 +15,9 @@
     <string name="action_add_transaction">Add transaction</string>
     <string name="action_archive">Archive</string>
     <string name="action_edit">Edit</string>
+    <string name="action_add_credit_card">Add Credit Card</string>
+    <string name="action_add_account">Add Account</string>
+    <string name="action_save">Save</string>
 
     <!-- Descriptions -->
     <string name="desc_categories_tabs">Categories tabs</string>
@@ -47,8 +50,13 @@
     <string name="test_currency_symbol">$</string>
     <string name="title_credit_card">Credit Card</string>
     <string name="test_billing_day_1">Billing day: 1</string>
-    <string name="action_add_credit_card">Add Credit Card</string>
     <string name="test_account_name">Account</string>
-    <string name="action_add_account">Add Account</string>
+    <string name="hint_card_nickname">Card Nickname</string>
+    <string name="label_color">Color</string>
+    <string name="label_billing_day">Billing day:</string>
+    <string name="test_1">1</string>
+    <string name="title_add_credit_card">Add Credit Card</string>
+    <string name="title_add_account">Add Account</string>
+    <string name="hint_account_nickname">Account Nickname</string>
 
 </resources>

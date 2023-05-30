@@ -45,6 +45,17 @@
     <dimen name="category_item_height_small">24dp</dimen>
     <dimen name="side_list_padding">8dp</dimen>
 
+    <!-- Forms -->
+    <dimen name="form_margin">14dp</dimen>
+    <dimen name="form_margin_top">28dp</dimen>
+    <dimen name="input_height">56dp</dimen>
+    <dimen name="input_padding">14dp</dimen>
+    <dimen name="input_margin">12dp</dimen>
+    <dimen name="input_icon_space">44dp</dimen>
+    <dimen name="input_icon_size">48dp</dimen>
+    <dimen name="input_icon_padding">12dp</dimen>
+    <dimen name="button_save_height">54dp</dimen>
+
     <!-- Progress -->
     <dimen name="progress_text_size">26sp</dimen>
     <dimen name="progress_indicator">104dp</dimen>

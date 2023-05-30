@@ -101,6 +101,61 @@
     </style>
 
     <!-- ==========================================================
+                                 FIELDS
+    ============================================================ -->
+
+    <style name="Field" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="layout_constraintWidth_max">380dp</item>
+        <item name="android:paddingStart">@dimen/input_padding</item>
+        <item name="android:paddingEnd">@dimen/input_padding</item>
+        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="android:fontFamily">@font/red_hat_text</item>
+    </style>
+
+    <style name="InputStyle" parent="Field">
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+
+    <style name="InputWithIcon" parent="InputStyle">
+        <item name="android:paddingStart">@dimen/input_icon_space</item>
+    </style>
+
+    <style name="InputIcon" parent="AppTheme">
+        <item name="android:layout_width">@dimen/input_icon_size</item>
+        <item name="android:layout_height">@dimen/input_icon_size</item>
+        <item name="android:padding">@dimen/input_icon_padding</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <style name="InputQuantity" parent="InputStyle">
+        <item name="android:layout_width">@dimen/input_height</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:inputType">number</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <!-- Checkbox -->
+
+    <style name="RadioWithIcon" parent="MainText">
+        <item name="android:paddingStart">40dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <style name="RadioButtonIcon" parent="Icon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginStart">26dp</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <!-- ==========================================================
                               IMAGES
     ============================================================ -->
 
@@ -165,6 +220,7 @@
         <item name="android:stateListAnimator">@null</item>
         <item name="backgroundTint">@null</item>
         <item name="android:fontFamily">@font/red_hat_text_medium</item>
+        <item name="android:textSize">@dimen/secondary_text</item>
     </style>
 
     <style name="IconButton" parent="CustomButton">
@@ -198,6 +254,24 @@
         <item name="android:background">@drawable/button_border</item>
         <item name="android:textColor">@color/high_emphasis_text</item>
         <item name="android:textSize">@dimen/secondary_text</item>
+    </style>
+
+    <style name="ButtonPicker" parent="InputWithIcon">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/button_picker</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/main_text</item>
+    </style>
+
+    <style name="ButtonSave" parent="CustomButton">
+        <item name="android:layout_height">@dimen/button_save_height</item>
+        <item name="android:text">@string/action_save</item>
+        <item name="android:background">@drawable/button_save</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:drawableEnd">@drawable/ic_app_done_all_24</item>
+        <item name="android:paddingStart">48dp</item>
+        <item name="android:drawableTint">@color/white</item>
     </style>
 
     <!-- ==========================================================
@@ -237,6 +311,11 @@
     <style name="ToolbarMonth" parent="MainTextEllipse">
         <item name="android:textSize">@dimen/toolbar_month_text</item>
         <item name="fontFamily">@font/red_hat_text_semi_bold</item>
+    </style>
+
+    <style name="ToolbarTitle" parent="MainTextEllipse">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginStart">4dp</item>
     </style>
 
     <style name="NumberImpact" parent="MainText">

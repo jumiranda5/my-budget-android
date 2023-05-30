@@ -30,6 +30,10 @@
     <!-- Cards -->
     <dimen name="card_padding">20dp</dimen>
 
+    <!-- Forms -->
+    <dimen name="form_margin_top">48dp</dimen>
+    <dimen name="input_margin">16dp</dimen>
+
     <!-- Progress -->
     <dimen name="progress_text_size">32sp</dimen>
     <dimen name="progress_indicator">140dp</dimen>

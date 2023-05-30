@@ -50,4 +50,14 @@
     <color name="item_focused">#F3FFF9</color>
     <color name="item_stroke_focused">#8BEDBE</color>
 
+    <!-- Inputs -->
+    <color name="input_stroke">#E3E3E3</color>
+    <color name="input_focused">#F3FFF9</color>
+    <color name="input_stroke_focused">#8BEDBE</color>
+
+    <!-- Button -->
+    <color name="button_save">#29A56F</color>
+    <color name="button_save_pressed">#3DCC8E</color>
+    <color name="button_picker_pressed">#C5FFE3</color>
+
 </resources>
