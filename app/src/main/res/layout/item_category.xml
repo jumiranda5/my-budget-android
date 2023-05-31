@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:id="@+id/category_item">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/guideline_item_start" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_card_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/guideline_item_end" />
+
+    <ImageView
+        android:id="@+id/category_icon"
+        style="@style/Icon"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_app_category" />
+
+    <TextView
+        android:id="@+id/category_name"
+        style="@style/MainTextEllipse"
+        android:layout_width="0dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_card_end"
+        app:layout_constraintStart_toEndOf="@+id/category_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

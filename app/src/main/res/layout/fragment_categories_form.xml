@@ -1,14 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
     tools:context=".CategoriesFormFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <!-- Toolbar -->
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/cat_form_toolbar"
+            style="@style/MainToolbar"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/cat_form_toolbar_title"
+                    style="@style/ToolbarTitle"
+                    android:text="@string/action_add_category"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_close"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/cat_form_toolbar_close"
+                    style="@style/ToolbarButton"
+                    android:contentDescription="@string/action_close"
+                    android:src="@drawable/ic_app_close"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cat_form_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_start" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cat_form_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+        <EditText
+            android:id="@+id/category_name_input"
+            style="@style/InputStyle"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:hint="@string/hint_category_name"
+            android:importantForAutofill="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cat_form_toolbar" />
+
+        <Button
+            android:id="@+id/category_icon_button"
+            style="@style/ButtonPicker"
+            android:layout_marginTop="8dp"
+            android:paddingStart="56dp"
+            android:paddingEnd="8dp"
+            android:text="@string/label_icon"
+            app:layout_constraintEnd_toStartOf="@+id/category_color_button"
+            app:layout_constraintStart_toStartOf="@+id/category_name_input"
+            app:layout_constraintTop_toBottomOf="@+id/category_name_input" />
+
+        <ImageView
+            android:id="@+id/category_icon"
+            style="@style/InputIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_category"
+            app:layout_constraintBottom_toBottomOf="@+id/category_icon_button"
+            app:layout_constraintStart_toStartOf="@+id/category_icon_button"
+            app:layout_constraintTop_toTopOf="@+id/category_icon_button" />
+
+        <Button
+            android:id="@+id/category_color_button"
+            style="@style/ButtonPicker"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingStart="56dp"
+            android:paddingEnd="8dp"
+            android:text="@string/label_color"
+            app:layout_constraintEnd_toEndOf="@id/category_name_input"
+            app:layout_constraintStart_toEndOf="@+id/category_icon_button"
+            app:layout_constraintTop_toBottomOf="@+id/category_name_input" />
+
+        <ImageView
+            android:id="@+id/category_color"
+            style="@style/InputIcon"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_app_circle_24"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/category_color_button"
+            app:layout_constraintStart_toStartOf="@+id/category_color_button"
+            app:layout_constraintTop_toTopOf="@+id/category_color_button" />
+
+        <Button
+            android:id="@+id/button_save_category"
+            style="@style/ButtonSave"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/category_name_input"
+            app:layout_constraintStart_toStartOf="@+id/category_name_input"
+            app:layout_constraintTop_toBottomOf="@+id/category_icon_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
