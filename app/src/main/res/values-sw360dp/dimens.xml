@@ -20,7 +20,6 @@
     <dimen name="form_margin_top">32dp</dimen>
     <dimen name="input_height">60dp</dimen>
     <dimen name="input_padding">16dp</dimen>
-    <dimen name="input_margin">14dp</dimen>
     <dimen name="button_save_height">56dp</dimen>
 
     <!-- Toolbar -->

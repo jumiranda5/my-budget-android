@@ -3,12 +3,413 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TransactionFormFragment">
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="TRANSACTION FORM" />
+        android:clipToPadding="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@dimen/guideline_start" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="@dimen/guideline_end" />
+
+            <!-- Toolbar -->
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/add_toolbar"
+                style="@style/MainToolbar"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/add_close_button"
+                        style="@style/ToolbarButton"
+                        android:contentDescription="@string/action_close"
+                        android:src="@drawable/ic_app_close"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <!-- Toggle Transaction type -->
+
+            <RadioGroup
+                android:id="@+id/add_toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_toolbar">
+
+                <ToggleButton
+                    android:id="@+id/toggle_expense"
+                    style="@style/toggleButtonPill"
+                    android:checked="true"
+                    android:textOn="@string/action_out"
+                    android:textOff="@string/action_out"
+                    android:button="@drawable/button_pill_icon_out"
+                    android:buttonTint="@color/toggle_type_expense_text_color"
+                    android:textColor="@color/toggle_type_expense_text_color"
+                    app:backgroundTint="@color/expense" />
+
+                <ToggleButton
+                    android:id="@+id/toggle_income"
+                    style="@style/toggleButtonPill"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textOn="@string/action_in"
+                    android:textOff="@string/action_in"
+                    android:button="@drawable/button_pill_icon_in"
+                    android:buttonTint="@color/toggle_type_income_text_color"
+                    android:textColor="@color/toggle_type_income_text_color"
+                    app:backgroundTint="@color/income" />
+
+                <ToggleButton
+                    android:id="@+id/toggle_transfer"
+                    style="@style/toggleButtonPill"
+                    android:textOn="@string/action_transfer"
+                    android:textOff="@string/action_transfer"
+                    android:button="@drawable/button_pill_icon_transfer"
+                    android:buttonTint="@color/toggle_type_transfer_text_color"
+                    android:textColor="@color/toggle_type_transfer_text_color"
+                    app:backgroundTint="@color/savings" />
+            </RadioGroup>
+
+            <!-- Amount -->
+
+            <TextView
+                android:id="@+id/add_formatted_price"
+                style="@style/NumberImpact"
+                android:layout_width="0dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/test_formatted_price"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/add_toggle_group" />
+
+            <EditText
+                android:id="@+id/add_amount"
+                style="@style/InputWithIcon"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_amount"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_formatted_price" />
+
+            <ImageView
+                android:id="@+id/add_icon_amount"
+                style="@style/InputIcon"
+                android:contentDescription="@string/desc_payment_value"
+                android:src="@drawable/ic_app_paid"
+                app:layout_constraintBottom_toBottomOf="@+id/add_amount"
+                app:layout_constraintStart_toStartOf="@+id/add_amount"
+                app:layout_constraintTop_toTopOf="@+id/add_amount" />
+
+            <!-- Description Input -->
+
+            <AutoCompleteTextView
+                android:id="@+id/add_description"
+                style="@style/InputWithIcon"
+                android:hint="@string/hint_description"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_amount" />
+
+            <ImageView
+                android:id="@+id/add_icon_desc"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_app_description"
+                app:layout_constraintBottom_toBottomOf="@+id/add_description"
+                app:layout_constraintStart_toStartOf="@+id/add_description"
+                app:layout_constraintTop_toTopOf="@+id/add_description" />
+
+            <!-- Date -->
+
+            <Button
+                android:id="@+id/add_date_picker"
+                style="@style/ButtonPicker"
+                android:layout_marginTop="12dp"
+                android:text="@string/hint_today"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_description" />
+
+            <ImageView
+                android:id="@+id/add_icon_date"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_app_today_fill"
+                app:layout_constraintBottom_toBottomOf="@+id/add_date_picker"
+                app:layout_constraintStart_toStartOf="@+id/add_date_picker"
+                app:layout_constraintTop_toTopOf="@+id/add_date_picker" />
+
+            <!-- Divisor -->
+
+            <ImageView
+                android:id="@+id/add_divisor_1"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:contentDescription="@null"
+                android:layout_marginTop="24dp"
+                android:background="@color/border"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/add_date_picker"/>
+
+            <!-- Category -->
+            <Button
+                android:id="@+id/add_category_picker"
+                style="@style/ButtonPicker"
+                android:text="@string/label_category"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_divisor_1" />
+
+            <ImageView
+                android:id="@+id/add_icon_category"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/ic_app_category"
+                app:layout_constraintBottom_toBottomOf="@+id/add_category_picker"
+                app:layout_constraintStart_toStartOf="@+id/add_category_picker"
+                app:layout_constraintTop_toTopOf="@+id/add_category_picker" />
+
+
+            <!-- Method -->
+
+            <Button
+                android:id="@+id/add_method_picker"
+                style="@style/ButtonPicker"
+                android:text="@string/label_cash"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_category_picker" />
+
+            <ImageView
+                android:id="@+id/add_icon_method"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_app_cash"
+                app:layout_constraintBottom_toBottomOf="@+id/add_method_picker"
+                app:layout_constraintStart_toStartOf="@+id/add_method_picker"
+                app:layout_constraintTop_toTopOf="@+id/add_method_picker" />
+
+            <!-- Credit Card Billing Month -->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/credit_card_month_picker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_transparent_border"
+                android:padding="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_method_picker">
+
+                <TextView
+                    android:id="@+id/credit_card_month_picker_label"
+                    style="@style/SecondaryText"
+                    android:text="@string/label_billing_month"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/credit_card_month_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/credit_card_month_picker_label">
+
+                    <RadioButton
+                        android:id="@+id/billing_month1"
+                        style="@style/MainText"
+                        android:checked="true"
+                        android:text="@string/test_january" />
+
+                    <RadioButton
+                        android:id="@+id/billing_month2"
+                        style="@style/MainText"
+                        android:layout_marginStart="32dp"
+                        android:text="@string/test_february" />
+
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Account Picker Out -->
+
+            <Button
+                android:id="@+id/add_account_picker_out"
+                style="@style/ButtonPicker"
+                android:text="@string/action_out"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/credit_card_month_picker" />
+
+            <ImageView
+                android:id="@+id/add_icon_out"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/arrow_north_east_600"
+                app:tint="@color/expense"
+                app:layout_constraintBottom_toBottomOf="@+id/add_account_picker_out"
+                app:layout_constraintStart_toStartOf="@+id/add_account_picker_out"
+                app:layout_constraintTop_toTopOf="@+id/add_account_picker_out" />
+
+            <!-- Account Picker In -->
+
+            <Button
+                android:id="@+id/add_account_picker_in"
+                style="@style/ButtonPicker"
+                android:text="@string/action_in"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/add_account_picker_out" />
+
+            <ImageView
+                android:id="@+id/add_icon_in"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                android:src="@drawable/arrow_south_west_600"
+                app:tint="@color/income"
+                app:layout_constraintBottom_toBottomOf="@+id/add_account_picker_in"
+                app:layout_constraintStart_toStartOf="@+id/add_account_picker_in"
+                app:layout_constraintTop_toTopOf="@+id/add_account_picker_in"/>
+
+            <!-- Divisor -->
+
+            <ImageView
+                android:id="@+id/add_divisor_2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:contentDescription="@null"
+                android:layout_marginTop="24dp"
+                android:background="@color/border"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/add_account_picker_in" />
+
+            <!-- Is payed - toggle button -->
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/add_switch_payed"
+                style="@style/FormSwitch"
+                android:layout_marginTop="24dp"
+                android:checked="true"
+                android:text="@string/label_paid"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_divisor_2" />
+
+            <!-- Is fixed - toggle button -->
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/add_switch_fixed"
+                style="@style/FormSwitch"
+                android:layout_marginTop="12dp"
+                android:text="@string/label_fixed"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_switch_payed" />
+
+            <!-- Repeat -->
+
+            <TextView
+                android:id="@+id/repeat_label"
+                style="@style/WrappingLabel"
+                android:layout_marginTop="12dp"
+                android:text="@string/label_repeat"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/add_switch_fixed" />
+
+            <ImageButton
+                android:id="@+id/button_repeat_increase"
+                style="@style/IconButton"
+                android:contentDescription="@string/action_increase"
+                app:srcCompat="@drawable/ic_app_add_400"
+                app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
+                app:layout_constraintEnd_toEndOf="@id/repeat_label"
+                app:layout_constraintTop_toTopOf="@+id/repeat_label" />
+
+            <EditText
+                android:id="@+id/add_quantity_input"
+                style="@style/InputQuantity"
+                android:visibility="visible"
+                android:hint="@string/test_1"
+                android:importantForAutofill="no"
+                android:imeOptions="actionDone"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
+                app:layout_constraintEnd_toStartOf="@+id/button_repeat_increase"
+                app:layout_constraintTop_toTopOf="@+id/repeat_label" />
+
+            <ImageButton
+                android:id="@+id/button_repeat_decrease"
+                style="@style/IconButton"
+                android:contentDescription="@string/action_decrease"
+                android:text="@string/action_decrease"
+                android:layout_marginEnd="8dp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_app_remove_400"
+                app:layout_constraintEnd_toStartOf="@+id/add_quantity_input"
+                app:layout_constraintTop_toTopOf="@+id/add_quantity_input"
+                app:layout_constraintBottom_toBottomOf="@id/add_quantity_input"/>
+
+            <!-- Save Button -->
+
+            <Button
+                android:id="@+id/save_button"
+                style="@style/ButtonSave"
+                android:layout_width="0dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/repeat_label" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

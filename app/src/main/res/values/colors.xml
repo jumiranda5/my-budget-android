@@ -11,7 +11,6 @@
 
     <!-- Main -->
     <color name="main_background">#F3F3F3</color>
-    <color name="border">#EAEAEA</color>
     <color name="click">#EEEEEE</color>
 
     <!-- Backgrounds -->
@@ -25,6 +24,10 @@
     <color name="bg_12dp">#FFFFFF</color>
     <color name="bg_16dp">#FFFFFF</color>
     <color name="bg_24dp">#FFFFFF</color>
+
+    <!-- Borders -->
+    <color name="border">#EAEAEA</color>
+    <color name="border_darker">#B0BEC5</color>
 
     <!-- Text -->
     <color name="high_emphasis_text">#1E1E1E</color>
