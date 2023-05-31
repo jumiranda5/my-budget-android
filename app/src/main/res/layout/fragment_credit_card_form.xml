@@ -45,22 +45,24 @@
                     android:id="@+id/card_form_back_button"
                     style="@style/ToolbarButton"
                     android:contentDescription="@string/nav_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:srcCompat="@drawable/ic_app_arrow_back" />
-
-                <TextView
-                    android:id="@+id/card_form_title"
-                    style="@style/ToolbarTitle"
-                    android:text="@string/title_add_credit_card"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/card_form_back_button"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_app_close" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
+
+        <!-- Form title -->
+        <TextView
+            android:id="@+id/card_form_title"
+            style="@style/MainTitle"
+            android:text="@string/title_add_credit_card"
+            android:layout_marginStart="@dimen/form_margin"
+            android:layout_marginEnd="@dimen/form_margin"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_card_form_end"
+            app:layout_constraintStart_toEndOf="@+id/guideline_card_form_start"
+            app:layout_constraintTop_toBottomOf="@+id/card_form_toolbar" />
 
         <!-- Nickname Input -->
 
@@ -76,7 +78,7 @@
             android:inputType="textCapWords"
             app:layout_constraintEnd_toStartOf="@+id/guideline_card_form_end"
             app:layout_constraintStart_toStartOf="@+id/guideline_card_form_start"
-            app:layout_constraintTop_toBottomOf="@+id/card_form_toolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/card_form_title" />
 
         <ImageView
             android:id="@+id/card_form_nickname_icon"
