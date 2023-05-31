@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ==========================================================
+                              IMAGES
+    ============================================================ -->
+
+    <style name="Icon" parent="AppTheme">
+        <item name="android:layout_width">26dp</item>
+        <item name="android:layout_height">26dp</item>
+    </style>
+
+    <style name="SmallIcon" parent="AppTheme">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+    </style>
+
+    <style name="IconMedium" parent="AppTheme">
+        <item name="android:layout_width">@dimen/icon_medium</item>
+        <item name="android:layout_height">@dimen/icon_medium</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <style name="IconMediumSecondary" parent="IconMedium">
+        <item name="tint">@color/medium_emphasis_text</item>
+    </style>
+
+    <style name="IconLarge" parent="AppTheme">
+        <item name="android:layout_width">@dimen/icon_large</item>
+        <item name="android:layout_height">@dimen/icon_large</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <style name="ChartImage" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="tint">@color/colorSecondaryContainer</item>
+    </style>
+
+    <style name="PieChartSmall" parent="ChartImage">
+        <item name="layout_constraintWidth_max">@dimen/home_pie_max</item>
+        <item name="android:layout_marginTop">@dimen/home_pie_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/home_pie_margin</item>
+        <item name="android:layout_marginEnd">@dimen/home_pie_margin</item>
+        <item name="layout_constraintDimensionRatio">w,1:1</item>
+        <item name="srcCompat">@drawable/ic_app_donut_large</item>
+    </style>
+
+    <style name="BarChart" parent="ChartImage">
+        <item name="android:layout_marginTop">@dimen/year_chart_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/year_chart_margin</item>
+        <item name="android:layout_marginEnd">@dimen/year_chart_margin</item>
+        <item name="android:src">@drawable/ic_bar_chart</item>
+        <item name="layout_constraintDimensionRatio">w,3:1</item>
+    </style>
+
+</resources>

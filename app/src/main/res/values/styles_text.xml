@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ==========================================================
+                             PARAGRAPHS
+    ============================================================ -->
+
+    <style name="MainText" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:fontFamily">@font/red_hat_text</item>
+        <item name="android:textSize">@dimen/main_text</item>
+    </style>
+
+    <style name="SecondaryText" parent="MainText">
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:textSize">@dimen/secondary_text</item>
+    </style>
+
+    <!-- Labels -->
+
+    <style name="WrappingLabel" parent="Field">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">12dp</item>
+    </style>
+
+    <!-- ==========================================================
+                              ELLIPSE
+    ============================================================ -->
+
+    <style name="Ellipse" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="MainTextEllipse" parent="MainText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="SecondaryTextEllipse" parent="SecondaryText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- ==========================================================
+                               TITLES
+    ============================================================ -->
+
+    <style name="MainTitle" parent="MainTextEllipse">
+        <item name="android:fontFamily">@font/red_hat_text_medium</item>
+        <item name="android:textSize">@dimen/main_title</item>
+    </style>
+
+    <style name="ToolbarMonth" parent="MainTextEllipse">
+        <item name="android:textSize">@dimen/toolbar_month_text</item>
+        <item name="fontFamily">@font/red_hat_text_semi_bold</item>
+    </style>
+
+    <style name="ToolbarTitle" parent="MainTextEllipse">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginStart">4dp</item>
+    </style>
+
+    <!-- ==========================================================
+                             NUMBERS
+    ============================================================ -->
+
+    <style name="NumberImpact" parent="MainText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/overpass_semi_bold</item>
+        <item name="android:textSize">@dimen/number_impact</item>
+    </style>
+
+    <style name="NumberRegular" parent="MainText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/overpass_regular</item>
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+
+    <style name="NumberMedium" parent="NumberRegular">
+        <item name="android:fontFamily">@font/overpass_medium</item>
+    </style>
+
+    <style name="NumberCurrency" parent="NumberMedium">
+        <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>
+    </style>
+
+</resources>

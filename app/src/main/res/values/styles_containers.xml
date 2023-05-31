@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ==========================================================
+                                NAV BARS
+    ============================================================ -->
+
+    <style name="MainToolbar" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:background">@drawable/bg_toolbar</item>
+        <item name="contentInsetStart">@dimen/toolbar_inset_start</item>
+        <item name="contentInsetEnd">@dimen/toolbar_inset_end</item>
+    </style>
+
+    <style name="BottomNav" parent="AppTheme">
+        <item name="android:layout_width">@dimen/bottomBar_width</item>
+        <item name="android:layout_height">@dimen/bottomBar_height</item>
+        <item name="android:background">@color/bg_01dp</item>
+        <item name="elevation">0dp</item>
+        <item name="itemBackground">@drawable/bg_bottom_bar</item>
+        <!--        <item name="itemActiveIndicatorStyle"></item>-->
+        <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_color</item>
+        <item name="itemTextColor">@color/bottom_nav_icon_color</item>
+        <item name="labelVisibilityMode">unlabeled</item>
+    </style>
+
+    <!-- ==========================================================
+                            CARD VIEW
+    ============================================================ -->
+
+    <style name="CardContainer" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:paddingStart">@dimen/card_padding</item>
+        <item name="android:paddingTop">@dimen/card_padding</item>
+        <item name="android:paddingEnd">@dimen/card_padding</item>
+        <item name="android:paddingBottom">@dimen/card_padding</item>
+    </style>
+
+    <style name="CardContainerClickable" parent="CardContainer">
+        <item name="android:clickable">true</item>
+        <item name="android:state_focused">true</item>
+        <item name="android:background">@drawable/bg_card_click</item>
+    </style>
+
+
+    <!-- ==========================================================
+                               LISTS
+    ============================================================ -->
+
+    <style name="MainList" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:isScrollContainer">false</item>
+        <item name="android:nestedScrollingEnabled">false</item>
+    </style>
+
+    <style name="CategoriesListSmall" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/home_categories_list_margin</item>
+        <item name="android:isScrollContainer">false</item>
+        <item name="android:nestedScrollingEnabled">false</item>
+    </style>
+
+    <style name="SideList" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:padding">@dimen/side_list_padding</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+</resources>

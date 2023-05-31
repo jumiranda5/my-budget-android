@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ==========================================================
+                                MAIN
+    ============================================================ -->
+
+    <style name="TransparentButton" parent="AppTheme">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="MainButton" parent="TransparentButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:fontFamily">@font/red_hat_text_medium</item>
+        <item name="android:textSize">@dimen/secondary_text</item>
+    </style>
+
+    <style name="ButtonSave" parent="MainButton">
+        <item name="android:layout_height">@dimen/button_save_height</item>
+        <item name="android:text">@string/action_save</item>
+        <item name="android:background">@drawable/button_save</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:drawableEnd">@drawable/ic_app_done_all_24</item>
+        <item name="android:paddingStart">48dp</item>
+        <item name="android:drawableTint">@color/white</item>
+    </style>
+
+    <style name="BorderButton" parent="MainButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:background">@drawable/button_border</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:textSize">@dimen/secondary_text</item>
+    </style>
+
+    <!-- ==========================================================
+                            IMAGE BUTTONS
+    ============================================================ -->
+
+    <style name="IconButton" parent="TransparentButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <style name="ToolbarButton" parent="IconButton">
+        <item name="android:layout_width">@dimen/toolbar_button</item>
+        <item name="android:layout_height">@dimen/toolbar_button</item>
+    </style>
+
+    <style name="ItemButton" parent="Icon">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="tint">@color/main_text</item>
+        <item name="layout_constraintDimensionRatio">1:1</item>
+    </style>
+
+    <style name="FormRepeatButton" parent="IconButton">
+        <item name="android:padding">0dp</item>
+        <item name="android:textColor">@color/main_text</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <!-- ==========================================================
+                            SWITCH BUTTONS
+    ============================================================ -->
+
+    <style name="MySwitchButton" parent="MainButton">
+        <item name="layout_constraintWidth_min">112dp</item>
+        <item name="layout_constraintWidth_max">160dp</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="track">@drawable/switch_track</item>
+    </style>
+
+    <style name="FormSwitch" parent="Field">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="track">@drawable/switch_track</item>
+    </style>
+
+    <!-- ==========================================================
+                            TOGGLE BUTTONS
+    ============================================================ -->
+
+    <style name="toggleButtonPill" parent="SecondaryTextEllipse">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:maxWidth">120dp</item>
+        <item name="android:background">@drawable/button_pill</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:fontFamily">@font/red_hat_text_medium</item>
+    </style>
+
+    <!-- ==========================================================
+                            BUTTON PICKER
+    ============================================================ -->
+
+    <style name="ButtonPicker" parent="InputWithIcon">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/button_picker</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textColor">@color/main_text</item>
+    </style>
+
+</resources>
