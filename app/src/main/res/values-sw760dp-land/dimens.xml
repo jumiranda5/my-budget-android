@@ -10,7 +10,6 @@
     <!-- Text -->
     <dimen name="main_text">18sp</dimen>
     <dimen name="secondary_text">16sp</dimen>
-    <dimen name="number_impact">34sp</dimen>
 
     <!-- Buttons -->
     <dimen name="toolbar_button">50dp</dimen>

@@ -10,7 +10,6 @@
     <!-- Text -->
     <dimen name="main_text">16sp</dimen>
     <dimen name="secondary_text">14sp</dimen>
-    <dimen name="number_impact">30sp</dimen>
 
     <!-- Icons -->
     <dimen name="icon_medium">28dp</dimen>

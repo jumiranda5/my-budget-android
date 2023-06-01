@@ -24,13 +24,13 @@ public class CreditCardDetailsFragment extends Fragment {
     // UI
     private FragmentCreditCardDetailsBinding binding;
     private ImageButton buttonBack, buttonArchive, buttonEdit;
-    private Button buttonTransactionDialog;
+    //private Button buttonTransactionDialog;
 
     private void setBinding() {
         buttonBack = binding.cardDetailsBackButton;
         buttonArchive = binding.cardDetailsArchiveButton;
         buttonEdit = binding.cardDetailsEditButton;
-        buttonTransactionDialog = binding.cardDetailsTransaction;
+        //buttonTransactionDialog = binding.cardDetailsTransaction;
     }
 
     // Interfaces
@@ -63,6 +63,6 @@ public class CreditCardDetailsFragment extends Fragment {
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         buttonEdit.setOnClickListener(v-> mInterface.openCardForm(true));
         buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg, 0));
-        buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
+        //buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
     }
 }

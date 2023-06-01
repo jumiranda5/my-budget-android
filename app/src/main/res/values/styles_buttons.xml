@@ -19,6 +19,7 @@
     </style>
 
     <style name="ButtonSave" parent="MainButton">
+        <item name="layout_constraintWidth_max">380dp</item>
         <item name="android:layout_height">@dimen/button_save_height</item>
         <item name="android:text">@string/action_save</item>
         <item name="android:background">@drawable/button_save</item>
@@ -92,11 +93,13 @@
     <style name="toggleButtonPill" parent="SecondaryTextEllipse">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:minWidth">80dp</item>
-        <item name="android:maxWidth">120dp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minWidth">@dimen/toggle_pill_min_width</item>
+        <item name="android:maxWidth">@dimen/toggle_pill_max_width</item>
         <item name="android:background">@drawable/button_pill</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingStart">@dimen/toggle_pill_padding_start</item>
+        <item name="android:paddingEnd">@dimen/toggle_pill_padding_end</item>
         <item name="android:fontFamily">@font/red_hat_text_medium</item>
     </style>
 

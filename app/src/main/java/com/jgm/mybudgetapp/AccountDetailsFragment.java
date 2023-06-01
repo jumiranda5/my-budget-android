@@ -25,13 +25,13 @@ public class AccountDetailsFragment extends Fragment {
     // UI
     private FragmentAccountDetailsBinding binding;
     private ImageButton buttonBack, buttonArchive, buttonEdit;
-    private Button buttonTransactionDialog;
+    //private Button buttonTransactionDialog;
 
     private void setBinding() {
         buttonBack = binding.accountDetailsBackButton;
         buttonArchive = binding.accountDetailsArchiveButton;
         buttonEdit = binding.accountDetailsEditButton;
-        buttonTransactionDialog = binding.accountDetailsTransaction;
+        //buttonTransactionDialog = binding.accountDetailsTransaction;
     }
 
     // Interfaces
@@ -64,6 +64,6 @@ public class AccountDetailsFragment extends Fragment {
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true));
         buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg, 0));
-        buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
+        //buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
     }
 }

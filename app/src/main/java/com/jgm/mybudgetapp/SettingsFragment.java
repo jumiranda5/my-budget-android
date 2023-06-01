@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.jgm.mybudgetapp.databinding.FragmentSettingsBinding;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
@@ -25,9 +26,11 @@ public class SettingsFragment extends Fragment {
     // UI
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
+    private Button mOpenCategories;
 
     private void setBinding() {
         switchDarkMode = binding.switchDarkMode;
+        mOpenCategories = binding.settingsEditCategories;
     }
 
     // Interfaces
@@ -64,5 +67,7 @@ public class SettingsFragment extends Fragment {
             mInterface.switchDarkMode(isChecked);
             SettingsPrefs.setSettingsPrefsBoolean(mContext, "isDark", isChecked);
         });
+
+        mOpenCategories.setOnClickListener(v -> mInterface.openCategoryForm(false));
     }
 }

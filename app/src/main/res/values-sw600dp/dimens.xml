@@ -11,6 +11,21 @@
     <dimen name="main_text">18sp</dimen>
     <dimen name="secondary_text">16sp</dimen>
     <dimen name="number_impact">34sp</dimen>
+    <dimen name="form_title_size">26sp</dimen>
+    <dimen name="toggle_pill_text_size">14sp</dimen>
+    <dimen name="form_title_margin">32dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="toggle_pill_min_width">86dp</dimen>
+    <dimen name="toggle_pill_max_width">128dp</dimen>
+    <dimen name="toggle_pill_padding_start">4dp</dimen>
+    <dimen name="toggle_pill_padding_end">14dp</dimen>
+
+    <!-- Inputs -->
+    <dimen name="input_margin">16dp</dimen>
+
+    <!-- Forms -->
+    <dimen name="form_margin_top">48dp</dimen>
 
     <!-- Icons -->
     <dimen name="icon_medium">32dp</dimen>
@@ -29,10 +44,6 @@
 
     <!-- Cards -->
     <dimen name="card_padding">20dp</dimen>
-
-    <!-- Forms -->
-    <dimen name="form_margin_top">48dp</dimen>
-    <dimen name="input_margin">16dp</dimen>
 
     <!-- Progress -->
     <dimen name="progress_text_size">32sp</dimen>

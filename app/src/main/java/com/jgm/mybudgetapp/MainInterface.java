@@ -9,6 +9,7 @@ public interface MainInterface {
     void openIncome();
     void openExpensesCategories();
     void openIncomeCategories();
+    void openCategoryForm(boolean isEdit);
     void openAccounts();
     void openAccountDetails();
     void openAccountForm(boolean isEdit);

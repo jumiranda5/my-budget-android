@@ -7,35 +7,29 @@
     tools:context=".TransactionFormFragment">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false">
+        style="@style/MyNestedScrollView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="40dp">
+            android:layout_height="wrap_content">
+
+            <!-- Guidelines -->
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="@dimen/guideline_start" />
+                style="@style/GuidelineStart"
+                android:orientation="vertical"  />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="@dimen/guideline_end" />
+                style="@style/GuidelineEnd"
+                android:orientation="vertical"  />
 
             <!-- Toolbar -->
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/add_toolbar"
-                style="@style/MainToolbar"
-                android:background="@android:color/transparent"
+                style="@style/TransparentToolbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -48,7 +42,7 @@
                         android:id="@+id/add_close_button"
                         style="@style/ToolbarButton"
                         android:contentDescription="@string/action_close"
-                        android:src="@drawable/ic_app_close"
+                        app:srcCompat="@drawable/ic_app_close"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -63,20 +57,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                android:paddingTop="@dimen/form_toggle_pill_margin"
+                android:paddingBottom="@dimen/form_toggle_pill_margin"
+                app:layout_constraintStart_toStartOf="@+id/add_amount"
                 app:layout_constraintTop_toBottomOf="@+id/add_toolbar">
 
                 <ToggleButton
                     android:id="@+id/toggle_expense"
                     style="@style/toggleButtonPill"
-                    android:checked="true"
-                    android:textOn="@string/action_out"
-                    android:textOff="@string/action_out"
                     android:button="@drawable/button_pill_icon_out"
                     android:buttonTint="@color/toggle_type_expense_text_color"
+                    android:checked="true"
                     android:textColor="@color/toggle_type_expense_text_color"
+                    android:textOff="@string/action_out"
+                    android:textOn="@string/action_out"
                     app:backgroundTint="@color/expense" />
 
                 <ToggleButton
@@ -84,21 +78,21 @@
                     style="@style/toggleButtonPill"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:textOn="@string/action_in"
-                    android:textOff="@string/action_in"
                     android:button="@drawable/button_pill_icon_in"
                     android:buttonTint="@color/toggle_type_income_text_color"
                     android:textColor="@color/toggle_type_income_text_color"
+                    android:textOff="@string/action_in"
+                    android:textOn="@string/action_in"
                     app:backgroundTint="@color/income" />
 
                 <ToggleButton
                     android:id="@+id/toggle_transfer"
                     style="@style/toggleButtonPill"
-                    android:textOn="@string/action_transfer"
-                    android:textOff="@string/action_transfer"
                     android:button="@drawable/button_pill_icon_transfer"
                     android:buttonTint="@color/toggle_type_transfer_text_color"
                     android:textColor="@color/toggle_type_transfer_text_color"
+                    android:textOff="@string/action_transfer"
+                    android:textOn="@string/action_transfer"
                     app:backgroundTint="@color/savings" />
             </RadioGroup>
 
@@ -110,8 +104,8 @@
                 android:layout_width="0dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/test_formatted_price"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/add_amount"
+                app:layout_constraintStart_toStartOf="@+id/add_amount"
                 app:layout_constraintTop_toBottomOf="@id/add_toggle_group" />
 
             <EditText
@@ -180,21 +174,18 @@
 
             <ImageView
                 android:id="@+id/add_divisor_1"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
+                style="@style/FormDivisor"
                 android:contentDescription="@null"
-                android:layout_marginTop="24dp"
-                android:background="@color/border"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@id/add_date_picker"/>
+                app:layout_constraintEnd_toEndOf="@+id/add_amount"
+                app:layout_constraintStart_toStartOf="@+id/add_amount"
+                app:layout_constraintTop_toBottomOf="@id/add_date_picker" />
 
             <!-- Category -->
             <Button
                 android:id="@+id/add_category_picker"
                 style="@style/ButtonPicker"
                 android:text="@string/label_category"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/form_divisor_space"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_divisor_1" />
@@ -214,8 +205,8 @@
             <Button
                 android:id="@+id/add_method_picker"
                 style="@style/ButtonPicker"
-                android:text="@string/label_cash"
                 android:layout_marginTop="12dp"
+                android:text="@string/label_cash"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_category_picker" />
@@ -238,8 +229,8 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_transparent_border"
                 android:padding="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/add_method_picker"
+                app:layout_constraintStart_toStartOf="@+id/add_method_picker"
                 app:layout_constraintTop_toBottomOf="@+id/add_method_picker">
 
                 <TextView
@@ -281,7 +272,6 @@
                 android:text="@string/action_out"
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/credit_card_month_picker" />
 
@@ -303,7 +293,6 @@
                 android:text="@string/action_in"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/add_account_picker_out" />
 
@@ -321,13 +310,10 @@
 
             <ImageView
                 android:id="@+id/add_divisor_2"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
+                style="@style/FormDivisor"
                 android:contentDescription="@null"
-                android:layout_marginTop="24dp"
-                android:background="@color/border"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/add_amount"
+                app:layout_constraintStart_toStartOf="@+id/add_amount"
                 app:layout_constraintTop_toBottomOf="@id/add_account_picker_in" />
 
             <!-- Is payed - toggle button -->
@@ -335,7 +321,7 @@
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/add_switch_payed"
                 style="@style/FormSwitch"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/form_divisor_space"
                 android:checked="true"
                 android:text="@string/label_paid"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"

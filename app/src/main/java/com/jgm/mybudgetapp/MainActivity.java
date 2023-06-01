@@ -317,6 +317,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
+    public void openCategoryForm(boolean isEdit) {
+        openFragment(categoriesFormTag);
+    }
+
+    @Override
     public void openAccounts() {
         openFragment(accountsTag);
     }

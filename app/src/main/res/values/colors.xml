@@ -37,17 +37,6 @@
     <color name="secondary_text">#767676</color>
     <color name="secondary_icon">#8A8A8A</color>
 
-    <color name="expense">#D91414</color>
-    <color name="expense_pressed">#BC1616</color>
-    <color name="expense_chart">#CCD91414</color>
-
-    <color name="income">#0E7C54</color>
-    <color name="income_pressed">#095F40</color>
-    <color name="income_chart">#29A56F</color>
-
-    <color name="savings">#720EC1</color>
-    <color name="savings_pressed">#5A0C97</color>
-
     <!-- Items -->
     <color name="item_pressed">#F3FFF9</color>
     <color name="item_focused">#F3FFF9</color>
@@ -62,7 +51,18 @@
     <color name="button_save">#29A56F</color>
     <color name="button_save_pressed">#3DCC8E</color>
     <color name="button_picker_pressed">#C5FFE3</color>
-    <color name="disabled_button">#BABABA</color>
+    <color name="disabled_button">#DADADA</color>
+
+    <color name="expense">#D91414</color>
+    <color name="expense_pressed">#BC1616</color>
+    <color name="expense_chart">#CCD91414</color>
+
+    <color name="income">#0E7C54</color>
+    <color name="income_pressed">#095F40</color>
+    <color name="income_chart">#29A56F</color>
+
+    <color name="savings">#720EC1</color>
+    <color name="savings_pressed">#5A0C97</color>
 
     <!-- Color Picker -->
     <color name="red">#E41E1E</color>

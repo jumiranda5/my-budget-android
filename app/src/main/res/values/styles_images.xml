@@ -56,4 +56,12 @@
         <item name="layout_constraintDimensionRatio">w,3:1</item>
     </style>
 
+    <style name="FormDivisor" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginTop">@dimen/form_divisor_space</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:background">@color/border</item>
+    </style>
 </resources>

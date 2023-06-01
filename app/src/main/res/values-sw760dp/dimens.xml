@@ -23,9 +23,6 @@
     <dimen name="bottomBar_icon_size">30dp</dimen>
     <dimen name="main_fab_size">52dp</dimen>
 
-    <!-- Forms -->
-    <dimen name="form_margin_top">64dp</dimen>
-
     <!-- Bar chart -->
     <dimen name="year_chart_margin">56dp</dimen>
     <dimen name="year_chart_margin_top">64dp</dimen>

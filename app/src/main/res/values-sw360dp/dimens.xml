@@ -9,18 +9,30 @@
 
     <!-- Text -->
     <dimen name="number_impact">32sp</dimen>
+    <dimen name="form_title_margin">8dp</dimen>
     <dimen name="currency_width_min">96dp</dimen>
     <dimen name="currency_width_max">160dp</dimen>
 
-    <!-- Cards -->
-    <dimen name="card_padding_sm">16dp</dimen>
+    <!-- Inputs -->
+    <dimen name="input_height">60dp</dimen>
+    <dimen name="input_padding">16dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="toolbar_button">48dp</dimen>
+    <dimen name="toggle_pill_min_width">80dp</dimen>
+    <dimen name="toggle_pill_max_width">104dp</dimen>
+    <dimen name="toggle_pill_padding_start">4dp</dimen>
+    <dimen name="toggle_pill_padding_end">12dp</dimen>
+    <dimen name="button_save_height">56dp</dimen>
 
     <!-- Forms -->
     <dimen name="form_margin">16dp</dimen>
-    <dimen name="form_margin_top">32dp</dimen>
-    <dimen name="input_height">60dp</dimen>
-    <dimen name="input_padding">16dp</dimen>
-    <dimen name="button_save_height">56dp</dimen>
+    <dimen name="form_margin_top">40dp</dimen>
+    <dimen name="form_toggle_pill_margin">16dp</dimen>
+    <dimen name="form_divisor_space">24dp</dimen>
+
+    <!-- Cards -->
+    <dimen name="card_padding_sm">16dp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbar_month_text">18sp</dimen>

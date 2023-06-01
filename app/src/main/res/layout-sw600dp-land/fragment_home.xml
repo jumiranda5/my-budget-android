@@ -41,6 +41,7 @@
             <TextView
                 android:id="@+id/home_month_balance"
                 style="@style/NumberImpact"
+                android:textSize="@dimen/number_impact_home_land"
                 android:text="@string/test_month_balance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/home_month_label"
