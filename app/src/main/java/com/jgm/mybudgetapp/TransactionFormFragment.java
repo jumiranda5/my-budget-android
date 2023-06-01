@@ -1,56 +1,91 @@
 package com.jgm.mybudgetapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.jgm.mybudgetapp.databinding.FragmentTransactionFormBinding;
+import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.utils.ColorUtils;
 
 public class TransactionFormFragment extends Fragment {
-
-    private static final String ARG_TYPE = "OUT_ADD";
-
-    private String mParamType;
 
     public TransactionFormFragment() {
         // Required empty public constructor
     }
 
-    public static TransactionFormFragment newInstance(String param) {
-        TransactionFormFragment fragment = new TransactionFormFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_TYPE, param);
-        fragment.setArguments(args);
-        return fragment;
+    // Vars
+    private boolean hasChosenCategory = false;
+    private int selectedCategoryId;
+
+    // UI
+    private FragmentTransactionFormBinding binding;
+    private Button mCategoryPicker;
+    private ImageView mCategoryIcon;
+
+    private void setBinding() {
+        mCategoryPicker = binding.addCategoryPicker;
+        mCategoryIcon = binding.addIconCategory;
+    }
+
+    // Interfaces
+    private Context mContext;
+    private MainInterface mInterface;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+        mInterface = (MainInterface) context;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParamType = getArguments().getString(ARG_TYPE);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transaction_form, container, false);
+        binding = FragmentTransactionFormBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        setBinding();
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("debug-transaction", "PARAM => " + mParamType);
+
+        initCategory();
+
     }
 
-    public void setTypeParam(String param) {
-        Log.d("debug-transaction", "PARAM => " + param);
+    /* ===============================================================================
+                                         CATEGORY
+     =============================================================================== */
+
+    private void initCategory() {
+        selectedCategoryId = 0;
+        mCategoryPicker.setOnClickListener(view -> mInterface.openCategoriesList(false));
     }
+
+    public void setSelectedCategory(Category category) {
+        // todo: Icon icon = IconUtils.getIcon(category.getIconId());
+        Color color = ColorUtils.getColor(category.getColorId());
+        selectedCategoryId = category.getId();
+        mCategoryPicker.setText(category.getName());
+        // todo mCategoryIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+        mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+        hasChosenCategory = true;
+    }
+
 }

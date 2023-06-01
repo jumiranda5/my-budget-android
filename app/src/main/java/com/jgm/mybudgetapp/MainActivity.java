@@ -23,6 +23,7 @@ import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
+import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
@@ -317,8 +318,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
+    public void openCategoriesList(boolean isEdit) {
+        openFragment(categoriesListTag);
+        if (mCategoriesList != null) mCategoriesList.setListType(isEdit);
+    }
+
+    @Override
     public void openCategoryForm(boolean isEdit) {
         openFragment(categoriesFormTag);
+        if (mCategoriesForm != null) mCategoriesForm.setFormType(isEdit);
     }
 
     @Override
@@ -423,6 +431,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     /* ===============================================================================
+       INTERFACE                        CATEGORIES
+     =============================================================================== */
+
+    @Override
+    public void setSelectedCategory(Category category) {
+        mTransactionForm.setSelectedCategory(category);
+        onBackPressed();
+    }
+
+    /* ===============================================================================
                                          FRAGMENTS
      =============================================================================== */
 
@@ -499,30 +517,71 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 throw new IllegalStateException("Unexpected value: " + tag);
         }
 
-        loadFragment(fragment, tag);
+        if (tag.equals(categoriesListTag) || tag.equals(categoriesFormTag)) addFragment(fragment, tag);
+        else replaceFragment(fragment, tag);
 
     }
 
-    private void loadFragment(Fragment fragment, String tag) {
+    private void replaceFragment(Fragment fragment, String tag) {
 
         Log.d(LOG_NAV, "Fragment to be replaced: " + currentFragment);
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_content_frame, fragment, tag);
         transaction.commit();
 
+        // Set replaced fragment to null
+        deReferenceFragment(currentFragment);
+
         // Update custom navigation stack
         mFragmentTagList.remove(tag);
         mFragmentTagList.add(tag);
-
-        // Set replaced fragment to null
-        deReferenceFragment(currentFragment);
 
         // Set current fragment tag
         currentFragment = tag;
 
         Log.d(LOG_NAV, "Fragment loaded: " + tag);
 
+    }
+
+    private void addFragment(Fragment fragment, String tag) {
+
+        Log.d(LOG_NAV, "Fragment to be added: " + currentFragment);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.main_content_frame, fragment, tag);
+        transaction.commit();
+
+        // hide prev fragment
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        if (tag.equals(categoriesListTag)) {
+            if (currentFragment.equals(transactionFormTag)) transaction2.hide(mTransactionForm);
+            if (currentFragment.equals(settingsTag)) transaction2.hide(mSettings);
+        }
+        else if (tag.equals(categoriesFormTag)) transaction2.hide(mCategoriesList);
+        transaction2.commit();
+
+        // Update custom navigation stack
+        mFragmentTagList.remove(tag);
+        mFragmentTagList.add(tag);
+
+        // Set current fragment tag
+        currentFragment = tag;
+        Log.d(LOG_NAV, "Fragment added: " + tag);
+    }
+
+    private void destroyFragment(Fragment fragment, String tag) {
+        Log.d(LOG_NAV, "Fragment to be removed: " + currentFragment);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.remove(fragment);
+        transaction.commit();
+
+        // show prev fragment
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        if (tag.equals(categoriesListTag)) {
+            if (currentFragment.equals(transactionFormTag)) transaction2.show(mTransactionForm);
+            if (currentFragment.equals(settingsTag)) transaction2.show(mSettings);
+        }
+        if (tag.equals(categoriesFormTag)) transaction2.show(mCategoriesList);
+        transaction2.commit();
     }
 
     private void reReferenceFragment() {
@@ -608,7 +667,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             Log.d(LOG_NAV, "Back to: " + newTopFragmentTag);
             mFragmentTagList.remove(topFragmentTag);
-            setFragment(newTopFragmentTag);
+
+            // remove or replace top fragment
+            if (topFragmentTag.equals(categoriesListTag)) destroyFragment(mCategoriesList, categoriesListTag);
+            else if (topFragmentTag.equals(categoriesFormTag)) destroyFragment(mCategoriesForm, categoriesFormTag);
+            else setFragment(newTopFragmentTag);
 
             // Update toolbar and bottom nav
             setToolbarVisibilities(newTopFragmentTag);

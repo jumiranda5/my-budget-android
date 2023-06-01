@@ -68,6 +68,6 @@ public class SettingsFragment extends Fragment {
             SettingsPrefs.setSettingsPrefsBoolean(mContext, "isDark", isChecked);
         });
 
-        mOpenCategories.setOnClickListener(v -> mInterface.openCategoryForm(false));
+        mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
     }
 }

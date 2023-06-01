@@ -1,64 +1,106 @@
 package com.jgm.mybudgetapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.jgm.mybudgetapp.adapters.CategoryAdapter;
+import com.jgm.mybudgetapp.databinding.FragmentCategoriesListBinding;
+import com.jgm.mybudgetapp.objects.Category;
+
+import java.util.ArrayList;
+
 public class CategoriesListFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public CategoriesListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoriesListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoriesListFragment newInstance(String param1, String param2) {
-        CategoriesListFragment fragment = new CategoriesListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    // Vars
+    private boolean isEdit;
+
+    // List
+    private ArrayList<Category> categoryList = new ArrayList<>();
+    private CategoryAdapter adapter;
+
+    // UI
+    private FragmentCategoriesListBinding binding;
+    private RecyclerView mRecyclerView;
+    private Button mOpenForm;
+
+    private void setBinding() {
+        mRecyclerView = binding.categoriesList;
+        mOpenForm = binding.buttonAddCategory;
+    }
+
+    // Interfaces
+    private Context mContext;
+    private MainInterface mInterface;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+        mInterface = (MainInterface) context;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories_list, container, false);
+        binding = FragmentCategoriesListBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        setBinding();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initCategoriesList();
+        mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(isEdit));
+
+    }
+
+    public void setListType(boolean isEdit) {
+        this.isEdit = isEdit;
+        Log.w("debug-type", "is edit list => " + isEdit);
+    }
+
+    private void initCategoriesList() {
+        initDummyList();
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(listLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        adapter = new CategoryAdapter(mContext, categoryList, isEdit);
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    private void initDummyList() {
+        Category c1 = new Category(0, "Home", 0, 0, true);
+        Category c2 = new Category(0, "Groceries", 1, 0, true);
+        Category c3 = new Category(0, "Leisure", 2, 0, true);
+        Category c4 = new Category(0, "Pet", 3, 0, true);
+        Category c5 = new Category(0, "Car", 4, 0, true);
+        Category c6 = new Category(0, "Restaurant", 5, 0, true);
+
+        categoryList.add(c1);
+        categoryList.add(c2);
+        categoryList.add(c3);
+        categoryList.add(c4);
+        categoryList.add(c5);
+        categoryList.add(c6);
     }
 }

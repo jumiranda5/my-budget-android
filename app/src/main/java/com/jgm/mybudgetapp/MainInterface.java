@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 
 public interface MainInterface {
@@ -7,6 +8,7 @@ public interface MainInterface {
     // Navigation
     void openExpenses();
     void openIncome();
+    void openCategoriesList(boolean isEdit);
     void openExpensesCategories();
     void openIncomeCategories();
     void openCategoryForm(boolean isEdit);
@@ -28,5 +30,8 @@ public interface MainInterface {
 
     // Settings
     void switchDarkMode(boolean isDark);
+
+    // Categories
+    void setSelectedCategory(Category category);
 
 }
