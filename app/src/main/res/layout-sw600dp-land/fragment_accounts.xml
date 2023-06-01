@@ -13,7 +13,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="wrap_content"
-            android:layout_width="500dp"
+            android:layout_width="@dimen/list_width_land"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="@dimen/main_button_margin">
 

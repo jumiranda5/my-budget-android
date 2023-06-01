@@ -69,7 +69,7 @@
     <string name="title_edit_credit_card">Edit Credit Card</string>
     <string name="title_edit_account">Edit Account</string>
     <string name="title_credit_card">Credit Card</string>
-    <string name="title_categories_list">Categories List</string>
+    <string name="title_categories_list">Categories</string>
 
     <!-- Initial values -->
     <string name="test_month_balance">$5,000.00</string>

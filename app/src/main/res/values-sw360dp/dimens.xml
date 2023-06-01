@@ -65,4 +65,8 @@
     <dimen name="item_card_height">72dp</dimen>
     <dimen name="item_account_height">60dp</dimen>
 
+    <!-- Items -->
+    <dimen name="item_simple_height">60dp</dimen>
+    <dimen name="item_double_height">72dp</dimen>
+
 </resources>

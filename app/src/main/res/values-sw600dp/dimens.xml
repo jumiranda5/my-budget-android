@@ -78,9 +78,18 @@
     <dimen name="main_total">36sp</dimen>
     <dimen name="main_accounts_icon_size">34dp</dimen>
 
+    <!-- Categories -->
+    <dimen name="categories_title_size">22sp</dimen>
+    <dimen name="categories_list_margin_top">24dp</dimen>
+    <dimen name="categories_list_margin_bottom">32dp</dimen>
+
     <!-- Items Cards and Accounts (Main page) -->
     <dimen name="item_card_day_margin_top">2dp</dimen>
     <dimen name="item_card_height">80dp</dimen>
     <dimen name="item_account_height">64dp</dimen>
+
+    <!-- Items -->
+    <dimen name="item_simple_height">64dp</dimen>
+    <dimen name="item_double_height">80dp</dimen>
 
 </resources>

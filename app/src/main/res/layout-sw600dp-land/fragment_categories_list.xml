@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoriesListFragment">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/MyNestedScrollView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <!-- Toolbar -->
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/cat_list_toolbar"
+                style="@style/MainToolbar"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/cat_list_toolbar_close"
+                        style="@style/ToolbarButton"
+                        android:contentDescription="@string/action_close"
+                        android:src="@drawable/ic_app_close"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="@dimen/list_width_land"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cat_list_toolbar">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_cat_list_start"
+                    style="@style/GuidelineStart"
+                    android:orientation="vertical" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_cat_list_end"
+                    style="@style/GuidelineEnd"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/cat_list_toolbar_title"
+                    style="@style/MainTitle"
+                    android:text="@string/title_categories_list"
+                    android:textSize="@dimen/categories_title_size"
+                    app:layout_constraintStart_toStartOf="@id/guideline_cat_list_start"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categories_list"
+                    style="@style/MainList"
+                    android:layout_marginTop="@dimen/categories_list_margin_top"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cat_list_toolbar_title"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_category" />
+
+                <Button
+                    android:id="@+id/button_add_category"
+                    style="@style/BorderButton"
+                    android:layout_marginTop="@dimen/categories_list_margin_bottom"
+                    android:text="@string/action_add_category"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_cat_list_end"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_cat_list_start"
+                    app:layout_constraintTop_toBottomOf="@+id/categories_list" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

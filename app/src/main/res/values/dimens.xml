@@ -111,10 +111,20 @@
     <dimen name="item_card_height">70dp</dimen>
     <dimen name="item_account_height">56dp</dimen>
 
+    <!-- Categories -->
+    <dimen name="categories_title_size">20sp</dimen>
+    <dimen name="categories_list_margin_top">16dp</dimen>
+    <dimen name="categories_list_margin_bottom">24dp</dimen>
+
+    <!-- Items -->
+    <dimen name="item_simple_height">56dp</dimen>
+    <dimen name="item_double_height">70dp</dimen>
+
     <!-- Landscape -->
     <dimen name="main_text_home_land">16sp</dimen>
     <dimen name="secondary_text_home_land">14sp</dimen>
     <dimen name="icon_medium_home_land">28dp</dimen>
     <dimen name="card_padding_home_land">16dp</dimen>
+    <dimen name="list_width_land">500dp</dimen>
 
 </resources>
