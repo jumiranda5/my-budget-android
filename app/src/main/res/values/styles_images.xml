@@ -8,6 +8,7 @@
     <style name="Icon" parent="AppTheme">
         <item name="android:layout_width">26dp</item>
         <item name="android:layout_height">26dp</item>
+        <item name="tint">@color/high_emphasis_text</item>
     </style>
 
     <style name="SmallIcon" parent="AppTheme">

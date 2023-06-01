@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Account;
+import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.utils.ColorUtils;
 
 import java.util.List;
 
@@ -43,6 +45,8 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
 
         Account account = mDataList.get(position);
+        int colorId = account.getColorId();
+        Color color = ColorUtils.getColor(colorId);
         int iconId;
         switch (account.getType()) {
             case 0: iconId = R.drawable.ic_app_cash; break;
@@ -52,10 +56,16 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
 
         // Set Icon and color
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, iconId));
-        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.savings));
+        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         // Set account name
         holder.mName.setText(account.getName());
+
+        // Set currency color
+        if (account.getType() == 2) {
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+        }
 
         // Open account details
         holder.mContainer.setOnClickListener(v -> mInterface.openAccountDetails());
@@ -70,7 +80,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
     public static class GridViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mIcon;
-        private final TextView mName;
+        private final TextView mName, mTotal, mCurrencySymbol;
         private final ConstraintLayout mContainer;
 
         private GridViewHolder(@NonNull View itemView) {
@@ -79,6 +89,8 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
             mIcon = itemView.findViewById(R.id.item_account_icon);
             mName = itemView.findViewById(R.id.item_account_name);
             mContainer = itemView.findViewById(R.id.account_item_container);
+            mTotal = itemView.findViewById(R.id.item_account_total);
+            mCurrencySymbol = itemView.findViewById(R.id.item_account_currency_symbol);
 
         }
     }

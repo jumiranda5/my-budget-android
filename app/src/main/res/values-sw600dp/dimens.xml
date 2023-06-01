@@ -2,10 +2,8 @@
 <resources>
 
     <!-- Guidelines -->
-    <item name="guideline_start" format="float" type="dimen">0.08</item>
-    <item name="guideline_end" format="float" type="dimen">0.92</item>
-    <item name="guideline_item_start" format="float" type="dimen">0.08</item>
-    <item name="guideline_item_end" format="float" type="dimen">0.92</item>
+    <item name="guideline_start" format="float" type="dimen">0.1</item>
+    <item name="guideline_end" format="float" type="dimen">0.9</item>
 
     <!-- Text -->
     <dimen name="main_text">18sp</dimen>
@@ -13,7 +11,10 @@
     <dimen name="number_impact">34sp</dimen>
     <dimen name="form_title_size">26sp</dimen>
     <dimen name="toggle_pill_text_size">14sp</dimen>
+    <!-- Text margins and widths -->
     <dimen name="form_title_margin">32dp</dimen>
+    <dimen name="currency_width_min">104dp</dimen>
+    <dimen name="currency_width_max">200dp</dimen>
 
     <!-- Buttons -->
     <dimen name="toggle_pill_min_width">86dp</dimen>
@@ -71,12 +72,14 @@
 
     <!-- Cards and Accounts (Main page) -->
     <dimen name="main_title">20sp</dimen>
-    <dimen name="main_title_large">34sp</dimen>
-    <dimen name="main_title_space">80dp</dimen>
-    <dimen name="main_icon_space">72dp</dimen>
-    <dimen name="main_total">40sp</dimen>
+    <dimen name="main_title_large">30sp</dimen>
+    <dimen name="main_title_space">56dp</dimen>
+    <dimen name="main_title_space_top">80dp</dimen>
+    <dimen name="main_total">36sp</dimen>
+    <dimen name="main_accounts_icon_size">34dp</dimen>
 
-    <!-- Items -->
+    <!-- Items Cards and Accounts (Main page) -->
+    <dimen name="item_card_day_margin_top">2dp</dimen>
     <dimen name="item_card_height">80dp</dimen>
     <dimen name="item_account_height">64dp</dimen>
 

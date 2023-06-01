@@ -34,13 +34,11 @@ public class CreditCardsFragment extends Fragment {
 
     // UI
     private FragmentCreditCardsBinding binding;
-    private ImageButton mBack;
     private Button mAddCard;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
-        mBack = binding.cardsBackButton;
         mAddCard = binding.buttonAddCreditCard;
         mTotal = binding.creditCardsTotal;
         mRecyclerView = binding.cardsList;
@@ -71,7 +69,6 @@ public class CreditCardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mBack.setOnClickListener(v -> mInterface.navigateBack());
         mAddCard.setOnClickListener(v -> mInterface.openCardForm(false));
 
         initDummyList();

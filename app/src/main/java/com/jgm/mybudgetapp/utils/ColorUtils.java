@@ -28,6 +28,12 @@ public class ColorUtils {
     private static final Color grey = new Color(16, R.color.grey, "Grey");
     private static final Color black_white = new Color(17, R.color.black, "Black");
 
+    // App colors
+    private static final Color expenses = new Color(18, R.color.expense, "Red");
+    private static final Color income = new Color(19, R.color.income, "Green");
+    private static final Color savings = new Color(20, R.color.savings, "Purple");
+
+
     public static ArrayList<Color> getColorList() {
         ArrayList<Color> colors = new ArrayList<>();
 
@@ -76,6 +82,9 @@ public class ColorUtils {
             case 14: color = deep_orange; break;
             case 15: color = brown; break;
             case 16: color = grey; break;
+            case 18: color = expenses; break;
+            case 19: color = income; break;
+            case 20: color = savings; break;
             default: color = black_white;
         }
 

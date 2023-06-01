@@ -17,6 +17,7 @@
     <TextView
         android:id="@+id/item_home_cat_text"
         style="@style/SecondaryTextEllipse"
+        android:textSize="@dimen/secondary_text_home_land"
         android:layout_marginStart="8dp"
         android:text="@string/test_category_value"
         app:layout_constraintBottom_toBottomOf="parent"

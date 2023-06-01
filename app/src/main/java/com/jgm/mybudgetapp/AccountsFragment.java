@@ -33,12 +33,10 @@ public class AccountsFragment extends Fragment {
 
     // UI
     private FragmentAccountsBinding binding;
-    private ImageButton mBack;
     private RecyclerView mRecyclerView;
     private Button mAddAccount;
 
     private void setBinding() {
-        mBack = binding.accountsBackButton;
         mRecyclerView = binding.accountsList;
         mAddAccount = binding.buttonAddAccount;
     }
@@ -69,7 +67,6 @@ public class AccountsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false));
-        mBack.setOnClickListener(v -> mInterface.navigateBack());
 
         initDummyList();
         initAccountsList();
@@ -85,9 +82,9 @@ public class AccountsFragment extends Fragment {
     }
 
     private void initDummyList() {
-        accountsList.add(new Account(0, "Cash", 0, 0, 0, true));
-        accountsList.add(new Account(1, "Bank 1", 0, 0, 1, true));
-        accountsList.add(new Account(2, "Bank 2", 0, 0, 1, true));
-        accountsList.add(new Account(3, "Savings", 0, 0, 2, true));
+        accountsList.add(new Account(0, "Cash", 19, 0, 0, true));
+        accountsList.add(new Account(1, "Bank 1", 11, 0, 1, true));
+        accountsList.add(new Account(2, "Bank 2", 14, 0, 1, true));
+        accountsList.add(new Account(3, "Savings", 20, 0, 2, true));
     }
 }

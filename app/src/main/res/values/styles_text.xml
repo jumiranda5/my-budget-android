@@ -52,7 +52,7 @@
     ============================================================ -->
 
     <style name="MainTitle" parent="MainTextEllipse">
-        <item name="android:fontFamily">@font/red_hat_text_medium</item>
+        <item name="android:fontFamily">@font/red_hat_display_medium</item>
         <item name="android:textSize">@dimen/main_title</item>
     </style>
 
