@@ -36,6 +36,19 @@
         <item name="android:textSize">@dimen/secondary_text</item>
     </style>
 
+    <style name="SettingsButton" parent="TransparentButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="layout_constraintWidth_max">460dp</item>
+        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:fontFamily">@font/red_hat_text</item>
+        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:paddingStart">48dp</item>
+        <item name="android:layout_marginTop">@dimen/settings_button_margin</item>
+    </style>
+
     <!-- ==========================================================
                             IMAGE BUTTONS
     ============================================================ -->
@@ -84,6 +97,17 @@
         <item name="android:paddingStart">12dp</item>
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="track">@drawable/switch_track</item>
+    </style>
+
+    <style name="FormSwitchWithIcon" parent="Field">
+        <item name="android:paddingStart">48dp</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="track">@drawable/switch_track</item>
+    </style>
+
+    <style name="SettingsSwitch" parent="FormSwitchWithIcon">
+        <item name="layout_constraintWidth_max">460dp</item>
+        <item name="android:layout_marginTop">@dimen/settings_button_margin</item>
     </style>
 
     <!-- ==========================================================

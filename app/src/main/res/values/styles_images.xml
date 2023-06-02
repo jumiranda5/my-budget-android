@@ -5,6 +5,12 @@
                               IMAGES
     ============================================================ -->
 
+    <style name="MyImage" parent="AppTheme">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
     <style name="Icon" parent="AppTheme">
         <item name="android:layout_width">26dp</item>
         <item name="android:layout_height">26dp</item>
@@ -32,11 +38,15 @@
         <item name="tint">@color/high_emphasis_text</item>
     </style>
 
-    <style name="ChartImage" parent="AppTheme">
+    <style name="IconImage" parent="MyImage">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="ChartImage" parent="MyImage">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:adjustViewBounds">true</item>
-        <item name="android:scaleType">fitCenter</item>
         <item name="tint">@color/colorSecondaryContainer</item>
     </style>
 

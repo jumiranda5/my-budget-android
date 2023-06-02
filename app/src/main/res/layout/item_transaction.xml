@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="@dimen/guideline_item_start" />
+        app:layout_constraintGuide_percent="@dimen/guideline_start" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_item_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="@dimen/guideline_item_end" />
+        app:layout_constraintGuide_percent="@dimen/guideline_end" />
 
     <ImageView
         android:id="@+id/item_transaction_icon"

@@ -1,29 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingsFragment">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_dark_mode"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Dark mode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView
+        style="@style/MyNestedScrollView">
 
-    <Button
-        android:id="@+id/settings_edit_categories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Menage Categories"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_dark_mode" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Toolbar -->
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/settings_toolbar"
+                style="@style/MainToolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/toolbar_settings_icon"
+                        style="@style/IconImage"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_app_settings_400" />
+
+                    <TextView
+                        android:id="@+id/settings_toolbar_title"
+                        style="@style/ToolbarTitle"
+                        android:text="@string/nav_settings"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/toolbar_settings_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/settings_toolbar_close"
+                        style="@style/ToolbarButton"
+                        android:contentDescription="@string/action_close"
+                        android:src="@drawable/ic_app_close"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <!-- Guidelines -->
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_settings_start"
+                style="@style/GuidelineStart"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.02"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_settings_end"
+                style="@style/GuidelineEnd"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.98"/>
+
+            <!-- Biometric lock -->
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/settings_switch_lock"
+                style="@style/SettingsSwitch"
+                android:layout_marginTop="@dimen/settings_margin_top"
+                android:checked="true"
+                android:text="@string/action_biometric_lock"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/settings_toolbar" />
+
+            <ImageView
+                android:id="@+id/settings_lock_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_switch_lock"
+                app:layout_constraintStart_toStartOf="@+id/settings_switch_lock"
+                app:layout_constraintTop_toTopOf="@+id/settings_switch_lock"
+                app:srcCompat="@drawable/ic_app_fingerprint" />
+
+            <!-- Dark mode -->
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_dark_mode"
+                style="@style/SettingsSwitch"
+                android:text="@string/action_dark_mode"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/settings_switch_lock" />
+
+            <ImageView
+                android:id="@+id/settings_mode_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/switch_dark_mode"
+                app:layout_constraintStart_toStartOf="@+id/switch_dark_mode"
+                app:layout_constraintTop_toTopOf="@+id/switch_dark_mode"
+                app:srcCompat="@drawable/ic_app_dark_mode" />
+
+            <!-- Categories -->
+
+            <Button
+                android:id="@+id/settings_edit_categories"
+                style="@style/SettingsButton"
+                android:text="@string/action_menage_categories"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/switch_dark_mode" />
+
+            <ImageView
+                android:id="@+id/settings_category_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_edit_categories"
+                app:layout_constraintStart_toStartOf="@+id/settings_edit_categories"
+                app:layout_constraintTop_toTopOf="@+id/settings_edit_categories"
+                app:srcCompat="@drawable/ic_app_category" />
+
+            <!-- Premium member -->
+
+            <Button
+                android:id="@+id/settings_premium_member"
+                style="@style/SettingsButton"
+                android:text="@string/action_become_a_premium_user"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/settings_edit_categories" />
+
+            <ImageView
+                android:id="@+id/settings_premium_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_premium_member"
+                app:layout_constraintStart_toStartOf="@+id/settings_premium_member"
+                app:layout_constraintTop_toTopOf="@+id/settings_premium_member"
+                app:srcCompat="@drawable/ic_app_premium" />
+
+            <!-- Support -->
+
+            <Button
+                android:id="@+id/settings_support"
+                style="@style/SettingsButton"
+                android:text="@string/action_support"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/settings_premium_member" />
+
+            <ImageView
+                android:id="@+id/settings_support_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_support"
+                app:layout_constraintStart_toStartOf="@+id/settings_support"
+                app:layout_constraintTop_toTopOf="@+id/settings_support"
+                app:srcCompat="@drawable/ic_app_contact_support" />
+
+            <!-- Privacy Policy -->
+
+            <Button
+                android:id="@+id/settings_privacy_policy"
+                style="@style/SettingsButton"
+                android:text="@string/action_privacy_policy"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/settings_support" />
+
+            <ImageView
+                android:id="@+id/settings_privacy_policy_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_privacy_policy"
+                app:layout_constraintStart_toStartOf="@+id/settings_privacy_policy"
+                app:layout_constraintTop_toTopOf="@+id/settings_privacy_policy"
+                app:srcCompat="@drawable/ic_app_policy" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

@@ -4,8 +4,11 @@
     <!-- Guidelines -->
     <item name="guideline_start" format="float" type="dimen">0.1</item>
     <item name="guideline_end" format="float" type="dimen">0.9</item>
+    <item name="guideline_settings_start" format="float" type="dimen">0.1</item>
+    <item name="guideline_settings_end" format="float" type="dimen">0.9</item>
 
     <!-- Text -->
+    <dimen name="toolbar_title_size">20sp</dimen>
     <dimen name="main_text">18sp</dimen>
     <dimen name="secondary_text">16sp</dimen>
     <dimen name="number_impact">34sp</dimen>
@@ -82,6 +85,10 @@
     <dimen name="categories_title_size">22sp</dimen>
     <dimen name="categories_list_margin_top">24dp</dimen>
     <dimen name="categories_list_margin_bottom">32dp</dimen>
+
+    <!-- Settings -->
+    <dimen name="settings_margin_top">32dp</dimen>
+    <dimen name="settings_button_margin">8dp</dimen>
 
     <!-- Items Cards and Accounts (Main page) -->
     <dimen name="item_card_day_margin_top">2dp</dimen>

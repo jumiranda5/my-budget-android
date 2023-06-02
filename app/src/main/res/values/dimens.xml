@@ -6,12 +6,13 @@
     <item name="guideline_end" format="float" type="dimen">0.94</item>
     <item name="guideline_home_start" format="float" type="dimen">0</item>
     <item name="guideline_home_end" format="float" type="dimen">1</item>
-    <item name="guideline_item_start" format="float" type="dimen">0.04</item>
-    <item name="guideline_item_end" format="float" type="dimen">0.96</item>
+    <item name="guideline_settings_start" format="float" type="dimen">0.02</item>
+    <item name="guideline_settings_end" format="float" type="dimen">0.98</item>
 
     <!-- Text -->
     <dimen name="main_text">16sp</dimen>
     <dimen name="secondary_text">14sp</dimen>
+    <dimen name="toolbar_title_size">18sp</dimen>
     <dimen name="number_impact">30sp</dimen>
     <dimen name="number_impact_home_land">30sp</dimen>
     <dimen name="toggle_pill_text_size">14sp</dimen>
@@ -115,6 +116,10 @@
     <dimen name="categories_title_size">20sp</dimen>
     <dimen name="categories_list_margin_top">16dp</dimen>
     <dimen name="categories_list_margin_bottom">24dp</dimen>
+
+    <!-- Settings -->
+    <dimen name="settings_margin_top">16dp</dimen>
+    <dimen name="settings_button_margin">4dp</dimen>
 
     <!-- Items -->
     <dimen name="item_simple_height">56dp</dimen>
