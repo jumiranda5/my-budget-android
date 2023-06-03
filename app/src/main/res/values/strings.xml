@@ -93,5 +93,6 @@
     <string name="action_support">Support</string>
     <string name="action_privacy_policy">Privacy Policy</string>
     <string name="action_biometric_lock">Biometric Lock</string>
+    <string name="desc_categories_chart">Categories chart</string>
 
 </resources>

@@ -22,27 +22,11 @@ import java.util.List;
 
 public class CategoriesFragment extends Fragment {
 
-    private static final String ARG_TAB = "OUT";
-    private String mParamTab;
+    private static final String OUT = "OUT";
+    private static final String IN = "IN";
 
     public CategoriesFragment() {
         // Required empty public constructor
-    }
-
-    public static CategoriesFragment newInstance(String paramTab) {
-        CategoriesFragment fragment = new CategoriesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_TAB, paramTab);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParamTab = getArguments().getString(ARG_TAB);
-        }
     }
 
     // Fragments
@@ -89,7 +73,7 @@ public class CategoriesFragment extends Fragment {
 
         prepareTabs();
         setTabs();
-        setInitialTab(mParamTab);
+        setInitialTab(OUT);
 
     }
 

@@ -69,4 +69,11 @@
     <dimen name="item_simple_height">60dp</dimen>
     <dimen name="item_double_height">72dp</dimen>
 
+    <!-- Categories -->
+    <dimen name="categories_chart_text_size">20sp</dimen>
+    <dimen name="categories_chart_text_padding">32sp</dimen>
+    <dimen name="categories_chart_size">220dp</dimen>
+    <dimen name="categories_chart_margin">60dp</dimen>
+    <dimen name="categories_chart_list_margin">56dp</dimen>
+
 </resources>

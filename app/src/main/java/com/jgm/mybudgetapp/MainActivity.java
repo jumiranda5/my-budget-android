@@ -529,6 +529,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         transaction.replace(R.id.main_content_frame, fragment, tag);
         transaction.commit();
 
+        // Change toolbar background if viewpager
+        if (tag.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
+        else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
+
         // Set replaced fragment to null
         deReferenceFragment(currentFragment);
 
