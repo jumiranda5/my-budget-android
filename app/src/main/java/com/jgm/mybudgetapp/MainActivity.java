@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         reReferenceFragment();
         updateBottomNav(currentFragment);
         setToolbarVisibilities(currentFragment);
+        // Change toolbar background if viewpager
+        if (currentFragment.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
+        else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
     }
 
     @Override

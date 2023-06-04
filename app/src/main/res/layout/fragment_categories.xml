@@ -17,23 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/categories_back_button"
-            style="@style/IconButton"
-            android:contentDescription="@string/nav_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_app_arrow_back" />
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/categories_tabs"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            app:tabTextAppearance="@style/MyTabText"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/bg_toolbar"
             android:contentDescription="@string/desc_categories_tabs"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/categories_back_button"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

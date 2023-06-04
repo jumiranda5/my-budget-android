@@ -49,5 +49,8 @@
     <dimen name="item_simple_height">64dp</dimen>
     <dimen name="item_double_height">88dp</dimen>
 
+    <!-- Categories -->
+    <dimen name="categories_chart_margin">80dp</dimen>
+    <dimen name="categories_chart_list_margin">80dp</dimen>
 
 </resources>

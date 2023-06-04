@@ -19,8 +19,7 @@
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_cards_start"
                 style="@style/GuidelineStart"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="@dimen/guideline_start" />
+                android:orientation="vertical" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_cards_end"

@@ -123,6 +123,7 @@
     <dimen name="categories_chart_size">200dp</dimen>
     <dimen name="categories_chart_margin">48dp</dimen>
     <dimen name="categories_chart_list_margin">40dp</dimen>
+    <dimen name="categories_chart_list_margin_start">0dp</dimen>
 
     <!-- Settings -->
     <dimen name="settings_margin_top">16dp</dimen>

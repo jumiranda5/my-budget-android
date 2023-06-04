@@ -74,7 +74,7 @@ public class CategoriesExpensesFragment extends Fragment {
         mTotal.setText(totalCurrency);
         setDummyList();
         initCategoriesList();
-        Charts.setCategoriesChart(mContext, categories, mChartImage, 220, 18);
+        Charts.setCategoriesChart(mContext, categories, mChartImage, 220, 16);
 
     }
 

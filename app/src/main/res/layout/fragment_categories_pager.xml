@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_01dp"
+    android:paddingBottom="@dimen/bottomBar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CategoriesExpensesFragment">
 
@@ -45,10 +46,11 @@
                 android:id="@+id/categories_percent_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/categories_chart_list_margin_start"
+                android:layout_marginEnd="@dimen/categories_chart_list_margin_start"
                 android:layout_marginTop="@dimen/categories_chart_list_margin"
                 android:nestedScrollingEnabled="false"
                 android:isScrollContainer="false"
-                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/categories_donut_chart"

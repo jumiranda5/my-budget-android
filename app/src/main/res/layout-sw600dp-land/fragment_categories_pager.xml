@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_01dp"
+    android:paddingBottom="@dimen/bottomBar_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CategoriesExpensesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cat_start"
+            style="@style/GuidelineStart"
+            android:orientation="vertical" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cat_middle"
+            style="@style/GuidelineStart"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_cat_end"
+            style="@style/GuidelineEnd"
+            android:orientation="vertical" />
+
+        <ImageView
+            android:id="@+id/categories_donut_chart"
+            android:layout_width="@dimen/categories_chart_size"
+            android:layout_height="@dimen/categories_chart_size"
+            android:layout_marginTop="@dimen/categories_chart_margin"
+            android:contentDescription="@string/desc_categories_chart"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_cat_middle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/categories_total"
+            style="@style/NumberMedium"
+            android:text="@string/test_expenses_value"
+            android:textAlignment="center"
+            android:padding="@dimen/categories_chart_text_padding"
+            android:textSize="@dimen/categories_chart_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/categories_donut_chart"
+            app:layout_constraintEnd_toEndOf="@+id/categories_donut_chart"
+            app:layout_constraintStart_toStartOf="@+id/categories_donut_chart"
+            app:layout_constraintTop_toTopOf="@+id/categories_donut_chart" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories_percent_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:isScrollContainer="false"
+            android:nestedScrollingEnabled="false"
+            android:paddingTop="@dimen/categories_chart_margin"
+            android:paddingBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_cat_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_cat_middle"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_category_percent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

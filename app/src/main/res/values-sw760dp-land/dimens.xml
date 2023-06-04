@@ -54,4 +54,8 @@
     <!-- Credit Cards and Accounts (Main page) -->
     <dimen name="main_title_large">36sp</dimen>
 
+    <!-- Categories -->
+    <dimen name="categories_chart_size">260dp</dimen>
+    <dimen name="categories_chart_margin">60dp</dimen>
+
 </resources>
