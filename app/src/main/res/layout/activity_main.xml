@@ -104,21 +104,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/menu_bottom_nav" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="@dimen/main_fab_size"
-            android:layout_height="@dimen/main_fab_size"
-            android:contentDescription="@string/action_add_transaction"
-            android:src="@drawable/ic_app_add"
-            app:backgroundTint="@color/expense"
-            app:elevation="0dp"
-            app:fabCustomSize="@dimen/main_fab_size"
-            app:layout_constraintBottom_toBottomOf="@+id/bottomNavigationView"
-            app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
-            app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
-            app:layout_constraintTop_toTopOf="@+id/bottomNavigationView"
-            app:tint="@color/bg_00dp" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

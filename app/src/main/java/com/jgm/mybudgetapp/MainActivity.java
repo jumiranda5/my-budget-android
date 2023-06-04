@@ -88,13 +88,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ActivityMainBinding binding;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
-    private FloatingActionButton fab;
     private ImageButton settingsButton;
 
     private void setBinding() {
         toolbar = binding.mainToolbar;
         bottomNavigationView = binding.bottomNavigationView;
-        fab = binding.fab;
         settingsButton = binding.settingsButton;
     }
 
@@ -118,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (savedInstanceState == null) setFragment(homeTag);
 
         initBottomBar();
-        initFab();
         settingsButton.setOnClickListener(v -> openFragment(settingsTag));
     }
 
@@ -196,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private void initBottomBar() {
         MenuItem itemHome = bottomNavigationView.getMenu().getItem(0);
         MenuItem itemCategories = bottomNavigationView.getMenu().getItem(1);
+        MenuItem itemAdd = bottomNavigationView.getMenu().getItem(2);
         MenuItem itemCards = bottomNavigationView.getMenu().getItem(3);
         MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
 
@@ -206,6 +204,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         itemAccounts.setOnMenuItemClickListener(item -> {
             openFragment(accountsTag);
+            return false;
+        });
+
+        itemAdd.setOnMenuItemClickListener(item -> {
+            openFragment(transactionFormTag);
             return false;
         });
 
@@ -228,51 +231,28 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         switch (tag) {
             case categoriesTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_categories);
-                hideBottomNav();
                 break;
             case accountsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
-                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add_account));
-                fab.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.main_text));
                 break;
             case cardsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_cards);
-                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add_card));
-                fab.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.main_text));
                 break;
             case homeTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_home);
-                fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_app_add));
                 break;
             default:
                 hideBottomNav();
         }
     }
 
-    private void initFab() {
-        fab.setOnClickListener(v -> {
-            switch (currentFragment) {
-                case homeTag:
-                    openFragment(transactionFormTag);
-                    break;
-                case accountsTag:
-                    openAccountForm(false);
-                    break;
-                case cardsTag:
-                    openCardForm(false);
-                    break;
-            }
-        });
-    }
 
     private void hideBottomNav() {
         bottomNavigationView.setVisibility(View.GONE);
-        fab.setVisibility(View.GONE);
     }
 
     private void showBottomNav() {
         bottomNavigationView.setVisibility(View.VISIBLE);
-        fab.setVisibility(View.VISIBLE);
     }
 
     /* ===============================================================================

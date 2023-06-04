@@ -17,9 +17,11 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menu_empty"
-        android:title=""
-        app:showAsAction="always"/>
+        android:id="@+id/menu_add"
+        android:title="Add"
+        android:contentDescription="Add"
+        android:icon="@drawable/ic_app_add_400"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_cards"
