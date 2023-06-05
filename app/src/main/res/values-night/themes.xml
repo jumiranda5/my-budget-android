@@ -12,9 +12,10 @@
         <item name="android:statusBarColor">@color/bg_01dp</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Bottom bar indicator -->
-        <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
-        <!-- Switch button -->
+        <item name="colorSecondaryContainer">@color/bg_04dp</item>
+        <!-- Custom material 3 -->
         <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
+        <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
     </style>
 
     <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
@@ -23,11 +24,11 @@
 
     <style name="ThemeOverlay.App.Switch" parent="">
         <!-- Thumb -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
+        <item name="colorPrimary">@color/switch_thumb_on</item>
+        <item name="colorOnSurface">@color/switch_thumb_off</item>
         <!-- Track -->
-        <item name="colorOutline">@color/secondary_icon</item>
-        <item name="colorPrimaryContainer">@color/colorAccent</item>
+        <item name="colorPrimaryContainer">@color/switch_track_on</item>
+        <item name="colorOutline">@color/switch_track_off</item>
     </style>
 
 </resources>

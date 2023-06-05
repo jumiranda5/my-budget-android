@@ -10,7 +10,7 @@
     android:fillViewport="true"
     android:clipToPadding="false"
     android:padding="@dimen/home_padding"
-    android:background="@color/main_background"
+    android:background="@color/bg_00dp"
     tools:context=".HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -22,9 +22,8 @@
         <item name="android:layout_width">@dimen/bottomBar_width</item>
         <item name="android:layout_height">@dimen/bottomBar_height</item>
         <item name="android:background">@color/bg_01dp</item>
-        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
         <item name="itemBackground">@drawable/bg_bottom_bar</item>
-        <!--        <item name="itemActiveIndicatorStyle"></item>-->
         <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
         <item name="itemIconTint">@color/bottom_nav_icon_color</item>
         <item name="itemTextColor">@color/bottom_nav_icon_color</item>

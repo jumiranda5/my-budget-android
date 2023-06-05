@@ -9,7 +9,7 @@
         <item name="android:ambientShadowAlpha">0.09</item>
         <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/bg_01dp</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Bottom bar indicator -->
         <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
@@ -24,11 +24,11 @@
 
     <style name="ThemeOverlay.App.Switch" parent="">
         <!-- Thumb -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
+        <item name="colorPrimary">@color/switch_thumb_on</item>
+        <item name="colorOnSurface">@color/switch_thumb_off</item>
         <!-- Track -->
-        <item name="colorOutline">@color/secondary_icon</item>
-        <item name="colorPrimaryContainer">@color/colorAccent</item>
+        <item name="colorPrimaryContainer">@color/switch_track_on</item>
+        <item name="colorOutline">@color/switch_track_off</item>
     </style>
 
     <style name="Widget.App.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">

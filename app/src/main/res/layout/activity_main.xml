@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_background"
+    android:background="@color/bg_01dp"
     tools:context=".MainActivity">
 
     <!-- Toolbar -->
@@ -36,7 +36,7 @@
 
             <TextView
                 android:id="@+id/toolbar_year"
-                style="@style/MainText"
+                style="@style/SecondaryText"
                 android:fontFamily="@font/red_hat_text_semi_bold"
                 android:layout_marginStart="16dp"
                 android:text="@string/test_year"
@@ -74,7 +74,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_settings_fill" />
+                app:srcCompat="@drawable/ic_app_settings_400" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>

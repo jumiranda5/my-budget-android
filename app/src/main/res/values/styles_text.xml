@@ -58,7 +58,7 @@
 
     <style name="ToolbarMonth" parent="MainTextEllipse">
         <item name="android:textSize">@dimen/toolbar_month_text</item>
-        <item name="fontFamily">@font/red_hat_text_semi_bold</item>
+        <item name="android:fontFamily">@font/red_hat_display_semi_bold</item>
     </style>
 
     <style name="ToolbarTitle" parent="MainTextEllipse">

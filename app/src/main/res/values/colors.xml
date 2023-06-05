@@ -3,38 +3,40 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#1E1E1E</color>
-    <color name="colorSecondary">#767676</color>
+    <color name="colorSecondary">#737373</color>
     <color name="colorAccent">#3DCC8E</color>
     <color name="colorAccentLight">#C5FFE3</color>
     <color name="colorControlHighlight">#BABABA</color>
     <color name="colorSecondaryContainer">#EAEAEA</color>
 
     <!-- Main -->
-    <color name="main_background">#F3F3F3</color>
     <color name="click">#EEEEEE</color>
+    <color name="switch_thumb_off">#737373</color>
+    <color name="switch_thumb_on">@color/colorAccent</color>
+    <color name="switch_track_off">#6B737373</color>
+    <color name="switch_track_on">#6B3DCC8E</color>
 
     <!-- Backgrounds -->
     <color name="bg_00dp">#F3F3F3</color>
     <color name="bg_01dp">#FFFFFF</color>
-    <color name="bg_02dp">#FFFFFF</color>
-    <color name="bg_03dp">#FFFFFF</color>
-    <color name="bg_04dp">#FFFFFF</color>
-    <color name="bg_06dp">#FFFFFF</color>
-    <color name="bg_08dp">#FFFFFF</color>
-    <color name="bg_12dp">#FFFFFF</color>
-    <color name="bg_16dp">#FFFFFF</color>
-    <color name="bg_24dp">#FFFFFF</color>
+    <color name="bg_02dp">@color/bg_01dp</color>
+    <color name="bg_03dp">@color/bg_01dp</color>
+    <color name="bg_04dp">@color/bg_01dp</color>
+    <color name="bg_06dp">@color/bg_01dp</color>
+    <color name="bg_08dp">@color/bg_01dp</color>
+    <color name="bg_12dp">@color/bg_01dp</color>
+    <color name="bg_16dp">@color/bg_01dp</color>
+    <color name="bg_24dp">@color/bg_01dp</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>
-    <color name="border_darker">#B0BEC5</color>
+    <color name="border_darker">#E0E0E0</color>
 
     <!-- Text -->
     <color name="high_emphasis_text">#1E1E1E</color>
-    <color name="medium_emphasis_text">#767676</color>
+    <color name="medium_emphasis_text">#737373</color>
     <color name="disabled_text">#9A9A9A</color>
     <color name="main_text">#1E1E1E</color>
-    <color name="secondary_text">#767676</color>
     <color name="secondary_icon">#8A8A8A</color>
 
     <!-- Items -->

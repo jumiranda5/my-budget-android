@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,6 +23,7 @@
                 android:id="@+id/card_details_back_button"
                 style="@style/IconButton"
                 android:contentDescription="@string/nav_back"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_app_arrow_back" />
@@ -31,14 +33,17 @@
                 style="@style/IconButton"
                 android:layout_marginEnd="4dp"
                 android:contentDescription="@string/action_archive"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/card_details_edit_button"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_archive" />
+                app:srcCompat="@drawable/ic_app_archive"
+                app:tint="@color/expense" />
 
             <ImageButton
                 android:id="@+id/card_details_edit_button"
                 style="@style/IconButton"
                 android:contentDescription="@string/action_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_app_edit" />
@@ -46,45 +51,57 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_details_start"
+        style="@style/GuidelineStart"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_details_end"
+        style="@style/GuidelineEnd"
+        android:orientation="vertical" />
+
     <ImageView
         android:id="@+id/card_details_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="16dp"
+        style="@style/Icon"
+        android:layout_width="@dimen/details_icon_size"
+        android:layout_height="@dimen/details_icon_size"
+        android:layout_marginTop="@dimen/details_icon_margin"
         android:contentDescription="@null"
         android:src="@drawable/ic_app_credit_card"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_details_start"
         app:layout_constraintTop_toBottomOf="@+id/card_details_toolbar" />
 
     <TextView
         android:id="@+id/card_details_title"
+        style="@style/MainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_credit_card"
-        android:layout_marginTop="16dp"
-        android:textSize="22sp"
+        android:layout_marginTop="4dp"
+        android:textSize="@dimen/details_title_size"
         app:layout_constraintStart_toStartOf="@+id/card_details_icon"
         app:layout_constraintTop_toBottomOf="@+id/card_details_icon" />
 
     <TextView
         android:id="@+id/card_details_total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/NumberCurrency"
+        app:layout_constraintWidth_max="1000dp"
         android:text="$4,000.00"
+        android:textSize="@dimen/details_title_size"
         app:layout_constraintBottom_toBottomOf="@+id/card_details_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_details_end"
         app:layout_constraintStart_toEndOf="@+id/card_details_title"
         app:layout_constraintTop_toTopOf="@+id/card_details_title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/details_icon_margin_bottom"
+        android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_card"
+        android:background="@drawable/bg_transparent_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,12 +110,12 @@
         <TextView
             android:id="@+id/card_details_month"
             style="@style/ToolbarMonth"
-            android:layout_width="@dimen/toolbar_month_width"
+            android:layout_width="@dimen/details_month_width"
             android:layout_height="48dp"
-            android:fontFamily="@font/red_hat_text_semi_bold"
+            android:fontFamily="@font/red_hat_display_medium"
+            android:textSize="@dimen/details_month_size"
             android:gravity="center"
             android:text="@string/test_month"
-            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -128,8 +145,9 @@
         <TextView
             android:id="@+id/card_details_year"
             style="@style/MainText"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="14dp"
             android:fontFamily="@font/red_hat_text_semi_bold"
+            android:textSize="@dimen/details_year_size"
             android:text="@string/test_year"
             app:layout_constraintBottom_toBottomOf="@+id/card_details_month"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +160,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_details_month"
-            tools:listitem="@layout/item_transaction_day"/>
+            tools:listitem="@layout/item_transaction2_day"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

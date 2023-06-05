@@ -1,69 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="48dp"
     android:focusable="true"
     android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_item_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="@dimen/guideline_start" />
+        style="@style/GuidelineStart"
+        android:orientation="vertical" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_item_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="@dimen/guideline_end" />
-
-    <ImageView
-        android:id="@+id/item_transaction_icon"
-        style="@style/Icon"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_item_start"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_category" />
+        style="@style/GuidelineEnd"
+        android:orientation="vertical" />
 
     <TextView
         android:id="@+id/item_transaction_name"
         style="@style/MainTextEllipse"
-        android:layout_marginStart="12dp"
         android:text="@string/hint_description"
+        android:textSize="@dimen/secondary_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
-        app:layout_constraintStart_toEndOf="@+id/item_transaction_icon"
+        app:layout_constraintStart_toEndOf="@+id/guideline_item_start"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/item_transaction_total"
         style="@style/NumberCurrency"
+        android:textSize="@dimen/secondary_text"
         android:text="@string/test_currency_value"
         android:textColor="@color/income"
-        android:layout_marginEnd="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
-        app:layout_constraintEnd_toStartOf="@+id/item_transaction_state" />
+        app:layout_constraintEnd_toEndOf="@id/guideline_item_end" />
 
     <TextView
         android:id="@+id/item_transaction_currency_symbol"
         style="@style/NumberMedium"
         android:text="@string/test_currency_symbol"
         android:textColor="@color/income"
+        android:textSize="@dimen/secondary_text"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
         app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
-
-    <ImageView
-        android:id="@+id/item_transaction_state"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_item_end"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_circle_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
