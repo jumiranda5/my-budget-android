@@ -2,6 +2,7 @@ package com.jgm.mybudgetapp;
 
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.objects.Icon;
 
 public interface MainInterface {
 
@@ -27,6 +28,8 @@ public interface MainInterface {
     void showTransactionDialog();
     void showColorPickerDialog();
     void handleColorSelection(Color color);
+    void showIconPickerDialog();
+    void handleIconSelection(Icon icon);
 
     // Settings
     void switchDarkMode(boolean isDark);

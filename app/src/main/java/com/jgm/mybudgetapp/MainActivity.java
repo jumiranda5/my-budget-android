@@ -18,13 +18,14 @@ import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
+import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
     private static final String STATE_FRAGMENT = "current-fragment";
     private static final String STATE_TAG_LIST = "fragment-tag-list";
-    private static final String STATE_FRAGMENT_LIST = "fragment-list";
 
     // Params
     private static final String PARAM_OUT = "OUT";
@@ -273,8 +273,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     /* ===============================================================================
-                                     INTERFACE NAVIGATION
+                                         INTERFACE
      =============================================================================== */
+
+
+    /* ---------------------  NAVIGATION --------------------- */
+
 
     @Override
     public void openExpenses() {
@@ -355,9 +359,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         onBackPressed();
     }
 
-    /* ===============================================================================
-                                     INTERFACE DIALOGS
-     =============================================================================== */
+
+    /* ---------------------  DIALOGS --------------------- */
+
 
     @Override
     public void showConfirmationDialog(String message, int id) {
@@ -396,9 +400,21 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    /* ===============================================================================
-                                    INTERFACE SETTINGS
-     =============================================================================== */
+    @Override
+    public void showIconPickerDialog() {
+        Log.d(LOG_NAV, "Show icon picker dialog");
+        BottomSheetDialogFragment iconPicker = new IconPickerDialog();
+        iconPicker.show(getSupportFragmentManager(), "iconPicker");
+    }
+
+    @Override
+    public void handleIconSelection(Icon icon) {
+        Log.d("debug-icon-picker", "Icon: " + icon.getIconName());
+        if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) mCategoriesForm.setSelectedIcon(icon);
+    }
+
+    /* ---------------------  SETTINGS --------------------- */
+
 
     @Override
     public void switchDarkMode(boolean isDark) {
@@ -413,15 +429,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-    /* ===============================================================================
-       INTERFACE                        CATEGORIES
-     =============================================================================== */
+
+    /* ---------------------  CATEGORIES --------------------- */
+
 
     @Override
     public void setSelectedCategory(Category category) {
         mTransactionForm.setSelectedCategory(category);
         onBackPressed();
     }
+
 
     /* ===============================================================================
                                          FRAGMENTS

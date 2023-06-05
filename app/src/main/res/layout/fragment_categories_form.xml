@@ -95,7 +95,7 @@
                 android:id="@+id/category_icon"
                 style="@style/InputIcon"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_app_category"
+                android:src="@drawable/ic_category_fill"
                 app:layout_constraintBottom_toBottomOf="@+id/category_icon_button"
                 app:layout_constraintStart_toStartOf="@+id/category_icon_button"
                 app:layout_constraintTop_toTopOf="@+id/category_icon_button" />
