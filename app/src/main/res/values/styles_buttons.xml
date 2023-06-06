@@ -65,6 +65,7 @@
     <style name="ToolbarButton" parent="IconButton">
         <item name="android:layout_width">@dimen/toolbar_button</item>
         <item name="android:layout_height">@dimen/toolbar_button</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="ItemButton" parent="Icon">

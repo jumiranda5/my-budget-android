@@ -1,7 +1,6 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,15 +61,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
         // Set category name
         holder.mName.setText(category.getName());
 
-        // Select category
-        if (!isEdit) holder.mContainer.setOnClickListener(v -> mInterface.setSelectedCategory(category));
-
-        // Set edit button
+        // Select category | Set edit button
         if (isEdit) {
             holder.mEdit.setVisibility(View.VISIBLE);
             holder.mEdit.setOnClickListener(v -> mInterface.openCategoryForm(true, category, position));
+            holder.mContainer.setOnClickListener(v -> mInterface.openCategoryForm(true, category, position));
         }
-        else holder.mEdit.setVisibility(View.GONE);
+        else {
+            holder.mEdit.setVisibility(View.GONE);
+            holder.mContainer.setOnClickListener(v -> mInterface.setSelectedCategory(category));
+        }
 
     }
 

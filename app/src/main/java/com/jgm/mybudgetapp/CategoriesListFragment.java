@@ -1,6 +1,5 @@
 package com.jgm.mybudgetapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.CategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesListBinding;
@@ -41,10 +41,12 @@ public class CategoriesListFragment extends Fragment {
     private FragmentCategoriesListBinding binding;
     private RecyclerView mRecyclerView;
     private Button mOpenForm;
+    private ImageButton mClose;
 
     private void setBinding() {
         mRecyclerView = binding.categoriesList;
         mOpenForm = binding.buttonAddCategory;
+        mClose = binding.catListToolbarClose;
     }
 
     // Interfaces
@@ -75,6 +77,7 @@ public class CategoriesListFragment extends Fragment {
         initCategoriesList();
         mInterface.getCategoriesData();
         mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(false, null, 0));
+        mClose.setOnClickListener(v -> mInterface.navigateBack());
 
     }
 
@@ -127,7 +130,7 @@ public class CategoriesListFragment extends Fragment {
         ArrayList<Category> list = new ArrayList<>();
 
         Category c1 = new Category(0, mContext.getString(R.string.category_home), 3, 6, true);
-        Category c2 = new Category(0, mContext.getString(R.string.category_health), 5, 24, true);
+        Category c2 = new Category(0, mContext.getString(R.string.category_health), 5, 34, true);
         Category c3 = new Category(0, mContext.getString(R.string.category_groceries), 14, 9, true);
         Category c4 = new Category(0, mContext.getString(R.string.category_transport), 11, 29, true);
         Category c5 = new Category(0, mContext.getString(R.string.category_leisure), 1, 46, true);
