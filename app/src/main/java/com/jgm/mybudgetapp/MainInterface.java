@@ -4,6 +4,8 @@ import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 
+import java.util.ArrayList;
+
 public interface MainInterface {
 
     // Navigation
@@ -12,7 +14,7 @@ public interface MainInterface {
     void openCategoriesList(boolean isEdit);
     void openExpensesCategories();
     void openIncomeCategories();
-    void openCategoryForm(boolean isEdit);
+    void openCategoryForm(boolean isEdit, Category category, int position);
     void openAccounts();
     void openAccountDetails();
     void openAccountForm(boolean isEdit);
@@ -23,8 +25,8 @@ public interface MainInterface {
     void navigateBack();
 
     // Dialogs
-    void showConfirmationDialog(String message, int id);
-    void handleConfirmation(int id);
+    void showConfirmationDialog(String message);
+    void handleConfirmation();
     void showTransactionDialog();
     void showColorPickerDialog();
     void handleColorSelection(Color color);
@@ -36,5 +38,12 @@ public interface MainInterface {
 
     // Categories
     void setSelectedCategory(Category category);
+
+
+    // DATABASE
+
+    void getCategoriesData();
+    void insertCategoryData(Category category);
+    void editCategoryData(int position, Category category);
 
 }

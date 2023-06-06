@@ -1,6 +1,7 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.IconUtils;
 
 import java.util.List;
 
@@ -48,12 +51,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
 
         Category category = mDataList.get(position);
-        // todo: Icon icon = IconUtils.getIcon(category.getIconId());
+        Icon icon = IconUtils.getIcon(category.getIconId());
         Color color = ColorUtils.getColor(category.getColorId());
 
         // Set Icon and color
-        // todo holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-        // todo holder.mIcon.setContentDescription(icon.getIconName());
+        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+        holder.mIcon.setContentDescription(icon.getIconName());
         holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         // Set category name
@@ -65,7 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
         // Set edit button
         if (isEdit) {
             holder.mEdit.setVisibility(View.VISIBLE);
-            holder.mEdit.setOnClickListener(v -> mInterface.openCategoryForm(true));
+            holder.mEdit.setOnClickListener(v -> mInterface.openCategoryForm(true, category, position));
         }
         else holder.mEdit.setVisibility(View.GONE);
 
@@ -79,7 +82,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
     public void addItem(Category category) {
         if (category != null) {
             mDataList.add(category);
-            int pos = mDataList.size() - 1;
+            int pos = mDataList.size();
             notifyItemInserted(pos);
             notifyItemRangeInserted(pos, mDataList.size());
         }

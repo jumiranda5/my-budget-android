@@ -62,7 +62,7 @@ public class CreditCardDetailsFragment extends Fragment {
 
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         buttonEdit.setOnClickListener(v-> mInterface.openCardForm(true));
-        buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg, 0));
+        buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg));
         //buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
     }
 }

@@ -48,6 +48,16 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <ImageButton
+                        android:id="@+id/cat_form_toolbar_archive"
+                        style="@style/ToolbarButton"
+                        android:contentDescription="@string/action_archive"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_close"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_app_archive"
+                        app:tint="@color/red" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -55,7 +65,7 @@
             <TextView
                 android:id="@+id/cat_form_title"
                 style="@style/FormTitle"
-                android:text="@string/action_add_category"
+                android:text="@string/title_add_category"
                 app:layout_constraintEnd_toEndOf="@+id/category_name_input"
                 app:layout_constraintStart_toStartOf="@+id/category_name_input"
                 app:layout_constraintTop_toBottomOf="@+id/cat_form_toolbar" />

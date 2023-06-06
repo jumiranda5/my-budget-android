@@ -63,7 +63,7 @@ public class AccountDetailsFragment extends Fragment {
 
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true));
-        buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg, 0));
+        buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg));
         //buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
     }
 }

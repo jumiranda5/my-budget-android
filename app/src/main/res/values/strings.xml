@@ -3,6 +3,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Default categories -->
+    <string name="category_home">Home</string>
+    <string name="category_health">Health</string>
+    <string name="category_groceries">Groceries</string>
+    <string name="category_transport">Transportation</string>
+    <string name="category_leisure">Leisure</string>
+    <string name="category_work">Work</string>
+    <string name="category_education">Education</string>
+
+
     <!-- Navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_categories">Categories</string>
@@ -25,6 +35,14 @@
     <string name="action_transfer">Transfer</string>
     <string name="action_increase">Increase</string>
     <string name="action_decrease">Decrease</string>
+    <string name="action_dark_mode">Dark mode</string>
+    <string name="action_menage_categories">Menage Categories</string>
+    <string name="action_become_a_premium_user">Become a Premium User</string>
+    <string name="action_support">Support</string>
+    <string name="action_privacy_policy">Privacy Policy</string>
+    <string name="action_biometric_lock">Biometric Lock</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
 
     <!-- Descriptions -->
     <string name="desc_categories_tabs">Categories tabs</string>
@@ -36,6 +54,7 @@
     <string name="desc_next_month">Next month</string>
     <string name="desc_list_of_colors">List of colors</string>
     <string name="desc_payment_value">Payment value</string>
+    <string name="desc_categories_chart">Categories chart</string>
 
     <!-- Hints -->
     <string name="hint_account_nickname">Account Nickname</string>
@@ -70,6 +89,8 @@
     <string name="title_edit_account">Edit Account</string>
     <string name="title_credit_card">Credit Card</string>
     <string name="title_categories_list">Categories</string>
+    <string name="title_add_category">Add Category</string>
+    <string name="title_edit_category">Edit Category</string>
 
     <!-- Initial values -->
     <string name="test_month_balance">$5,000.00</string>
@@ -87,12 +108,10 @@
     <string name="test_formatted_price">$0.00</string>
     <string name="test_january">January</string>
     <string name="test_february">February</string>
-    <string name="action_dark_mode">Dark mode</string>
-    <string name="action_menage_categories">Menage Categories</string>
-    <string name="action_become_a_premium_user">Become a Premium User</string>
-    <string name="action_support">Support</string>
-    <string name="action_privacy_policy">Privacy Policy</string>
-    <string name="action_biometric_lock">Biometric Lock</string>
-    <string name="desc_categories_chart">Categories chart</string>
+
+    <!-- Messages -->
+    <string name="msg_archive_default">Would you like to permanently archive this item?</string>
+    <string name="msg_archive_category">Would you like to permanently archive this category?</string>
+
 
 </resources>

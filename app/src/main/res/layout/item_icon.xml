@@ -11,7 +11,7 @@
         style="@style/ItemButton"
         android:contentDescription="@string/label_color"
         android:padding="14dp"
-        app:tint="@color/medium_emphasis_text"
+        app:tint="@color/high_emphasis_text"
         app:srcCompat="@drawable/ic_category_fill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,11 +18,10 @@ import com.jgm.mybudgetapp.R;
 public class ConfirmationDialog extends DialogFragment {
     public ConfirmationDialog() {}
 
-    public static ConfirmationDialog newInstance(String message, int id) {
+    public static ConfirmationDialog newInstance(String message) {
         ConfirmationDialog frag = new ConfirmationDialog();
         Bundle args = new Bundle();
         args.putString("message", message);
-        args.putInt("id", id);
         frag.setArguments(args);
         return frag;
     }
@@ -56,7 +54,7 @@ public class ConfirmationDialog extends DialogFragment {
         // Confirm
         Button confirmBtn = view.findViewById(R.id.dialog_confirmation_button);
         confirmBtn.setOnClickListener(v -> {
-            mInterface.handleConfirmation(0);
+            mInterface.handleConfirmation();
             dismiss();
         });
 

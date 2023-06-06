@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -26,6 +27,8 @@ public class CategoriesListFragment extends Fragment {
     public CategoriesListFragment() {
         // Required empty public constructor
     }
+
+    private static final String LOG = "debug-cat-list";
 
     // Vars
     private boolean isEdit;
@@ -70,37 +73,78 @@ public class CategoriesListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initCategoriesList();
-        mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(isEdit));
+        mInterface.getCategoriesData();
+        mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(false, null, 0));
 
     }
+
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
 
     public void setListType(boolean isEdit) {
         this.isEdit = isEdit;
-        Log.w("debug-type", "is edit list => " + isEdit);
+        Log.w(LOG, "is edit list => " + isEdit);
     }
 
+    public void updateListAfterDbRead(ArrayList<Category> dbCategories) {
+        Log.d(LOG, "Update ui list: " + dbCategories.size());
+        if (dbCategories.size() > 0) {
+            categoryList = dbCategories;
+            initCategoriesList();
+        }
+        else setDefaultList(); // todo => check for first open on shared prefs
+    }
+
+    public void updateListAfterDbInsertion(Category category) {
+        Log.d(LOG, "Update ui list: " + category.getName());
+        adapter.addItem(category);
+    }
+
+    public void updateListAfterDelete(int pos) {
+        Log.d(LOG, "Update ui list after item delete");
+        adapter.deleteItem(pos);
+    }
+
+    public void updateListAfterEdit(int pos, Category editedCategory) {
+        Log.d(LOG, "Update ui list after item edit");
+        adapter.updateItem(pos, editedCategory);
+    }
+
+    /* ===============================================================================
+                                          LIST
+    =============================================================================== */
+
     private void initCategoriesList() {
-        initDummyList();
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
         adapter = new CategoryAdapter(mContext, categoryList, isEdit);
         mRecyclerView.setAdapter(adapter);
     }
 
-    private void initDummyList() {
-        Category c1 = new Category(0, "Home", 0, 0, true);
-        Category c2 = new Category(0, "Groceries", 1, 0, true);
-        Category c3 = new Category(0, "Leisure", 2, 0, true);
-        Category c4 = new Category(0, "Pet", 3, 0, true);
-        Category c5 = new Category(0, "Car", 4, 0, true);
-        Category c6 = new Category(0, "Restaurant", 5, 0, true);
+    private void setDefaultList() {
 
-        categoryList.add(c1);
-        categoryList.add(c2);
-        categoryList.add(c3);
-        categoryList.add(c4);
-        categoryList.add(c5);
-        categoryList.add(c6);
+        ArrayList<Category> list = new ArrayList<>();
+
+        Category c1 = new Category(0, mContext.getString(R.string.category_home), 3, 6, true);
+        Category c2 = new Category(0, mContext.getString(R.string.category_health), 5, 24, true);
+        Category c3 = new Category(0, mContext.getString(R.string.category_groceries), 14, 9, true);
+        Category c4 = new Category(0, mContext.getString(R.string.category_transport), 11, 29, true);
+        Category c5 = new Category(0, mContext.getString(R.string.category_leisure), 1, 46, true);
+        Category c6 = new Category(0, mContext.getString(R.string.category_education), 7, 15, true);
+        Category c7 = new Category(0, mContext.getString(R.string.category_work), 4, 11, true);
+
+        list.add(c1);
+        list.add(c2);
+        list.add(c3);
+        list.add(c4);
+        list.add(c5);
+        list.add(c6);
+        list.add(c7);
+
+        for (int i = 0; i < list.size(); i++) {
+            mInterface.insertCategoryData(list.get(i));
+        }
+
     }
 }

@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.jgm.mybudgetapp.db.DataManager;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
@@ -29,12 +32,18 @@ import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
     // Constants
     private static final String LOG_NAV = "debug-nav";
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
+
+    private static final String LOG_THREAD = "debug-thread";
+
+    private static final String LOG_DB = "debug-database";
     private static final String STATE_FRAGMENT = "current-fragment";
     private static final String STATE_TAG_LIST = "fragment-tag-list";
 
@@ -84,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
     private String currentFragment;
 
+    // Db
+    private ExecutorService executorServiceRead;
+    private ExecutorService executorServiceWrite;
+    protected DataManager mDbManager;
+
     // UI
     private ActivityMainBinding binding;
     private Toolbar toolbar;
@@ -115,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         if (savedInstanceState == null) setFragment(homeTag);
 
+        openDatabase();
         initBottomBar();
         settingsButton.setOnClickListener(v -> openFragment(settingsTag));
     }
@@ -144,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     protected void onResume() {
         super.onResume();
         Log.d(LOG_LIFECYCLE, "Main Activity onResume");
+        initExecutors();
     }
 
     @Override
@@ -164,12 +180,59 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     protected void onStop() {
         super.onStop();
         Log.d(LOG_LIFECYCLE, "Main Activity onStop");
+        closeExecutors();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         Log.d(LOG_LIFECYCLE, "Main Activity onDestroy");
+        closeDatabase();
+        super.onDestroy();
+    }
+
+    /* ==========================================================================
+                                      DATABASE
+    ========================================================================== */
+
+    private void openDatabase() {
+        if (mDbManager == null) {
+            mDbManager = new DataManager(this);
+            mDbManager.open();
+            Log.d(LOG_DB, "opening db...");
+        }
+    }
+
+    private void closeDatabase() {
+        if (mDbManager != null) mDbManager.close();
+        Log.d(LOG_DB, "closing db...");
+    }
+
+    private void initExecutors() {
+
+        if (executorServiceWrite == null || executorServiceWrite.isShutdown()) {
+            Log.d(LOG_THREAD, "Init executor Write => Main Activity");
+            executorServiceWrite = Executors.newSingleThreadExecutor();
+        }
+
+        if (executorServiceRead == null || executorServiceRead.isShutdown()) {
+            Log.d(LOG_THREAD, "Init executorRead => Main Activity");
+            executorServiceRead = Executors.newSingleThreadExecutor();
+        }
+
+    }
+
+    private void closeExecutors() {
+
+        Log.d(LOG_THREAD, "Close executors => Main Activity");
+
+        if (executorServiceWrite != null) executorServiceWrite.shutdownNow();
+        if (executorServiceRead != null) executorServiceRead.shutdownNow();
+
+        if (executorServiceWrite != null && executorServiceRead != null) {
+            Log.d(LOG_THREAD, "Executor read shut down: " + executorServiceRead.isShutdown());
+            Log.d(LOG_THREAD, "Executor write shut down: " + executorServiceWrite.isShutdown());
+        }
+
     }
 
     /* ===============================================================================
@@ -277,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      =============================================================================== */
 
 
-    /* ---------------------  NAVIGATION --------------------- */
+    /* ========================  NAVIGATION ======================== */
 
 
     @Override
@@ -311,9 +374,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openCategoryForm(boolean isEdit) {
+    public void openCategoryForm(boolean isEdit, Category category, int position) {
         openFragment(categoriesFormTag);
-        if (mCategoriesForm != null) mCategoriesForm.setFormType(isEdit);
+        if (mCategoriesForm != null) {
+            mCategoriesForm.setFormType(isEdit);
+            mCategoriesForm.setCategoryToEdit(category, position);
+        }
     }
 
     @Override
@@ -360,20 +426,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ---------------------  DIALOGS --------------------- */
+    /* ========================  DIALOGS ======================== */
 
 
     @Override
-    public void showConfirmationDialog(String message, int id) {
+    public void showConfirmationDialog(String message) {
         FragmentManager fm = getSupportFragmentManager();
-        ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message, id);
+        ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message);
         confirmationDialog.show(fm, "CONFIRMATION_DIALOG");
     }
 
     @Override
-    public void handleConfirmation(int id) {
-        // todo => update item on db...
-        Log.d("debug-dialog", "Id to be updated: " + id);
+    public void handleConfirmation() {
+        if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null)
+            mCategoriesForm.handleArchiveConfirmation();
     }
 
     @Override
@@ -398,6 +464,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         else if (currentFragment.equals(accountFormTag) && mAccountForm != null) {
             mAccountForm.updateColor(color);
         }
+        else if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) {
+            mCategoriesForm.setSelectedColor(color);
+        }
     }
 
     @Override
@@ -413,7 +482,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) mCategoriesForm.setSelectedIcon(icon);
     }
 
-    /* ---------------------  SETTINGS --------------------- */
+
+    /* ========================  SETTINGS ======================== */
 
 
     @Override
@@ -430,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ---------------------  CATEGORIES --------------------- */
+    /* ========================  CATEGORIES ======================== */
 
 
     @Override
@@ -439,6 +509,56 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         onBackPressed();
     }
 
+
+    /* ========================  DATABASE ======================== */
+
+    @Override
+    public void getCategoriesData() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceRead.execute(() -> {
+
+            ArrayList<Category> categoriesList = mDbManager.getAllCategories();
+
+            handler.post(() -> {
+                mCategoriesList.updateListAfterDbRead(categoriesList);
+                Log.d(LOG_DB, "Done reading all accounts from db: " + categoriesList.size());
+            });
+        });
+    }
+
+    @Override
+    public void insertCategoryData(Category category) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            int id = (int) mDbManager.createCategory(category);
+            category.setId(id);
+
+            handler.post(() -> {
+                if (mCategoriesList != null) mCategoriesList.updateListAfterDbInsertion(category);
+                Log.d(LOG_DB, "Category saved in db... update ui");
+            });
+
+        });
+    }
+
+    @Override
+    public void editCategoryData(int position, Category category) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            mDbManager.updateCategory(category);
+
+            handler.post(() -> {
+                Log.d(LOG_DB, "category updated on db... update ui");
+                if (mCategoriesList != null) {
+                    if (category.isActive()) mCategoriesList.updateListAfterEdit(position, category);
+                    else mCategoriesList.updateListAfterDelete(position);
+                }
+            });
+
+        });
+    }
 
     /* ===============================================================================
                                          FRAGMENTS
