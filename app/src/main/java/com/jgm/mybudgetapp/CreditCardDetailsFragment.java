@@ -5,15 +5,20 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardDetailsBinding;
+import com.jgm.mybudgetapp.objects.Card;
+import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.utils.ColorUtils;
 
 public class CreditCardDetailsFragment extends Fragment {
 
@@ -21,16 +26,21 @@ public class CreditCardDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    // Vars
+    private int position;
+    private Card creditCard;
+
     // UI
     private FragmentCreditCardDetailsBinding binding;
-    private ImageButton buttonBack, buttonArchive, buttonEdit;
-    //private Button buttonTransactionDialog;
+    private ImageButton mBack, mEdit;
+    private ImageView mCardIcon;
+    private TextView mCardName;
 
     private void setBinding() {
-        buttonBack = binding.cardDetailsBackButton;
-        buttonArchive = binding.cardDetailsArchiveButton;
-        buttonEdit = binding.cardDetailsEditButton;
-        //buttonTransactionDialog = binding.cardDetailsTransaction;
+        mBack = binding.cardDetailsBackButton;
+        mEdit = binding.cardDetailsEditButton;
+        mCardIcon = binding.cardDetailsIcon;
+        mCardName = binding.cardDetailsTitle;
     }
 
     // Interfaces
@@ -58,11 +68,33 @@ public class CreditCardDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String archiveMsg = "This will permanently archive this credit card. Would you like to continue?";
+        mBack.setOnClickListener(v-> mInterface.navigateBack());
+        mEdit.setOnClickListener(v-> mInterface.openCardForm(true, creditCard, position));
 
-        buttonBack.setOnClickListener(v-> mInterface.navigateBack());
-        buttonEdit.setOnClickListener(v-> mInterface.openCardForm(true));
-        buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg));
-        //buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
+        if (creditCard != null) initCreditCardInfo();
+    }
+
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
+
+    public void setCreditCard(Card card, int position) {
+        this.position = position;
+        creditCard = card;
+    }
+
+    public void updateCreditCardAfterEdit(Card card) {
+        creditCard = card;
+        initCreditCardInfo();
+    }
+
+    /* ===============================================================================
+                                          DATA
+     =============================================================================== */
+
+    private void initCreditCardInfo() {
+        mCardName.setText(creditCard.getName());
+        Color color = ColorUtils.getColor(creditCard.getColorId());
+        mCardIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
     }
 }

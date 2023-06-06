@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.adapters.CardAdapter;
@@ -29,8 +29,11 @@ public class CreditCardsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private static final String LOG = "debug-credit-cards";
+
     // List
-    private final ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> cardsList = new ArrayList<>();
+    CardAdapter adapter;
 
     // UI
     private FragmentCreditCardsBinding binding;
@@ -69,44 +72,62 @@ public class CreditCardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAddCard.setOnClickListener(v -> mInterface.openCardForm(false));
+        mAddCard.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
 
-        initDummyList();
-        setTotal();
         initRecyclerView();
+        mInterface.getCreditCardsData();
+        setTotal();
 
     }
 
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
+
+    public void updateListAfterDbRead(ArrayList<Card> dbCards) {
+        Log.d(LOG, "Update ui list: " + dbCards.size());
+        cardsList = dbCards;
+        initRecyclerView();
+    }
+
+    public void updateUiAfterInsertion(Card card) {
+        adapter.addItem(card);
+    }
+
+    public void updateListAfterDelete(int pos) {
+        Log.d("debug-cards", "Update ui list after item delete");
+        adapter.deleteItem(pos);
+    }
+
+    public void updateListAfterEdit(int pos, Card editedCard) {
+        Log.d("debug-cards", "Update ui list after item edit");
+        adapter.updateItem(pos, editedCard);
+    }
+
+
+    /* ===============================================================================
+                                         TOTAL
+     =============================================================================== */
+
     private void setTotal() {
         float total = 0.0f;
-        for (int i = 0; i < cards.size(); i++) {
-            total = total + cards.get(i).getTotal();
+        for (int i = 0; i < cardsList.size(); i++) {
+            total = total + cardsList.get(i).getTotal();
         }
         String[] currencyFormat = NumberUtils.getCurrencyFormat(mContext, total);
         String formattedValue = currencyFormat[0] + currencyFormat[1];
         mTotal.setText(formattedValue);
     }
 
+    /* ===============================================================================
+                                        LIST
+     =============================================================================== */
+
     private void initRecyclerView() {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemViewCacheSize(20);
-        CardAdapter adapter = new CardAdapter(mContext, cards);
+        adapter = new CardAdapter(mContext, cardsList);
         mRecyclerView.setAdapter(adapter);
     }
 
-    private void initDummyList() {
-        Card c1 = new Card(0, "Card 1", R.color.colorAccent, 8, true);
-        Card c2 = new Card(0, "Card 2", R.color.expense, 14, true);
-        Card c3 = new Card(0, "Card 3", R.color.savings, 21, true);
-
-        c1.setTotal(1200.0f);
-        c2.setTotal(850.5f);
-        c3.setTotal(500.0f);
-
-        cards.add(c1);
-        cards.add(c2);
-        cards.add(c3);
-    }
 }

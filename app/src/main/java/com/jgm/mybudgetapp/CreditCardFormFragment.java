@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardFormBinding;
+import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
@@ -33,20 +34,24 @@ public class CreditCardFormFragment extends Fragment {
     private static final String LOG = "debug-card-form";
 
     // Vars
+    private boolean isEdit = false;
     private Color selectedColor;
     private int billingDay;
+    private int position;
+    private Card creditCard;
 
     // UI
     private FragmentCreditCardFormBinding binding;
     private TextView mToolbarTitle;
     private EditText mNicknameInput, mBillingDayInput;
     private Button mColorButton, mSave;
-    private ImageButton mBack;
+    private ImageButton mBack, mArchive;
     private ImageView mColorIcon;
 
     private void setBinding() {
         mToolbarTitle = binding.cardFormTitle;
         mBack = binding.cardFormBackButton;
+        mArchive = binding.cardFormArchiveButton;
         mSave = binding.cardFormSaveButton;
         mNicknameInput = binding.cardFormNickname;
         mBillingDayInput = binding.cardFormDay;
@@ -81,29 +86,58 @@ public class CreditCardFormFragment extends Fragment {
 
         mBack.setOnClickListener(v -> mInterface.navigateBack());
         mSave.setOnClickListener(v -> mInterface.navigateBack());
+        mArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(getString(R.string.msg_archive_credit_card)));
+        mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
+        mSave.setOnClickListener(v -> {
+            if (isEdit) editCreditCard(true);
+            else createCard();
+        });
+
         initCreditCardForm();
 
     }
 
-    // Init Edit / Add form
-    public void setFormType(boolean isEdit) {
+    private void initCreditCardForm() {
+        mSave.setEnabled(false);
+        mNicknameInput.addTextChangedListener(cardNameWatcher);
         if (isEdit) {
             mToolbarTitle.setText(getString(R.string.title_edit_credit_card));
-            Log.d(LOG, "Form type => EDIT");
+            setEditOptions();
         }
         else {
             mToolbarTitle.setText(getString(R.string.title_add_credit_card));
-            Log.d(LOG, "Form type => ADD");
+            setDefaultOptions();
         }
     }
 
-    private void initCreditCardForm() {
-        setDefaultOptions();
-        mSave.setEnabled(false);
-        mNicknameInput.addTextChangedListener(cardNameWatcher);
-        mSave.setOnClickListener(v -> createCard());
-        mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
+
+    // Init Edit / Add form
+    public void setFormType(boolean isEdit) {
+        this.isEdit = isEdit;
     }
+
+    public void setCreditCard(Card card, int position) {
+        this.position = position;
+        creditCard = card;
+    }
+
+    public void setSelectedColor(Color color) {
+        selectedColor = color;
+        Log.e(LOG, "selected color => " + selectedColor.getColorName());
+        mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
+        mColorIcon.setContentDescription(selectedColor.getColorName());
+    }
+
+    public void handleArchiveConfirmation() {
+        editCreditCard(false);
+    }
+
+    /* ===============================================================================
+                                        OPTIONS
+     =============================================================================== */
 
     private void setDefaultOptions() {
         billingDay = 1;
@@ -112,18 +146,17 @@ public class CreditCardFormFragment extends Fragment {
         mColorIcon.setContentDescription(selectedColor.getColorName());
     }
 
-    public void updateColor(Color color) {
-        Log.d(LOG, "Should change color: " + color.getColorName());
-        selectedColor = color;
+    private void setEditOptions() {
+        mNicknameInput.setText(creditCard.getName());
+        mBillingDayInput.setText(String.valueOf(creditCard.getBillingDay()));
+        selectedColor = ColorUtils.getColor(creditCard.getColorId());
         mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
         mColorIcon.setContentDescription(selectedColor.getColorName());
     }
 
-    private void clearForm() {
-        mNicknameInput.setText("");
-        mBillingDayInput.setText("");
-        setDefaultOptions();
-    }
+    /* ===============================================================================
+                                        FORM
+     =============================================================================== */
 
     private final TextWatcher cardNameWatcher = new TextWatcher() {
         @Override
@@ -145,11 +178,25 @@ public class CreditCardFormFragment extends Fragment {
         if (billingDayText.equals("")) billingDayText = "1";
         billingDay = Integer.parseInt(billingDayText);
 
-        Log.d(LOG, "Card nickname => " + nickname);
-        Log.d(LOG, "Card color => " + selectedColor.getColorName());
-        Log.d(LOG, "Card billing day => " + billingDay);
+        Card newCard = new Card(0, nickname, selectedColor.getId(), billingDay, true);
+        mInterface.insertCreditCardData(newCard);
+        mInterface.navigateBack();
+    }
 
-        clearForm();
+    private void editCreditCard(boolean isActive) {
+        String nickname = mNicknameInput.getText().toString().trim();
+        String billingDayText = mBillingDayInput.getText().toString();
+        if (billingDayText.equals("")) billingDayText = "1";
+        billingDay = Integer.parseInt(billingDayText);
+
+        Card editedCard = new Card(
+                creditCard.getId(),
+                nickname,
+                selectedColor.getId(),
+                billingDay,
+                isActive);
+
+        mInterface.editCreditCardData(position, editedCard);
         mInterface.navigateBack();
     }
 }

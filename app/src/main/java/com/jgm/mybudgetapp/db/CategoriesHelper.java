@@ -22,7 +22,7 @@ public class CategoriesHelper {
         values.put(DatabaseContract.Categories.COLUMN_NAME, category.getName());
         values.put(DatabaseContract.Categories.COLUMN_COLOR, category.getColorId());
         values.put(DatabaseContract.Categories.COLUMN_ICON, category.getIconId());
-        values.put(DatabaseContract.Categories.COLUMN_ACTIVE, category.isActive());
+        values.put(DatabaseContract.Categories.COLUMN_ACTIVE, 1);
 
         try {
             Log.d(LOG, "row successfully inserted on Categories table");

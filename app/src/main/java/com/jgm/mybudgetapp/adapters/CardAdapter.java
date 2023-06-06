@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Card;
+import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;
@@ -47,7 +49,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
         String billingDay = "Billing day: " + card.getBillingDay();
 
         // Set color
-        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, card.getColorId()));
+        Color color = ColorUtils.getColor(card.getColorId());
+        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         // Set account name and type
         holder.mName.setText(card.getName());
@@ -59,8 +62,30 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
         holder.mTotal.setText(total[1]);
 
         // Container
-        holder.mContainer.setOnClickListener(v -> mInterface.openCardDetails());
+        holder.mContainer.setOnClickListener(v -> mInterface.openCardDetails(card, position));
 
+    }
+
+    public void addItem(Card card) {
+        if (card != null) {
+            mDataList.add(card);
+            int pos = mDataList.size();
+            notifyItemInserted(pos);
+            notifyItemRangeInserted(pos, mDataList.size());
+        }
+    }
+
+    public void updateItem(int pos, Card newData) {
+        mDataList.get(pos).setName(newData.getName());
+        mDataList.get(pos).setColorId(newData.getColorId());
+        mDataList.get(pos).setBillingDay(newData.getBillingDay());
+        notifyItemChanged(pos);
+    }
+
+    public void deleteItem(int pos) {
+        mDataList.remove(pos);
+        notifyItemRemoved(pos);
+        notifyItemRangeChanged(pos, mDataList.size());
     }
 
     @Override

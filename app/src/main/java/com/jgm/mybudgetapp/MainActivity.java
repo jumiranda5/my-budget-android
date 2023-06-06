@@ -26,6 +26,7 @@ import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
+import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
@@ -409,14 +410,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openCardDetails() {
+    public void openCardDetails(Card card, int position) {
         openFragment(cardDetailsTag);
+        if (mCreditCardDetails != null) mCreditCardDetails.setCreditCard(card, position);
     }
 
     @Override
-    public void openCardForm(boolean isEdit) {
-        if (mCreditCardForm != null) mCreditCardForm.setFormType(isEdit);
+    public void openCardForm(boolean isEdit, Card card, int position) {
         openFragment(cardFormTag);
+        if (mCreditCardForm != null) {
+            mCreditCardForm.setFormType(isEdit);
+            if (isEdit) mCreditCardForm.setCreditCard(card, position);
+        }
     }
 
     @Override
@@ -445,6 +450,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void handleConfirmation() {
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null)
             mCategoriesForm.handleArchiveConfirmation();
+        else if (currentFragment.equals(cardFormTag) && mCreditCardForm != null)
+            mCreditCardForm.handleArchiveConfirmation();
     }
 
     @Override
@@ -464,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void handleColorSelection(Color color) {
         if (currentFragment.equals(cardFormTag) && mCreditCardForm != null) {
-            mCreditCardForm.updateColor(color);
+            mCreditCardForm.setSelectedColor(color);
         }
         else if (currentFragment.equals(accountFormTag) && mAccountForm != null) {
             mAccountForm.updateColor(color);
@@ -515,7 +522,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ========================  DATABASE ======================== */
+    /* ========================  DATABASE - CATEGORIES ======================== */
 
     @Override
     public void getCategoriesData() {
@@ -526,7 +533,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             handler.post(() -> {
                 mCategoriesList.updateListAfterDbRead(categoriesList);
-                Log.d(LOG_DB, "Done reading all accounts from db: " + categoriesList.size());
+                Log.d(LOG_DB, "Done reading all categories from db: " + categoriesList.size());
             });
         });
     }
@@ -560,6 +567,60 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     if (category.isActive()) mCategoriesList.updateListAfterEdit(position, category);
                     else mCategoriesList.updateListAfterDelete(position);
                 }
+            });
+
+        });
+    }
+
+    /* ========================  DATABASE - CREDIT CARDS ======================== */
+
+    @Override
+    public void getCreditCardsData() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceRead.execute(() -> {
+
+            ArrayList<Card> cardsList = mDbManager.getAllCreditCards();
+
+            handler.post(() -> {
+                if (mCreditCards != null) mCreditCards.updateListAfterDbRead(cardsList);
+                Log.d("debug-database", "Done reading all credit cards from db: " + cardsList.size());
+            });
+        });
+    }
+
+    @Override
+    public void insertCreditCardData(Card card) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            int id = (int) mDbManager.createCreditCard(card);
+            card.setId(id);
+
+            handler.post(() -> {
+                if (mCreditCards != null) mCreditCards.updateUiAfterInsertion(card);
+                Log.d("debug-db", "Credit Card saved in db... update ui");
+            });
+        });
+    }
+
+    @Override
+    public void editCreditCardData(int position, Card card) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            mDbManager.updateCreditCard(card);
+
+            handler.post(() -> {
+                if (card.isActive()) {
+                    if (mCreditCards != null) mCreditCards.updateListAfterEdit(position, card);
+                    if (mCreditCardDetails != null) mCreditCardDetails.updateCreditCardAfterEdit(card);
+                }
+                else {
+                    // close cards details fragment and update main
+                    onBackPressed();
+                    mCreditCards.updateListAfterDelete(position);
+                }
+                Log.d(LOG_DB, "credit card updated on db... update ui");
             });
 
         });
@@ -642,7 +703,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 throw new IllegalStateException("Unexpected value: " + tag);
         }
 
-        if (tag.equals(categoriesListTag) || tag.equals(categoriesFormTag)) addFragment(fragment, tag);
+        if (tag.equals(categoriesListTag)
+                || tag.equals(categoriesFormTag)
+                || tag.equals(cardFormTag)
+                || tag.equals(cardDetailsTag)) addFragment(fragment, tag);
         else replaceFragment(fragment, tag);
 
     }
@@ -681,12 +745,25 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         // hide prev fragment
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        if (tag.equals(categoriesListTag)) {
-            if (currentFragment.equals(transactionFormTag)) transaction2.hide(mTransactionForm);
-            if (currentFragment.equals(settingsTag)) transaction2.hide(mSettings);
+        switch (tag) {
+            case categoriesListTag:
+                if (currentFragment.equals(transactionFormTag)) transaction2.hide(mTransactionForm);
+                if (currentFragment.equals(settingsTag)) transaction2.hide(mSettings);
+                break;
+            case categoriesFormTag:
+                transaction2.hide(mCategoriesList);
+                break;
+            case cardFormTag:
+                if (currentFragment.equals(cardsTag)) transaction2.hide(mCreditCards);
+                if (currentFragment.equals(cardDetailsTag)) transaction2.hide(mCreditCardDetails);
+                break;
+            case cardDetailsTag:
+                transaction2.hide(mCreditCards);
+                break;
         }
-        else if (tag.equals(categoriesFormTag)) transaction2.hide(mCategoriesList);
         transaction2.commit();
+
+        Log.e("debug-card-fragment", "Is fragment null after details add => " + (mCreditCards == null));
 
         // Update custom navigation stack
         mFragmentTagList.remove(tag);
@@ -705,11 +782,22 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         // show prev fragment
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        if (tag.equals(categoriesListTag)) {
-            if (currentFragment.equals(transactionFormTag)) transaction2.show(mTransactionForm);
-            if (currentFragment.equals(settingsTag)) transaction2.show(mSettings);
+        switch (tag) {
+            case categoriesListTag:
+                if (currentFragment.equals(transactionFormTag)) transaction2.show(mTransactionForm);
+                if (currentFragment.equals(settingsTag)) transaction2.show(mSettings);
+                break;
+            case categoriesFormTag:
+                transaction2.show(mCategoriesList);
+                break;
+            case cardFormTag:
+                if (currentFragment.equals(cardsTag)) transaction2.show(mCreditCards);
+                if (currentFragment.equals(cardDetailsTag)) transaction2.show(mCreditCardDetails);
+                break;
+            case cardDetailsTag:
+                transaction2.show(mCreditCards);
+                break;
         }
-        if (tag.equals(categoriesFormTag)) transaction2.show(mCategoriesList);
         transaction2.commit();
     }
 
@@ -802,9 +890,23 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             // remove or replace top fragment
             Log.d(LOG_NAV, "Top fragment: " + topFragmentTag);
-            if (topFragmentTag.equals(categoriesListTag)) destroyFragment(mCategoriesList, categoriesListTag);
-            else if (topFragmentTag.equals(categoriesFormTag)) destroyFragment(mCategoriesForm, categoriesFormTag);
-            else setFragment(newTopFragmentTag);
+            switch (topFragmentTag) {
+                case categoriesListTag:
+                    destroyFragment(mCategoriesList, categoriesListTag);
+                    break;
+                case categoriesFormTag:
+                    destroyFragment(mCategoriesForm, categoriesFormTag);
+                    break;
+                case cardFormTag:
+                    destroyFragment(mCreditCardForm, cardFormTag);
+                    break;
+                case cardDetailsTag:
+                    destroyFragment(mCreditCardDetails, cardDetailsTag);
+                    break;
+                default:
+                    setFragment(newTopFragmentTag);
+                    break;
+            }
 
             // Update toolbar and bottom nav
             setToolbarVisibilities(newTopFragmentTag);

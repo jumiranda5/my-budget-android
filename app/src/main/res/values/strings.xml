@@ -112,6 +112,7 @@
     <!-- Messages -->
     <string name="msg_archive_default">Would you like to permanently archive this item?</string>
     <string name="msg_archive_category">Would you like to permanently archive this category?</string>
+    <string name="msg_archive_credit_card">Would you like to permanently archive this credit card?</string>
 
 
 </resources>

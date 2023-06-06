@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
@@ -19,8 +20,8 @@ public interface MainInterface {
     void openAccountDetails();
     void openAccountForm(boolean isEdit);
     void openYear();
-    void openCardDetails();
-    void openCardForm(boolean isEdit);
+    void openCardDetails(Card card, int position);
+    void openCardForm(boolean isEdit, Card card, int position);
     void openTransactionForm();
     void navigateBack();
 
@@ -45,5 +46,9 @@ public interface MainInterface {
     void getCategoriesData();
     void insertCategoryData(Category category);
     void editCategoryData(int position, Category category);
+
+    void getCreditCardsData();
+    void insertCreditCardData(Card card);
+    void editCreditCardData(int position, Card card);
 
 }

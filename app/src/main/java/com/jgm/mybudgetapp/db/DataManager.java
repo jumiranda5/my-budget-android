@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 
 import java.util.ArrayList;
@@ -56,6 +57,21 @@ public class DataManager {
 
     /* ================ CREDIT CARDS CRUD  ================== */
 
+    public long createCreditCard(Card card) {
+        return CreditCardsHelper.create(mDatabase, card);
+    }
+
+    public ArrayList<Card> getAllCreditCards() {
+        return CreditCardsHelper.readAll(mDatabase);
+    }
+
+    public void updateCreditCard(Card card) {
+        CreditCardsHelper.updateRow(mDatabase, card);
+    }
+
+    public void deleteCreditCard(int id) {
+        CreditCardsHelper.deleteRow(mDatabase, id);
+    }
 
 
     /* ================ TRANSACTIONS CRUD  ================== */
