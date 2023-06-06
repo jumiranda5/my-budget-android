@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import com.jgm.mybudgetapp.adapters.CategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesListBinding;
 import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
 
@@ -78,7 +79,6 @@ public class CategoriesListFragment extends Fragment {
         mInterface.getCategoriesData();
         mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(false, null, 0));
         mClose.setOnClickListener(v -> mInterface.navigateBack());
-
     }
 
     /* ===============================================================================
@@ -96,7 +96,7 @@ public class CategoriesListFragment extends Fragment {
             categoryList = dbCategories;
             initCategoriesList();
         }
-        else setDefaultList(); // todo => check for first open on shared prefs
+        else setDefaultList();
     }
 
     public void updateListAfterDbInsertion(Category category) {
@@ -127,26 +127,35 @@ public class CategoriesListFragment extends Fragment {
 
     private void setDefaultList() {
 
-        ArrayList<Category> list = new ArrayList<>();
+        boolean hasInitialCategories = SettingsPrefs.getSettingsPrefsBoolean(mContext, "hasInitialCategories");
 
-        Category c1 = new Category(0, mContext.getString(R.string.category_home), 3, 6, true);
-        Category c2 = new Category(0, mContext.getString(R.string.category_health), 5, 34, true);
-        Category c3 = new Category(0, mContext.getString(R.string.category_groceries), 14, 9, true);
-        Category c4 = new Category(0, mContext.getString(R.string.category_transport), 11, 29, true);
-        Category c5 = new Category(0, mContext.getString(R.string.category_leisure), 1, 46, true);
-        Category c6 = new Category(0, mContext.getString(R.string.category_education), 7, 15, true);
-        Category c7 = new Category(0, mContext.getString(R.string.category_work), 4, 11, true);
+        if (!hasInitialCategories) {
 
-        list.add(c1);
-        list.add(c2);
-        list.add(c3);
-        list.add(c4);
-        list.add(c5);
-        list.add(c6);
-        list.add(c7);
+            Log.d(LOG, "== INIT CATEGORIES DEFAULT LIST");
 
-        for (int i = 0; i < list.size(); i++) {
-            mInterface.insertCategoryData(list.get(i));
+            ArrayList<Category> list = new ArrayList<>();
+
+            Category c1 = new Category(0, mContext.getString(R.string.category_home), 3, 6, true);
+            Category c2 = new Category(0, mContext.getString(R.string.category_health), 5, 34, true);
+            Category c3 = new Category(0, mContext.getString(R.string.category_groceries), 14, 9, true);
+            Category c4 = new Category(0, mContext.getString(R.string.category_transport), 11, 29, true);
+            Category c5 = new Category(0, mContext.getString(R.string.category_leisure), 1, 46, true);
+            Category c6 = new Category(0, mContext.getString(R.string.category_education), 7, 15, true);
+            Category c7 = new Category(0, mContext.getString(R.string.category_work), 4, 11, true);
+
+            list.add(c1);
+            list.add(c2);
+            list.add(c3);
+            list.add(c4);
+            list.add(c5);
+            list.add(c6);
+            list.add(c7);
+
+            for (int i = 0; i < list.size(); i++) {
+                mInterface.insertCategoryData(list.get(i));
+            }
+
+            SettingsPrefs.setSettingsPrefsBoolean(mContext, "hasInitialCategories", true);
         }
 
     }
