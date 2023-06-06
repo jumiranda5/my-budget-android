@@ -75,6 +75,8 @@ public class CategoriesListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.d(LOG, "Categories list onViewCreated");
+
         initCategoriesList();
         mInterface.getCategoriesData();
         mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(false, null, 0));

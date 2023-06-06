@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         setBinding();
 
         if (savedInstanceState == null) setFragment(homeTag);
+        else initExecutors();
 
         openDatabase();
         initBottomBar();
@@ -141,15 +142,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
         super.onRestoreInstanceState(savedInstanceState);
+
         currentFragment = savedInstanceState.getString(STATE_FRAGMENT);
         mFragmentTagList = savedInstanceState.getStringArrayList(STATE_TAG_LIST);
+
         Log.d(LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
-        Log.d(LOG_LIFECYCLE, "current fragment => " + currentFragment);
-        reReferenceFragment();
+
+        for (int i = 0; i < mFragmentTagList.size(); i++) {
+            reReferenceFragment(mFragmentTagList.get(i));
+        }
         updateBottomNav(currentFragment);
         setToolbarVisibilities(currentFragment);
+
         // Change toolbar background if viewpager
         if (currentFragment.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
         else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
@@ -693,7 +698,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void destroyFragment(Fragment fragment, String tag) {
-        Log.d(LOG_NAV, "Fragment to be removed: " + currentFragment);
+        Log.d(LOG_NAV, "Fragment to be removed: " + tag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(fragment);
         transaction.commit();
@@ -708,8 +713,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         transaction2.commit();
     }
 
-    private void reReferenceFragment() {
-        switch (currentFragment) {
+    private void reReferenceFragment(String tag) {
+
+        Log.d(LOG_NAV, "========= re-reference: " + currentFragment);
+
+        switch (tag) {
             case accountsTag:
                 mAccounts = (AccountsFragment) getSupportFragmentManager().findFragmentByTag(accountsTag);
                 break;
@@ -793,6 +801,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mFragmentTagList.remove(topFragmentTag);
 
             // remove or replace top fragment
+            Log.d(LOG_NAV, "Top fragment: " + topFragmentTag);
             if (topFragmentTag.equals(categoriesListTag)) destroyFragment(mCategoriesList, categoriesListTag);
             else if (topFragmentTag.equals(categoriesFormTag)) destroyFragment(mCategoriesForm, categoriesFormTag);
             else setFragment(newTopFragmentTag);
