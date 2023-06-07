@@ -32,6 +32,7 @@ public class ColorUtils {
     private static final Color expenses = new Color(18, R.color.expense, "Red");
     private static final Color income = new Color(19, R.color.income, "Green");
     private static final Color savings = new Color(20, R.color.savings, "Purple");
+    private static final Color cash = new Color(21, R.color.cash, "Green");
 
 
     public static ArrayList<Color> getColorList() {
@@ -85,6 +86,7 @@ public class ColorUtils {
             case 18: color = expenses; break;
             case 19: color = income; break;
             case 20: color = savings; break;
+            case 21: color = cash; break;
             default: color = black_white;
         }
 

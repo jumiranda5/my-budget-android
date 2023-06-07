@@ -26,6 +26,7 @@ import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
+import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
@@ -394,14 +395,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openAccountDetails() {
+    public void openAccountDetails(Account account, int position) {
         openFragment(accountDetailsTag);
+        if (mAccountDetails != null) mAccountDetails.setAccount(account, position);
     }
 
     @Override
-    public void openAccountForm(boolean isEdit) {
-        if (mAccountForm != null) mAccountForm.setFormType(isEdit);
+    public void openAccountForm(boolean isEdit, Account account, int position) {
         openFragment(accountFormTag);
+        if (mAccountForm != null) {
+            mAccountForm.setFormType(isEdit);
+            if (isEdit) mAccountForm.setAccount(account, position);
+        }
     }
 
     @Override
@@ -452,6 +457,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mCategoriesForm.handleArchiveConfirmation();
         else if (currentFragment.equals(cardFormTag) && mCreditCardForm != null)
             mCreditCardForm.handleArchiveConfirmation();
+        else if (currentFragment.equals(accountFormTag) && mAccountForm != null)
+            mAccountForm.handleArchiveConfirmation();
     }
 
     @Override
@@ -474,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mCreditCardForm.setSelectedColor(color);
         }
         else if (currentFragment.equals(accountFormTag) && mAccountForm != null) {
-            mAccountForm.updateColor(color);
+            mAccountForm.setSelectedColor(color);
         }
         else if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) {
             mCategoriesForm.setSelectedColor(color);
@@ -519,6 +526,63 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void setSelectedCategory(Category category) {
         mTransactionForm.setSelectedCategory(category);
         onBackPressed();
+    }
+
+
+    /* ========================  DATABASE - ACCOUNTS ======================== */
+
+    @Override
+    public void getAccountsData() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceRead.execute(() -> {
+
+            ArrayList<Account> accountsList = mDbManager.getAllAccounts();
+
+            handler.post(() -> {
+                mAccounts.updateListAfterDbRead(accountsList);
+                Log.d(LOG_DB, "Done reading all accounts from db: " + accountsList.size());
+            });
+        });
+    }
+
+    @Override
+    public void insertAccountData(Account account) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            int id = (int) mDbManager.createAccount(account);
+            account.setId(id);
+
+            handler.post(() -> {
+                mAccounts.updateUiAfterInsertion(account);
+                Log.d(LOG_DB, "account saved on db... update ui");
+            });
+
+        });
+    }
+
+    @Override
+    public void editAccountData(int position, Account account) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            mDbManager.updateAccount(account);
+
+            handler.post(() -> {
+                if (account.isActive()) {
+                    mAccounts.updateListAfterEdit(position, account);
+                    mAccountDetails.updateAccountAfterEdit(account);
+                }
+                else {
+                    // close details page and update main
+                    onBackPressed();
+                    mAccounts.updateListAfterDelete(position);
+                }
+
+                Log.d(LOG_DB, "account updated on db... update ui");
+            });
+
+        });
     }
 
 
@@ -626,6 +690,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         });
     }
 
+
     /* ===============================================================================
                                          FRAGMENTS
      =============================================================================== */
@@ -706,7 +771,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (tag.equals(categoriesListTag)
                 || tag.equals(categoriesFormTag)
                 || tag.equals(cardFormTag)
-                || tag.equals(cardDetailsTag)) addFragment(fragment, tag);
+                || tag.equals(cardDetailsTag)
+                || tag.equals(accountFormTag)
+                || tag.equals(accountDetailsTag)) addFragment(fragment, tag);
         else replaceFragment(fragment, tag);
 
     }
@@ -760,10 +827,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case cardDetailsTag:
                 transaction2.hide(mCreditCards);
                 break;
+            case accountFormTag:
+                if (currentFragment.equals(accountsTag)) transaction2.hide(mAccounts);
+                if (currentFragment.equals(accountDetailsTag)) transaction2.hide(mAccountDetails);
+                break;
+            case accountDetailsTag:
+                transaction2.hide(mAccounts);
+                break;
         }
         transaction2.commit();
-
-        Log.e("debug-card-fragment", "Is fragment null after details add => " + (mCreditCards == null));
 
         // Update custom navigation stack
         mFragmentTagList.remove(tag);
@@ -796,6 +868,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 break;
             case cardDetailsTag:
                 transaction2.show(mCreditCards);
+                break;
+            case accountFormTag:
+                if (currentFragment.equals(accountsTag)) transaction2.show(mAccounts);
+                if (currentFragment.equals(accountDetailsTag)) transaction2.show(mAccountDetails);
+                break;
+            case accountDetailsTag:
+                transaction2.show(mAccounts);
                 break;
         }
         transaction2.commit();
@@ -902,6 +981,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     break;
                 case cardDetailsTag:
                     destroyFragment(mCreditCardDetails, cardDetailsTag);
+                    break;
+                case accountFormTag:
+                    destroyFragment(mAccountForm, accountFormTag);
+                    break;
+                case accountDetailsTag:
+                    destroyFragment(mAccountDetails, accountDetailsTag);
                     break;
                 default:
                     setFragment(newTopFragmentTag);

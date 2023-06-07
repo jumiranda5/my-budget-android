@@ -68,8 +68,31 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
         }
 
         // Open account details
-        holder.mContainer.setOnClickListener(v -> mInterface.openAccountDetails());
+        holder.mContainer.setOnClickListener(v -> mInterface.openAccountDetails(account, position));
 
+    }
+
+    public void addItem(Account account) {
+        if (account != null) {
+            mDataList.add(account);
+            int pos = mDataList.size();
+            notifyItemInserted(pos);
+            notifyItemRangeInserted(pos, mDataList.size());
+        }
+    }
+
+    public void updateItem(int pos, Account newData) {
+        mDataList.get(pos).setName(newData.getName());
+        mDataList.get(pos).setColorId(newData.getColorId());
+        mDataList.get(pos).setIconId(newData.getIconId());
+        mDataList.get(pos).setType(newData.getType());
+        notifyItemChanged(pos);
+    }
+
+    public void deleteItem(int pos) {
+        mDataList.remove(pos);
+        notifyItemRemoved(pos);
+        notifyItemRangeChanged(pos, mDataList.size());
     }
 
     @Override

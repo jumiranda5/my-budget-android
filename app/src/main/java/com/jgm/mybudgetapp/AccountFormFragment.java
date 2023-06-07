@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentAccountFormBinding;
+import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
@@ -34,13 +35,17 @@ public class AccountFormFragment extends Fragment {
     private static final String LOG = "debug-account-form";
 
     // Vars
+    private boolean isEdit = false;
+    private int selectedType;
     private Color selectedColor;
-    private int chosenType;
+    private int selectedIconId;
+    private int position;
+    private Account account;
 
     // UI
     private FragmentAccountFormBinding binding;
     private TextView mToolbarTitle;
-    private ImageButton mBack;
+    private ImageButton mBack, mArchive;
     private EditText mNicknameInput;
     private Button mColorButton, mSave;
     private ImageView mColorIcon;
@@ -56,6 +61,7 @@ public class AccountFormFragment extends Fragment {
         mCheckingType = binding.accountOptionChecking;
         mSavingsType = binding.accountOptionSavings;
         mSave = binding.accountFormSaveButton;
+        mArchive = binding.accountFormArchiveButton;
     }
 
     // Interfaces
@@ -83,55 +89,102 @@ public class AccountFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initTypeRadioGroup();
+        setDefaultOptions();
+
+        mNicknameInput.addTextChangedListener(accountNameWatcher);
         mBack.setOnClickListener(v -> mInterface.navigateBack());
+        mArchive.setOnClickListener(v -> mInterface.showConfirmationDialog(getString(R.string.msg_archive_account)));
+        mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
+
+        mSave.setEnabled(false);
         mSave.setOnClickListener(v -> mInterface.navigateBack());
-        initCreditCardForm();
+        mSave.setOnClickListener(v -> {
+            if (isEdit) editAccount(true);
+            else createAccount();
+        });
 
-    }
-
-    public void setFormType(boolean isEdit) {
         if (isEdit) {
             mToolbarTitle.setText(getString(R.string.title_edit_account));
-            Log.d("debug-account", "Form type => EDIT");
+            setEditOptions();
         }
         else {
             mToolbarTitle.setText(getString(R.string.title_add_account));
-            Log.d("debug-account", "Form type => ADD");
+            setDefaultOptions();
         }
+
     }
 
-    private void initCreditCardForm() {
-        setDefaultOptions();
-        initTypeRadioGroup();
-        mSave.setEnabled(false);
-        mNicknameInput.addTextChangedListener(accountNameWatcher);
-        mSave.setOnClickListener(v -> createAccount());
-        mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
+
+    public void setFormType(boolean isEdit) {
+        this.isEdit = isEdit;
     }
 
-    private void setDefaultOptions() {
-        selectedColor = ColorUtils.getColor(4);
-        mCashType.setChecked(true);
-        chosenType = 0;
-        mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
-        mColorIcon.setContentDescription(selectedColor.getColorName());
+    public void setAccount(Account account, int position) {
+        this.position = position;
+        this.account = account;
     }
 
-    private void initTypeRadioGroup() {
-        mCashType.setOnClickListener(v -> chosenType = 0);
-        mCheckingType.setOnClickListener(v -> chosenType = 1);
-        mSavingsType.setOnClickListener(v -> chosenType = 2);
-    }
-
-    public void updateColor(Color color) {
+    public void setSelectedColor(Color color) {
         selectedColor = color;
         mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
         mColorIcon.setContentDescription(selectedColor.getColorName());
     }
 
-    private void clearForm() {
-        mNicknameInput.setText("");
-        setDefaultOptions();
+    public void handleArchiveConfirmation() {
+        editAccount(false);
+    }
+
+
+    /* ===============================================================================
+                                      OPTIONS
+    =============================================================================== */
+
+    private void setDefaultOptions() {
+        selectedColor = ColorUtils.getColor(4);
+        mCashType.setChecked(true);
+        selectedType = 0;
+        selectedIconId = 1;
+        mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
+        mColorIcon.setContentDescription(selectedColor.getColorName());
+    }
+
+    private void setEditOptions() {
+        mNicknameInput.setText(account.getName());
+
+        selectedColor = ColorUtils.getColor(account.getColorId());
+        selectedIconId = account.getIconId();
+        mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
+        mColorIcon.setContentDescription(selectedColor.getColorName());
+
+        selectedType = account.getType();
+        switch (selectedType) {
+            case 0: mCashType.setChecked(true); break;
+            case 1: mCheckingType.setChecked(true); break;
+            case 2: mSavingsType.setChecked(true); break;
+        }
+    }
+
+    /* ===============================================================================
+                                      FORM
+    =============================================================================== */
+
+    private void initTypeRadioGroup() {
+        mCashType.setOnClickListener(v -> {
+            selectedType = 0;
+            selectedIconId = 1;
+        });
+        mCheckingType.setOnClickListener(v -> {
+            selectedType = 1;
+            selectedIconId = 13;
+        });
+        mSavingsType.setOnClickListener(v -> {
+            selectedType = 2;
+            selectedIconId = 4;
+        });
     }
 
     private final TextWatcher accountNameWatcher = new TextWatcher() {
@@ -151,11 +204,30 @@ public class AccountFormFragment extends Fragment {
     private void createAccount() {
         String nickname = mNicknameInput.getText().toString().trim();
 
-        Log.d(LOG, "Account nickname => " + nickname);
-        Log.d(LOG, "Account color => " + selectedColor.getColorName());
-        Log.d(LOG, "Type => " + chosenType);
+        Account newAccount = new Account(
+                0,
+                nickname,
+                selectedColor.getId(),
+                selectedIconId,
+                selectedType,
+                true);
 
-        clearForm();
+        mInterface.insertAccountData(newAccount);
+        mInterface.navigateBack();
+    }
+
+    private void editAccount(boolean isActive) {
+        String nickname = mNicknameInput.getText().toString().trim();
+
+        Account editedAccount = new Account(
+                account.getId(),
+                nickname,
+                selectedColor.getId(),
+                selectedIconId,
+                selectedType,
+                isActive);
+
+        mInterface.editAccountData(position, editedAccount);
         mInterface.navigateBack();
     }
 }

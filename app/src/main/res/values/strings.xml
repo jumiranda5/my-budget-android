@@ -12,6 +12,10 @@
     <string name="category_work">Work</string>
     <string name="category_education">Education</string>
 
+    <!-- Default accounts -->
+    <string name="account_cash">Cash</string>
+    <string name="account_checking">Checking Account</string>
+    <string name="account_savings">Savings</string>
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
@@ -113,6 +117,6 @@
     <string name="msg_archive_default">Would you like to permanently archive this item?</string>
     <string name="msg_archive_category">Would you like to permanently archive this category?</string>
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card?</string>
-
+    <string name="msg_archive_account">Would you like to permanently archive this account?</string>
 
 </resources>

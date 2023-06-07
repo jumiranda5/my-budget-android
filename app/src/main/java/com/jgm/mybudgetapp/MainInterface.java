@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
@@ -17,8 +18,8 @@ public interface MainInterface {
     void openIncomeCategories();
     void openCategoryForm(boolean isEdit, Category category, int position);
     void openAccounts();
-    void openAccountDetails();
-    void openAccountForm(boolean isEdit);
+    void openAccountDetails(Account account, int position);
+    void openAccountForm(boolean isEdit, Account account, int position);
     void openYear();
     void openCardDetails(Card card, int position);
     void openCardForm(boolean isEdit, Card card, int position);
@@ -42,6 +43,10 @@ public interface MainInterface {
 
 
     // DATABASE
+
+    void getAccountsData();
+    void insertAccountData(Account account);
+    void editAccountData(int position, Account account);
 
     void getCategoriesData();
     void insertCategoryData(Category category);

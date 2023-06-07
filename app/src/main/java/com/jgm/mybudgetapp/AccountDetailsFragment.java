@@ -5,16 +5,22 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentAccountDetailsBinding;
-import com.jgm.mybudgetapp.databinding.FragmentCreditCardDetailsBinding;
+import com.jgm.mybudgetapp.objects.Account;
+import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.IconUtils;
 
 public class AccountDetailsFragment extends Fragment {
 
@@ -22,16 +28,21 @@ public class AccountDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    // Vars
+    private int position;
+    private Account account;
+
     // UI
     private FragmentAccountDetailsBinding binding;
-    private ImageButton buttonBack, buttonArchive, buttonEdit;
-    //private Button buttonTransactionDialog;
+    private ImageButton buttonBack, buttonEdit;
+    private TextView mAccountName;
+    private ImageView mAccountIcon;
 
     private void setBinding() {
         buttonBack = binding.accountDetailsBackButton;
-        buttonArchive = binding.accountDetailsArchiveButton;
         buttonEdit = binding.accountDetailsEditButton;
-        //buttonTransactionDialog = binding.accountDetailsTransaction;
+        mAccountName = binding.accountDetailsTitle;
+        mAccountIcon = binding.accountDetailsIcon;
     }
 
     // Interfaces
@@ -59,11 +70,35 @@ public class AccountDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String archiveMsg = "This will permanently archive this account. Would you like to continue?";
-
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
-        buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true));
-        buttonArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(archiveMsg));
-        //buttonTransactionDialog.setOnClickListener(v-> mInterface.showTransactionDialog());
+        buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
+
+        if (account != null) initAccountInfo();
+    }
+
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
+
+    public void setAccount(Account account, int position) {
+        this.position = position;
+        this.account = account;
+    }
+
+    public void updateAccountAfterEdit(Account editedAccount) {
+        account = editedAccount;
+        initAccountInfo();
+    }
+
+    /* ===============================================================================
+                                          DATA
+     =============================================================================== */
+
+    private void initAccountInfo() {
+        mAccountName.setText(account.getName());
+        Color color = ColorUtils.getColor(account.getColorId());
+        Icon icon = IconUtils.getIcon(account.getIconId());
+        mAccountIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+        mAccountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
     }
 }

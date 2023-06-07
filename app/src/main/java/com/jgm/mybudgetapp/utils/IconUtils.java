@@ -88,8 +88,12 @@ public class IconUtils {
     private static final Icon ic_cabin = new Icon(63, R.drawable.ic_cabin_fill, "Cabin");
     private static final Icon ic_camping = new Icon(64, R.drawable.ic_camping_fill, "Camping");
     private static final Icon ic_phishing = new Icon(65, R.drawable.ic_phishing_fill, "Phishing");
-
     private static final Icon ic_emergency = new Icon(66, R.drawable.ic_emergency, "Emergency");
+
+    // Accounts
+    private static final Icon ic_app_cash = new Icon(67, R.drawable.ic_app_cash, "Cash");
+    private static final Icon ic_app_checking = new Icon(68, R.drawable.ic_app_account_balance, "Checking");
+    private static final Icon ic_app_savings = new Icon(69, R.drawable.ic_app_savings, "Savings");
 
     public static ArrayList<Icon> getIconList() {
         ArrayList<Icon> icons = new ArrayList<>();
@@ -248,6 +252,9 @@ public class IconUtils {
             case 64: icon = ic_camping; break;
             case 65: icon = ic_phishing; break;
             case 66: icon = ic_emergency; break;
+            case 67: icon = ic_app_cash; break;
+            case 68: icon = ic_app_checking; break;
+            case 69: icon = ic_app_savings; break;
             default: icon = ic_default;
         }
 

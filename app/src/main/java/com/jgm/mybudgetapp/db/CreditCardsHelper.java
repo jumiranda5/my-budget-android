@@ -104,7 +104,6 @@ public class CreditCardsHelper {
                     DatabaseContract.CreditCards._ID + " = " + card.getId(), null);
 
             Log.d("debug-database-cards", "Successfully updated Credit Card, id: " + card.getId());
-            Log.d("debug-database-cards", "Successfully updated Credit Card, active: " + card.isActive());
         }
         catch (Exception e) {
             Log.e("debug-database-cards", Objects.requireNonNull(e.getMessage()));

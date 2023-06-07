@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 
@@ -34,6 +35,21 @@ public class DataManager {
 
     /* ================ ACCOUNTS CRUD  ================== */
 
+    public long createAccount(Account account) {
+        return AccountsHelper.create(mDatabase, account);
+    }
+
+    public ArrayList<Account> getAllAccounts() {
+        return AccountsHelper.readAll(mDatabase);
+    }
+
+    public void updateAccount(Account account) {
+        AccountsHelper.updateRow(mDatabase, account);
+    }
+
+    public void deleteAccount(int id) {
+        AccountsHelper.deleteRow(mDatabase, id);
+    }
 
 
     /* ================ CATEGORIES CRUD  ================== */

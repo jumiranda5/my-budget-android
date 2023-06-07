@@ -9,15 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.AccountAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentAccountsBinding;
 import com.jgm.mybudgetapp.objects.Account;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,8 @@ public class AccountsFragment extends Fragment {
     public AccountsFragment() {
         // Required empty public constructor
     }
+
+    private static final String LOG = "debug-accounts";
 
     // List
     private ArrayList<Account> accountsList = new ArrayList<>();
@@ -66,25 +69,75 @@ public class AccountsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false));
-
-        initDummyList();
-        initAccountsList();
+        mInterface.getAccountsData();
+        mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
+        initRecyclerView();
 
     }
 
-    private void initAccountsList() {
+    /* ===============================================================================
+                                       INTERFACE
+     =============================================================================== */
+
+    public void updateListAfterDbRead(ArrayList<Account> dbAccounts) {
+        Log.d(LOG, "Update ui list: " + dbAccounts.size());
+        if (dbAccounts.size() > 0) {
+            accountsList = dbAccounts;
+            initRecyclerView();
+        }
+        else setDefaultList();
+    }
+
+    public void updateUiAfterInsertion(Account account) {
+        adapter.addItem(account);
+    }
+
+    public void updateListAfterDelete(int pos) {
+        Log.d(LOG, "Update ui list after item delete");
+        adapter.deleteItem(pos);
+    }
+
+    public void updateListAfterEdit(int pos, Account editedAccount) {
+        Log.d(LOG, "Update ui list after item edit");
+        adapter.updateItem(pos, editedAccount);
+    }
+
+
+    /* ===============================================================================
+                                         LIST
+     =============================================================================== */
+
+    private void initRecyclerView() {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
         adapter = new AccountAdapter(mContext, accountsList);
         mRecyclerView.setAdapter(adapter);
     }
 
-    private void initDummyList() {
-        accountsList.add(new Account(0, "Cash", 19, 0, 0, true));
-        accountsList.add(new Account(1, "Bank 1", 11, 0, 1, true));
-        accountsList.add(new Account(2, "Bank 2", 14, 0, 1, true));
-        accountsList.add(new Account(3, "Savings", 20, 0, 2, true));
+    private void setDefaultList() {
+        boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(mContext, "hasInitialAccounts");
+
+        if (!hasInitialAccounts) {
+
+            Log.d(LOG, "== INIT ACCOUNT DEFAULT LIST");
+
+            ArrayList<Account> list = new ArrayList<>();
+
+            Account cash = new Account(0, getString(R.string.account_cash), 21, 67, 0, true);
+            Account checking = new Account(0, getString(R.string.account_checking), 14, 68, 1, true);
+            Account savings = new Account(0, getString(R.string.account_savings), 20, 69, 2, true);
+
+            list.add(cash);
+            list.add(checking);
+            list.add(savings);
+
+            for (int i = 0; i < list.size(); i++) {
+                mInterface.insertAccountData(list.get(i));
+            }
+
+            SettingsPrefs.setSettingsPrefsBoolean(mContext, "hasInitialAccounts", true);
+
+        }
     }
+
 }
