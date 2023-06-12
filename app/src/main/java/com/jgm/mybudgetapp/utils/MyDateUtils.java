@@ -1,26 +1,34 @@
 package com.jgm.mybudgetapp.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.jgm.mybudgetapp.objects.MyDate;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class MyDateUtils {
     public MyDateUtils() {}
 
     public static MyDate getCurrentDate(Context context) {
-        Calendar c = Calendar.getInstance();
-        int month = c.get(Calendar.MONTH);
-        int year = c.get(Calendar.YEAR);
-        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        // month in date lib is from 0-11 => return as 1-12
-        month++;
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = now.format(formatter);
+
+        int day = Integer.parseInt(formattedDate.split("-")[2]);
+        int month = Integer.parseInt(formattedDate.split("-")[1]);
+        int year = Integer.parseInt(formattedDate.split("-")[0]);
 
         String monthName = getMonthName(context, month, year)[0];
         MyDate date = new MyDate(day, month, year);
@@ -30,54 +38,42 @@ public class MyDateUtils {
     }
 
     public static String getFormattedFieldDate(Context context, int year, int month, int day) {
-        Log.d("debug-date", "date-picker month => " + month);
-
-        // month in date lib is from 0-11
-        month--;
-
         Locale locale = context.getResources().getConfiguration().getLocales().get(0);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        long dateMilliseconds = calendar.getTimeInMillis();
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, locale);
-        return dateFormat.format(dateMilliseconds);
+        LocalDate localDate = LocalDate.of(year, month, day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(locale);
+
+        return localDate.format(formatter);
     }
 
     public static String[] getMonthName(Context context, int month, int year) {
-
-        // month in date lib is from 0-11
-        month--;
-
         Locale locale = context.getResources().getConfiguration().getLocales().get(0);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, 1);
 
-        long dateMilliseconds = calendar.getTimeInMillis();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", locale);
-        String month_name = month_date.format(dateMilliseconds);
-        String month_name_upper = month_name.substring(0, 1).toUpperCase() + month_name.substring(1);
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        Month monthObj = localDate.getMonth();
+        String monthFull = monthObj.getDisplayName(TextStyle.FULL, locale);
+        String monthShort = monthObj.getDisplayName(TextStyle.SHORT, locale);
 
-        SimpleDateFormat month_date_abbr = new SimpleDateFormat("MMM", locale);
-        String month_name_abbr = month_date_abbr.format(dateMilliseconds);
-        String month_name_abbr_upper =
-                month_name_abbr.substring(0, 1).toUpperCase() + month_name_abbr.substring(1);
+        String month_full_upper = monthFull.substring(0, 1).toUpperCase() + monthFull.substring(1);
+        String month_short_upper = monthShort.substring(0, 1).toUpperCase() + monthShort.substring(1);
 
-        return new String[]{month_name_upper, month_name_abbr_upper};
+        return new String[]{month_full_upper, month_short_upper};
 
     }
 
     public static MyDate getDateFromMilliseconds(Context context, long milliseconds) {
+
         Locale locale = context.getResources().getConfiguration().getLocales().get(0);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", locale);
-        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("EEE", locale);
-        String dateString = simpleDateFormat.format(milliseconds);
-        String weekday = simpleDateFormat2.format(milliseconds);
 
-        Log.d("debug-date", dateString);
+        LocalDate localDate = Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = localDate.format(formatter);
 
-        int day = Integer.parseInt(dateString.split("/")[0]);
-        int month = Integer.parseInt(dateString.split("/")[1]);
-        int year = Integer.parseInt(dateString.split("/")[2]);
+        int year = Integer.parseInt(formattedDate.split("-")[0]);
+        int month = Integer.parseInt(formattedDate.split("-")[1]);
+        int day = Integer.parseInt(formattedDate.split("-")[2]);
+
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        String weekday = dayOfWeek.getDisplayName(TextStyle.SHORT, locale);
 
         MyDate myDate = new MyDate(day, month, year);
         myDate.setWeekday(weekday);
@@ -100,6 +96,19 @@ public class MyDateUtils {
         }
 
         return new int[] { nextMonth, nextYear };
+    }
+
+    public static long getLocalDateTimeMilliseconds(long selection) {
+
+        // create an object with a matching timezone
+        LocalDateTime utcDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(selection), ZoneOffset.UTC);
+
+        // create an object converting from UTC to the device´s timezone
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(utcDate, ZoneId.systemDefault());
+
+        // get the local date in millis
+        return zonedDateTime.toInstant().toEpochMilli();
+
     }
 
 }

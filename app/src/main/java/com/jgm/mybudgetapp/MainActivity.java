@@ -33,10 +33,17 @@ import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.Transaction;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
+import com.jgm.mybudgetapp.utils.MyDateUtils;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -516,7 +523,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         datePicker.show(getSupportFragmentManager(), "datePicker");
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            if (mTransactionForm != null) mTransactionForm.setSelectedDate(selection);
+            // convert to local timezone
+            long zonedSelection = MyDateUtils.getLocalDateTimeMilliseconds(selection);
+            if (mTransactionForm != null) mTransactionForm.setSelectedDate(zonedSelection);
         });
     }
 

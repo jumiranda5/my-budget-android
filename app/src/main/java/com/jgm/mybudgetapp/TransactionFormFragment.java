@@ -306,6 +306,8 @@ public class TransactionFormFragment extends Fragment {
         int day = date.getDay();
         String weekday = date.getWeekday();
 
+        Log.d(LOG, "setSelectedDate: " + day + "/" + month + "/" + year);
+
         String dateFormatted = MyDateUtils.getFormattedFieldDate(mContext, year, month, day);
         String dateField = weekday + " - " + dateFormatted;
         mDatePicker.setText(dateField);

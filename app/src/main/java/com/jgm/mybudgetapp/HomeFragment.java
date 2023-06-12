@@ -221,7 +221,7 @@ public class HomeFragment extends Fragment {
             float[] expenses = {4000f, 6200f, 4900f, 5000f, 6500f, 5100f, 4600f, 4800f, 5500f, 5600f, 4500f, 5000f};
             float[] income = {5000f, 5200f, 5100f, 6000f, 7000f, 4900f, 5000f, 5300f, 5200f, 5000f, 5100f, 5200f};
 
-            int month = 0;
+            int month = 1;
             float higherBar = 0f;
             while (month < 12) {
                 String[] monthName = MyDateUtils.getMonthName(mContext, month, 2023);
