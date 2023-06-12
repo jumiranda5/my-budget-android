@@ -85,6 +85,9 @@
     <string name="label_fixed">Fixed</string>
     <string name="label_repeat">Repeat</string>
     <string name="label_icon">Icon</string>
+    <string name="label_today">Today</string>
+    <string name="label_transfer_from">Transfer from</string>
+    <string name="label_transfer_to">Transfer to</string>
 
     <!-- Title -->
     <string name="title_add_credit_card">Add Credit Card</string>

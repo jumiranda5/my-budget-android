@@ -20,10 +20,12 @@ import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.jgm.mybudgetapp.db.DataManager;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
+import com.jgm.mybudgetapp.dialogs.MethodPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.objects.Account;
@@ -31,6 +33,8 @@ import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.objects.Transaction;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     // Vars
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
     private String currentFragment;
+    private boolean isExpenseMethodDialog;
 
     // Db
     private ExecutorService executorServiceRead;
@@ -501,6 +506,73 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) mCategoriesForm.setSelectedIcon(icon);
     }
 
+    @Override
+    public void showDatePickerDialog() {
+        Log.d(LOG_NAV, "Show date picker dialog");
+        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build();
+
+        datePicker.show(getSupportFragmentManager(), "datePicker");
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            if (mTransactionForm != null) mTransactionForm.setSelectedDate(selection);
+        });
+    }
+
+    @Override
+    public void showMethodPickerDialog(boolean isExpense) {
+        Log.d(LOG_NAV, "Show method picker dialog");
+        isExpenseMethodDialog = isExpense;
+        MethodPickerDialog methodDialog = new MethodPickerDialog();
+        methodDialog.show(getSupportFragmentManager(), "methodPicker");
+    }
+
+    @Override
+    public ArrayList<PaymentMethod> getMethodsList() {
+
+        // Create a payment methods list
+        ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
+
+        // get accounts and credit cards from db
+        // Using the main thread to be able to use the return statement
+        ArrayList<Account> accountsList = mDbManager.getAllAccounts();
+
+        for (int i = 0; i < accountsList.size(); i++) {
+            Account account = accountsList.get(i);
+            PaymentMethod paymentMethod = new PaymentMethod(
+                    account.getId(),
+                    account.getType(),
+                    account.getName(),
+                    account.getColorId(),
+                    account.getIconId(),
+                    0);
+            paymentMethods.add(paymentMethod);
+        }
+
+        // Get credit cards from db if type is expense
+        if (isExpenseMethodDialog) {
+            ArrayList<Card> cardsList = mDbManager.getAllCreditCards();
+            for (int i = 0; i < cardsList.size(); i++) {
+                Card card = cardsList.get(i);
+                PaymentMethod paymentMethod = new PaymentMethod(
+                        card.getId(),
+                        3,
+                        card.getName(),
+                        card.getColorId(),
+                        70, card.getBillingDay());
+                paymentMethods.add(paymentMethod);
+            }
+        }
+        Log.d(LOG_DB, "Methods list size: " + paymentMethods.size());
+
+        return paymentMethods;
+    }
+
+    @Override
+    public void setSelectedPaymentMethod(PaymentMethod paymentMethod) {
+        mTransactionForm.setSelectedPaymentMethod(paymentMethod);
+    }
 
     /* ========================  SETTINGS ======================== */
 
@@ -539,7 +611,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             ArrayList<Account> accountsList = mDbManager.getAllAccounts();
 
             handler.post(() -> {
-                mAccounts.updateListAfterDbRead(accountsList);
+                if (mAccounts!= null) mAccounts.updateListAfterDbRead(accountsList);
                 Log.d(LOG_DB, "Done reading all accounts from db: " + accountsList.size());
             });
         });
@@ -690,6 +762,21 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         });
     }
 
+    /* ========================  DATABASE - TRANSACTIONS ======================== */
+
+    @Override
+    public void insertTransaction(Transaction transaction) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        executorServiceWrite.execute(() -> {
+
+            mDbManager.createTransaction(transaction);
+
+            handler.post(() -> {
+                if(mTransactionForm != null) mTransactionForm.handleTransactionInserted();
+                Log.d("debug-db", "Transaction saved on db... update ui");
+            });
+        });
+    }
 
     /* ===============================================================================
                                          FRAGMENTS

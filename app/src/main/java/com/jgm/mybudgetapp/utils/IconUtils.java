@@ -94,6 +94,8 @@ public class IconUtils {
     private static final Icon ic_app_cash = new Icon(67, R.drawable.ic_app_cash, "Cash");
     private static final Icon ic_app_checking = new Icon(68, R.drawable.ic_app_account_balance, "Checking");
     private static final Icon ic_app_savings = new Icon(69, R.drawable.ic_app_savings, "Savings");
+    private static final Icon ic_app_credit_card = new Icon(70, R.drawable.ic_app_credit_card, "Credit Card");
+
 
     public static ArrayList<Icon> getIconList() {
         ArrayList<Icon> icons = new ArrayList<>();
@@ -255,6 +257,7 @@ public class IconUtils {
             case 67: icon = ic_app_cash; break;
             case 68: icon = ic_app_checking; break;
             case 69: icon = ic_app_savings; break;
+            case 70: icon = ic_app_credit_card; break;
             default: icon = ic_default;
         }
 

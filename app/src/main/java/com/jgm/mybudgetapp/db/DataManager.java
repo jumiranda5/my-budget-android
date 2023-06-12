@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.Transaction;
 
 import java.util.ArrayList;
 
@@ -91,4 +92,7 @@ public class DataManager {
 
 
     /* ================ TRANSACTIONS CRUD  ================== */
+
+    public long createTransaction(Transaction transaction) {return TransactionsHelper.create(mDatabase, transaction); }
+
 }

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "budget.db";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -20,11 +20,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.Categories.SQL_CREATE_TABLE);
         db.execSQL(DatabaseContract.CreditCards.SQL_CREATE_TABLE);
         db.execSQL(DatabaseContract.Accounts.SQL_CREATE_TABLE);
+        db.execSQL(DatabaseContract.Transactions.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 2) db.execSQL(DatabaseContract.CreditCards.SQL_CREATE_TABLE);
         if (oldVersion < 3) db.execSQL(DatabaseContract.Accounts.SQL_CREATE_TABLE);
+        if (oldVersion < 4) db.execSQL(DatabaseContract.Transactions.SQL_CREATE_TABLE);
     }
 }

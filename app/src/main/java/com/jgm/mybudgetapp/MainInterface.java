@@ -5,6 +5,8 @@ import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.objects.Transaction;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,10 @@ public interface MainInterface {
     void handleColorSelection(Color color);
     void showIconPickerDialog();
     void handleIconSelection(Icon icon);
+    void showDatePickerDialog();
+    void showMethodPickerDialog(boolean isExpense);
+    ArrayList<PaymentMethod> getMethodsList();
+    void setSelectedPaymentMethod(PaymentMethod paymentMethod);
 
     // Settings
     void switchDarkMode(boolean isDark);
@@ -55,5 +61,7 @@ public interface MainInterface {
     void getCreditCardsData();
     void insertCreditCardData(Card card);
     void editCreditCardData(int position, Card card);
+
+    void insertTransaction(Transaction transaction);
 
 }

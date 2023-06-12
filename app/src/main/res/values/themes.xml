@@ -1,9 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MyBudgetApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/grey</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">#bababa</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Customize your light theme here. -->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:spotShadowAlpha">0.09</item>
         <item name="android:ambientShadowAlpha">0.09</item>
@@ -16,6 +22,11 @@
         <!-- Custom material 3 -->
         <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
+        <!--header textcolor-->
+        <item name="android:textColorPrimaryInverse">#FFFFFF</item>
+        <!--days of the week-->
+        <item name="android:textColorSecondary">@color/medium_emphasis_text</item>
     </style>
 
     <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
@@ -37,6 +48,28 @@
 
     <style name="ThemeOverlay.App.RadioButton" parent="">
         <item name="colorPrimary">@color/button_save</item>
+    </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorPrimary">@color/savings</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="MyDatePickerDialog" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <!--header background-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--header textcolor-->
+        <item name="android:textColorPrimaryInverse">#FFFFFF</item>
+        <!--body background-->
+        <item name="android:windowBackground">#FFFFFF</item>
+        <!--selected day-->
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+        <!--days of the month-->
+        <item name="android:textColorPrimary">@color/high_emphasis_text</item>
+        <!--days of the week-->
+        <item name="android:textColorSecondary">@color/medium_emphasis_text</item>
+        <!--cancel&ok-->
+        <item name="android:textColor">@color/high_emphasis_text</item>
     </style>
 
     <style name="AppTheme" parent="Base.Theme.MyBudgetApp" />

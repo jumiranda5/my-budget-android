@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_00dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TransactionFormFragment">
 
@@ -18,12 +19,12 @@
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_start"
                 style="@style/GuidelineStart"
-                android:orientation="vertical"  />
+                android:orientation="vertical" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"
                 style="@style/GuidelineEnd"
-                android:orientation="vertical"  />
+                android:orientation="vertical" />
 
             <!-- Toolbar -->
 
@@ -42,10 +43,10 @@
                         android:id="@+id/add_close_button"
                         style="@style/ToolbarButton"
                         android:contentDescription="@string/action_close"
-                        app:srcCompat="@drawable/ic_app_close"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_app_close" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -134,9 +135,9 @@
             <AutoCompleteTextView
                 android:id="@+id/add_description"
                 style="@style/InputWithIcon"
+                android:layout_marginTop="12dp"
                 android:hint="@string/hint_description"
                 android:imeOptions="actionNext"
-                android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_amount" />
@@ -184,8 +185,8 @@
             <Button
                 android:id="@+id/add_category_picker"
                 style="@style/ButtonPicker"
-                android:text="@string/label_category"
                 android:layout_marginTop="@dimen/form_divisor_space"
+                android:text="@string/label_category"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_divisor_1" />
@@ -194,10 +195,10 @@
                 android:id="@+id/add_icon_category"
                 style="@style/InputIcon"
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_app_category"
                 app:layout_constraintBottom_toBottomOf="@+id/add_category_picker"
                 app:layout_constraintStart_toStartOf="@+id/add_category_picker"
-                app:layout_constraintTop_toTopOf="@+id/add_category_picker" />
+                app:layout_constraintTop_toTopOf="@+id/add_category_picker"
+                app:srcCompat="@drawable/ic_app_category" />
 
 
             <!-- Method -->
@@ -269,8 +270,8 @@
             <Button
                 android:id="@+id/add_account_picker_out"
                 style="@style/ButtonPicker"
-                android:text="@string/action_out"
                 android:layout_marginTop="24dp"
+                android:text="@string/action_out"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/credit_card_month_picker" />
@@ -280,18 +281,18 @@
                 style="@style/InputIcon"
                 android:contentDescription="@null"
                 android:src="@drawable/arrow_north_east_600"
-                app:tint="@color/expense"
                 app:layout_constraintBottom_toBottomOf="@+id/add_account_picker_out"
                 app:layout_constraintStart_toStartOf="@+id/add_account_picker_out"
-                app:layout_constraintTop_toTopOf="@+id/add_account_picker_out" />
+                app:layout_constraintTop_toTopOf="@+id/add_account_picker_out"
+                app:tint="@color/expense" />
 
             <!-- Account Picker In -->
 
             <Button
                 android:id="@+id/add_account_picker_in"
                 style="@style/ButtonPicker"
-                android:text="@string/action_in"
                 android:layout_marginTop="12dp"
+                android:text="@string/action_in"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/add_account_picker_out" />
@@ -301,10 +302,10 @@
                 style="@style/InputIcon"
                 android:contentDescription="@null"
                 android:src="@drawable/arrow_south_west_600"
-                app:tint="@color/income"
                 app:layout_constraintBottom_toBottomOf="@+id/add_account_picker_in"
                 app:layout_constraintStart_toStartOf="@+id/add_account_picker_in"
-                app:layout_constraintTop_toTopOf="@+id/add_account_picker_in"/>
+                app:layout_constraintTop_toTopOf="@+id/add_account_picker_in"
+                app:tint="@color/income" />
 
             <!-- Divisor -->
 
@@ -319,7 +320,7 @@
             <!-- Is payed - toggle button -->
 
             <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/add_switch_payed"
+                android:id="@+id/add_switch_paid"
                 style="@style/FormSwitch"
                 android:layout_marginTop="@dimen/form_divisor_space"
                 android:checked="true"
@@ -328,16 +329,6 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_divisor_2" />
 
-            <!-- Is fixed - toggle button -->
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/add_switch_fixed"
-                style="@style/FormSwitch"
-                android:layout_marginTop="12dp"
-                android:text="@string/label_fixed"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@+id/add_switch_payed" />
 
             <!-- Repeat -->
 
@@ -348,25 +339,25 @@
                 android:text="@string/label_repeat"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@id/add_switch_fixed" />
+                app:layout_constraintTop_toBottomOf="@id/add_switch_paid" />
 
             <ImageButton
                 android:id="@+id/button_repeat_increase"
                 style="@style/IconButton"
                 android:contentDescription="@string/action_increase"
-                app:srcCompat="@drawable/ic_app_add_400"
                 app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
                 app:layout_constraintEnd_toEndOf="@id/repeat_label"
-                app:layout_constraintTop_toTopOf="@+id/repeat_label" />
+                app:layout_constraintTop_toTopOf="@+id/repeat_label"
+                app:srcCompat="@drawable/ic_app_add_400" />
 
             <EditText
                 android:id="@+id/add_quantity_input"
                 style="@style/InputQuantity"
-                android:visibility="visible"
-                android:hint="@string/test_1"
-                android:importantForAutofill="no"
-                android:imeOptions="actionDone"
                 android:layout_marginEnd="8dp"
+                android:hint="@string/test_1"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
                 app:layout_constraintEnd_toStartOf="@+id/button_repeat_increase"
                 app:layout_constraintTop_toTopOf="@+id/repeat_label" />
@@ -374,14 +365,14 @@
             <ImageButton
                 android:id="@+id/button_repeat_decrease"
                 style="@style/IconButton"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="@string/action_decrease"
                 android:text="@string/action_decrease"
-                android:layout_marginEnd="8dp"
                 android:visibility="visible"
-                app:srcCompat="@drawable/ic_app_remove_400"
+                app:layout_constraintBottom_toBottomOf="@id/add_quantity_input"
                 app:layout_constraintEnd_toStartOf="@+id/add_quantity_input"
                 app:layout_constraintTop_toTopOf="@+id/add_quantity_input"
-                app:layout_constraintBottom_toBottomOf="@id/add_quantity_input"/>
+                app:srcCompat="@drawable/ic_app_remove_400" />
 
             <!-- Save Button -->
 
@@ -393,6 +384,30 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/repeat_label" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/transactions_group_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method,credit_card_month_picker, add_description, add_icon_desc" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/transactions_group_transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="add_account_picker_out,add_icon_out,add_account_picker_in,add_icon_in" />
+
+            <ProgressBar
+                android:id="@+id/add_progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/save_button"
+                app:layout_constraintEnd_toEndOf="@+id/save_button"
+                app:layout_constraintStart_toStartOf="@+id/save_button"
+                app:layout_constraintTop_toTopOf="@+id/save_button" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

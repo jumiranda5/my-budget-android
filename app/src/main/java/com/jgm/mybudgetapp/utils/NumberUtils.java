@@ -19,6 +19,7 @@ public class NumberUtils {
     }
 
     public static String[] getCurrencyFormat(Context context, float value) {
+        // Todo => get locale and currency from shared prefs
         Locale locale = context.getResources().getConfiguration().getLocales().get(0);
         Currency currency = Currency.getInstance(locale);
         String currencySymbol = currency.getSymbol(locale);
@@ -29,6 +30,6 @@ public class NumberUtils {
         String valueString = format.format(value);
         String number = valueString.replaceAll("([^0-9|.,])", "");
 
-        return new String[]{currencySymbol, number};
+        return new String[]{currencySymbol, number, valueString};
     }
 }
