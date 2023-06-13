@@ -17,10 +17,11 @@ import android.widget.Button;
 
 import com.jgm.mybudgetapp.adapters.AccountAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentAccountsBinding;
-import com.jgm.mybudgetapp.objects.Account;
+import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountsFragment extends Fragment {
 
@@ -79,13 +80,12 @@ public class AccountsFragment extends Fragment {
                                        INTERFACE
      =============================================================================== */
 
-    public void updateListAfterDbRead(ArrayList<Account> dbAccounts) {
+    public void updateListAfterDbRead(List<Account> dbAccounts) {
         Log.d(LOG, "Update ui list: " + dbAccounts.size());
         if (dbAccounts.size() > 0) {
-            accountsList = dbAccounts;
+            accountsList = (ArrayList<Account>) dbAccounts;
             initRecyclerView();
         }
-        else setDefaultList();
     }
 
     public void updateUiAfterInsertion(Account account) {
@@ -123,9 +123,9 @@ public class AccountsFragment extends Fragment {
 
             ArrayList<Account> list = new ArrayList<>();
 
-            Account cash = new Account(0, getString(R.string.account_cash), 21, 67, 0, true);
-            Account checking = new Account(0, getString(R.string.account_checking), 14, 68, 1, true);
-            Account savings = new Account(0, getString(R.string.account_savings), 20, 69, 2, true);
+            Account cash = new Account(getString(R.string.account_cash), 21, 67, 0, true);
+            Account checking = new Account(getString(R.string.account_checking), 14, 68, 1, true);
+            Account savings = new Account(getString(R.string.account_savings), 20, 69, 2, true);
 
             list.add(cash);
             list.add(checking);

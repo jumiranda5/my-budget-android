@@ -1,16 +1,27 @@
-package com.jgm.mybudgetapp.objects;
+package com.jgm.mybudgetapp.room.entity;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "accounts")
 public class Account {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int id;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "colorId")
     private int colorId;
+    @ColumnInfo(name = "iconId")
     private int iconId;
+    @ColumnInfo(name = "type")
     private int type; // 0 = cash | 1 = checking | 2 = savings
+    @ColumnInfo(name = "active")
     private boolean isActive;
 
-    public Account(int id, String name, int colorId, int iconId, int type, boolean isActive) {
-        this.id = id;
+    public Account(String name, int colorId, int iconId, int type, boolean isActive) {
         this.name = name;
         this.colorId = colorId;
         this.iconId = iconId;

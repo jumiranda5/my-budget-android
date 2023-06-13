@@ -28,12 +28,12 @@ import android.widget.ToggleButton;
 
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionFormBinding;
-import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
-import com.jgm.mybudgetapp.objects.Transaction;
+import com.jgm.mybudgetapp.room.entity.Category;
+import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
@@ -606,17 +606,15 @@ public class TransactionFormFragment extends Fragment {
         String descTransferTo = getString(R.string.label_transfer_to) + " " + transferAccountIn.getName();
         String descTransferFrom = getString(R.string.label_transfer_from) + " " + transferAccountOut.getName();
 
-        Transaction in = new Transaction(1,
-                descTransferFrom, amount, 0,
+        Transaction in = new Transaction(1, descTransferFrom, amount,
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-                isPaid);
-        in.setAccountId(transferAccountIn.getId());
+                0, transferAccountIn.getId(), null,
+                isPaid, repeat, null, null);
 
-        Transaction out = new Transaction(-1,
-                descTransferTo, amount, 0,
+        Transaction out = new Transaction(-1, descTransferFrom, amount,
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-                isPaid);
-        out.setAccountId(transferAccountOut.getId());
+                0, transferAccountOut.getId(), null,
+                isPaid, repeat, null, null);
 
         saveTransaction(out);
         saveTransaction(in);
@@ -642,22 +640,20 @@ public class TransactionFormFragment extends Fragment {
         }
 
         Transaction transaction = new Transaction(
-                transactionType,
-                description,
-                amount, selectedCategoryId,
+                transactionType, description, amount,
                 year, month, day,
-                isPaid
-        );
-
-        transaction.setRepeat(repeat);
+                selectedCategoryId,
+                0, 0, isPaid, repeat, 0, null);
 
         if (repeat > 1) {
-            long repeatId = System.currentTimeMillis();
-            transaction.setRepeatId(repeatId);
+           long repeatId = System.currentTimeMillis();
+           transaction.setRepeatId(repeatId);
         }
 
-        if (paymentMethod.getType() == 3) transaction.setCardId(selectedCardId);
-        else transaction.setAccountId(selectedAccountId);
+        if (paymentMethod != null) {
+            if (paymentMethod.getType() == 3) transaction.setCardId(selectedCardId);
+            else transaction.setAccountId(selectedAccountId);
+        }
 
         saveTransaction(transaction);
 

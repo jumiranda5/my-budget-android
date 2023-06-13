@@ -1,12 +1,12 @@
 package com.jgm.mybudgetapp;
 
-import com.jgm.mybudgetapp.objects.Account;
-import com.jgm.mybudgetapp.objects.Card;
-import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
-import com.jgm.mybudgetapp.objects.Transaction;
+import com.jgm.mybudgetapp.room.entity.Account;
+import com.jgm.mybudgetapp.room.entity.Category;
+import com.jgm.mybudgetapp.room.entity.CreditCard;
+import com.jgm.mybudgetapp.room.entity.Transaction;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public interface MainInterface {
     void openAccountDetails(Account account, int position);
     void openAccountForm(boolean isEdit, Account account, int position);
     void openYear();
-    void openCardDetails(Card card, int position);
-    void openCardForm(boolean isEdit, Card card, int position);
+    void openCardDetails(CreditCard card, int position);
+    void openCardForm(boolean isEdit, CreditCard card, int position);
     void openTransactionForm();
     void navigateBack();
 
@@ -59,8 +59,8 @@ public interface MainInterface {
     void editCategoryData(int position, Category category);
 
     void getCreditCardsData();
-    void insertCreditCardData(Card card);
-    void editCreditCardData(int position, Card card);
+    void insertCreditCardData(CreditCard card);
+    void editCreditCardData(int position, CreditCard card);
 
     void insertTransaction(Transaction transaction);
 

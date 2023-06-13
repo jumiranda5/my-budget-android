@@ -16,9 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentAccountDetailsBinding;
-import com.jgm.mybudgetapp.objects.Account;
+import com.jgm.mybudgetapp.objects.AccountObj;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 

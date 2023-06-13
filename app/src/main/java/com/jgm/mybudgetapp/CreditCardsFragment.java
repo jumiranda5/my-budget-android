@@ -18,10 +18,11 @@ import android.widget.TextView;
 
 import com.jgm.mybudgetapp.adapters.CardAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardsBinding;
-import com.jgm.mybudgetapp.objects.Card;
+import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreditCardsFragment extends Fragment {
 
@@ -32,7 +33,7 @@ public class CreditCardsFragment extends Fragment {
     private static final String LOG = "debug-credit-cards";
 
     // List
-    private ArrayList<Card> cardsList = new ArrayList<>();
+    private ArrayList<CreditCard> cardsList = new ArrayList<>();
     CardAdapter adapter;
 
     // UI
@@ -84,13 +85,13 @@ public class CreditCardsFragment extends Fragment {
                                        INTERFACE
      =============================================================================== */
 
-    public void updateListAfterDbRead(ArrayList<Card> dbCards) {
+    public void updateListAfterDbRead(List<CreditCard> dbCards) {
         Log.d(LOG, "Update ui list: " + dbCards.size());
-        cardsList = dbCards;
+        cardsList = (ArrayList<CreditCard>) dbCards;
         initRecyclerView();
     }
 
-    public void updateUiAfterInsertion(Card card) {
+    public void updateUiAfterInsertion(CreditCard card) {
         adapter.addItem(card);
     }
 
@@ -99,7 +100,7 @@ public class CreditCardsFragment extends Fragment {
         adapter.deleteItem(pos);
     }
 
-    public void updateListAfterEdit(int pos, Card editedCard) {
+    public void updateListAfterEdit(int pos, CreditCard editedCard) {
         Log.d("debug-cards", "Update ui list after item edit");
         adapter.updateItem(pos, editedCard);
     }
@@ -112,7 +113,7 @@ public class CreditCardsFragment extends Fragment {
     private void setTotal() {
         float total = 0.0f;
         for (int i = 0; i < cardsList.size(); i++) {
-            total = total + cardsList.get(i).getTotal();
+            total = total + 0.0f; // todo
         }
         String[] currencyFormat = NumberUtils.getCurrencyFormat(mContext, total);
         String formattedValue = currencyFormat[0] + currencyFormat[1];

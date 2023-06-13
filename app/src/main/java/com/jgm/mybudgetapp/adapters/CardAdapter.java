@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
@@ -24,11 +24,11 @@ import java.util.List;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder> {
 
     private final Context mContext;
-    private final List<Card> mDataList;
+    private final List<CreditCard> mDataList;
     private final LayoutInflater layoutInflater;
     private final MainInterface mInterface;
 
-    public CardAdapter(Context context, List<Card> mDataList) {
+    public CardAdapter(Context context, List<CreditCard> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         this.mInterface = (MainInterface) context;
@@ -45,7 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
 
-        Card card = mDataList.get(position);
+        CreditCard card = mDataList.get(position);
         String billingDay = "Billing day: " + card.getBillingDay();
 
         // Set color
@@ -57,7 +57,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
         holder.mDay.setText(billingDay);
 
         // Set total
-        String[] total = NumberUtils.getCurrencyFormat(mContext, card.getTotal());
+        String[] total = NumberUtils.getCurrencyFormat(mContext, 0.0f);
         holder.mSymbol.setText(total[0]);
         holder.mTotal.setText(total[1]);
 
@@ -66,7 +66,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
 
     }
 
-    public void addItem(Card card) {
+    public void addItem(CreditCard card) {
         if (card != null) {
             mDataList.add(card);
             int pos = mDataList.size();
@@ -75,7 +75,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
         }
     }
 
-    public void updateItem(int pos, Card newData) {
+    public void updateItem(int pos, CreditCard newData) {
         mDataList.get(pos).setName(newData.getName());
         mDataList.get(pos).setColorId(newData.getColorId());
         mDataList.get(pos).setBillingDay(newData.getBillingDay());

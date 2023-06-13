@@ -21,32 +21,29 @@ import android.widget.ImageButton;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.jgm.mybudgetapp.db.DataManager;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.MethodPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
-import com.jgm.mybudgetapp.objects.Account;
-import com.jgm.mybudgetapp.objects.Card;
-import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
-import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
-import com.jgm.mybudgetapp.objects.Transaction;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.AccountDao;
+import com.jgm.mybudgetapp.room.dao.CardDao;
+import com.jgm.mybudgetapp.room.dao.CategoryDao;
+import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.room.entity.Account;
+import com.jgm.mybudgetapp.room.entity.Category;
+import com.jgm.mybudgetapp.room.entity.CreditCard;
+import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
@@ -108,9 +105,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private boolean isExpenseMethodDialog;
 
     // Db
-    private ExecutorService executorServiceRead;
-    private ExecutorService executorServiceWrite;
-    protected DataManager mDbManager;
+    private AccountDao mAccountDao;
+    private CardDao mCardDao;
+    private CategoryDao mCategoryDao;
+    private TransactionDao mTransactionDao;
 
     // UI
     private ActivityMainBinding binding;
@@ -142,11 +140,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         setBinding();
 
         if (savedInstanceState == null) setFragment(homeTag);
-        else initExecutors();
 
-        openDatabase();
+        initDatabase();
         initBottomBar();
         settingsButton.setOnClickListener(v -> openFragment(settingsTag));
+
     }
 
     @Override
@@ -178,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     protected void onResume() {
         super.onResume();
         Log.d(LOG_LIFECYCLE, "Main Activity onResume");
-        initExecutors();
     }
 
     @Override
@@ -199,13 +196,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     protected void onStop() {
         super.onStop();
         Log.d(LOG_LIFECYCLE, "Main Activity onStop");
-        closeExecutors();
     }
 
     @Override
     protected void onDestroy() {
         Log.d(LOG_LIFECYCLE, "Main Activity onDestroy");
-        closeDatabase();
         super.onDestroy();
     }
 
@@ -213,43 +208,72 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                                       DATABASE
     ========================================================================== */
 
-    private void openDatabase() {
-        if (mDbManager == null) {
-            mDbManager = new DataManager(this);
-            mDbManager.open();
-            Log.d(LOG_DB, "opening db...");
+    private void initDatabase() {
+        AppDatabase db = AppDatabase.getDatabase(this);
+        mAccountDao = db.AccountDao();
+        mCardDao = db.CardDao();
+        mCategoryDao = db.CategoryDao();
+        mTransactionDao = db.TransactionDao();
+        initDefaultAccounts();
+        initDefaultCategories();
+    }
+
+    private void initDefaultAccounts() {
+        boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(this, "hasInitialAccounts");
+        if (!hasInitialAccounts) {
+
+            Log.d(LOG_DB, "== INIT ACCOUNT DEFAULT LIST");
+
+            ArrayList<Account> list = new ArrayList<>();
+
+            Account cash = new Account(getString(R.string.account_cash), 21, 67, 0, true);
+            Account checking = new Account(getString(R.string.account_checking), 14, 68, 1, true);
+            Account savings = new Account(getString(R.string.account_savings), 20, 69, 2, true);
+
+            list.add(cash);
+            list.add(checking);
+            list.add(savings);
+
+            for (int i = 0; i < list.size(); i++) {
+                insertAccountData(list.get(i));
+            }
+
+            SettingsPrefs.setSettingsPrefsBoolean(this, "hasInitialAccounts", true);
+
         }
     }
 
-    private void closeDatabase() {
-        if (mDbManager != null) mDbManager.close();
-        Log.d(LOG_DB, "closing db...");
-    }
+    private void initDefaultCategories() {
 
-    private void initExecutors() {
+        boolean hasInitialCategories = SettingsPrefs.getSettingsPrefsBoolean(this, "hasInitialCategories");
 
-        if (executorServiceWrite == null || executorServiceWrite.isShutdown()) {
-            Log.d(LOG_THREAD, "Init executor Write => Main Activity");
-            executorServiceWrite = Executors.newSingleThreadExecutor();
-        }
+        if (!hasInitialCategories) {
 
-        if (executorServiceRead == null || executorServiceRead.isShutdown()) {
-            Log.d(LOG_THREAD, "Init executorRead => Main Activity");
-            executorServiceRead = Executors.newSingleThreadExecutor();
-        }
+            Log.d(LOG_DB, "== INIT CATEGORIES DEFAULT LIST");
 
-    }
+            ArrayList<com.jgm.mybudgetapp.room.entity.Category> list = new ArrayList<>();
 
-    private void closeExecutors() {
+            Category c1 = new Category(getString(R.string.category_home), 3, 6, true);
+            Category c2 = new Category(getString(R.string.category_health), 5, 34, true);
+            Category c3 = new Category(getString(R.string.category_groceries), 14, 9, true);
+            Category c4 = new Category(getString(R.string.category_transport), 11, 29, true);
+            Category c5 = new Category(getString(R.string.category_leisure), 1, 46, true);
+            Category c6 = new Category(getString(R.string.category_education), 7, 15, true);
+            Category c7 = new Category(getString(R.string.category_work), 4, 11, true);
 
-        Log.d(LOG_THREAD, "Close executors => Main Activity");
+            list.add(c1);
+            list.add(c2);
+            list.add(c3);
+            list.add(c4);
+            list.add(c5);
+            list.add(c6);
+            list.add(c7);
 
-        if (executorServiceWrite != null) executorServiceWrite.shutdownNow();
-        if (executorServiceRead != null) executorServiceRead.shutdownNow();
+            for (int i = 0; i < list.size(); i++) {
+                insertCategoryData(list.get(i));
+            }
 
-        if (executorServiceWrite != null && executorServiceRead != null) {
-            Log.d(LOG_THREAD, "Executor read shut down: " + executorServiceRead.isShutdown());
-            Log.d(LOG_THREAD, "Executor write shut down: " + executorServiceWrite.isShutdown());
+            SettingsPrefs.setSettingsPrefsBoolean(this, "hasInitialCategories", true);
         }
 
     }
@@ -427,13 +451,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openCardDetails(Card card, int position) {
+    public void openCardDetails(CreditCard card, int position) {
         openFragment(cardDetailsTag);
         if (mCreditCardDetails != null) mCreditCardDetails.setCreditCard(card, position);
     }
 
     @Override
-    public void openCardForm(boolean isEdit, Card card, int position) {
+    public void openCardForm(boolean isEdit, CreditCard card, int position) {
         openFragment(cardFormTag);
         if (mCreditCardForm != null) {
             mCreditCardForm.setFormType(isEdit);
@@ -543,37 +567,45 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         // Create a payment methods list
         ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
 
-        // get accounts and credit cards from db
-        // Using the main thread to be able to use the return statement
-        ArrayList<Account> accountsList = mDbManager.getAllAccounts();
+        AppDatabase.dbReadExecutor.execute(() -> {
+            // get accounts and credit cards from db
+            // Using the main thread to be able to use the return statement
+            List<Account> accountsList = mAccountDao.getAccounts();
 
-        for (int i = 0; i < accountsList.size(); i++) {
-            Account account = accountsList.get(i);
-            PaymentMethod paymentMethod = new PaymentMethod(
-                    account.getId(),
-                    account.getType(),
-                    account.getName(),
-                    account.getColorId(),
-                    account.getIconId(),
-                    0);
-            paymentMethods.add(paymentMethod);
-        }
-
-        // Get credit cards from db if type is expense
-        if (isExpenseMethodDialog) {
-            ArrayList<Card> cardsList = mDbManager.getAllCreditCards();
-            for (int i = 0; i < cardsList.size(); i++) {
-                Card card = cardsList.get(i);
+            for (int i = 0; i < accountsList.size(); i++) {
+                Account account = accountsList.get(i);
                 PaymentMethod paymentMethod = new PaymentMethod(
-                        card.getId(),
-                        3,
-                        card.getName(),
-                        card.getColorId(),
-                        70, card.getBillingDay());
+                        account.getId(),
+                        account.getType(),
+                        account.getName(),
+                        account.getColorId(),
+                        account.getIconId(),
+                        0);
                 paymentMethods.add(paymentMethod);
             }
+        });
+
+        if (isExpenseMethodDialog) {
+            AppDatabase.dbReadExecutor.execute(() -> {
+                // Get credit cards from db if type is expense
+
+                List<CreditCard> cardsList = mCardDao.getCreditCards();
+                for (int i = 0; i < cardsList.size(); i++) {
+                    CreditCard card = cardsList.get(i);
+                    PaymentMethod paymentMethod = new PaymentMethod(
+                            card.getId(),
+                            3,
+                            card.getName(),
+                            card.getColorId(),
+                            70, card.getBillingDay());
+                    paymentMethods.add(paymentMethod);
+                }
+
+                Log.d(LOG_DB, "Methods list size: " + paymentMethods.size());
+            });
         }
-        Log.d(LOG_DB, "Methods list size: " + paymentMethods.size());
+
+        // todo => wait executions...
 
         return paymentMethods;
     }
@@ -615,9 +647,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void getAccountsData() {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceRead.execute(() -> {
+        AppDatabase.dbReadExecutor.execute(() -> {
 
-            ArrayList<Account> accountsList = mDbManager.getAllAccounts();
+            List<Account> accountsList = mAccountDao.getAccounts();
 
             handler.post(() -> {
                 if (mAccounts!= null) mAccounts.updateListAfterDbRead(accountsList);
@@ -629,13 +661,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void insertAccountData(Account account) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            int id = (int) mDbManager.createAccount(account);
+            int id = (int) mAccountDao.insert(account);
             account.setId(id);
 
             handler.post(() -> {
-                mAccounts.updateUiAfterInsertion(account);
+                if (mAccounts != null) mAccounts.updateUiAfterInsertion(account);
                 Log.d(LOG_DB, "account saved on db... update ui");
             });
 
@@ -645,9 +677,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void editAccountData(int position, Account account) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            mDbManager.updateAccount(account);
+            mAccountDao.update(account);
 
             handler.post(() -> {
                 if (account.isActive()) {
@@ -672,9 +704,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void getCategoriesData() {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceRead.execute(() -> {
+        AppDatabase.dbReadExecutor.execute(() -> {
 
-            ArrayList<Category> categoriesList = mDbManager.getAllCategories();
+            List<Category> categoriesList = mCategoryDao.getCategories();
 
             handler.post(() -> {
                 mCategoriesList.updateListAfterDbRead(categoriesList);
@@ -686,9 +718,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void insertCategoryData(Category category) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            int id = (int) mDbManager.createCategory(category);
+            int id = (int) mCategoryDao.insert(category);
             category.setId(id);
 
             handler.post(() -> {
@@ -702,9 +734,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void editCategoryData(int position, Category category) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            mDbManager.updateCategory(category);
+            mCategoryDao.update(category);
 
             handler.post(() -> {
                 Log.d(LOG_DB, "category updated on db... update ui");
@@ -722,9 +754,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void getCreditCardsData() {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceRead.execute(() -> {
+        AppDatabase.dbReadExecutor.execute(() -> {
 
-            ArrayList<Card> cardsList = mDbManager.getAllCreditCards();
+            List<CreditCard> cardsList = mCardDao.getCreditCards();
 
             handler.post(() -> {
                 if (mCreditCards != null) mCreditCards.updateListAfterDbRead(cardsList);
@@ -734,11 +766,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void insertCreditCardData(Card card) {
+    public void insertCreditCardData(CreditCard card) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            int id = (int) mDbManager.createCreditCard(card);
+            int id = (int) mCardDao.insert(card);
             card.setId(id);
 
             handler.post(() -> {
@@ -749,11 +781,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void editCreditCardData(int position, Card card) {
+    public void editCreditCardData(int position, CreditCard card) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            mDbManager.updateCreditCard(card);
+            mCardDao.update(card);
 
             handler.post(() -> {
                 if (card.isActive()) {
@@ -776,9 +808,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void insertTransaction(Transaction transaction) {
         Handler handler = new Handler(Looper.getMainLooper());
-        executorServiceWrite.execute(() -> {
+        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            mDbManager.createTransaction(transaction);
+            mTransactionDao.insert(transaction);
 
             handler.post(() -> {
                 if(mTransactionForm != null) mTransactionForm.handleTransactionInserted();

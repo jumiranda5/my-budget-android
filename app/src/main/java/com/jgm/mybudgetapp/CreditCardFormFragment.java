@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardFormBinding;
-import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
 public class CreditCardFormFragment extends Fragment {
@@ -38,7 +37,7 @@ public class CreditCardFormFragment extends Fragment {
     private Color selectedColor;
     private int billingDay;
     private int position;
-    private Card creditCard;
+    private CreditCard creditCard;
 
     // UI
     private FragmentCreditCardFormBinding binding;
@@ -119,14 +118,13 @@ public class CreditCardFormFragment extends Fragment {
         this.isEdit = isEdit;
     }
 
-    public void setCreditCard(Card card, int position) {
+    public void setCreditCard(CreditCard card, int position) {
         this.position = position;
         creditCard = card;
     }
 
     public void setSelectedColor(Color color) {
         selectedColor = color;
-        Log.e(LOG, "selected color => " + selectedColor.getColorName());
         mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
         mColorIcon.setContentDescription(selectedColor.getColorName());
     }
@@ -178,7 +176,7 @@ public class CreditCardFormFragment extends Fragment {
         if (billingDayText.equals("")) billingDayText = "1";
         billingDay = Integer.parseInt(billingDayText);
 
-        Card newCard = new Card(0, nickname, selectedColor.getId(), billingDay, true);
+        CreditCard newCard = new CreditCard(nickname, selectedColor.getId(), billingDay, true);
         mInterface.insertCreditCardData(newCard);
         mInterface.navigateBack();
     }
@@ -189,12 +187,12 @@ public class CreditCardFormFragment extends Fragment {
         if (billingDayText.equals("")) billingDayText = "1";
         billingDay = Integer.parseInt(billingDayText);
 
-        Card editedCard = new Card(
-                creditCard.getId(),
+        CreditCard editedCard = new CreditCard(
                 nickname,
                 selectedColor.getId(),
                 billingDay,
                 isActive);
+        editedCard.setId(creditCard.getId());
 
         mInterface.editCreditCardData(position, editedCard);
         mInterface.navigateBack();

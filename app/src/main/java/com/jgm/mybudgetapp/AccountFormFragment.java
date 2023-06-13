@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentAccountFormBinding;
-import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
 public class AccountFormFragment extends Fragment {
@@ -205,7 +204,6 @@ public class AccountFormFragment extends Fragment {
         String nickname = mNicknameInput.getText().toString().trim();
 
         Account newAccount = new Account(
-                0,
                 nickname,
                 selectedColor.getId(),
                 selectedIconId,
@@ -220,12 +218,12 @@ public class AccountFormFragment extends Fragment {
         String nickname = mNicknameInput.getText().toString().trim();
 
         Account editedAccount = new Account(
-                account.getId(),
                 nickname,
                 selectedColor.getId(),
                 selectedIconId,
                 selectedType,
                 isActive);
+        editedAccount.setId(account.getId());
 
         mInterface.editAccountData(position, editedAccount);
         mInterface.navigateBack();

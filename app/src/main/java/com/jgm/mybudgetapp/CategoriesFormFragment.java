@@ -20,9 +20,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesFormBinding;
-import com.jgm.mybudgetapp.objects.Category;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 
@@ -162,15 +162,15 @@ public class CategoriesFormFragment extends Fragment {
 
     private void createCategory() {
         String name = mCategoryNameInput.getText().toString().trim();
-        Category category = new Category(0, name, selectedColor.getId(), selectedIcon.getId(), true);
+        Category category = new Category(name, selectedColor.getId(), selectedIcon.getId(), true);
         mInterface.insertCategoryData(category);
         mInterface.navigateBack();
     }
 
     private void editCategory(int pos, boolean active) {
         String name = mCategoryNameInput.getText().toString().trim();
-        Category category = new Category(
-                categoryToEdit.getId(), name, selectedColor.getId(), selectedIcon.getId(), active);
+        Category category = new Category(name, selectedColor.getId(), selectedIcon.getId(), active);
+        category.setId(categoryToEdit.getId());
         mInterface.editCategoryData(pos, category);
         mInterface.navigateBack();
     }

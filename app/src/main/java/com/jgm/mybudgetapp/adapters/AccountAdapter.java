@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Account;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
 import java.util.List;

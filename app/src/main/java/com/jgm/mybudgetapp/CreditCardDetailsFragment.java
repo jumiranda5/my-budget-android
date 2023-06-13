@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardDetailsBinding;
-import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
 public class CreditCardDetailsFragment extends Fragment {
@@ -28,7 +28,7 @@ public class CreditCardDetailsFragment extends Fragment {
 
     // Vars
     private int position;
-    private Card creditCard;
+    private CreditCard creditCard;
 
     // UI
     private FragmentCreditCardDetailsBinding binding;
@@ -78,12 +78,12 @@ public class CreditCardDetailsFragment extends Fragment {
                                        INTERFACE
      =============================================================================== */
 
-    public void setCreditCard(Card card, int position) {
+    public void setCreditCard(CreditCard card, int position) {
         this.position = position;
         creditCard = card;
     }
 
-    public void updateCreditCardAfterEdit(Card card) {
+    public void updateCreditCardAfterEdit(CreditCard card) {
         creditCard = card;
         initCreditCardInfo();
     }
