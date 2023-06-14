@@ -789,7 +789,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             handler.post(() -> {
                 if(mTransactionForm != null) mTransactionForm.handleTransactionInserted();
-                Log.d("debug-db", "Transaction saved on db... update ui");
+                Log.d(LOG_DB, "Transaction saved on db... update ui");
             });
         });
     }

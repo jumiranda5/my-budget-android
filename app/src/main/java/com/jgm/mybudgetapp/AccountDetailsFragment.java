@@ -153,6 +153,22 @@ public class AccountDetailsFragment extends Fragment {
             Log.d(LOG, "list size: " + transactions.size());
 
             handler.post(() -> {
+
+                for (int i = 0; i < transactions.size(); i++) {
+                    Transaction t = transactions.get(i);
+                    Log.d(LOG, "Transaction data to save => " + "\n" +
+                            "type: " + t.getType() + "\n" +
+                            "description: " + t.getDescription() + "\n" +
+                            "amount: " + t.getAmount() + "\n" +
+                            "date: " + t.getDay() + "/" + t.getMonth() + "/" + t.getYear() + "\n" +
+                            "category id: " + t.getCategoryId() + "\n" +
+                            "account id: " + t.getAccountId() + "\n" +
+                            "card id: " + t.getCardId() + "\n" +
+                            "isPaid: " + t.isPaid() + "\n" +
+                            "repeat: " + t.getRepeat() + " | " + "repeatCount: "
+                            + t.getRepeatCount() + " | " + "repeat id: " + t.getRepeatId());
+                }
+
                 accountTransactions = (ArrayList<Transaction>) transactions;
                 initRecyclerView();
             });

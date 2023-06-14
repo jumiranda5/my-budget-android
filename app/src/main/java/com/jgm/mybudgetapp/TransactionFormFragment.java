@@ -293,6 +293,8 @@ public class TransactionFormFragment extends Fragment {
         String formattedDate = MyDateUtils.getFormattedFieldDate(mContext,
                 today.getYear(), today.getMonth(), today.getDay());
 
+        Log.d(LOG, "setSelectedDate: " + formattedDate);
+
         String btnText = getString(R.string.label_today) + " - " + formattedDate;
         mDatePicker.setText(btnText);
         mDatePicker.setOnClickListener(view -> mInterface.showDatePickerDialog());
@@ -665,24 +667,30 @@ public class TransactionFormFragment extends Fragment {
 
     private void saveTransaction(Transaction transaction) {
 
-        int i = 0;
-        while (i < repeat) {
-            i++;
-            logTransaction(transaction);
-            mInterface.insertTransaction(transaction);
+        logTransaction(transaction);
+        Log.d(LOG, "==> month: " + transaction.getMonth());
+        mInterface.insertTransaction(transaction);
 
-            // if repeat => update next transaction month and year
-            int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
-            transaction.setMonth(nextDate[0]);
-            transaction.setYear(nextDate[1]);
-            transaction.setRepeatCount(i);
+        if (repeat > 1) {
+            int i = 1;
+            while (i < repeat) {
+                // if repeat => update next transaction month and year
+                int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
+                transaction.setMonth(nextDate[0]);
+                transaction.setYear(nextDate[1]);
+                transaction.setRepeatCount(i);
 
-            // if repeat => update isPaid
-            if (transaction.getYear() >= today.getYear()
-                    && transaction.getMonth() >= today.getMonth()
-                    && transaction.getDay() >= today.getDay()) isPaid = false;
+                // if repeat => update isPaid
+                if (transaction.getYear() >= today.getYear()
+                        && transaction.getMonth() >= today.getMonth()
+                        && transaction.getDay() >= today.getDay()) isPaid = false;
+
+                logTransaction(transaction);
+                mInterface.insertTransaction(transaction);
+
+                i++;
+            }
         }
-
     }
 
     private void logTransaction(Transaction t) {
