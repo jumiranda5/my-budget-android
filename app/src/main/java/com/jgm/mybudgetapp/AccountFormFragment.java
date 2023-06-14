@@ -8,8 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentAccountFormBinding;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
@@ -125,6 +130,7 @@ public class AccountFormFragment extends Fragment {
     public void setAccount(Account account, int position) {
         this.position = position;
         this.account = account;
+        Log.d(LOG, "account id: " + account.getId());
     }
 
     public void setSelectedColor(Color color) {
@@ -210,8 +216,7 @@ public class AccountFormFragment extends Fragment {
                 selectedType,
                 true);
 
-        mInterface.insertAccountData(newAccount);
-        mInterface.navigateBack();
+        saveAccountOnDb(newAccount);
     }
 
     private void editAccount(boolean isActive) {
@@ -225,7 +230,48 @@ public class AccountFormFragment extends Fragment {
                 isActive);
         editedAccount.setId(account.getId());
 
-        mInterface.editAccountData(position, editedAccount);
-        mInterface.navigateBack();
+        editAccountOnDb(editedAccount);
+    }
+
+    /* ===============================================================================
+                                      DATABASE
+    =============================================================================== */
+
+    private void saveAccountOnDb(Account newAccount) {
+
+        AccountDao accountDao = AppDatabase.getDatabase(mContext).AccountDao();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbWriteExecutor.execute(() -> {
+
+            int id = (int) accountDao.insert(newAccount);
+
+            handler.post(() -> {
+                Log.d(LOG, "account saved on db... update ui");
+                newAccount.setId(id);
+                mInterface.updateAccountInserted(newAccount, false, 0);
+                mInterface.navigateBack();
+            });
+
+        });
+
+    }
+
+    private void editAccountOnDb(Account editedAccount) {
+
+        AccountDao accountDao = AppDatabase.getDatabase(mContext).AccountDao();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbWriteExecutor.execute(() -> {
+
+            accountDao.update(editedAccount);
+
+            handler.post(() -> {
+                Log.d(LOG, "account updated on db... update ui");
+                mInterface.updateAccountInserted(editedAccount, true, position);
+                mInterface.navigateBack();
+            });
+
+        });
     }
 }

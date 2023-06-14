@@ -14,20 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridViewHolder> {
 
     private final Context mContext;
-    private final List<Account> mDataList;
+    private final List<AccountTotal> mDataList;
     private final LayoutInflater layoutInflater;
     private final MainInterface mInterface;
 
-    public AccountAdapter(Context context, List<Account> mDataList) {
+    public AccountAdapter(Context context, List<AccountTotal> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         this.mInterface = (MainInterface) context;
@@ -44,7 +46,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
 
-        Account account = mDataList.get(position);
+        AccountTotal account = mDataList.get(position);
         int colorId = account.getColorId();
         Color color = ColorUtils.getColor(colorId);
         int iconId;
@@ -61,10 +63,23 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
         // Set account name
         holder.mName.setText(account.getName());
 
+        // Set total
+        String[] currency = NumberUtils.getCurrencyFormat(mContext, account.getTotal());
+        holder.mCurrencySymbol.setText(currency[0]);
+        holder.mTotal.setText(currency[1]);
+
         // Set currency color
         if (account.getType() == 2) {
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+        }
+        else if (account.getTotal() < 0) {
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        }
+        else {
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
         }
 
         // Open account details
@@ -72,7 +87,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
 
     }
 
-    public void addItem(Account account) {
+    public void addItem(AccountTotal account) {
         if (account != null) {
             mDataList.add(account);
             int pos = mDataList.size();

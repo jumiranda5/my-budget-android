@@ -27,6 +27,7 @@ import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.MethodPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
+import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
@@ -44,6 +45,7 @@ import com.jgm.mybudgetapp.utils.MyDateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
@@ -219,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void initDefaultAccounts() {
+        // todo => and if list is empty
         boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(this, "hasInitialAccounts");
         if (!hasInitialAccounts) {
 
@@ -235,7 +238,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             list.add(savings);
 
             for (int i = 0; i < list.size(); i++) {
-                insertAccountData(list.get(i));
+                Account newAccount = list.get(i);
+                AppDatabase.dbWriteExecutor.execute(() -> {
+                    mAccountDao.insert(newAccount);
+                });
             }
 
             SettingsPrefs.setSettingsPrefsBoolean(this, "hasInitialAccounts", true);
@@ -245,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void initDefaultCategories() {
 
+        // todo => and if list is empty
         boolean hasInitialCategories = SettingsPrefs.getSettingsPrefsBoolean(this, "hasInitialCategories");
 
         if (!hasInitialCategories) {
@@ -431,9 +438,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openAccountDetails(Account account, int position) {
+    public void openAccountDetails(AccountTotal accountTotal, int position) {
         openFragment(accountDetailsTag);
-        if (mAccountDetails != null) mAccountDetails.setAccount(account, position);
+        if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, position);
     }
 
     @Override
@@ -645,57 +652,25 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     /* ========================  DATABASE - ACCOUNTS ======================== */
 
     @Override
-    public void getAccountsData() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
-
-            List<Account> accountsList = mAccountDao.getAccounts();
-
-            handler.post(() -> {
-                if (mAccounts!= null) mAccounts.updateListAfterDbRead(accountsList);
-                Log.d(LOG_DB, "Done reading all accounts from db: " + accountsList.size());
-            });
-        });
-    }
-
-    @Override
-    public void insertAccountData(Account account) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
-
-            int id = (int) mAccountDao.insert(account);
-            account.setId(id);
-
-            handler.post(() -> {
-                if (mAccounts != null) mAccounts.updateUiAfterInsertion(account);
-                Log.d(LOG_DB, "account saved on db... update ui");
-            });
-
-        });
-    }
-
-    @Override
-    public void editAccountData(int position, Account account) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
-
-            mAccountDao.update(account);
-
-            handler.post(() -> {
-                if (account.isActive()) {
-                    mAccounts.updateListAfterEdit(position, account);
-                    mAccountDetails.updateAccountAfterEdit(account);
-                }
-                else {
-                    // close details page and update main
-                    onBackPressed();
-                    mAccounts.updateListAfterDelete(position);
-                }
-
-                Log.d(LOG_DB, "account updated on db... update ui");
-            });
-
-        });
+    public void updateAccountInserted(Account account, boolean isEdit, int position) {
+        if (!isEdit){
+            if (mAccounts != null) mAccounts.updateUiAfterInsertion(account);
+        }
+        else {
+            // Changed account, but didn't archive
+            if (account.isActive()) {
+                Log.d("debug-account", "Should back press once");
+                if (mAccounts != null) mAccounts.updateListAfterEdit(position, account);
+                if (mAccountDetails != null) mAccountDetails.updateAccountAfterEdit(account);
+            }
+            // Archived
+            else {
+                // close details page and update main
+                Log.d("debug-account", "Should back press twice");
+                onBackPressed();
+                if (mAccounts != null) mAccounts.updateListAfterDelete(position);
+            }
+        }
     }
 
 

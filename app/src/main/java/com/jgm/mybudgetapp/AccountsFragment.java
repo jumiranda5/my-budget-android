@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +19,15 @@ import android.widget.Button;
 
 import com.jgm.mybudgetapp.adapters.AccountAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentAccountsBinding;
+import com.jgm.mybudgetapp.objects.AccountTotal;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AccountsFragment extends Fragment {
 
@@ -32,7 +38,7 @@ public class AccountsFragment extends Fragment {
     private static final String LOG = "debug-accounts";
 
     // List
-    private ArrayList<Account> accountsList = new ArrayList<>();
+    private ArrayList<AccountTotal> accountsList = new ArrayList<>();
     private AccountAdapter adapter;
 
     // UI
@@ -70,9 +76,8 @@ public class AccountsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mInterface.getAccountsData();
+        getAccountsData();
         mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
-        initRecyclerView();
 
     }
 
@@ -80,16 +85,18 @@ public class AccountsFragment extends Fragment {
                                        INTERFACE
      =============================================================================== */
 
-    public void updateListAfterDbRead(List<Account> dbAccounts) {
-        Log.d(LOG, "Update ui list: " + dbAccounts.size());
-        if (dbAccounts.size() > 0) {
-            accountsList = (ArrayList<Account>) dbAccounts;
-            initRecyclerView();
-        }
-    }
-
     public void updateUiAfterInsertion(Account account) {
-        adapter.addItem(account);
+        Log.d(LOG, "Update ui list after item inserted");
+        AccountTotal newAccount = new AccountTotal(
+                account.getId(),
+                account.getName(),
+                account.getColorId(),
+                account.getIconId(),
+                account.getType(),
+                account.isActive(),
+                0.0f
+        );
+        adapter.addItem(newAccount);
     }
 
     public void updateListAfterDelete(int pos) {
@@ -104,6 +111,48 @@ public class AccountsFragment extends Fragment {
 
 
     /* ===============================================================================
+                                        DATABASE
+     =============================================================================== */
+
+    private void getAccountsData() {
+        AppDatabase db = AppDatabase.getDatabase(mContext);
+        AccountDao mAccountDao = db.AccountDao();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbReadExecutor.execute(() -> {
+
+            Map<Account, String> accountsTotals = mAccountDao.getAccountsWithTotals();
+
+            handler.post(() -> {
+
+                for (Account account : accountsTotals.keySet()) {
+
+                    String stringTotal = accountsTotals.get(account);
+
+                    Log.d(LOG, "key: " + account.getName() + " value: " + stringTotal);
+
+                    float total = 0.0f;
+                    if (stringTotal != null)
+                        total = Float.parseFloat(stringTotal);
+
+                    AccountTotal accountTotal = new AccountTotal(
+                            account.getId(), account.getName(),
+                            account.getColorId(), account.getIconId(),
+                            account.getType(), account.isActive(), total
+                    );
+
+                    accountsList.add(accountTotal);
+                }
+
+                initRecyclerView();
+
+                Log.d(LOG, "Done reading all accounts from db: " + accountsTotals.size());
+            });
+        });
+    }
+
+
+    /* ===============================================================================
                                          LIST
      =============================================================================== */
 
@@ -112,32 +161,6 @@ public class AccountsFragment extends Fragment {
         mRecyclerView.setLayoutManager(listLayoutManager);
         adapter = new AccountAdapter(mContext, accountsList);
         mRecyclerView.setAdapter(adapter);
-    }
-
-    private void setDefaultList() {
-        boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(mContext, "hasInitialAccounts");
-
-        if (!hasInitialAccounts) {
-
-            Log.d(LOG, "== INIT ACCOUNT DEFAULT LIST");
-
-            ArrayList<Account> list = new ArrayList<>();
-
-            Account cash = new Account(getString(R.string.account_cash), 21, 67, 0, true);
-            Account checking = new Account(getString(R.string.account_checking), 14, 68, 1, true);
-            Account savings = new Account(getString(R.string.account_savings), 20, 69, 2, true);
-
-            list.add(cash);
-            list.add(checking);
-            list.add(savings);
-
-            for (int i = 0; i < list.size(); i++) {
-                mInterface.insertAccountData(list.get(i));
-            }
-
-            SettingsPrefs.setSettingsPrefsBoolean(mContext, "hasInitialAccounts", true);
-
-        }
     }
 
 }

@@ -1,6 +1,6 @@
 package com.jgm.mybudgetapp.objects;
 
-public class AccountObj {
+public class AccountTotal {
 
     private int id;
     private String name;
@@ -8,14 +8,16 @@ public class AccountObj {
     private int iconId;
     private int type; // 0 = cash | 1 = checking | 2 = savings
     private boolean isActive;
+    private float total;
 
-    public AccountObj(int id, String name, int colorId, int iconId, int type, boolean isActive) {
+    public AccountTotal(int id, String name, int colorId, int iconId, int type, boolean isActive, float total) {
         this.id = id;
         this.name = name;
         this.colorId = colorId;
         this.iconId = iconId;
         this.type = type;
         this.isActive = isActive;
+        this.total = total;
     }
 
     public int getId() {
@@ -44,6 +46,10 @@ public class AccountObj {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public float getTotal() {
+        return total;
     }
 
     public void setName(String name) {

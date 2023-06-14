@@ -21,4 +21,10 @@ public interface TransactionDao {
     @Update
     void update(Transaction transaction);
 
+    @Query("SELECT * FROM transactions " +
+            "WHERE accountId = :accountId " +
+            "AND year = :year " +
+            "AND month = :month ")
+    List<Transaction> getAccountTransactions(int accountId, int year, int month);
+
 }

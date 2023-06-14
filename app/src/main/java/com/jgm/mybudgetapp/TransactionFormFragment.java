@@ -611,7 +611,7 @@ public class TransactionFormFragment extends Fragment {
                 0, transferAccountIn.getId(), null,
                 isPaid, repeat, null, null);
 
-        Transaction out = new Transaction(-1, descTransferFrom, amount,
+        Transaction out = new Transaction(-1, descTransferTo, amount*-1,
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
                 0, transferAccountOut.getId(), null,
                 isPaid, repeat, null, null);
@@ -639,6 +639,8 @@ public class TransactionFormFragment extends Fragment {
             else description = getString(R.string.action_in);
         }
 
+        if (transactionType == OUT) amount = amount * -1;
+
         Transaction transaction = new Transaction(
                 transactionType, description, amount,
                 year, month, day,
@@ -658,6 +660,8 @@ public class TransactionFormFragment extends Fragment {
         saveTransaction(transaction);
 
     }
+
+    // todo => saving wrong month?
 
     private void saveTransaction(Transaction transaction) {
 
