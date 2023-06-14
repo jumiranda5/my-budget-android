@@ -10,6 +10,8 @@ import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,6 +34,8 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.ColorUtils;
@@ -594,13 +598,6 @@ public class TransactionFormFragment extends Fragment {
         });
     }
 
-    public void handleTransactionInserted() {
-        mProgressBar.setVisibility(View.GONE);
-        mSave.setEnabled(true);
-        mSave.setText(getText(R.string.action_save));
-        mInterface.navigateBack();
-    }
-
     private void setTransfer() {
 
         // Transfer don't allow credit card => set accountId and selected date
@@ -663,13 +660,10 @@ public class TransactionFormFragment extends Fragment {
 
     }
 
-    // todo => saving wrong month?
-
     private void saveTransaction(Transaction transaction) {
 
         logTransaction(transaction);
-        Log.d(LOG, "==> month: " + transaction.getMonth());
-        mInterface.insertTransaction(transaction);
+        insertTransactionOnDb(transaction);
 
         if (repeat > 1) {
             int i = 1;
@@ -686,11 +680,29 @@ public class TransactionFormFragment extends Fragment {
                         && transaction.getDay() >= today.getDay()) isPaid = false;
 
                 logTransaction(transaction);
-                mInterface.insertTransaction(transaction);
+                insertTransactionOnDb(transaction);
 
                 i++;
             }
         }
+    }
+
+    private void insertTransactionOnDb(Transaction transaction) {
+
+        TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbWriteExecutor.execute(() -> {
+
+            transactionDao.insert(transaction);
+
+            handler.post(() -> {
+                Log.d(LOG, "Transaction saved on db... update ui");
+                mProgressBar.setVisibility(View.GONE);
+                mSave.setText(getText(R.string.action_save));
+                mInterface.navigateBack();
+            });
+        });
     }
 
     private void logTransaction(Transaction t) {

@@ -61,6 +61,4 @@ public interface MainInterface {
     void insertCreditCardData(CreditCard card);
     void editCreditCardData(int position, CreditCard card);
 
-    void insertTransaction(Transaction transaction);
-
 }

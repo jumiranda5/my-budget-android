@@ -780,20 +780,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     /* ========================  DATABASE - TRANSACTIONS ======================== */
 
-    @Override
-    public void insertTransaction(Transaction transaction) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
-
-            mTransactionDao.insert(transaction);
-
-            handler.post(() -> {
-                if(mTransactionForm != null) mTransactionForm.handleTransactionInserted();
-                Log.d(LOG_DB, "Transaction saved on db... update ui");
-            });
-        });
-    }
-
     /* ===============================================================================
                                          FRAGMENTS
      =============================================================================== */
