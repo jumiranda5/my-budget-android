@@ -34,7 +34,8 @@
     <dimen name="card_padding_sm">16dp</dimen>
 
     <!-- Toolbar -->
-    <dimen name="toolbar_month_text">18sp</dimen>
+    <dimen name="toolbar_month_text">20sp</dimen>
+    <dimen name="toolbar_month_text_other">18sp</dimen>
     <dimen name="toolbar_month_width">120dp</dimen>
 
     <!-- Progress -->

@@ -61,6 +61,12 @@
         <item name="android:fontFamily">@font/red_hat_display_semi_bold</item>
     </style>
 
+    <style name="ToolbarNotCurrentMonth" parent="MainTextEllipse">
+        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:fontFamily">@font/red_hat_display_medium</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+    </style>
+
     <style name="ToolbarTitle" parent="MainTextEllipse">
         <item name="android:fontFamily">@font/red_hat_display_medium</item>
         <item name="android:textSize">@dimen/toolbar_title_size</item>

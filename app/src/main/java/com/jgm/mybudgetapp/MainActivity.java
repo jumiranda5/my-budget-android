@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -30,6 +31,7 @@ import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.AccountDao;
@@ -39,13 +41,11 @@ import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
-import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
@@ -53,21 +53,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private static final String LOG_NAV = "debug-nav";
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
 
-    private static final String LOG_THREAD = "debug-thread";
-
     private static final String LOG_DB = "debug-database";
     private static final String STATE_FRAGMENT = "current-fragment";
     private static final String STATE_TAG_LIST = "fragment-tag-list";
+    private static final String STATE_DAY = "day";
+    private static final String STATE_MONTH = "month";
+    private static final String STATE_YEAR = "year";
 
     // Params
     private static final String PARAM_OUT = "OUT";
     private static final String PARAM_IN = "IN";
-    private static final String PARAM_IN_ADD = "IN_ADD";
-    private static final String PARAM_IN_EDIT = "IN_EDIT";
-    private static final String PARAM_OUT_ADD = "OUT_ADD";
-    private static final String PARAM_OUT_EDIT = "OUT_EDIT";
-    private static final String PARAM_ADD = "ADD";
-    private static final String PARAM_EDIT = "EDIT";
 
     // FRAGMENTS
     private AccountsFragment mAccounts;
@@ -105,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
     private String currentFragment;
     private boolean isExpenseMethodDialog;
+    private MyDate selectedDate;
+    private MyDate today;
 
     // Db
     private AccountDao mAccountDao;
@@ -116,12 +113,17 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ActivityMainBinding binding;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton settingsButton;
+    private ImageButton settingsButton, mNextMonth, mPrevMonth;
+    private TextView mToolbarMonth, mToolbarYear;
 
     private void setBinding() {
         toolbar = binding.mainToolbar;
         bottomNavigationView = binding.bottomNavigationView;
         settingsButton = binding.settingsButton;
+        mToolbarMonth = binding.toolbarMonth;
+        mToolbarYear = binding.toolbarYear;
+        mNextMonth = binding.toolbarNextMonthButton;
+        mPrevMonth = binding.toolbarPrevMonthButton;
     }
 
     @Override
@@ -141,18 +143,25 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         setContentView(binding.getRoot());
         setBinding();
 
-        if (savedInstanceState == null) setFragment(homeTag);
+        if (savedInstanceState == null) {
+            setFragment(homeTag);
+            selectedDate = MyDateUtils.getCurrentDate(this);
+        }
+        else {
+            // Set toolbar date
+            int day = savedInstanceState.getInt(STATE_DAY);
+            int month = savedInstanceState.getInt(STATE_MONTH);
+            int year = savedInstanceState.getInt(STATE_YEAR);
+            selectedDate = new MyDate(day,month,year);
+            selectedDate.setMonthName(MyDateUtils.getMonthName(this, month, year)[0]);
+        }
+
+        today = MyDateUtils.getCurrentDate(this);
 
         initDatabase();
         initBottomBar();
-        settingsButton.setOnClickListener(v -> openFragment(settingsTag));
+        initToolbar();
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(LOG_LIFECYCLE, "Main Activity onStart");
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -172,18 +181,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         // Change toolbar background if viewpager
         if (currentFragment.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
         else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(LOG_LIFECYCLE, "Main Activity onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(LOG_LIFECYCLE, "Main Activity onPause");
     }
 
     @Override
@@ -192,18 +190,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         Log.d(LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
         outState.putString(STATE_FRAGMENT, currentFragment);
         outState.putStringArrayList(STATE_TAG_LIST, mFragmentTagList);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(LOG_LIFECYCLE, "Main Activity onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d(LOG_LIFECYCLE, "Main Activity onDestroy");
-        super.onDestroy();
+        outState.putInt(STATE_DAY, selectedDate.getDay());
+        outState.putInt(STATE_MONTH, selectedDate.getMonth());
+        outState.putInt(STATE_YEAR, selectedDate.getYear());
     }
 
     /* ==========================================================================
@@ -285,9 +274,46 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     }
 
+
     /* ===============================================================================
                                          TOOLBAR
      =============================================================================== */
+
+    private void initToolbar() {
+        // set toolbar date
+        mToolbarMonth.setText(selectedDate.getMonthName());
+        mToolbarYear.setText(String.valueOf(selectedDate.getYear()));
+        setToolbarMonthStyle();
+
+        // init buttons
+        settingsButton.setOnClickListener(v -> openFragment(settingsTag));
+        mNextMonth.setOnClickListener(v -> setToolbarNextMonth());
+        mPrevMonth.setOnClickListener(v -> setToolbarPrevMonth());
+    }
+
+    private void setToolbarNextMonth() {
+        MyDate nextDate = MyDateUtils.getNextMonth(this, selectedDate.getMonth(), selectedDate.getYear());
+        selectedDate = nextDate;
+        mToolbarMonth.setText(nextDate.getMonthName());
+        mToolbarYear.setText(String.valueOf(nextDate.getYear()));
+        setToolbarMonthStyle();
+    }
+
+    private void setToolbarPrevMonth() {
+        MyDate prevDate = MyDateUtils.getPrevMonth(this, selectedDate.getMonth(), selectedDate.getYear());
+        selectedDate = prevDate;
+        mToolbarMonth.setText(prevDate.getMonthName());
+        mToolbarYear.setText(String.valueOf(prevDate.getYear()));
+        setToolbarMonthStyle();
+    }
+
+    private void setToolbarMonthStyle() {
+        if (selectedDate.getMonth() != today.getMonth()
+                || selectedDate.getYear() != today.getYear()) {
+            mToolbarMonth.setTextAppearance(R.style.ToolbarNotCurrentMonth);
+        }
+        else mToolbarMonth.setTextAppearance(R.style.ToolbarMonth);
+    }
 
     private void setToolbarVisibilities(String tag) {
 

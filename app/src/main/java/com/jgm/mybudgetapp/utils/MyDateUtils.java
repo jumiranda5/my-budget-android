@@ -37,6 +37,42 @@ public class MyDateUtils {
         return date;
     }
 
+    public static MyDate getNextMonth(Context context, int currentMonth, int currentYear) {
+        int nextMonth = currentMonth;
+        int nextYear = currentYear;
+
+        if (currentMonth == 12) {
+            nextMonth = 1;
+            nextYear++;
+        }
+        else {
+            nextMonth++;
+        }
+
+        MyDate dateObj = new MyDate(1, nextMonth, nextYear);
+        dateObj.setMonthName(getMonthName(context, nextMonth, nextYear)[0]);
+
+        return dateObj;
+    }
+
+    public static MyDate getPrevMonth(Context context, int currentMonth, int currentYear) {
+        int prevMonth = currentMonth;
+        int prevYear = currentYear;
+
+        if (currentMonth == 1) {
+            prevMonth = 12;
+            prevYear--;
+        }
+        else {
+            prevMonth--;
+        }
+
+        MyDate dateObj = new MyDate(1, prevMonth, prevYear);
+        dateObj.setMonthName(getMonthName(context, prevMonth, prevYear)[0]);
+
+        return dateObj;
+    }
+
     public static String getFormattedFieldDate(Context context, int year, int month, int day) {
         Locale locale = context.getResources().getConfiguration().getLocales().get(0);
         LocalDate localDate = LocalDate.of(year, month, day);

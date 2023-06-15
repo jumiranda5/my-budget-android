@@ -51,6 +51,7 @@
     <!-- Toolbar -->
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="toolbar_month_text">18sp</dimen>
+    <dimen name="toolbar_month_text_other">16sp</dimen>
     <dimen name="toolbar_month_width">100dp</dimen>
     <dimen name="toolbar_inset_start">2dp</dimen>
     <dimen name="toolbar_inset_end">2dp</dimen>
