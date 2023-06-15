@@ -182,6 +182,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (currentFragment.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
         else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
 
+        // init fragment data
+        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+
     }
 
     @Override
@@ -297,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarMonth.setText(nextDate.getMonthName());
         mToolbarYear.setText(String.valueOf(nextDate.getYear()));
         setToolbarMonthStyle();
+        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
     }
 
     private void setToolbarPrevMonth() {
@@ -305,6 +309,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarMonth.setText(prevDate.getMonthName());
         mToolbarYear.setText(String.valueOf(prevDate.getYear()));
         setToolbarMonthStyle();
+        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
     }
 
     private void setToolbarMonthStyle() {

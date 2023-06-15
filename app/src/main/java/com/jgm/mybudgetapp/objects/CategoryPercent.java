@@ -2,22 +2,20 @@ package com.jgm.mybudgetapp.objects;
 
 import java.util.Comparator;
 
-public class Category {
+public class CategoryPercent {
 
     private int id;
     private String name;
     private int colorId;
     private int iconId;
-    private boolean isActive;
     private float total;
     private float percent;
 
-    public Category(int id, String name, int colorId, int iconId, boolean isActive) {
+    public CategoryPercent(int id, String name, int colorId, int iconId) {
         this.id = id;
         this.name = name;
         this.colorId = colorId;
         this.iconId = iconId;
-        this.isActive = isActive;
     }
 
     public int getId() {
@@ -34,10 +32,6 @@ public class Category {
 
     public int getIconId() {
         return iconId;
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     public float getTotal() {
@@ -64,10 +58,6 @@ public class Category {
         this.iconId = iconId;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
     public void setTotal(float total) {
         this.total = total;
     }
@@ -78,7 +68,7 @@ public class Category {
 
 
     // Comparator (Name)
-    public static Comparator<Category> CategoryNameComparator = (c1, c2) -> {
+    public static Comparator<CategoryPercent> CategoryNameComparator = (c1, c2) -> {
 
         String CategoryName1 = c1.getName().toUpperCase();
         String CategoryName2 = c2.getName().toUpperCase();
@@ -91,10 +81,10 @@ public class Category {
     };
 
     // Comparator (Total)
-    public static Comparator<Category> CategoryTotalComparator = new Comparator<Category>() {
+    public static Comparator<CategoryPercent> CategoryTotalComparator = new Comparator<CategoryPercent>() {
 
         // Method
-        public int compare(Category c1, Category c2) {
+        public int compare(CategoryPercent c1, CategoryPercent c2) {
 
             float total1 = c1.getTotal();
             float total2 = c2.getTotal();

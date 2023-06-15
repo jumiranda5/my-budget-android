@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.CategoryPercent;
 import com.jgm.mybudgetapp.objects.MonthTotal;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class Charts {
 
     public static void setCategoriesChart(
             Context context,
-            ArrayList<Category> categories,
+            ArrayList<CategoryPercent> categories,
             ImageView imageView,
             int size,
             int indicator) {
@@ -53,8 +53,9 @@ public class Charts {
             // Loop through list to set the pie slices
             for(int i =0; i < categories.size(); i++) {
 
-                Category category = categories.get(i);
-                paint.setColor(context.getColor(category.getColorId())); // todo: create color utils
+                CategoryPercent category = categories.get(i);
+                int color = ColorUtils.getColor(category.getColorId()).getColor();
+                paint.setColor(context.getColor(color));
 
                 // Set category angle (1% = 3,6°)
                 float percent = category.getPercent();
@@ -135,17 +136,29 @@ public class Charts {
 
                 // draw income bar
                 float income = monthList.get(i).getIncome();
+                Log.d("debug-chart", "income: " + income + " / " + monthName);
+
                 float incomeBarPercent = NumberUtils.roundFloat(income / barPercentValue);
                 float incomeHeight = NumberUtils.roundFloat((incomeBarPercent/100) * chartHeight);
+                if (incomeHeight == 0.0f) incomeHeight = 0.1f;
                 float incomeBarStart = start + barPadding;
                 float incomeBarTop = chartHeight - incomeHeight;
                 int incomeBarEnd = start + barWidth;
                 int incomeBarBottom = chartHeight - barMarginBottom;
+
+                Log.d("debug-chart", "incomeHeight: " + incomeHeight + "\n" +
+                        "incomeBarStart: " + incomeBarStart + "\n" +
+                        "incomeBarTop: " + incomeBarTop + "\n" +
+                        "incomeBarEnd: " + incomeBarEnd + "\n" +
+                        "incomeBarBottom: " + incomeBarBottom);
+
                 paint.setColor(context.getColor(R.color.income_chart));
                 canvas.drawRect(incomeBarStart, incomeBarTop, incomeBarEnd, incomeBarBottom, paint);
 
                 // draw expenses bar
                 float expenses = monthList.get(i).getExpenses();
+                Log.d("debug-chart", "expenses: " + expenses + " / " + monthName);
+
                 float expensesBarPercent = NumberUtils.roundFloat(expenses / barPercentValue);
                 float expensesHeight = NumberUtils.roundFloat((expensesBarPercent/100) * chartHeight);
                 float expensesBarEnd = (start + monthWidth) - barPadding;

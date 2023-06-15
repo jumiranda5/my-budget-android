@@ -12,17 +12,17 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.CategoryPercent;
 
 import java.util.List;
 
 public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercentAdapter.GridViewHolder> {
 
     private final Context mContext;
-    private final List<Category> mDataList;
+    private final List<CategoryPercent> mDataList;
     private final LayoutInflater layoutInflater;
 
-    public CategoryPercentAdapter(Context context, List<Category> mDataList) {
+    public CategoryPercentAdapter(Context context, List<CategoryPercent> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         layoutInflater = LayoutInflater.from(context);
@@ -38,7 +38,7 @@ public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercent
     @Override
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
 
-        Category category = mDataList.get(position);
+        CategoryPercent category = mDataList.get(position);
 
         // Set Icon and color
         holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, category.getColorId()));

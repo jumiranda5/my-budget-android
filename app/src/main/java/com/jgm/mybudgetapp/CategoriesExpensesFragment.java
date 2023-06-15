@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jgm.mybudgetapp.adapters.CategoryPercentAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesPagerBinding;
-import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.CategoryPercent;
+import com.jgm.mybudgetapp.objects.HomeCategory;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
@@ -30,7 +29,7 @@ public class CategoriesExpensesFragment extends Fragment {
     }
 
     // List
-    private final ArrayList<Category> categories = new ArrayList<>();
+    private final ArrayList<CategoryPercent> categories = new ArrayList<>();
     private final float total = 3508.75f;
 
     // UI
@@ -79,31 +78,31 @@ public class CategoriesExpensesFragment extends Fragment {
     }
 
     private void setDummyList() {
-        Category c1 = new Category(0, "Home", R.color.savings, 0, true);
-        Category c2 = new Category(0, "Restaurant", R.color.colorAccent, 0, true);
-        Category c3 = new Category(0, "Groceries", R.color.expense, 0, true);
-        Category c4 = new Category(0, "Clothes", R.color.colorSecondary, 0, true);
-        Category c5 = new Category(0, "Car", R.color.main_text, 0, true);
-        Category c6 = new Category(0, "Gym", R.color.income, 0, true);
-
-        c1.setTotal(2034.80f);
-        c2.setTotal(323.95f);
-        c3.setTotal(200f);
-        c4.setTotal(350f);
-        c5.setTotal(500f);
-        c6.setTotal(100f);
-
-        categories.add(c1);
-        categories.add(c2);
-        categories.add(c3);
-        categories.add(c4);
-        categories.add(c5);
-        categories.add(c6);
-
-        for(int i =0; i < categories.size(); i++){
-            float percent = NumberUtils.roundFloat((categories.get(i).getTotal() * 100) / total);
-            categories.get(i).setPercent(percent);
-        }
+//        HomeCategory c1 = new HomeCategory(0, "Home", R.color.savings, 0);
+//        HomeCategory c2 = new HomeCategory(0, "Restaurant", R.color.colorAccent, 0, true);
+//        HomeCategory c3 = new HomeCategory(0, "Groceries", R.color.expense, 0, true);
+//        HomeCategory c4 = new HomeCategory(0, "Clothes", R.color.colorSecondary, 0, true);
+//        HomeCategory c5 = new HomeCategory(0, "Car", R.color.main_text, 0, true);
+//        HomeCategory c6 = new HomeCategory(0, "Gym", R.color.income, 0, true);
+//
+//        c1.setTotal(2034.80f);
+//        c2.setTotal(323.95f);
+//        c3.setTotal(200f);
+//        c4.setTotal(350f);
+//        c5.setTotal(500f);
+//        c6.setTotal(100f);
+//
+//        categories.add(c1);
+//        categories.add(c2);
+//        categories.add(c3);
+//        categories.add(c4);
+//        categories.add(c5);
+//        categories.add(c6);
+//
+//        for(int i =0; i < categories.size(); i++){
+//            float percent = NumberUtils.roundFloat((categories.get(i).getTotal() * 100) / total);
+//            categories.get(i).setPercent(percent);
+//        }
     }
 
     /* ===============================================================================
@@ -111,11 +110,11 @@ public class CategoriesExpensesFragment extends Fragment {
      =============================================================================== */
 
     private void initCategoriesList() {
-        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(listLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemViewCacheSize(20);
-        CategoryPercentAdapter adapter = new CategoryPercentAdapter(mContext, categories);
-        mRecyclerView.setAdapter(adapter);
+//        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+//        mRecyclerView.setLayoutManager(listLayoutManager);
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setItemViewCacheSize(20);
+//        CategoryPercentAdapter adapter = new CategoryPercentAdapter(mContext, categories);
+//        mRecyclerView.setAdapter(adapter);
     }
 }

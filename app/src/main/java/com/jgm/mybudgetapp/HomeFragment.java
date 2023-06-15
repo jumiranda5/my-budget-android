@@ -10,16 +10,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jgm.mybudgetapp.adapters.HomeCategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentHomeBinding;
-import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.Balance;
+import com.jgm.mybudgetapp.objects.CategoryPercent;
+import com.jgm.mybudgetapp.objects.HomeAccounts;
+import com.jgm.mybudgetapp.objects.HomeCategory;
+import com.jgm.mybudgetapp.objects.MonthResponse;
 import com.jgm.mybudgetapp.objects.MonthTotal;
+import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -42,6 +52,8 @@ public class HomeFragment extends Fragment {
             cardExpensesCategories, cardYear;
     private ImageView incomeChart, expensesChart, yearChart;
     private RecyclerView incomeCategoryListView, expensesCategoryListView;
+    private TextView mBalanceText, mIncomeText, mExpensesText,
+                     mCash, mChecking, mSavings;
 
     private void bindViews() {
         cardIncome = binding.homeCardIncome;
@@ -57,6 +69,12 @@ public class HomeFragment extends Fragment {
         yearChart = binding.homeYearChart;
         incomeCategoryListView = binding.homeIncomeCategoriesList;
         expensesCategoryListView = binding.homeExpensesCategoriesList;
+        mBalanceText = binding.homeMonthBalance;
+        mIncomeText = binding.homeIncome;
+        mExpensesText = binding.homeExpenses;
+        mCash = binding.homeCash;
+        mChecking = binding.homeChecking;
+        mSavings = binding.homeSavings;
     }
 
     // Interfaces
@@ -85,9 +103,12 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initNavigation();
-        setDummyExpensesList();
-        setDummyIncomeList();
-        setDummyYear();
+
+        if (savedInstanceState == null) {
+            Log.d(LOG_LIFECYCLE, "saved instance is null => init home data");
+            MyDate today = MyDateUtils.getCurrentDate(mContext);
+            getHomeData(today.getMonth(), today.getYear());
+        }
 
     }
 
@@ -107,135 +128,111 @@ public class HomeFragment extends Fragment {
     }
 
     /* ===============================================================================
-                                    CATEGORIES CONTAINERS
+                                          DATA
      =============================================================================== */
 
-    // Lists
-    private final ArrayList<Category> categoriesExpenses = new ArrayList<>();
-    private final ArrayList<Category> categoriesIncome = new ArrayList<>();
-    private void setDummyExpensesList() {
+    public void getHomeData(int month, int year) {
 
-        expensesChart.post(() -> {
+        TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
 
-            Category c1 = new Category(0, "Home", R.color.savings, 0, true);
-            Category c2 = new Category(0, "Restaurant", R.color.colorAccent, 0, true);
-            Category c3 = new Category(0, "Groceries", R.color.expense, 0, true);
-            Category c4 = new Category(0, "Clothes", R.color.colorSecondary, 0, true);
-            Category c5 = new Category(0, "Car", R.color.main_text, 0, true);
-            Category c6 = new Category(0, "Gym", R.color.income, 0, true);
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbReadExecutor.execute(() -> {
 
-            float totalExpenses = 3508.75f;
-            c1.setTotal(2034.80f);
-            c2.setTotal(323.95f);
-            c3.setTotal(200f);
-            c4.setTotal(350f);
-            c5.setTotal(500f);
-            c6.setTotal(100f);
+            Balance balance = transactionDao.getHomeBalance(month, year);
+            HomeAccounts homeAccounts = transactionDao.getAccountsTotals();
+            List<HomeCategory> incomeCategories = transactionDao.getHomeCategories(month, year, 1);
+            List<HomeCategory> expensesCategories = transactionDao.getHomeCategories(month, year, -1);
+            List<MonthResponse> yearBalance = transactionDao.getYearBalance(year);
 
-            categoriesExpenses.add(c1);
-            categoriesExpenses.add(c2);
-            categoriesExpenses.add(c3);
-            categoriesExpenses.add(c4);
-            categoriesExpenses.add(c5);
-            categoriesExpenses.add(c6);
+            handler.post(() -> {
+                setBalanceData(balance);
+                setAccountsData(homeAccounts);
+                setIncomeCategories(incomeCategories);
+                setExpensesCategories(expensesCategories);
+                setYearChart(yearBalance, year);
+            });
 
-            // Set percentage for each category
-            for(int i =0; i < categoriesExpenses.size(); i++){
-                float percent = NumberUtils.roundFloat((categoriesExpenses.get(i).getTotal() * 100) / totalExpenses);
-                categoriesExpenses.get(i).setPercent(percent);
-            }
-
-            categoriesExpenses.sort(Category.CategoryTotalComparator);
-            initCategoriesExpensesList();
-
-            // Set expenses chart
-            expensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, categoriesExpenses, expensesChart, 100, 10);
         });
-
     }
 
-    private void setDummyIncomeList() {
+    private void setBalanceData(Balance balance) {
+        String formattedBalance = NumberUtils.getCurrencyFormat(mContext, balance.getBalance())[2];
+        String formattedIncome = NumberUtils.getCurrencyFormat(mContext, balance.getIncome())[2];
+        String formattedExpenses = NumberUtils.getCurrencyFormat(mContext, balance.getExpenses())[2];
+        mBalanceText.setText(formattedBalance);
+        mExpensesText.setText(formattedExpenses);
+        mIncomeText.setText(formattedIncome);
+    }
+
+    private void setAccountsData(HomeAccounts homeAccounts) {
+        String formattedCash = NumberUtils.getCurrencyFormat(mContext, homeAccounts.getCash())[2];
+        String formattedChecking = NumberUtils.getCurrencyFormat(mContext, homeAccounts.getChecking())[2];
+        String formattedSavings = NumberUtils.getCurrencyFormat(mContext, homeAccounts.getSavings())[2];
+        mCash.setText(formattedCash);
+        mChecking.setText(formattedChecking);
+        mSavings.setText(formattedSavings);
+    }
+
+    private void setIncomeCategories(List<HomeCategory> categories) {
+
+        initCategoriesIncomeList(categories);
+        ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
 
         incomeChart.post(() -> {
-            Category c1 = new Category(0, "Salary", R.color.savings, 0, true);
-            Category c2 = new Category(0, "Rent", R.color.colorAccent, 0, true);
-            Category c3 = new Category(0, "Extras", R.color.expense, 0, true);
-
-            float totalIncome = 5000.0f;
-            c1.setTotal(3000f);
-            c2.setTotal(1000f);
-            c3.setTotal(1000f);
-
-            categoriesIncome.add(c1);
-            categoriesIncome.add(c2);
-            categoriesIncome.add(c3);
-
-            // Set percentage for each category
-            for(int i =0; i < categoriesIncome.size(); i++){
-                float percent = NumberUtils.roundFloat((categoriesIncome.get(i).getTotal() * 100) / totalIncome);
-                categoriesIncome.get(i).setPercent(percent);
-            }
-
-            categoriesIncome.sort(Category.CategoryTotalComparator);
-            initCategoriesIncomeList();
-
-            // Set expenses chart
             incomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, categoriesIncome, incomeChart, 100, 10);
+            Charts.setCategoriesChart(mContext, percents, incomeChart, 100, 10);
         });
+
     }
 
-    private void initCategoriesIncomeList() {
+    private void setExpensesCategories(List<HomeCategory> categories) {
 
-        List<Category> cat = categoriesIncome.subList(0, 3);
+        initCategoriesExpensesList(categories);
+        ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
 
-        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        incomeCategoryListView.setLayoutManager(listLayoutManager);
-        incomeCategoryListView.setHasFixedSize(true);
-        HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
-        incomeCategoryListView.setAdapter(adapter);
+        expensesChart.post(() -> {
+            expensesChart.setImageTintList(null);
+            Charts.setCategoriesChart(mContext, percents, expensesChart, 100, 10);
+        });
+
     }
 
-    private void initCategoriesExpensesList() {
+    private void setYearChart(List<MonthResponse> response, int year) {
 
-        List<Category> cat = categoriesExpenses.subList(0, 3);
-
-        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        expensesCategoryListView.setLayoutManager(listLayoutManager);
-        expensesCategoryListView.setHasFixedSize(true);
-        HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
-        expensesCategoryListView.setAdapter(adapter);
-    }
-
-
-    /* ===============================================================================
-                                          YEAR
-     =============================================================================== */
-
-    private void setDummyYear() {
+        // Todo => chart is not drawing correctly... ???
 
         yearChart.post(() -> {
+            ArrayList<MonthTotal> yearList = new ArrayList<>();
+            float[] expenses = {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
+            float[] income =   {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
 
-            ArrayList<MonthTotal> year = new ArrayList<>();
-            float[] expenses = {4000f, 6200f, 4900f, 5000f, 6500f, 5100f, 4600f, 4800f, 5500f, 5600f, 4500f, 5000f};
-            float[] income = {5000f, 5200f, 5100f, 6000f, 7000f, 4900f, 5000f, 5300f, 5200f, 5000f, 5100f, 5200f};
+            // get expenses and income values from response
+            for (int i = 0; i < response.size(); i++) {
+                float monthExpenses = Math.abs(response.get(i).getExpenses());
+                float monthIncome = response.get(i).getIncome();
+                int month = response.get(i).getMonth();
+
+                int index = month - 1;
+                expenses[index] = monthExpenses;
+                income[index] = monthIncome;
+            }
 
             int month = 1;
             float higherBar = 0f;
             while (month < 12) {
-                String[] monthName = MyDateUtils.getMonthName(mContext, month, 2023);
-                float monthExpenses = NumberUtils.roundFloat(expenses[month]);
-                float monthIncome = NumberUtils.roundFloat(income[month]);
+
+                String[] monthName = MyDateUtils.getMonthName(mContext, month, year);
+                float monthExpenses = NumberUtils.roundFloat(expenses[month-1]);
+                float monthIncome = NumberUtils.roundFloat(income[month-1]);
 
                 MonthTotal monthTotal = new MonthTotal(
-                        2023, month,
+                        year, month,
                         monthName[0],
                         monthName[1],
                         monthExpenses,
                         monthIncome);
 
-                year.add(monthTotal);
+                yearList.add(monthTotal);
 
                 if (monthExpenses > higherBar) higherBar = monthExpenses;
                 if (monthIncome > higherBar) higherBar = monthIncome;
@@ -244,8 +241,65 @@ public class HomeFragment extends Fragment {
             }
 
             yearChart.setImageTintList(null);
-            Charts.setYearTotalChart(mContext, yearChart, year, higherBar, 300, 100);
+            Charts.setYearTotalChart(mContext, yearChart, yearList, higherBar, 300, 100);
         });
+
     }
+
+    /* ===============================================================================
+                                    CATEGORIES CONTAINERS
+     =============================================================================== */
+
+    private ArrayList<CategoryPercent> getCategoriesPercents(List<HomeCategory> categories) {
+        float total = 0.0f;
+        ArrayList<CategoryPercent> percents = new ArrayList<>();
+
+        // Get total from list
+        for(int i =0; i < categories.size(); i++){
+            total = total + categories.get(i).getTotal();
+        }
+
+        // Set percentage for each category
+        for(int i =0; i < categories.size(); i++){
+            float percent =
+                    NumberUtils.roundFloat((categories.get(i).getTotal() * 100) / total);
+            HomeCategory category = categories.get(i);
+            CategoryPercent categoryPercent =
+                    new CategoryPercent(0,category.getCategory(), category.getColorId(), 0);
+            categoryPercent.setPercent(percent);
+            percents.add(categoryPercent);
+        }
+
+        return percents;
+    }
+
+    private void initCategoriesIncomeList(List<HomeCategory> categories) {
+
+        List<HomeCategory> cat;
+
+        if (categories.size() > 3) cat = categories.subList(0, 3);
+        else cat = categories;
+
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+        incomeCategoryListView.setLayoutManager(listLayoutManager);
+        incomeCategoryListView.setHasFixedSize(true);
+        HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
+        incomeCategoryListView.setAdapter(adapter);
+    }
+
+    private void initCategoriesExpensesList(List<HomeCategory> categories) {
+
+        List<HomeCategory> cat;
+
+        if (categories.size() > 3) cat = categories.subList(0, 3);
+        else cat = categories;
+
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+        expensesCategoryListView.setLayoutManager(listLayoutManager);
+        expensesCategoryListView.setHasFixedSize(true);
+        HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
+        expensesCategoryListView.setAdapter(adapter);
+    }
+
 
 }

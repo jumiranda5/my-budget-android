@@ -1,31 +1,29 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Category;
+import com.jgm.mybudgetapp.objects.HomeCategory;
+import com.jgm.mybudgetapp.utils.ColorUtils;
 
 import java.util.List;
 
 public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapter.ListViewHolder> {
 
     private final Context mContext;
-    private final List<Category> mDataList;
+    private final List<HomeCategory> mDataList;
     private final LayoutInflater layoutInflater;
 
-    public HomeCategoryAdapter(Context context, List<Category> mDataList) {
+    public HomeCategoryAdapter(Context context, List<HomeCategory> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         layoutInflater = LayoutInflater.from(context);
@@ -41,14 +39,14 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
-        Category category = mDataList.get(position);
-        int color = category.getColorId(); // todo: create color utils
+        HomeCategory category = mDataList.get(position);
+        int color = ColorUtils.getColor(category.getColorId()).getColor();
 
         // Set color
         holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color));
 
         // Set category name
-        holder.mName.setText(category.getName());
+        holder.mName.setText(category.getCategory());
 
     }
 
