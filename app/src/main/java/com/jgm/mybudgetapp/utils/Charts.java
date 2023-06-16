@@ -136,35 +136,20 @@ public class Charts {
 
                 // draw income bar
                 float income = monthList.get(i).getIncome();
-                Log.d("debug-chart", "income: " + income + " / " + monthName);
-
-                float incomeBarPercent = NumberUtils.roundFloat(income / barPercentValue);
-                float incomeHeight = NumberUtils.roundFloat((incomeBarPercent/100) * chartHeight);
-                if (incomeHeight == 0.0f) incomeHeight = 0.1f;
-                float incomeBarStart = start + barPadding;
-                float incomeBarTop = chartHeight - incomeHeight;
-                int incomeBarEnd = start + barWidth;
-                int incomeBarBottom = chartHeight - barMarginBottom;
-
-                Log.d("debug-chart", "incomeHeight: " + incomeHeight + "\n" +
-                        "incomeBarStart: " + incomeBarStart + "\n" +
-                        "incomeBarTop: " + incomeBarTop + "\n" +
-                        "incomeBarEnd: " + incomeBarEnd + "\n" +
-                        "incomeBarBottom: " + incomeBarBottom);
+                float[] bar1 = getBarMeasures(income, barPercentValue, chartHeight,
+                        start, barWidth, barPadding, barMarginBottom);
 
                 paint.setColor(context.getColor(R.color.income_chart));
-                canvas.drawRect(incomeBarStart, incomeBarTop, incomeBarEnd, incomeBarBottom, paint);
+                canvas.drawRect(bar1[0], bar1[1], bar1[2], bar1[3], paint);
 
                 // draw expenses bar
                 float expenses = monthList.get(i).getExpenses();
-                Log.d("debug-chart", "expenses: " + expenses + " / " + monthName);
+                int expensesBarStart = start + barWidth;
+                float[] bar2 = getBarMeasures(expenses, barPercentValue,chartHeight,
+                        expensesBarStart, barWidth, barPadding, barMarginBottom);
 
-                float expensesBarPercent = NumberUtils.roundFloat(expenses / barPercentValue);
-                float expensesHeight = NumberUtils.roundFloat((expensesBarPercent/100) * chartHeight);
-                float expensesBarEnd = (start + monthWidth) - barPadding;
-                float expensesBarTop = chartHeight - expensesHeight;
                 paint.setColor(context.getColor(R.color.expense_chart));
-                canvas.drawRect(incomeBarEnd, expensesBarTop, expensesBarEnd, chartHeight-barMarginBottom, paint);
+                canvas.drawRect(bar2[0], bar2[1], bar2[2], bar2[3], paint);
 
                 // Increase start
                 start += nextStart;
@@ -176,6 +161,20 @@ public class Charts {
             });
         });
 
+    }
+
+    public static float[] getBarMeasures(float value, float barPercentValue, int chartHeight,
+                                   int start, int barWidth, int barPadding, int barMarginBottom) {
+
+        float barPercent = NumberUtils.roundFloat(value / barPercentValue);
+        float barHeight = NumberUtils.roundFloat(((barPercent/100) * chartHeight) + 2f);
+        if (barHeight == 0.0f) barHeight = 2f;
+        float barStart = start + barPadding;
+        float barTop = (chartHeight - barHeight) - barMarginBottom;
+        int barEnd = start + barWidth;
+        int barBottom = chartHeight - barMarginBottom;
+
+        return new float[] {barStart, barTop, barEnd, barBottom};
     }
 
 }

@@ -219,7 +219,7 @@ public class HomeFragment extends Fragment {
 
             int month = 1;
             float higherBar = 0f;
-            while (month < 12) {
+            while (month < 13) {
 
                 String[] monthName = MyDateUtils.getMonthName(mContext, month, year);
                 float monthExpenses = NumberUtils.roundFloat(expenses[month-1]);
