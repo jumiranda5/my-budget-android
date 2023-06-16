@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     private ImageView incomeChart, expensesChart, yearChart;
     private RecyclerView incomeCategoryListView, expensesCategoryListView;
     private TextView mBalanceText, mIncomeText, mExpensesText,
-                     mCash, mChecking, mSavings;
+                     mCash, mChecking, mSavings, mYearBalance;
 
     private void bindViews() {
         cardIncome = binding.homeCardIncome;
@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
         mCash = binding.homeCash;
         mChecking = binding.homeChecking;
         mSavings = binding.homeSavings;
+        mYearBalance = binding.homeYearBalance;
     }
 
     // Interfaces
@@ -199,26 +200,38 @@ public class HomeFragment extends Fragment {
 
     private void setYearChart(List<MonthResponse> response, int year) {
 
-        // Todo => chart is not drawing correctly... ???
-
         yearChart.post(() -> {
             ArrayList<MonthTotal> yearList = new ArrayList<>();
             float[] expenses = {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
             float[] income =   {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
+            float expensesTotal = 0f;
+            float incomeTotal = 0f;
 
             // get expenses and income values from response
             for (int i = 0; i < response.size(); i++) {
+                // get values
                 float monthExpenses = Math.abs(response.get(i).getExpenses());
                 float monthIncome = response.get(i).getIncome();
                 int month = response.get(i).getMonth();
 
+                // sum
+                expensesTotal = expensesTotal + monthExpenses;
+                incomeTotal = incomeTotal + monthIncome;
+
+                // set month values
                 int index = month - 1;
                 expenses[index] = monthExpenses;
                 income[index] = monthIncome;
             }
 
+            // Get year balance
+            float yearBalance = NumberUtils.roundFloat(incomeTotal) - NumberUtils.roundFloat(expensesTotal);
+            String yearBalanceCurrency = NumberUtils.getCurrencyFormat(mContext, yearBalance)[2];
+            mYearBalance.setText(yearBalanceCurrency);
+
+            // Build list to draw chart
             int month = 1;
-            float higherBar = 0f;
+            float highestBar = 0f;
             while (month < 13) {
 
                 String[] monthName = MyDateUtils.getMonthName(mContext, month, year);
@@ -234,14 +247,14 @@ public class HomeFragment extends Fragment {
 
                 yearList.add(monthTotal);
 
-                if (monthExpenses > higherBar) higherBar = monthExpenses;
-                if (monthIncome > higherBar) higherBar = monthIncome;
+                if (monthExpenses > highestBar) highestBar = monthExpenses;
+                if (monthIncome > highestBar) highestBar = monthIncome;
 
                 month++;
             }
 
             yearChart.setImageTintList(null);
-            Charts.setYearTotalChart(mContext, yearChart, yearList, higherBar, 300, 100);
+            Charts.setYearTotalChart(mContext, yearChart, yearList, highestBar, 300, 100);
         });
 
     }
