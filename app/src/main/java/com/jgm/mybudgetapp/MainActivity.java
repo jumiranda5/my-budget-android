@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private HomeFragment mHome;
     private SettingsFragment mSettings;
     private TransactionFormFragment mTransactionForm;
-    private TransactionsFragment mTransactions;
+    private TransactionsOutFragment mTransactions;
     private YearFragment mYear;
 
     // Fragment Tags
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
 
         // init fragment data
-        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+        updateMonthOnCurrentFragment();
 
     }
 
@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarMonth.setText(nextDate.getMonthName());
         mToolbarYear.setText(String.valueOf(nextDate.getYear()));
         setToolbarMonthStyle();
-        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+        updateMonthOnCurrentFragment();
     }
 
     private void setToolbarPrevMonth() {
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarMonth.setText(prevDate.getMonthName());
         mToolbarYear.setText(String.valueOf(prevDate.getYear()));
         setToolbarMonthStyle();
-        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+        updateMonthOnCurrentFragment();
     }
 
     private void setToolbarMonthStyle() {
@@ -320,9 +320,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         else mToolbarMonth.setTextAppearance(R.style.ToolbarMonth);
     }
 
+    private void updateMonthOnCurrentFragment() {
+        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mTransactions != null) mTransactions.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
+    }
+
     private void setToolbarVisibilities(String tag) {
 
-        if (tag.equals(homeTag) || tag.equals(categoriesTag)) {
+        if (tag.equals(homeTag) || tag.equals(categoriesTag) || tag.equals(transactionsTag)) {
             toolbar.setVisibility(View.VISIBLE);
             if (tag.equals(homeTag)) settingsButton.setVisibility(View.VISIBLE);
             else settingsButton.setVisibility(View.GONE);
@@ -426,13 +431,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openExpenses() {
-        if (mTransactions != null) mTransactions.setTypeParam(PARAM_OUT);
         openFragment(transactionsTag);
     }
 
     @Override
     public void openIncome() {
-        if (mTransactions != null) mTransactions.setTypeParam(PARAM_IN);
         openFragment(transactionsTag);
     }
 
@@ -809,7 +812,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         });
     }
 
-    /* ========================  DATABASE - TRANSACTIONS ======================== */
+    @Override
+    public MyDate getDate() {
+        return selectedDate;
+    }
+
 
     /* ===============================================================================
                                          FRAGMENTS
@@ -873,7 +880,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 fragment = mSettings;
                 break;
             case transactionsTag:
-                mTransactions = new TransactionsFragment();
+                mTransactions = new TransactionsOutFragment();
                 fragment = mTransactions;
                 break;
             case transactionFormTag:
@@ -1039,7 +1046,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mSettings = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(settingsTag);
                 break;
             case transactionsTag:
-                mTransactions = (TransactionsFragment) getSupportFragmentManager().findFragmentByTag(transactionsTag);
+                mTransactions = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsTag);
                 break;
             case transactionFormTag:
                 mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);

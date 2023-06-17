@@ -9,6 +9,7 @@ import com.jgm.mybudgetapp.objects.Balance;
 import com.jgm.mybudgetapp.objects.HomeAccounts;
 import com.jgm.mybudgetapp.objects.HomeCategory;
 import com.jgm.mybudgetapp.objects.MonthResponse;
+import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Transaction;
 
 import java.util.List;
@@ -24,6 +25,17 @@ public interface TransactionDao {
 
     @Update
     void update(Transaction transaction);
+
+    // Transactions fragment
+
+    @Query("SELECT *, categories.name AS categoryName, categories.colorId, categories.iconId " +
+            "FROM transactions " +
+            "JOIN categories ON transactions.categoryId = categories.id " +
+            "WHERE transactions.year = :year " +
+            "AND transactions.month = :month " +
+            "AND transactions.type = :type " +
+            "ORDER BY transactions.day;")
+    List<TransactionResponse> getTransactions(int type, int month, int year);
 
     // Account fragment
     @Query("SELECT * FROM transactions " +

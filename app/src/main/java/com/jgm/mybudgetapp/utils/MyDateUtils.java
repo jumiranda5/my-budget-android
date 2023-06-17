@@ -117,6 +117,16 @@ public class MyDateUtils {
         return myDate;
     }
 
+    public static String getDayOfWeek(Context context, int day, int month, int year) {
+
+        Locale locale = context.getResources().getConfiguration().getLocales().get(0);
+        LocalDate localDate = LocalDate.of(year, month, day);
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        String weekday = dayOfWeek.getDisplayName(TextStyle.FULL, locale);
+
+        return weekday;
+    }
+
     public static int[] getNextTransactionDate(int currentMonth, int currentYear) {
 
         int nextMonth;

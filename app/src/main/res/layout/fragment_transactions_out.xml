@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/toolbar_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".TransactionsOutFragment">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/MyNestedScrollView"
+        android:paddingBottom="100dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/t_out_title"
+                style="@style/MainTitle"
+                android:layout_margin="16dp"
+                android:text="Expenses"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/t_out_total"
+                style="@style/NumberImpact"
+                android:text="$0,00"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/expense"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/t_out_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/t_out_list"
+                style="@style/MainList"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/t_out_total"
+                tools:listitem="@layout/item_transaction_day"
+                tools:itemCount="2"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/transaction_out_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/action_add_transaction"
+        android:layout_gravity="center|bottom"
+        android:src="@drawable/ic_app_add_400"
+        android:backgroundTint="@color/expense"
+        app:tint="@color/white"
+        android:layout_marginBottom="24dp"/>
+
+</FrameLayout>
