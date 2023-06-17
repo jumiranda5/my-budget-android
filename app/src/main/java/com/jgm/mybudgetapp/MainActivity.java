@@ -33,6 +33,7 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.dao.CardDao;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private boolean isExpenseMethodDialog;
     private MyDate selectedDate;
     private MyDate today;
+    private TransactionResponse selectedTransaction;
 
     // Db
     private AccountDao mAccountDao;
@@ -539,10 +541,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void showTransactionDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        TransactionDialog transactionDialog = new TransactionDialog();
-        transactionDialog.show(fm, "TRANSACTION DIALOG");
+    public void showTransactionDialog(TransactionResponse transaction) {
+        selectedTransaction = transaction;
+        BottomSheetDialogFragment transactionDialog = new TransactionDialog();
+        transactionDialog.show(getSupportFragmentManager(), "TRANSACTION DIALOG");
+    }
+
+    @Override
+    public TransactionResponse getSelectedTransactionData() {
+        return selectedTransaction;
     }
 
     @Override

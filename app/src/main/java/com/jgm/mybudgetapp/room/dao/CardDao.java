@@ -21,4 +21,7 @@ public interface CardDao {
     @Update
     void update(CreditCard creditCard);
 
+    @Query("SELECT * FROM cards WHERE id = :id LIMIT 1")
+    CreditCard getCreditCardById(int id);
+
 }

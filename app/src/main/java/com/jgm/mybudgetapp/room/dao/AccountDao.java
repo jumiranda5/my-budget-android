@@ -24,6 +24,9 @@ public interface AccountDao {
     @Update
     void update(Account account);
 
+    @Query("SELECT * FROM accounts WHERE id = :id LIMIT 1")
+    Account getAccountById(int id);
+
     // Get accounts with totals by type
     @MapInfo(valueColumn = "total")
     @Query("SELECT accounts.*, SUM(transactions.amount) AS total " +

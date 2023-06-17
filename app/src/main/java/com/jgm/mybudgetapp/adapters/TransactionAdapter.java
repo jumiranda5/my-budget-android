@@ -14,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
-import com.jgm.mybudgetapp.room.entity.Category;
-import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -66,6 +63,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
+
+        // Open transaction details dialog
+        holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
 
     }
 

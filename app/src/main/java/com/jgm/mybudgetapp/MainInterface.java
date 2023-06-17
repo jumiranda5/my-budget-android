@@ -5,6 +5,7 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
@@ -33,7 +34,8 @@ public interface MainInterface {
     // Dialogs
     void showConfirmationDialog(String message);
     void handleConfirmation();
-    void showTransactionDialog();
+    void showTransactionDialog(TransactionResponse transaction);
+    TransactionResponse getSelectedTransactionData();
     void showColorPickerDialog();
     void handleColorSelection(Color color);
     void showIconPickerDialog();
