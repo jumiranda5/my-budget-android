@@ -556,9 +556,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public TransactionResponse getSelectedTransactionData() {
-        Log.d("debug-add", "should have the data...");
         Log.d("debug-add", selectedTransaction.getDescription());
         return selectedTransaction;
+    }
+
+    @Override
+    public void handleTransactionDeleted(int id) {
+        if (mTransactions != null) mTransactions.updateOnTransactionDeleted(id);
     }
 
     @Override

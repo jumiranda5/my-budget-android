@@ -36,6 +36,7 @@ public interface MainInterface {
     void handleConfirmation();
     void showTransactionDialog(TransactionResponse transaction);
     TransactionResponse getSelectedTransactionData();
+    void handleTransactionDeleted(int id);
     void showColorPickerDialog();
     void handleColorSelection(Color color);
     void showIconPickerDialog();

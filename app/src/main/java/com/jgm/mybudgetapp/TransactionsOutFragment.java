@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jgm.mybudgetapp.adapters.AccountAdapter;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionsOutBinding;
 import com.jgm.mybudgetapp.objects.DayGroup;
@@ -26,8 +25,6 @@ import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
-import com.jgm.mybudgetapp.room.entity.Transaction;
-import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.ArrayList;
@@ -40,6 +37,7 @@ public class TransactionsOutFragment extends Fragment {
     }
 
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
+    private List<TransactionResponse> expenses;
 
     // UI
     private FragmentTransactionsOutBinding binding;
@@ -86,6 +84,16 @@ public class TransactionsOutFragment extends Fragment {
 
     }
 
+    public void updateOnTransactionDeleted(int id) {
+        TransactionResponse transaction = expenses.stream()
+                .filter(t -> id == t.getId())
+                .findAny()
+                .orElse(null);
+        expenses.remove(transaction);
+
+        if (transaction != null) setExpensesData(transaction.getMonth(), transaction.getYear());
+    }
+
     public void getExpensesData(int month, int year) {
 
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
@@ -93,14 +101,14 @@ public class TransactionsOutFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbReadExecutor.execute(() -> {
 
-            List<TransactionResponse> expenses = transactionDao.getTransactions(-1, month, year);
-            handler.post(() -> setExpensesData(expenses, month, year));
+            expenses = transactionDao.getTransactions(-1, month, year);
+            handler.post(() -> setExpensesData(month, year));
 
         });
 
     }
 
-    private void setExpensesData(List<TransactionResponse> expenses, int month, int year) {
+    private void setExpensesData(int month, int year) {
 
         float total = 0f;
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
@@ -111,7 +119,8 @@ public class TransactionsOutFragment extends Fragment {
 
             // set total
             total = total + expenses.get(i).getAmount();
-            Log.d("debug-expenses", transaction.getDescription() + " = " + transaction.getAmount() + "/day: " + day);
+            Log.d("debug-expenses", transaction.getDescription() + " = " + transaction.getId() + "/" +
+                    transaction.getAmount() + "/day: " + day);
 
             // set transactions grouped by day
             // if first item => create new dayGroup obj and add to dayGroups list

@@ -27,6 +27,9 @@ public interface TransactionDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(Transaction transaction);
 
+    @Query("DELETE FROM transactions WHERE id = :id")
+    int deleteById(final int id);
+
     // Transactions fragment
 
     @Query("SELECT *, categories.name AS categoryName, categories.colorId, categories.iconId " +

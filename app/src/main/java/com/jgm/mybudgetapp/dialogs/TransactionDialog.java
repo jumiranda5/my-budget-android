@@ -2,6 +2,8 @@ package com.jgm.mybudgetapp.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,6 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         else type = "Income";
         title.setText(type); // todo: add to strings file
 
-        Log.d("debug-transfer-dialog", "id => " + transaction.getId());
 
         // Description
         TextView description = view.findViewById(R.id.dialog_transaction_desc);
@@ -122,8 +123,15 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         // Delete transaction
         Button deleteBtn = view.findViewById(R.id.dialog_transaction_delete);
         deleteBtn.setOnClickListener(v -> {
-            // todo: delete on database
-            dismiss();
+            Handler handler = new Handler(Looper.getMainLooper());
+            AppDatabase.dbWriteExecutor.execute(() -> {
+                int res = AppDatabase.getDatabase(mContext).TransactionDao().deleteById(transaction.getId());
+                handler.post(() -> {
+                    Log.d("debug-dialog", "delete response: " + res);
+                    mInterface.handleTransactionDeleted(transaction.getId());
+                    dismiss();
+                });
+            });
         });
 
         return view;
