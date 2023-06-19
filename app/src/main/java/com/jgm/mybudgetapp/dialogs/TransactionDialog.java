@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.jgm.mybudgetapp.MainInterface;
@@ -22,14 +21,10 @@ import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
-import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TransactionDialog extends BottomSheetDialogFragment {
 
@@ -77,7 +72,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         // Payment method
         PaymentMethod paymentMethod = new PaymentMethod(0,0,"", 0, 0, 0);
         TextView method = view.findViewById(R.id.dialog_transaction_method);
-        // todo: save as null when not used, instead of 0...
+
         if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
             AppDatabase.dbExecutor.execute(() -> {
                 Account account = AppDatabase.getDatabase(mContext).AccountDao()
@@ -125,9 +120,11 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         deleteBtn.setOnClickListener(v -> {
             Handler handler = new Handler(Looper.getMainLooper());
             AppDatabase.dbExecutor.execute(() -> {
-                int res = AppDatabase.getDatabase(mContext).TransactionDao().deleteById(transaction.getId());
+                Log.d(Tags.LOG_DB, "Transaction id to delete: " + transaction.getId());
+                AppDatabase db = AppDatabase.getDatabase(mContext);
+                int res = db.TransactionDao().deleteById(transaction.getId());
                 handler.post(() -> {
-                    Log.d("debug-dialog", "delete response: " + res);
+                    Log.d(Tags.LOG_DB, "delete response: " + res);
                     mInterface.handleTransactionDeleted(transaction.getId());
                     dismiss();
                 });

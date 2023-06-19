@@ -733,6 +733,7 @@ public class TransactionFormFragment extends Fragment {
 
     }
 
+    // todo: save as null when not used, instead of 0...
     private void saveTransaction(Transaction transaction) {
 
         logTransaction(transaction);
@@ -770,7 +771,7 @@ public class TransactionFormFragment extends Fragment {
             transactionDao.insert(transaction);
 
             handler.post(() -> {
-                Log.d(LOG, "Transaction saved on db... update ui");
+                Log.d(Tags.LOG_DB, "Transaction saved on db... update ui");
                 mProgressBar.setVisibility(View.GONE);
                 mSave.setText(getText(R.string.action_save));
                 mInterface.navigateBack();
@@ -788,7 +789,7 @@ public class TransactionFormFragment extends Fragment {
             // todo: edit repeated transactions...
 
             handler.post(() -> {
-                Log.d(LOG, "Transaction updated on db... update ui");
+                Log.d(Tags.LOG_DB, "Transaction updated on db... update ui");
                 mProgressBar.setVisibility(View.GONE);
                 mSave.setText(getText(R.string.action_edit));
                 mInterface.navigateBack();

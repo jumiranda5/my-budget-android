@@ -2,7 +2,6 @@ package com.jgm.mybudgetapp.room.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -24,15 +23,15 @@ public interface TransactionDao {
     @Query("SELECT * FROM transactions")
     List<Transaction> getAllTransactions();
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Update
     void update(Transaction transaction);
 
-    @Query("DELETE FROM transactions WHERE id = :id")
-    int deleteById(final int id);
+    @Query("DELETE FROM transactions WHERE id=:id")
+    int deleteById(int id);
 
     // Transactions fragment
 
-    @Query("SELECT *, categories.name AS categoryName, categories.colorId, categories.iconId " +
+    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE transactions.year = :year " +

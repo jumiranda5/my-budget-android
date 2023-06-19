@@ -25,7 +25,9 @@ import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +104,9 @@ public class TransactionsOutFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             expenses = transactionDao.getTransactions(-1, month, year);
-            handler.post(() -> setExpensesData(month, year));
+            handler.post(() -> {
+                setExpensesData(month, year);
+            });
 
         });
 
@@ -119,7 +123,7 @@ public class TransactionsOutFragment extends Fragment {
 
             // set total
             total = total + expenses.get(i).getAmount();
-            Log.d("debug-expenses", transaction.getDescription() + " = " + transaction.getId() + "/" +
+            Log.d(Tags.LOG_DB, transaction.getDescription() + " = " + transaction.getId() + "/" +
                     transaction.getAmount() + "/day: " + day);
 
             // set transactions grouped by day
