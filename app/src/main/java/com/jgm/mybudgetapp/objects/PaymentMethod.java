@@ -46,4 +46,28 @@ public class PaymentMethod {
     public int getBillingDay() {
         return billingDay;
     }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setIconId(int iconId) {
+        this.iconId = iconId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBillingDay(int billingDay) {
+        this.billingDay = billingDay;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

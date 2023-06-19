@@ -44,6 +44,7 @@ import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -509,9 +510,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openTransactionForm() {
-        // todo: add param (IN/OUT && ADD/EDIT)
+    public void openTransactionForm(
+            boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
+
         setFragment(transactionFormTag);
+
+        if (mTransactionForm != null) {
+            mTransactionForm.setFormType(isEdit, transaction, paymentMethod);
+        }
+
     }
 
     @Override
@@ -549,6 +556,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public TransactionResponse getSelectedTransactionData() {
+        Log.d("debug-add", "should have the data...");
+        Log.d("debug-add", selectedTransaction.getDescription());
         return selectedTransaction;
     }
 
@@ -642,10 +651,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     CreditCard card = cardsList.get(i);
                     PaymentMethod paymentMethod = new PaymentMethod(
                             card.getId(),
-                            3,
+                            Tags.METHOD_CARD,
                             card.getName(),
                             card.getColorId(),
-                            70, card.getBillingDay());
+                            Tags.CARD_ICON_ID,
+                            card.getBillingDay());
                     paymentMethods.add(paymentMethod);
                 }
 

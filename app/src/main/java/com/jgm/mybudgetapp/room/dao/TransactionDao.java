@@ -2,6 +2,7 @@ package com.jgm.mybudgetapp.room.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -23,7 +24,7 @@ public interface TransactionDao {
     @Query("SELECT * FROM transactions")
     List<Transaction> getAllTransactions();
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(Transaction transaction);
 
     // Transactions fragment

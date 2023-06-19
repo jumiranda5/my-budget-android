@@ -48,7 +48,7 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
         int day = dayGroup.getDay();
         int month = dayGroup.getMonth();
         int year = dayGroup.getYear();
-        String weekDay = MyDateUtils.getDayOfWeek(mContext, day, month, year);
+        String weekDay = MyDateUtils.getDayOfWeek(mContext, day, month, year)[1];
         String weekDayWithNumber = weekDay + ", " + day;
         holder.mDay.setText(weekDayWithNumber);
 

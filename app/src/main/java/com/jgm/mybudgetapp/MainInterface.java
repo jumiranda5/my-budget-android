@@ -28,7 +28,7 @@ public interface MainInterface {
     void openYear();
     void openCardDetails(CreditCard card, int position);
     void openCardForm(boolean isEdit, CreditCard card, int position);
-    void openTransactionForm();
+    void openTransactionForm(boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
     void navigateBack();
 
     // Dialogs

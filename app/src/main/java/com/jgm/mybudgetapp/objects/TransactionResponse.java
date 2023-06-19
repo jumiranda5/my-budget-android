@@ -1,8 +1,5 @@
 package com.jgm.mybudgetapp.objects;
 
-import androidx.room.ColumnInfo;
-import androidx.room.PrimaryKey;
-
 public class TransactionResponse {
 
     private int id;

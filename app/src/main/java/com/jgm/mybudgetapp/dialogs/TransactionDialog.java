@@ -24,6 +24,7 @@ import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,8 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         else type = "Income";
         title.setText(type); // todo: add to strings file
 
+        Log.d("debug-transfer-dialog", "id => " + transaction.getId());
+
         // Description
         TextView description = view.findViewById(R.id.dialog_transaction_desc);
         description.setText(transaction.getDescription());
@@ -71,6 +74,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         categoryName.setText(transaction.getCategoryName());
 
         // Payment method
+        PaymentMethod paymentMethod = new PaymentMethod(0,0,"", 0, 0, 0);
         TextView method = view.findViewById(R.id.dialog_transaction_method);
         // todo: save as null when not used, instead of 0...
         if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
@@ -78,6 +82,11 @@ public class TransactionDialog extends BottomSheetDialogFragment {
                 Account account = AppDatabase.getDatabase(mContext).AccountDao()
                         .getAccountById(transaction.getAccountId());
                 method.setText(account.getName());
+                paymentMethod.setId(account.getId());
+                paymentMethod.setName(account.getName());
+                paymentMethod.setType(account.getType());
+                paymentMethod.setColorId(account.getColorId());
+                paymentMethod.setIconId(account.getIconId());
             });
         }
         else if (transaction.getCardId() != null && transaction.getCardId() > 0) {
@@ -85,6 +94,12 @@ public class TransactionDialog extends BottomSheetDialogFragment {
                 CreditCard creditCard = AppDatabase.getDatabase(mContext).CardDao()
                         .getCreditCardById(transaction.getCardId());
                 method.setText(creditCard.getName());
+                paymentMethod.setId(creditCard.getId());
+                paymentMethod.setType(Tags.METHOD_CARD);
+                paymentMethod.setName(creditCard.getName());
+                paymentMethod.setColorId(creditCard.getColorId());
+                paymentMethod.setIconId(Tags.CARD_ICON_ID);
+                paymentMethod.setBillingDay(creditCard.getBillingDay());
             });
         }
 
@@ -100,7 +115,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         // Open edit fragment
         Button editBtn = view.findViewById(R.id.dialog_transaction_edit);
         editBtn.setOnClickListener(v -> {
-            mInterface.openTransactionForm();
+            mInterface.openTransactionForm(true, transaction, paymentMethod);
             dismiss();
         });
 
