@@ -13,9 +13,15 @@ public class NumberUtils {
     public NumberUtils() {}
 
     public static float roundFloat(float value) {
-        BigDecimal bd = new BigDecimal(Float.toString(value));
-        bd = bd.setScale(2, RoundingMode.HALF_DOWN);
-        return bd.floatValue();
+        try {
+            BigDecimal bd = new BigDecimal(Float.toString(value));
+            bd = bd.setScale(2, RoundingMode.HALF_DOWN);
+            return bd.floatValue();
+        }
+        catch (Exception e) {
+            Log.w("debug-number", "division by zero => " + e);
+            return 0.00f;
+        }
     }
 
     public static String[] getCurrencyFormat(Context context, float value) {

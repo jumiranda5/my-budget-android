@@ -33,6 +33,7 @@ import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,14 +119,14 @@ public class HomeFragment extends Fragment {
      =============================================================================== */
 
     private void initNavigation() {
-        cardIncome.setOnClickListener(v -> mInterface.openIncome());
-        cardExpenses.setOnClickListener(v -> mInterface.openExpenses());
-        cardSavings.setOnClickListener(v -> mInterface.openAccounts());
-        cardCash.setOnClickListener(v -> mInterface.openAccounts());
-        cardChecking.setOnClickListener(v -> mInterface.openAccounts());
+        cardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
+        cardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
+        cardSavings.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
+        cardCash.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
+        cardChecking.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
         cardExpensesCategories.setOnClickListener(v -> mInterface.openExpensesCategories());
         cardIncomeCategories.setOnClickListener(v -> mInterface.openIncomeCategories());
-        cardYear.setOnClickListener(v -> mInterface.openYear());
+        cardYear.setOnClickListener(v -> mInterface.open(Tags.yearTag));
     }
 
     /* ===============================================================================
@@ -137,7 +138,7 @@ public class HomeFragment extends Fragment {
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             Balance balance = transactionDao.getHomeBalance(month, year);
             HomeAccounts homeAccounts = transactionDao.getAccountsTotals();

@@ -147,7 +147,7 @@ public class AccountDetailsFragment extends Fragment {
         TransactionDao transactionDao = db.TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             List<Transaction> transactions = transactionDao.getAccountTransactions(accountTotal.getId(), 2023, 7);
             Log.d(LOG, "list size: " + transactions.size());

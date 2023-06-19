@@ -8,8 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +25,12 @@ import android.widget.TextView;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesFormBinding;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.CategoryDao;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 public class CategoriesFormFragment extends Fragment {
 
@@ -163,16 +169,42 @@ public class CategoriesFormFragment extends Fragment {
     private void createCategory() {
         String name = mCategoryNameInput.getText().toString().trim();
         Category category = new Category(name, selectedColor.getId(), selectedIcon.getId(), true);
-        mInterface.insertCategoryData(category);
-        mInterface.navigateBack();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            CategoryDao categoryDao = AppDatabase.getDatabase(mContext).CategoryDao();
+            int id = (int) categoryDao.insert(category);
+            category.setId(id);
+
+            handler.post(() -> {
+                Log.d(Tags.LOG_DB, "Category saved in db... update ui");
+                mInterface.handleCategoryInserted(category);
+                mInterface.navigateBack();
+            });
+
+        });
+
     }
 
     private void editCategory(int pos, boolean active) {
         String name = mCategoryNameInput.getText().toString().trim();
         Category category = new Category(name, selectedColor.getId(), selectedIcon.getId(), active);
         category.setId(categoryToEdit.getId());
-        mInterface.editCategoryData(pos, category);
-        mInterface.navigateBack();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            CategoryDao categoryDao = AppDatabase.getDatabase(mContext).CategoryDao();
+            categoryDao.update(category);
+
+            handler.post(() -> {
+                mInterface.handleCategoryEdited(pos, category);
+                mInterface.navigateBack();
+                Log.d(Tags.LOG_DB, "category updated on db... update ui");
+            });
+
+        });
     }
 
     private final TextWatcher categoryWatcher = new TextWatcher() {

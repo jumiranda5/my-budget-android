@@ -242,7 +242,7 @@ public class AccountFormFragment extends Fragment {
         AccountDao accountDao = AppDatabase.getDatabase(mContext).AccountDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             int id = (int) accountDao.insert(newAccount);
 
@@ -262,7 +262,7 @@ public class AccountFormFragment extends Fragment {
         AccountDao accountDao = AppDatabase.getDatabase(mContext).AccountDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             accountDao.update(editedAccount);
 

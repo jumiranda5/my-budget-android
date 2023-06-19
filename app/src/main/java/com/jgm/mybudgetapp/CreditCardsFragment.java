@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 
 import com.jgm.mybudgetapp.adapters.CardAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardsBinding;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.CardDao;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
@@ -33,7 +37,7 @@ public class CreditCardsFragment extends Fragment {
     private static final String LOG = "debug-credit-cards";
 
     // List
-    private ArrayList<CreditCard> cardsList = new ArrayList<>();
+    private List<CreditCard> cardsList = new ArrayList<>();
     CardAdapter adapter;
 
     // UI
@@ -76,20 +80,25 @@ public class CreditCardsFragment extends Fragment {
         mAddCard.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
 
         initRecyclerView();
-        mInterface.getCreditCardsData();
-        setTotal();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            CardDao cardDao = AppDatabase.getDatabase(mContext).CardDao();
+            cardsList = cardDao.getCreditCards();
+
+            handler.post(() -> {
+                Log.d("debug-database", "Done reading all credit cards from db: " + cardsList.size());
+                initRecyclerView();
+                setTotal();
+            });
+        });
 
     }
 
     /* ===============================================================================
                                        INTERFACE
      =============================================================================== */
-
-    public void updateListAfterDbRead(List<CreditCard> dbCards) {
-        Log.d(LOG, "Update ui list: " + dbCards.size());
-        cardsList = (ArrayList<CreditCard>) dbCards;
-        initRecyclerView();
-    }
 
     public void updateUiAfterInsertion(CreditCard card) {
         adapter.addItem(card);

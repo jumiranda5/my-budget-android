@@ -119,7 +119,7 @@ public class AccountsFragment extends Fragment {
         AccountDao mAccountDao = db.AccountDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             Map<Account, String> accountsTotals = mAccountDao.getAccountsWithTotals();
 

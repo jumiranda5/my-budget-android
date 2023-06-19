@@ -8,8 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +24,11 @@ import android.widget.TextView;
 
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardFormBinding;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.CardDao;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 public class CreditCardFormFragment extends Fragment {
 
@@ -177,8 +183,20 @@ public class CreditCardFormFragment extends Fragment {
         billingDay = Integer.parseInt(billingDayText);
 
         CreditCard newCard = new CreditCard(nickname, selectedColor.getId(), billingDay, true);
-        mInterface.insertCreditCardData(newCard);
-        mInterface.navigateBack();
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            CardDao cardDao = AppDatabase.getDatabase(mContext).CardDao();
+            int id = (int) cardDao.insert(newCard);
+            newCard.setId(id);
+
+            handler.post(() -> {
+                Log.d("debug-db", "Credit Card saved in db... update ui");
+                mInterface.handleCreditCardInserted(newCard);
+                mInterface.navigateBack();
+            });
+        });
     }
 
     private void editCreditCard(boolean isActive) {
@@ -194,7 +212,18 @@ public class CreditCardFormFragment extends Fragment {
                 isActive);
         editedCard.setId(creditCard.getId());
 
-        mInterface.editCreditCardData(position, editedCard);
-        mInterface.navigateBack();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            CardDao cardDao = AppDatabase.getDatabase(mContext).CardDao();
+            cardDao.update(editedCard);
+
+            handler.post(() -> {
+                Log.d(Tags.LOG_DB, "credit card updated on db... update ui");
+                mInterface.handleCreditCardEdited(position, editedCard);
+                mInterface.navigateBack();
+            });
+
+        });
     }
 }

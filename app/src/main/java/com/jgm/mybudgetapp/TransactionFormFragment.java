@@ -202,6 +202,7 @@ public class TransactionFormFragment extends Fragment {
 
         initType(selectedTransaction.getType());
         initAmount(Math.abs(selectedTransaction.getAmount()));
+        mAmountInput.setText(String.valueOf(Math.abs(selectedTransaction.getAmount())));
         initDescription(selectedTransaction.getDescription());
         initDate(date);
         initCategory(category);
@@ -293,7 +294,6 @@ public class TransactionFormFragment extends Fragment {
     private void initAmount(float amount) {
         mAmountInput.addTextChangedListener(priceWatcher);
         this.amount = amount;
-        mAmountInput.setText(String.valueOf(amount));
     }
 
     private final TextWatcher priceWatcher = new TextWatcher() {
@@ -765,7 +765,7 @@ public class TransactionFormFragment extends Fragment {
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             transactionDao.insert(transaction);
 
@@ -782,7 +782,7 @@ public class TransactionFormFragment extends Fragment {
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             transactionDao.update(transaction);
             // todo: edit repeated transactions...

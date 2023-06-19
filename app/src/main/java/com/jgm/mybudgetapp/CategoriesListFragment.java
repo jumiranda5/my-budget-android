@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,10 @@ import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.CategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesListBinding;
+import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,7 @@ public class CategoriesListFragment extends Fragment {
     private boolean isEdit;
 
     // List
-    private ArrayList<Category> categoryList = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
     private CategoryAdapter adapter;
 
     // UI
@@ -79,7 +83,7 @@ public class CategoriesListFragment extends Fragment {
         Log.d(LOG, "Categories list onViewCreated");
 
         initCategoriesList();
-        mInterface.getCategoriesData();
+        getCategoriesData();
         mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(false, null, 0));
         mClose.setOnClickListener(v -> mInterface.navigateBack());
     }
@@ -91,14 +95,6 @@ public class CategoriesListFragment extends Fragment {
     public void setListType(boolean isEdit) {
         this.isEdit = isEdit;
         Log.w(LOG, "is edit list => " + isEdit);
-    }
-
-    public void updateListAfterDbRead(List<Category> dbCategories) {
-        Log.d(LOG, "Update ui list: " + dbCategories.size());
-        if (dbCategories.size() > 0) {
-            categoryList = (ArrayList<Category>) dbCategories;
-            initCategoriesList();
-        }
     }
 
     public void updateListAfterDbInsertion(Category category) {
@@ -119,6 +115,16 @@ public class CategoriesListFragment extends Fragment {
     /* ===============================================================================
                                           LIST
     =============================================================================== */
+
+    private void getCategoriesData() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            categoryList = AppDatabase.getDatabase(mContext).CategoryDao().getCategories();
+            handler.post(() -> initCategoriesList());
+
+        });
+    }
 
     private void initCategoriesList() {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);

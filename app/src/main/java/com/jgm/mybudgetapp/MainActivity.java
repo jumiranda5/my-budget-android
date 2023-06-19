@@ -1,5 +1,20 @@
 package com.jgm.mybudgetapp;
 
+import static com.jgm.mybudgetapp.utils.Tags.accountDetailsTag;
+import static com.jgm.mybudgetapp.utils.Tags.accountFormTag;
+import static com.jgm.mybudgetapp.utils.Tags.accountsTag;
+import static com.jgm.mybudgetapp.utils.Tags.cardDetailsTag;
+import static com.jgm.mybudgetapp.utils.Tags.cardFormTag;
+import static com.jgm.mybudgetapp.utils.Tags.cardsTag;
+import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
+import static com.jgm.mybudgetapp.utils.Tags.categoriesListTag;
+import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
+import static com.jgm.mybudgetapp.utils.Tags.homeTag;
+import static com.jgm.mybudgetapp.utils.Tags.settingsTag;
+import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
+import static com.jgm.mybudgetapp.utils.Tags.transactionsOutTag;
+import static com.jgm.mybudgetapp.utils.Tags.yearTag;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -11,8 +26,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,28 +47,19 @@ import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
-import com.jgm.mybudgetapp.room.AppDatabase;
-import com.jgm.mybudgetapp.room.dao.AccountDao;
-import com.jgm.mybudgetapp.room.dao.CardDao;
-import com.jgm.mybudgetapp.room.dao.CategoryDao;
-import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
+import com.jgm.mybudgetapp.utils.Populate;
 import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
     // Constants
-    private static final String LOG_NAV = "debug-nav";
-    private static final String LOG_LIFECYCLE = "debug-lifecycle";
-
-    private static final String LOG_DB = "debug-database";
     private static final String STATE_FRAGMENT = "current-fragment";
     private static final String STATE_TAG_LIST = "fragment-tag-list";
     private static final String STATE_DAY = "day";
@@ -79,24 +83,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private HomeFragment mHome;
     private SettingsFragment mSettings;
     private TransactionFormFragment mTransactionForm;
-    private TransactionsOutFragment mTransactions;
+    private TransactionsOutFragment mTransactionsOut;
     private YearFragment mYear;
-
-    // Fragment Tags
-    private static final String accountsTag = "ACCOUNTS";
-    private static final String accountFormTag = "ACCOUNT_FORM";
-    private static final String accountDetailsTag = "ACCOUNT_DETAILS";
-    private static final String categoriesTag = "CATEGORIES";
-    private static final String categoriesFormTag = "CATEGORIES_FORM";
-    private static final String categoriesListTag = "CATEGORIES_LIST";
-    private static final String cardsTag = "CARDS";
-    private static final String cardFormTag = "CARD_FORM";
-    private static final String cardDetailsTag = "CARD_DETAILS";
-    private static final String homeTag = "HOME";
-    private static final String settingsTag = "SETTINGS";
-    private static final String transactionFormTag = "TRANSACTION_FORM";
-    private static final String transactionsTag = "TRANSACTIONS";
-    private static final String yearTag = "YEAR";
 
     // Vars
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
@@ -105,12 +93,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private MyDate selectedDate;
     private MyDate today;
     private TransactionResponse selectedTransaction;
-
-    // Db
-    private AccountDao mAccountDao;
-    private CardDao mCardDao;
-    private CategoryDao mCategoryDao;
-    private TransactionDao mTransactionDao;
 
     // UI
     private ActivityMainBinding binding;
@@ -140,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         super.onCreate(savedInstanceState);
 
-        Log.d(LOG_LIFECYCLE, "Main Activity onCreate");
+        Log.d(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -149,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (savedInstanceState == null) {
             setFragment(homeTag);
             selectedDate = MyDateUtils.getCurrentDate(this);
+            Populate.initDefaultAccounts(this);
+            Populate.initDefaultCategories(this);
         }
         else {
             // Set toolbar date
@@ -161,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         today = MyDateUtils.getCurrentDate(this);
 
-        initDatabase();
         initBottomBar();
         initToolbar();
 
@@ -173,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         currentFragment = savedInstanceState.getString(STATE_FRAGMENT);
         mFragmentTagList = savedInstanceState.getStringArrayList(STATE_TAG_LIST);
 
-        Log.d(LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
+        Log.d(Tags.LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
 
         for (int i = 0; i < mFragmentTagList.size(); i++) {
             reReferenceFragment(mFragmentTagList.get(i));
@@ -193,91 +176,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
+        Log.d(Tags.LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
         outState.putString(STATE_FRAGMENT, currentFragment);
         outState.putStringArrayList(STATE_TAG_LIST, mFragmentTagList);
         outState.putInt(STATE_DAY, selectedDate.getDay());
         outState.putInt(STATE_MONTH, selectedDate.getMonth());
         outState.putInt(STATE_YEAR, selectedDate.getYear());
-    }
-
-    /* ==========================================================================
-                                      DATABASE
-    ========================================================================== */
-
-    private void initDatabase() {
-        AppDatabase db = AppDatabase.getDatabase(this);
-        mAccountDao = db.AccountDao();
-        mCardDao = db.CardDao();
-        mCategoryDao = db.CategoryDao();
-        mTransactionDao = db.TransactionDao();
-        initDefaultAccounts();
-        initDefaultCategories();
-    }
-
-    private void initDefaultAccounts() {
-        // todo => and if list is empty
-        boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(this, "hasInitialAccounts");
-        if (!hasInitialAccounts) {
-
-            Log.d(LOG_DB, "== INIT ACCOUNT DEFAULT LIST");
-
-            ArrayList<Account> list = new ArrayList<>();
-
-            Account cash = new Account(getString(R.string.account_cash), 21, 67, 0, true);
-            Account checking = new Account(getString(R.string.account_checking), 14, 68, 1, true);
-            Account savings = new Account(getString(R.string.account_savings), 20, 69, 2, true);
-
-            list.add(cash);
-            list.add(checking);
-            list.add(savings);
-
-            for (int i = 0; i < list.size(); i++) {
-                Account newAccount = list.get(i);
-                AppDatabase.dbWriteExecutor.execute(() -> {
-                    mAccountDao.insert(newAccount);
-                });
-            }
-
-            SettingsPrefs.setSettingsPrefsBoolean(this, "hasInitialAccounts", true);
-
-        }
-    }
-
-    private void initDefaultCategories() {
-
-        // todo => and if list is empty
-        boolean hasInitialCategories = SettingsPrefs.getSettingsPrefsBoolean(this, "hasInitialCategories");
-
-        if (!hasInitialCategories) {
-
-            Log.d(LOG_DB, "== INIT CATEGORIES DEFAULT LIST");
-
-            ArrayList<com.jgm.mybudgetapp.room.entity.Category> list = new ArrayList<>();
-
-            Category c1 = new Category(getString(R.string.category_home), 3, 6, true);
-            Category c2 = new Category(getString(R.string.category_health), 5, 34, true);
-            Category c3 = new Category(getString(R.string.category_groceries), 14, 9, true);
-            Category c4 = new Category(getString(R.string.category_transport), 11, 29, true);
-            Category c5 = new Category(getString(R.string.category_leisure), 1, 46, true);
-            Category c6 = new Category(getString(R.string.category_education), 7, 15, true);
-            Category c7 = new Category(getString(R.string.category_work), 4, 11, true);
-
-            list.add(c1);
-            list.add(c2);
-            list.add(c3);
-            list.add(c4);
-            list.add(c5);
-            list.add(c6);
-            list.add(c7);
-
-            for (int i = 0; i < list.size(); i++) {
-                insertCategoryData(list.get(i));
-            }
-
-            SettingsPrefs.setSettingsPrefsBoolean(this, "hasInitialCategories", true);
-        }
-
     }
 
 
@@ -325,12 +229,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void updateMonthOnCurrentFragment() {
         if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
-        else if (mTransactions != null) mTransactions.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mTransactionsOut != null) mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
     }
 
     private void setToolbarVisibilities(String tag) {
 
-        if (tag.equals(homeTag) || tag.equals(categoriesTag) || tag.equals(transactionsTag)) {
+        if (tag.equals(homeTag) || tag.equals(categoriesTag) || tag.equals(transactionsOutTag)) {
             toolbar.setVisibility(View.VISIBLE);
             if (tag.equals(homeTag)) settingsButton.setVisibility(View.VISIBLE);
             else settingsButton.setVisibility(View.GONE);
@@ -416,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void openFragment(String tag) {
         if (!currentFragment.equals(tag)) {
-            Log.d(LOG_NAV, "OPEN " + tag);
+            Log.d(Tags.LOG_NAV, "OPEN " + tag);
             if (tag.equals(homeTag)) resetFragmentStack();
             setFragment(tag);
             setToolbarVisibilities(tag);
@@ -428,19 +332,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                                          INTERFACE
      =============================================================================== */
 
-
-    /* ========================  NAVIGATION ======================== */
-
+    /* ==========  NAVIGATION ========== */
 
     @Override
-    public void openExpenses() {
-        openFragment(transactionsTag);
-    }
-
-    @Override
-    public void openIncome() {
-        openFragment(transactionsTag);
-    }
+    public void open(String tag) { openFragment(tag); }
 
     @Override
     public void openExpensesCategories() {
@@ -470,11 +365,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openAccounts() {
-        openFragment(accountsTag);
-    }
-
-    @Override
     public void openAccountDetails(AccountTotal accountTotal, int position) {
         openFragment(accountDetailsTag);
         if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, position);
@@ -487,11 +377,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mAccountForm.setFormType(isEdit);
             if (isEdit) mAccountForm.setAccount(account, position);
         }
-    }
-
-    @Override
-    public void openYear() {
-        openFragment(yearTag);
     }
 
     @Override
@@ -562,12 +447,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void handleTransactionDeleted(int id) {
-        if (mTransactions != null) mTransactions.updateOnTransactionDeleted(id);
+        if (mTransactionsOut != null) mTransactionsOut.updateOnTransactionDeleted(id);
     }
 
     @Override
     public void showColorPickerDialog() {
-        Log.d(LOG_NAV, "Show color picker dialog");
+        Log.d(Tags.LOG_NAV, "Show color picker dialog");
         BottomSheetDialogFragment colorPicker = new ColorPickerDialog();
         colorPicker.show(getSupportFragmentManager(), "colorPicker");
     }
@@ -587,7 +472,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void showIconPickerDialog() {
-        Log.d(LOG_NAV, "Show icon picker dialog");
+        Log.d(Tags.LOG_NAV, "Show icon picker dialog");
         BottomSheetDialogFragment iconPicker = new IconPickerDialog();
         iconPicker.show(getSupportFragmentManager(), "iconPicker");
     }
@@ -600,7 +485,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void showDatePickerDialog() {
-        Log.d(LOG_NAV, "Show date picker dialog");
+        Log.d(Tags.LOG_NAV, "Show date picker dialog");
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build();
@@ -616,60 +501,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void showMethodPickerDialog(boolean isExpense) {
-        Log.d(LOG_NAV, "Show method picker dialog");
+        Log.d(Tags.LOG_NAV, "Show method picker dialog");
         isExpenseMethodDialog = isExpense;
         MethodPickerDialog methodDialog = new MethodPickerDialog();
         methodDialog.show(getSupportFragmentManager(), "methodPicker");
     }
 
     @Override
-    public ArrayList<PaymentMethod> getMethodsList() {
-
-        // Create a payment methods list
-        ArrayList<PaymentMethod> paymentMethods = new ArrayList<>();
-
-        AppDatabase.dbReadExecutor.execute(() -> {
-            // get accounts and credit cards from db
-            // Using the main thread to be able to use the return statement
-            List<Account> accountsList = mAccountDao.getAccounts();
-
-            for (int i = 0; i < accountsList.size(); i++) {
-                Account account = accountsList.get(i);
-                PaymentMethod paymentMethod = new PaymentMethod(
-                        account.getId(),
-                        account.getType(),
-                        account.getName(),
-                        account.getColorId(),
-                        account.getIconId(),
-                        0);
-                paymentMethods.add(paymentMethod);
-            }
-        });
-
-        if (isExpenseMethodDialog) {
-            AppDatabase.dbReadExecutor.execute(() -> {
-                // Get credit cards from db if type is expense
-
-                List<CreditCard> cardsList = mCardDao.getCreditCards();
-                for (int i = 0; i < cardsList.size(); i++) {
-                    CreditCard card = cardsList.get(i);
-                    PaymentMethod paymentMethod = new PaymentMethod(
-                            card.getId(),
-                            Tags.METHOD_CARD,
-                            card.getName(),
-                            card.getColorId(),
-                            Tags.CARD_ICON_ID,
-                            card.getBillingDay());
-                    paymentMethods.add(paymentMethod);
-                }
-
-                Log.d(LOG_DB, "Methods list size: " + paymentMethods.size());
-            });
-        }
-
-        // todo => wait executions...
-
-        return paymentMethods;
+    public boolean getMethodDialogType() {
+        return isExpenseMethodDialog;
     }
 
     @Override
@@ -694,8 +534,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ========================  CATEGORIES ======================== */
-
+    /* ========== CATEGORIES ========== */
 
     @Override
     public void setSelectedCategory(Category category) {
@@ -703,8 +542,21 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         onBackPressed();
     }
 
+    @Override
+    public void handleCategoryInserted(Category category) {
+        if (mCategoriesList != null) mCategoriesList.updateListAfterDbInsertion(category);
+    }
 
-    /* ========================  DATABASE - ACCOUNTS ======================== */
+    @Override
+    public void handleCategoryEdited(int position, Category category) {
+        if (mCategoriesList != null) {
+            if (category.isActive()) mCategoriesList.updateListAfterEdit(position, category);
+            else mCategoriesList.updateListAfterDelete(position);
+        }
+    }
+
+
+    /* ========== ACCOUNTS ========== */
 
     @Override
     public void updateAccountInserted(Account account, boolean isEdit, int position) {
@@ -714,14 +566,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         else {
             // Changed account, but didn't archive
             if (account.isActive()) {
-                Log.d("debug-account", "Should back press once");
                 if (mAccounts != null) mAccounts.updateListAfterEdit(position, account);
                 if (mAccountDetails != null) mAccountDetails.updateAccountAfterEdit(account);
             }
             // Archived
             else {
                 // close details page and update main
-                Log.d("debug-account", "Should back press twice");
                 onBackPressed();
                 if (mAccounts != null) mAccounts.updateListAfterDelete(position);
             }
@@ -729,110 +579,28 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ========================  DATABASE - CATEGORIES ======================== */
+    /* ==========  CREDIT CARDS ========== */
 
     @Override
-    public void getCategoriesData() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
-
-            List<Category> categoriesList = mCategoryDao.getCategories();
-
-            handler.post(() -> {
-                mCategoriesList.updateListAfterDbRead(categoriesList);
-                Log.d(LOG_DB, "Done reading all categories from db: " + categoriesList.size());
-            });
-        });
+    public void handleCreditCardInserted(CreditCard card) {
+        if (mCreditCards != null) mCreditCards.updateUiAfterInsertion(card);
     }
 
     @Override
-    public void insertCategoryData(Category category) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
-
-            int id = (int) mCategoryDao.insert(category);
-            category.setId(id);
-
-            handler.post(() -> {
-                if (mCategoriesList != null) mCategoriesList.updateListAfterDbInsertion(category);
-                Log.d(LOG_DB, "Category saved in db... update ui");
-            });
-
-        });
+    public void handleCreditCardEdited(int position, CreditCard card) {
+        if (card.isActive()) {
+            if (mCreditCards != null) mCreditCards.updateListAfterEdit(position, card);
+            if (mCreditCardDetails != null) mCreditCardDetails.updateCreditCardAfterEdit(card);
+        }
+        else {
+            // close cards details fragment and update main
+            onBackPressed();
+            mCreditCards.updateListAfterDelete(position);
+        }
     }
 
-    @Override
-    public void editCategoryData(int position, Category category) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
 
-            mCategoryDao.update(category);
-
-            handler.post(() -> {
-                Log.d(LOG_DB, "category updated on db... update ui");
-                if (mCategoriesList != null) {
-                    if (category.isActive()) mCategoriesList.updateListAfterEdit(position, category);
-                    else mCategoriesList.updateListAfterDelete(position);
-                }
-            });
-
-        });
-    }
-
-    /* ========================  DATABASE - CREDIT CARDS ======================== */
-
-    @Override
-    public void getCreditCardsData() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
-
-            List<CreditCard> cardsList = mCardDao.getCreditCards();
-
-            handler.post(() -> {
-                if (mCreditCards != null) mCreditCards.updateListAfterDbRead(cardsList);
-                Log.d("debug-database", "Done reading all credit cards from db: " + cardsList.size());
-            });
-        });
-    }
-
-    @Override
-    public void insertCreditCardData(CreditCard card) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
-
-            int id = (int) mCardDao.insert(card);
-            card.setId(id);
-
-            handler.post(() -> {
-                if (mCreditCards != null) mCreditCards.updateUiAfterInsertion(card);
-                Log.d("debug-db", "Credit Card saved in db... update ui");
-            });
-        });
-    }
-
-    @Override
-    public void editCreditCardData(int position, CreditCard card) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbWriteExecutor.execute(() -> {
-
-            mCardDao.update(card);
-
-            handler.post(() -> {
-                if (card.isActive()) {
-                    if (mCreditCards != null) mCreditCards.updateListAfterEdit(position, card);
-                    if (mCreditCardDetails != null) mCreditCardDetails.updateCreditCardAfterEdit(card);
-                }
-                else {
-                    // close cards details fragment and update main
-                    onBackPressed();
-                    mCreditCards.updateListAfterDelete(position);
-                }
-                Log.d(LOG_DB, "credit card updated on db... update ui");
-            });
-
-        });
-    }
-
+    /* ==========  DATE ========== */
     @Override
     public MyDate getDate() {
         return selectedDate;
@@ -846,12 +614,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private void resetFragmentStack() {
         mFragmentTagList.clear();
         mFragmentTagList = new ArrayList<>();
-        Log.d(LOG_NAV, "Reset fragment stack: " + mFragmentTagList.size());
+        Log.d(Tags.LOG_NAV, "Reset fragment stack: " + mFragmentTagList.size());
     }
 
     private void setFragment(String tag) {
 
-        Log.d(LOG_NAV, "init fragment: " + tag);
+        Log.d(Tags.LOG_NAV, "init fragment: " + tag);
 
         Fragment fragment;
 
@@ -900,9 +668,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mSettings = new SettingsFragment();
                 fragment = mSettings;
                 break;
-            case transactionsTag:
-                mTransactions = new TransactionsOutFragment();
-                fragment = mTransactions;
+            case transactionsOutTag:
+                mTransactionsOut = new TransactionsOutFragment();
+                fragment = mTransactionsOut;
                 break;
             case transactionFormTag:
                 mTransactionForm = new TransactionFormFragment();
@@ -928,7 +696,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void replaceFragment(Fragment fragment, String tag) {
 
-        Log.d(LOG_NAV, "Fragment to be replaced: " + currentFragment);
+        Log.d(Tags.LOG_NAV, "Fragment to be replaced: " + currentFragment);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_content_frame, fragment, tag);
         transaction.commit();
@@ -947,13 +715,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         // Set current fragment tag
         currentFragment = tag;
 
-        Log.d(LOG_NAV, "Fragment loaded: " + tag);
+        Log.d(Tags.LOG_NAV, "Fragment loaded: " + tag);
 
     }
 
     private void addFragment(Fragment fragment, String tag) {
 
-        Log.d(LOG_NAV, "Fragment to be added: " + currentFragment);
+        Log.d(Tags.LOG_NAV, "Fragment to be added: " + currentFragment);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.main_content_frame, fragment, tag);
         transaction.commit();
@@ -991,11 +759,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         // Set current fragment tag
         currentFragment = tag;
-        Log.d(LOG_NAV, "Fragment added: " + tag);
+        Log.d(Tags.LOG_NAV, "Fragment added: " + tag);
     }
 
     private void destroyFragment(Fragment fragment, String tag) {
-        Log.d(LOG_NAV, "Fragment to be removed: " + tag);
+        Log.d(Tags.LOG_NAV, "Fragment to be removed: " + tag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(fragment);
         transaction.commit();
@@ -1030,7 +798,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void reReferenceFragment(String tag) {
 
-        Log.d(LOG_NAV, "========= re-reference: " + currentFragment);
+        Log.d(Tags.LOG_NAV, "========= re-reference: " + currentFragment);
 
         switch (tag) {
             case accountsTag:
@@ -1066,8 +834,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case settingsTag:
                 mSettings = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(settingsTag);
                 break;
-            case transactionsTag:
-                mTransactions = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsTag);
+            case transactionsOutTag:
+                mTransactionsOut = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsOutTag);
                 break;
             case transactionFormTag:
                 mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);
@@ -1093,7 +861,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case cardDetailsTag: mCreditCardDetails = null; break;
                 case homeTag: mHome = null; break;
                 case settingsTag: mSettings = null; break;
-                case transactionsTag: mTransactions = null; break;
+                case transactionsOutTag: mTransactionsOut = null; break;
                 case transactionFormTag: mTransactionForm = null; break;
                 case yearTag: mYear = null; break;
             }
@@ -1112,11 +880,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             String newTopFragmentTag = mFragmentTagList.get(backStackCount - 2);
             currentFragment = newTopFragmentTag;
 
-            Log.d(LOG_NAV, "Back to: " + newTopFragmentTag);
+            Log.d(Tags.LOG_NAV, "Back to: " + newTopFragmentTag);
             mFragmentTagList.remove(topFragmentTag);
 
             // remove or replace top fragment
-            Log.d(LOG_NAV, "Top fragment: " + topFragmentTag);
+            Log.d(Tags.LOG_NAV, "Top fragment: " + topFragmentTag);
             switch (topFragmentTag) {
                 case categoriesListTag:
                     destroyFragment(mCategoriesList, categoriesListTag);
@@ -1147,7 +915,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         }
         else if( backStackCount == 1 ){
-            Log.d(LOG_NAV, "EXIT");
+            Log.d(Tags.LOG_NAV, "EXIT");
             super.onBackPressed();
         }
     }

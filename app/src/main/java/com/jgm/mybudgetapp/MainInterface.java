@@ -16,16 +16,13 @@ import java.util.ArrayList;
 public interface MainInterface {
 
     // Navigation
-    void openExpenses();
-    void openIncome();
+    void open(String tag);
     void openCategoriesList(boolean isEdit);
     void openExpensesCategories();
     void openIncomeCategories();
     void openCategoryForm(boolean isEdit, Category category, int position);
-    void openAccounts();
     void openAccountDetails(AccountTotal accountTotal, int position);
     void openAccountForm(boolean isEdit, Account account, int position);
-    void openYear();
     void openCardDetails(CreditCard card, int position);
     void openCardForm(boolean isEdit, CreditCard card, int position);
     void openTransactionForm(boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
@@ -43,7 +40,7 @@ public interface MainInterface {
     void handleIconSelection(Icon icon);
     void showDatePickerDialog();
     void showMethodPickerDialog(boolean isExpense);
-    ArrayList<PaymentMethod> getMethodsList();
+    boolean getMethodDialogType();
     void setSelectedPaymentMethod(PaymentMethod paymentMethod);
 
     // Settings
@@ -51,19 +48,15 @@ public interface MainInterface {
 
     // Categories
     void setSelectedCategory(Category category);
+    void handleCategoryInserted(Category category);
+    void handleCategoryEdited(int position, Category category);
 
     // Accounts
     void updateAccountInserted(Account account, boolean isEdit, int position);
 
-    // DATABASE
-
-    void getCategoriesData();
-    void insertCategoryData(Category category);
-    void editCategoryData(int position, Category category);
-
-    void getCreditCardsData();
-    void insertCreditCardData(CreditCard card);
-    void editCreditCardData(int position, CreditCard card);
+    // Credit Cards
+    void handleCreditCardInserted(CreditCard card);
+    void handleCreditCardEdited(int position, CreditCard card);
 
     // Date
     MyDate getDate();

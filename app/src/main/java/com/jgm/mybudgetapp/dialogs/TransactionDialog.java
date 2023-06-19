@@ -79,7 +79,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         TextView method = view.findViewById(R.id.dialog_transaction_method);
         // todo: save as null when not used, instead of 0...
         if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
-            AppDatabase.dbReadExecutor.execute(() -> {
+            AppDatabase.dbExecutor.execute(() -> {
                 Account account = AppDatabase.getDatabase(mContext).AccountDao()
                         .getAccountById(transaction.getAccountId());
                 method.setText(account.getName());
@@ -91,7 +91,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
             });
         }
         else if (transaction.getCardId() != null && transaction.getCardId() > 0) {
-            AppDatabase.dbReadExecutor.execute(() -> {
+            AppDatabase.dbExecutor.execute(() -> {
                 CreditCard creditCard = AppDatabase.getDatabase(mContext).CardDao()
                         .getCreditCardById(transaction.getCardId());
                 method.setText(creditCard.getName());
@@ -124,7 +124,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         Button deleteBtn = view.findViewById(R.id.dialog_transaction_delete);
         deleteBtn.setOnClickListener(v -> {
             Handler handler = new Handler(Looper.getMainLooper());
-            AppDatabase.dbWriteExecutor.execute(() -> {
+            AppDatabase.dbExecutor.execute(() -> {
                 int res = AppDatabase.getDatabase(mContext).TransactionDao().deleteById(transaction.getId());
                 handler.post(() -> {
                     Log.d("debug-dialog", "delete response: " + res);

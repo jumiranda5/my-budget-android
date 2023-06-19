@@ -99,7 +99,7 @@ public class TransactionsOutFragment extends Fragment {
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbReadExecutor.execute(() -> {
+        AppDatabase.dbExecutor.execute(() -> {
 
             expenses = transactionDao.getTransactions(-1, month, year);
             handler.post(() -> setExpensesData(month, year));

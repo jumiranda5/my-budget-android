@@ -29,8 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TransactionDao TransactionDao();
 
     private static volatile AppDatabase INSTANCE;
-    public static final ExecutorService dbWriteExecutor = Executors.newSingleThreadExecutor();
-    public static final ExecutorService dbReadExecutor = Executors.newSingleThreadExecutor();
+    public static final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
 
     public static AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
