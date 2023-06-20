@@ -228,8 +228,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void updateMonthOnCurrentFragment() {
-        if (mHome != null) mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
-        else if (mTransactionsOut != null) mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
+        Log.d(Tags.LOG_NAV, "is home null? " + (mHome == null));
+        if (mHome != null)
+            mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mTransactionsOut != null)
+            mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
     }
 
     private void setToolbarVisibilities(String tag) {

@@ -30,6 +30,7 @@ import com.jgm.mybudgetapp.objects.MonthTotal;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -140,6 +141,9 @@ public class HomeFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
+            MyDate today = MyDateUtils.getCurrentDate(mContext);
+            int pendingCount = transactionDao.getPendingCount(today.getDay(), today.getMonth(), today.getYear());
+
             Balance balance = transactionDao.getHomeBalance(month, year);
             HomeAccounts homeAccounts = transactionDao.getAccountsTotals();
             List<HomeCategory> incomeCategories = transactionDao.getHomeCategories(month, year, 1);
@@ -152,6 +156,9 @@ public class HomeFragment extends Fragment {
                 setIncomeCategories(incomeCategories);
                 setExpensesCategories(expensesCategories);
                 setYearChart(yearBalance, year);
+
+                Log.d(Tags.LOG_DB, "Pending => " + pendingCount);
+
             });
 
         });

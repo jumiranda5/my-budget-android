@@ -49,6 +49,11 @@ public interface TransactionDao {
 
     // Home fragment
 
+    @Query("SELECT COUNT(paid) FROM transactions " +
+            "WHERE paid = 0 " +
+            "AND NOT (day > :day AND month >= :month AND year >= :year)")
+    int getPendingCount(int day, int month, int year);
+
     @Query("SELECT SUM (amount) AS balance, " +
             "SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +
             "SUM(CASE WHEN type = '-1' THEN amount ELSE 0 END) AS expenses " +
