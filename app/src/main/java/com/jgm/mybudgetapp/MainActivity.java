@@ -228,7 +228,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void updateMonthOnCurrentFragment() {
-        Log.d(Tags.LOG_NAV, "is home null? " + (mHome == null));
         if (mHome != null)
             mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsOut != null)
@@ -317,19 +316,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
-    /* ===============================================================================
-                                     FRAGMENT NAVIGATION
-     =============================================================================== */
-
-    private void openFragment(String tag) {
-        if (!currentFragment.equals(tag)) {
-            Log.d(Tags.LOG_NAV, "OPEN " + tag);
-            if (tag.equals(homeTag)) resetFragmentStack();
-            setFragment(tag);
-            setToolbarVisibilities(tag);
-            updateBottomNav(tag);
-        }
-    }
 
     /* ===============================================================================
                                          INTERFACE
@@ -444,7 +430,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public TransactionResponse getSelectedTransactionData() {
-        Log.d("debug-add", selectedTransaction.getDescription());
         return selectedTransaction;
     }
 
@@ -611,8 +596,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
 
     /* ===============================================================================
-                                         FRAGMENTS
+                                     FRAGMENT NAVIGATION
      =============================================================================== */
+
+    private void openFragment(String tag) {
+        Log.d(Tags.LOG_NAV, "== openFragment / " + tag);
+        Log.d(Tags.LOG_NAV, "currentFragment " + currentFragment);
+        if (!currentFragment.equals(tag)) {
+            if (tag.equals(homeTag)) resetFragmentStack();
+            setFragment(tag);
+            setToolbarVisibilities(tag);
+            updateBottomNav(tag);
+        }
+    }
 
     private void resetFragmentStack() {
         mFragmentTagList.clear();
@@ -622,7 +618,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void setFragment(String tag) {
 
-        Log.d(Tags.LOG_NAV, "init fragment: " + tag);
+        Log.d(Tags.LOG_NAV, "== setFragment / " + tag);
 
         Fragment fragment;
 
@@ -699,7 +695,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void replaceFragment(Fragment fragment, String tag) {
 
+        Log.d(Tags.LOG_NAV, "== replaceFragment / new fragment: " + tag);
         Log.d(Tags.LOG_NAV, "Fragment to be replaced: " + currentFragment);
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_content_frame, fragment, tag);
         transaction.commit();
@@ -875,19 +873,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void onBackPressed() {
 
+        Log.d(Tags.LOG_NAV, "== onBackPressed");
+
         int backStackCount = mFragmentTagList.size();
         String topFragmentTag = mFragmentTagList.get(backStackCount - 1);
 
         if(backStackCount > 1){
             // Get previous fragment from stack
             String newTopFragmentTag = mFragmentTagList.get(backStackCount - 2);
-            currentFragment = newTopFragmentTag;
+            Log.d(Tags.LOG_NAV, "previous fragment (return to): " + newTopFragmentTag);
+            Log.d(Tags.LOG_NAV, "current fragment (remove): " + topFragmentTag);
 
-            Log.d(Tags.LOG_NAV, "Back to: " + newTopFragmentTag);
             mFragmentTagList.remove(topFragmentTag);
 
             // remove or replace top fragment
-            Log.d(Tags.LOG_NAV, "Top fragment: " + topFragmentTag);
             switch (topFragmentTag) {
                 case categoriesListTag:
                     destroyFragment(mCategoriesList, categoriesListTag);
