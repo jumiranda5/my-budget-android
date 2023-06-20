@@ -50,16 +50,18 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
         app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
 
-    <!-- Todo: toggle button -->
-    <ImageView
+    <ToggleButton
         android:id="@+id/item_transaction_toggle"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
+        style="@style/IconButton"
+        android:layout_marginEnd="8dp"
         android:contentDescription="@null"
+        android:textOn="@string/label_paid"
+        android:textOff="@string/label_not_paid"
+        android:textSize="0sp"
+        android:checked="false"
+        android:background="@drawable/button_toggle_paid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_circle_24" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

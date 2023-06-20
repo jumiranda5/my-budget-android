@@ -1,11 +1,15 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,10 +22,12 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
+import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.List;
 
@@ -72,10 +78,31 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
 
-        // todo: set amount color
+        if (transaction.getType() == Tags.TYPE_IN) {
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        }
+        else {
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        }
 
-        // Open transaction details dialog
-        holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
+        // Toggle paid
+        holder.mPaid.setChecked(false);
+        AppDatabase db = AppDatabase.getDatabase(mContext);
+        holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppDatabase.dbExecutor.execute(() -> {
+                    db.TransactionDao().updatePaid(transaction.getId(), true);
+                });
+            }
+            else {
+                AppDatabase.dbExecutor.execute(() -> {
+                    db.TransactionDao().updatePaid(transaction.getId(), false);
+                });
+            }
+        });
+
     }
 
     @Override
@@ -87,18 +114,17 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
 
         private final ImageView mIcon;
         private final TextView mName, mTotal, mCurrencySymbol, mDate;
-        private final ConstraintLayout mContainer;
-        // todo: toggleButton
+        private final ToggleButton mPaid;
 
         private ListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mIcon = itemView.findViewById(R.id.item_pending_icon);
             mName = itemView.findViewById(R.id.item_pending_name);
-            mContainer = itemView.findViewById(R.id.item_pending_container);
             mTotal = itemView.findViewById(R.id.item_pending_total);
             mCurrencySymbol = itemView.findViewById(R.id.item_pending_currency_symbol);
             mDate = itemView.findViewById(R.id.item_pending_date);
+            mPaid = itemView.findViewById(R.id.item_pending_toggle);
 
         }
     }

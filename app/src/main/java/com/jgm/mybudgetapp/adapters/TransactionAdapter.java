@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,10 +17,14 @@ import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
+import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
+import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.List;
 
@@ -64,6 +69,41 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
 
+        if (transaction.getType() == Tags.TYPE_IN) {
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        }
+        else {
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        }
+
+        // Toggle paid
+        if (transaction.isPaid()) holder.mPaid.setChecked(true);
+        else {
+            holder.mPaid.setChecked(true);
+            MyDate today = MyDateUtils.getCurrentDate(mContext);
+            if (transaction.getDay() < today.getDay() &&
+                    transaction.getMonth() <= today.getMonth() &&
+                    transaction.getYear() <= today.getYear()) {
+                holder.mPaid.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_toggle_paid_pending));
+            }
+        }
+
+        AppDatabase db = AppDatabase.getDatabase(mContext);
+        holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppDatabase.dbExecutor.execute(() -> {
+                    db.TransactionDao().updatePaid(transaction.getId(), true);
+                });
+            }
+            else {
+                AppDatabase.dbExecutor.execute(() -> {
+                    db.TransactionDao().updatePaid(transaction.getId(), false);
+                });
+            }
+        });
+
         // Open transaction details dialog
         holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
 
@@ -79,7 +119,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         private final ImageView mIcon;
         private final TextView mName, mTotal, mCurrencySymbol;
         private final ConstraintLayout mContainer;
-        // todo: toggleButton
+        private final ToggleButton mPaid;
 
         private ListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +129,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mContainer = itemView.findViewById(R.id.item_transaction);
             mTotal = itemView.findViewById(R.id.item_transaction_total);
             mCurrencySymbol = itemView.findViewById(R.id.item_transaction_currency_symbol);
+            mPaid = itemView.findViewById(R.id.item_transaction_toggle);
 
         }
     }

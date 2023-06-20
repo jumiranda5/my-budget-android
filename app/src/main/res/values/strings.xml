@@ -125,5 +125,6 @@
     <string name="msg_backlogs_part2">pending payment.</string>
     <string name="msg_backlogs_part2_plural">pending payments.</string>
     <string name="title_pending">Pending</string>
+    <string name="label_not_paid">Not paid</string>
 
 </resources>

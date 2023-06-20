@@ -29,6 +29,9 @@ public interface TransactionDao {
     @Query("DELETE FROM transactions WHERE id=:id")
     int deleteById(int id);
 
+    @Query("UPDATE transactions SET paid = :isPaid WHERE id = :id")
+    int updatePaid(int id, boolean isPaid);
+
     // Transactions fragment
 
     @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +

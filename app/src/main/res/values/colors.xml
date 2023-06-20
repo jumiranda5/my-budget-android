@@ -57,6 +57,7 @@
     <color name="button_save_pressed">#3DCC8E</color>
     <color name="button_picker_pressed">#C5FFE3</color>
     <color name="disabled_button">#DADADA</color>
+    <color name="check_circle_color">#FF29A56F</color>
 
     <color name="expense">#D91414</color>
     <color name="expense_pressed">#BC1616</color>
