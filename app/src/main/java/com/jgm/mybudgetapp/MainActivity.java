@@ -10,6 +10,7 @@ import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesListTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
 import static com.jgm.mybudgetapp.utils.Tags.homeTag;
+import static com.jgm.mybudgetapp.utils.Tags.pendingTag;
 import static com.jgm.mybudgetapp.utils.Tags.settingsTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionsOutTag;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private TransactionFormFragment mTransactionForm;
     private TransactionsOutFragment mTransactionsOut;
     private YearFragment mYear;
+    private PendingFragment mPending;
 
     // Vars
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
@@ -679,6 +681,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mYear = new YearFragment();
                 fragment = mYear;
                 break;
+            case pendingTag:
+                mPending = new PendingFragment();
+                fragment = mPending;
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + tag);
         }
@@ -797,79 +803,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         transaction2.commit();
     }
 
-    private void reReferenceFragment(String tag) {
-
-        Log.d(Tags.LOG_NAV, "========= re-reference: " + currentFragment);
-
-        switch (tag) {
-            case accountsTag:
-                mAccounts = (AccountsFragment) getSupportFragmentManager().findFragmentByTag(accountsTag);
-                break;
-            case accountFormTag:
-                mAccountForm = (AccountFormFragment) getSupportFragmentManager().findFragmentByTag(accountFormTag);
-                break;
-            case accountDetailsTag:
-                mAccountDetails = (AccountDetailsFragment) getSupportFragmentManager().findFragmentByTag(accountDetailsTag);
-                break;
-            case categoriesTag:
-                mCategories = (CategoriesFragment) getSupportFragmentManager().findFragmentByTag(categoriesTag);
-                break;
-            case categoriesListTag:
-                mCategoriesList = (CategoriesListFragment) getSupportFragmentManager().findFragmentByTag(categoriesListTag);
-                break;
-            case categoriesFormTag:
-                mCategoriesForm = (CategoriesFormFragment) getSupportFragmentManager().findFragmentByTag(categoriesFormTag);
-                break;
-            case cardsTag:
-                mCreditCards = (CreditCardsFragment) getSupportFragmentManager().findFragmentByTag(cardsTag);
-                break;
-            case cardFormTag:
-                mCreditCardForm = (CreditCardFormFragment) getSupportFragmentManager().findFragmentByTag(cardFormTag);
-                break;
-            case cardDetailsTag:
-                mCreditCardDetails = (CreditCardDetailsFragment) getSupportFragmentManager().findFragmentByTag(cardDetailsTag);
-                break;
-            case homeTag:
-                mHome = (HomeFragment) getSupportFragmentManager().findFragmentByTag(homeTag);
-                break;
-            case settingsTag:
-                mSettings = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(settingsTag);
-                break;
-            case transactionsOutTag:
-                mTransactionsOut = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsOutTag);
-                break;
-            case transactionFormTag:
-                mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);
-                break;
-            case yearTag:
-                mYear = (YearFragment) getSupportFragmentManager().findFragmentByTag(yearTag);
-                break;
-        }
-    }
-
-    private void deReferenceFragment(String tag) {
-
-        if (tag != null) {
-            switch (tag) {
-                case accountsTag: mAccounts = null; break;
-                case accountFormTag: mAccountForm = null; break;
-                case accountDetailsTag: mAccountDetails = null;break;
-                case categoriesTag: mCategories = null; break;
-                case categoriesListTag: mCategoriesList = null; break;
-                case categoriesFormTag: mCategoriesForm = null; break;
-                case cardsTag: mCreditCards = null; break;
-                case cardFormTag: mCreditCardForm = null; break;
-                case cardDetailsTag: mCreditCardDetails = null; break;
-                case homeTag: mHome = null; break;
-                case settingsTag: mSettings = null; break;
-                case transactionsOutTag: mTransactionsOut = null; break;
-                case transactionFormTag: mTransactionForm = null; break;
-                case yearTag: mYear = null; break;
-            }
-        }
-
-    }
-
     @Override
     public void onBackPressed() {
 
@@ -920,6 +853,84 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             Log.d(Tags.LOG_NAV, "EXIT");
             super.onBackPressed();
         }
+    }
+
+    // for screen rotation...
+    private void reReferenceFragment(String tag) {
+
+        Log.d(Tags.LOG_NAV, "========= re-reference: " + currentFragment);
+
+        switch (tag) {
+            case accountsTag:
+                mAccounts = (AccountsFragment) getSupportFragmentManager().findFragmentByTag(accountsTag);
+                break;
+            case accountFormTag:
+                mAccountForm = (AccountFormFragment) getSupportFragmentManager().findFragmentByTag(accountFormTag);
+                break;
+            case accountDetailsTag:
+                mAccountDetails = (AccountDetailsFragment) getSupportFragmentManager().findFragmentByTag(accountDetailsTag);
+                break;
+            case categoriesTag:
+                mCategories = (CategoriesFragment) getSupportFragmentManager().findFragmentByTag(categoriesTag);
+                break;
+            case categoriesListTag:
+                mCategoriesList = (CategoriesListFragment) getSupportFragmentManager().findFragmentByTag(categoriesListTag);
+                break;
+            case categoriesFormTag:
+                mCategoriesForm = (CategoriesFormFragment) getSupportFragmentManager().findFragmentByTag(categoriesFormTag);
+                break;
+            case cardsTag:
+                mCreditCards = (CreditCardsFragment) getSupportFragmentManager().findFragmentByTag(cardsTag);
+                break;
+            case cardFormTag:
+                mCreditCardForm = (CreditCardFormFragment) getSupportFragmentManager().findFragmentByTag(cardFormTag);
+                break;
+            case cardDetailsTag:
+                mCreditCardDetails = (CreditCardDetailsFragment) getSupportFragmentManager().findFragmentByTag(cardDetailsTag);
+                break;
+            case homeTag:
+                mHome = (HomeFragment) getSupportFragmentManager().findFragmentByTag(homeTag);
+                break;
+            case settingsTag:
+                mSettings = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(settingsTag);
+                break;
+            case transactionsOutTag:
+                mTransactionsOut = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsOutTag);
+                break;
+            case transactionFormTag:
+                mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);
+                break;
+            case yearTag:
+                mYear = (YearFragment) getSupportFragmentManager().findFragmentByTag(yearTag);
+                break;
+            case pendingTag:
+                mPending = (PendingFragment) getSupportFragmentManager().findFragmentByTag(pendingTag);
+                break;
+        }
+    }
+
+    private void deReferenceFragment(String tag) {
+
+        if (tag != null) {
+            switch (tag) {
+                case accountsTag: mAccounts = null; break;
+                case accountFormTag: mAccountForm = null; break;
+                case accountDetailsTag: mAccountDetails = null;break;
+                case categoriesTag: mCategories = null; break;
+                case categoriesListTag: mCategoriesList = null; break;
+                case categoriesFormTag: mCategoriesForm = null; break;
+                case cardsTag: mCreditCards = null; break;
+                case cardFormTag: mCreditCardForm = null; break;
+                case cardDetailsTag: mCreditCardDetails = null; break;
+                case homeTag: mHome = null; break;
+                case settingsTag: mSettings = null; break;
+                case transactionsOutTag: mTransactionsOut = null; break;
+                case transactionFormTag: mTransactionForm = null; break;
+                case yearTag: mYear = null; break;
+                case pendingTag: mPending = null; break;
+            }
+        }
+
     }
 
 }

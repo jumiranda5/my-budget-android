@@ -121,5 +121,9 @@
     <string name="msg_archive_category">Would you like to permanently archive this category?</string>
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card?</string>
     <string name="msg_archive_account">Would you like to permanently archive this account?</string>
+    <string name="msg_backlogs_part1">You have</string>
+    <string name="msg_backlogs_part2">pending payment.</string>
+    <string name="msg_backlogs_part2_plural">pending payments.</string>
+    <string name="title_pending">Pending</string>
 
 </resources>

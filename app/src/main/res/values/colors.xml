@@ -27,10 +27,12 @@
     <color name="bg_12dp">@color/bg_01dp</color>
     <color name="bg_16dp">@color/bg_01dp</color>
     <color name="bg_24dp">@color/bg_01dp</color>
+    <color name="bg_error">#FFCDD2</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>
     <color name="border_darker">#E0E0E0</color>
+    <color name="border_error">#EF9A9A</color>
 
     <!-- Text -->
     <color name="high_emphasis_text">#1E1E1E</color>
@@ -38,6 +40,7 @@
     <color name="disabled_text">#9A9A9A</color>
     <color name="main_text">#1E1E1E</color>
     <color name="secondary_icon">#8A8A8A</color>
+    <color name="text_error">#B71C1C</color>
 
     <!-- Items -->
     <color name="item_pressed">#F3FFF9</color>

@@ -30,7 +30,6 @@ import com.jgm.mybudgetapp.objects.MonthTotal;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
-import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -49,28 +48,28 @@ public class HomeFragment extends Fragment {
 
     // UI
     private FragmentHomeBinding binding;
-    private ConstraintLayout cardIncome, cardExpenses, cardSavings,
-            cardCash, cardChecking, cardIncomeCategories,
-            cardExpensesCategories, cardYear;
-    private ImageView incomeChart, expensesChart, yearChart;
-    private RecyclerView incomeCategoryListView, expensesCategoryListView;
+    private ConstraintLayout mCardIncome, mCardExpenses, mCardSavings,
+            mCardCash, mCardChecking, mCardIncomeCategories,
+            mCardExpensesCategories, mCardYear, mCardPending;
+    private ImageView mIncomeChart, mExpensesChart, mYearChart;
+    private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
     private TextView mBalanceText, mIncomeText, mExpensesText,
-                     mCash, mChecking, mSavings, mYearBalance;
+                     mCash, mChecking, mSavings, mYearBalance, mPendingMsg;
 
     private void bindViews() {
-        cardIncome = binding.homeCardIncome;
-        cardExpenses = binding.homeCardExpenses;
-        cardSavings = binding.homeCardSavings;
-        cardCash = binding.homeCardCash;
-        cardChecking = binding.homeCardChecking;
-        cardIncomeCategories = binding.homeCardIncomeCategories;
-        cardExpensesCategories = binding.homeCardExpensesCategories;
-        cardYear = binding.homeCardYear;
-        incomeChart = binding.homeCategoriesIn;
-        expensesChart = binding.homeCategoriesOut;
-        yearChart = binding.homeYearChart;
-        incomeCategoryListView = binding.homeIncomeCategoriesList;
-        expensesCategoryListView = binding.homeExpensesCategoriesList;
+        mCardIncome = binding.homeCardIncome;
+        mCardExpenses = binding.homeCardExpenses;
+        mCardSavings = binding.homeCardSavings;
+        mCardCash = binding.homeCardCash;
+        mCardChecking = binding.homeCardChecking;
+        mCardIncomeCategories = binding.homeCardIncomeCategories;
+        mCardExpensesCategories = binding.homeCardExpensesCategories;
+        mCardYear = binding.homeCardYear;
+        mIncomeChart = binding.homeCategoriesIn;
+        mExpensesChart = binding.homeCategoriesOut;
+        mYearChart = binding.homeYearChart;
+        mIncomeCategoryListView = binding.homeIncomeCategoriesList;
+        mExpensesCategoryListView = binding.homeExpensesCategoriesList;
         mBalanceText = binding.homeMonthBalance;
         mIncomeText = binding.homeIncome;
         mExpensesText = binding.homeExpenses;
@@ -78,6 +77,8 @@ public class HomeFragment extends Fragment {
         mChecking = binding.homeChecking;
         mSavings = binding.homeSavings;
         mYearBalance = binding.homeYearBalance;
+        mPendingMsg = binding.homePendingText;
+        mCardPending = binding.homePending;
     }
 
     // Interfaces
@@ -109,6 +110,7 @@ public class HomeFragment extends Fragment {
 
         if (savedInstanceState == null) {
             Log.d(LOG_LIFECYCLE, "saved instance is null => init home data");
+            mCardPending.setVisibility(View.GONE);
             MyDate today = MyDateUtils.getCurrentDate(mContext);
             getHomeData(today.getMonth(), today.getYear());
         }
@@ -120,14 +122,15 @@ public class HomeFragment extends Fragment {
      =============================================================================== */
 
     private void initNavigation() {
-        cardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
-        cardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
-        cardSavings.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        cardCash.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        cardChecking.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        cardExpensesCategories.setOnClickListener(v -> mInterface.openExpensesCategories());
-        cardIncomeCategories.setOnClickListener(v -> mInterface.openIncomeCategories());
-        cardYear.setOnClickListener(v -> mInterface.open(Tags.yearTag));
+        mCardPending.setOnClickListener(v -> mInterface.open(Tags.pendingTag));
+        mCardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
+        mCardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
+        mCardSavings.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
+        mCardCash.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
+        mCardChecking.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
+        mCardExpensesCategories.setOnClickListener(v -> mInterface.openExpensesCategories());
+        mCardIncomeCategories.setOnClickListener(v -> mInterface.openIncomeCategories());
+        mCardYear.setOnClickListener(v -> mInterface.open(Tags.yearTag));
     }
 
     /* ===============================================================================
@@ -156,12 +159,28 @@ public class HomeFragment extends Fragment {
                 setIncomeCategories(incomeCategories);
                 setExpensesCategories(expensesCategories);
                 setYearChart(yearBalance, year);
-
-                Log.d(Tags.LOG_DB, "Pending => " + pendingCount);
-
+                setBacklogMessage(pendingCount);
             });
 
         });
+    }
+
+    private void setBacklogMessage(int count) {
+        Log.d(Tags.LOG_DB, "Pending => " + count);
+
+        if (count == 0) mCardPending.setVisibility(View.GONE);
+        else {
+            mCardPending.setVisibility(View.VISIBLE);
+            String msg = getString(R.string.msg_backlogs_part1) + " " + count + " ";
+            if (count == 1) {
+                String msg1 = msg + getString(R.string.msg_backlogs_part2);
+                mPendingMsg.setText(msg1);
+            }
+            else {
+                String msg2 = msg + getString(R.string.msg_backlogs_part2_plural);
+                mPendingMsg.setText(msg2);
+            }
+        }
     }
 
     private void setBalanceData(Balance balance) {
@@ -187,9 +206,9 @@ public class HomeFragment extends Fragment {
         initCategoriesIncomeList(categories);
         ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
 
-        incomeChart.post(() -> {
-            incomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, incomeChart, 100, 10);
+        mIncomeChart.post(() -> {
+            mIncomeChart.setImageTintList(null);
+            Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 10);
         });
 
     }
@@ -199,16 +218,16 @@ public class HomeFragment extends Fragment {
         initCategoriesExpensesList(categories);
         ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
 
-        expensesChart.post(() -> {
-            expensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, expensesChart, 100, 10);
+        mExpensesChart.post(() -> {
+            mExpensesChart.setImageTintList(null);
+            Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 10);
         });
 
     }
 
     private void setYearChart(List<MonthResponse> response, int year) {
 
-        yearChart.post(() -> {
+        mYearChart.post(() -> {
             ArrayList<MonthTotal> yearList = new ArrayList<>();
             float[] expenses = {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
             float[] income =   {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
@@ -261,8 +280,8 @@ public class HomeFragment extends Fragment {
                 month++;
             }
 
-            yearChart.setImageTintList(null);
-            Charts.setYearTotalChart(mContext, yearChart, yearList, highestBar, 300, 100);
+            mYearChart.setImageTintList(null);
+            Charts.setYearTotalChart(mContext, mYearChart, yearList, highestBar, 300, 100);
         });
 
     }
@@ -302,10 +321,10 @@ public class HomeFragment extends Fragment {
         else cat = categories;
 
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        incomeCategoryListView.setLayoutManager(listLayoutManager);
-        incomeCategoryListView.setHasFixedSize(true);
+        mIncomeCategoryListView.setLayoutManager(listLayoutManager);
+        mIncomeCategoryListView.setHasFixedSize(true);
         HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
-        incomeCategoryListView.setAdapter(adapter);
+        mIncomeCategoryListView.setAdapter(adapter);
     }
 
     private void initCategoriesExpensesList(List<HomeCategory> categories) {
@@ -316,10 +335,10 @@ public class HomeFragment extends Fragment {
         else cat = categories;
 
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        expensesCategoryListView.setLayoutManager(listLayoutManager);
-        expensesCategoryListView.setHasFixedSize(true);
+        mExpensesCategoryListView.setLayoutManager(listLayoutManager);
+        mExpensesCategoryListView.setHasFixedSize(true);
         HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
-        expensesCategoryListView.setAdapter(adapter);
+        mExpensesCategoryListView.setAdapter(adapter);
     }
 
 

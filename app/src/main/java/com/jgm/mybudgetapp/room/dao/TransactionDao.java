@@ -37,7 +37,7 @@ public interface TransactionDao {
             "WHERE transactions.year = :year " +
             "AND transactions.month = :month " +
             "AND transactions.type = :type " +
-            "ORDER BY transactions.day;")
+            "ORDER BY transactions.day")
     List<TransactionResponse> getTransactions(int type, int month, int year);
 
     // Account fragment
@@ -46,6 +46,15 @@ public interface TransactionDao {
             "AND year = :year " +
             "AND month = :month ")
     List<Transaction> getAccountTransactions(int accountId, int year, int month);
+
+    // Pending fragment
+    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
+            "FROM transactions " +
+            "JOIN categories ON transactions.categoryId = categories.id " +
+            "WHERE paid = 0 " +
+            "AND NOT (day > :day AND month >= :month AND year >= :year) " +
+            "ORDER BY year, month, day")
+    List<TransactionResponse> getPendingList(int day, int month, int year);
 
     // Home fragment
 

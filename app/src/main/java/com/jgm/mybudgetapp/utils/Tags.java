@@ -35,5 +35,6 @@ public class Tags {
     public static final String transactionsOutTag = "TRANSACTIONS_OUT";
     public static final String transactionsInTag = "TRANSACTIONS_IN";
     public static final String yearTag = "YEAR";
+    public static final String pendingTag = "PENDING";
     
 }
