@@ -528,7 +528,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void setSelectedCategory(Category category) {
-        mTransactionForm.setSelectedCategory(category);
+        if (mTransactionForm != null) mTransactionForm.setSelectedCategory(category);
         onBackPressed();
     }
 
@@ -728,7 +728,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void addFragment(Fragment fragment, String tag) {
 
-        Log.d(Tags.LOG_NAV, "Fragment to be added: " + currentFragment);
+        Log.d(Tags.LOG_NAV, "Fragment to be added: " + tag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.main_content_frame, fragment, tag);
         transaction.commit();
@@ -767,6 +767,37 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         // Set current fragment tag
         currentFragment = tag;
         Log.d(Tags.LOG_NAV, "Fragment added: " + tag);
+    }
+
+    private void showHiddenFragment(String tag, String prevTag) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        switch (prevTag) {
+            case categoriesListTag:
+                if (tag.equals(transactionFormTag)) transaction.show(mTransactionForm);
+                if (tag.equals(settingsTag)) transaction.show(mSettings);
+                break;
+            case categoriesFormTag:
+                transaction.show(mCategoriesList);
+                break;
+            case cardFormTag:
+                if (tag.equals(cardsTag)) transaction.show(mCreditCards);
+                if (tag.equals(cardDetailsTag)) transaction.show(mCreditCardDetails);
+                break;
+            case cardDetailsTag:
+                transaction.show(mCreditCards);
+                break;
+            case accountFormTag:
+                if (tag.equals(accountsTag)) transaction.show(mAccounts);
+                if (tag.equals(accountDetailsTag)) transaction.show(mAccountDetails);
+                break;
+            case accountDetailsTag:
+                transaction.show(mAccounts);
+                break;
+        }
+
+        transaction.commit();
+        currentFragment = tag;
     }
 
     private void destroyFragment(Fragment fragment, String tag) {
@@ -842,6 +873,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 default:
                     setFragment(newTopFragmentTag);
                     break;
+            }
+
+            // show hidden newTopFragment
+            if (topFragmentTag.equals(accountDetailsTag)
+                    || topFragmentTag.equals(accountFormTag)
+                    || topFragmentTag.equals(cardDetailsTag)
+                    || topFragmentTag.equals(cardFormTag)
+                    || topFragmentTag.equals(categoriesFormTag)
+                    || topFragmentTag.equals(categoriesListTag)) {
+
+                showHiddenFragment(newTopFragmentTag, topFragmentTag);
+
             }
 
             // Update toolbar and bottom nav
