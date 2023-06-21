@@ -30,7 +30,7 @@ public interface TransactionDao {
     int deleteById(int id);
 
     @Query("UPDATE transactions SET paid = :isPaid WHERE id = :id")
-    int updatePaid(int id, boolean isPaid);
+    void updatePaid(int id, boolean isPaid);
 
     // Transactions fragment
 
@@ -65,6 +65,9 @@ public interface TransactionDao {
             "WHERE paid = 0 " +
             "AND NOT (day > :day AND month >= :month AND year >= :year)")
     int getPendingCount(int day, int month, int year);
+
+    @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year and month < :month")
+    float getAccumulated(int month, int year);
 
     @Query("SELECT SUM (amount) AS balance, " +
             "SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +

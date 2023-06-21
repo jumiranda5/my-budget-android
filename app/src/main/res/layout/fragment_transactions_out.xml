@@ -15,7 +15,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/t_out_title"
+                android:id="@+id/out_title"
                 style="@style/MainTitle"
                 android:layout_margin="16dp"
                 android:text="Expenses"
@@ -24,7 +24,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/t_out_total"
+                android:id="@+id/out_total"
                 style="@style/NumberImpact"
                 android:text="$0,00"
                 android:layout_marginStart="16dp"
@@ -32,15 +32,75 @@
                 android:textColor="@color/expense"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/t_out_title" />
+                app:layout_constraintTop_toBottomOf="@+id/out_title" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/out_total"
+                android:id="@+id/out_accumulated_container">
+
+                <ImageView
+                    android:id="@+id/out_accumulated_icon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_app_autorenew" />
+
+                <TextView
+                    android:id="@+id/out_accumulated_name"
+                    style="@style/MainTextEllipse"
+                    android:text="Previous month"
+                    android:textSize="@dimen/secondary_text"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/out_accumulated_toggle"
+                    app:layout_constraintStart_toEndOf="@+id/out_accumulated_total"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/out_accumulated_total"
+                    style="@style/NumberRegular"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="@string/test_currency_value"
+                    android:textColor="@color/income"
+                    android:textSize="@dimen/secondary_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/out_accumulated_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ToggleButton
+                    android:id="@+id/out_accumulated_toggle"
+                    style="@style/IconButton"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/button_toggle_paid"
+                    android:checked="false"
+                    android:contentDescription="@null"
+                    android:textOff="@string/label_not_paid"
+                    android:textOn="@string/label_paid"
+                    android:textSize="0sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/t_out_list"
+                android:id="@+id/out_list"
                 style="@style/MainList"
                 android:layout_marginTop="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/t_out_total"
+                app:layout_constraintTop_toBottomOf="@+id/out_accumulated_container"
                 tools:listitem="@layout/item_transaction_day"
                 tools:itemCount="2"/>
 

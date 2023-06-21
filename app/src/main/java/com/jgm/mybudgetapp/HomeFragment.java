@@ -147,6 +147,7 @@ public class HomeFragment extends Fragment {
             MyDate today = MyDateUtils.getCurrentDate(mContext);
             int pendingCount = transactionDao.getPendingCount(today.getDay(), today.getMonth(), today.getYear());
 
+            float prevTotal = transactionDao.getAccumulated(month, year);
             Balance balance = transactionDao.getHomeBalance(month, year);
             HomeAccounts homeAccounts = transactionDao.getAccountsTotals();
             List<HomeCategory> incomeCategories = transactionDao.getHomeCategories(month, year, 1);
@@ -154,7 +155,7 @@ public class HomeFragment extends Fragment {
             List<MonthResponse> yearBalance = transactionDao.getYearBalance(year);
 
             handler.post(() -> {
-                setBalanceData(balance);
+                setBalanceData(balance, prevTotal);
                 setAccountsData(homeAccounts);
                 setIncomeCategories(incomeCategories);
                 setExpensesCategories(expensesCategories);
@@ -183,10 +184,18 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setBalanceData(Balance balance) {
-        String formattedBalance = NumberUtils.getCurrencyFormat(mContext, balance.getBalance())[2];
-        String formattedIncome = NumberUtils.getCurrencyFormat(mContext, balance.getIncome())[2];
-        String formattedExpenses = NumberUtils.getCurrencyFormat(mContext, balance.getExpenses())[2];
+    private void setBalanceData(Balance balance, float prevTotal) {
+
+        float monthBalance = balance.getBalance() + prevTotal;
+        float monthExpenses = balance.getExpenses();
+        float monthIncome = balance.getIncome();
+
+        if (prevTotal < 0.0f) monthExpenses = monthExpenses + prevTotal;
+        else monthIncome = monthIncome + prevTotal;
+
+        String formattedBalance = NumberUtils.getCurrencyFormat(mContext, monthBalance)[2];
+        String formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome)[2];
+        String formattedExpenses = NumberUtils.getCurrencyFormat(mContext, monthExpenses)[2];
         mBalanceText.setText(formattedBalance);
         mExpensesText.setText(formattedExpenses);
         mIncomeText.setText(formattedIncome);
