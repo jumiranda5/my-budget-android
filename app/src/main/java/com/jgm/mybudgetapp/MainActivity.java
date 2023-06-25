@@ -21,12 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private MyDate selectedDate;
     private MyDate today;
     private TransactionResponse selectedTransaction;
+    private boolean keep = true;
 
     // UI
     private ActivityMainBinding binding;
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             switchDarkMode(isDark);
         }
 
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
 
         Log.d(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         setBinding();
 
         if (savedInstanceState == null) {
-            setFragment(homeTag);
+            handleSplashScreenDelay(splashScreen);
             selectedDate = MyDateUtils.getCurrentDate(this);
             Populate.initDefaultAccounts(this);
             Populate.initDefaultCategories(this);
@@ -150,6 +154,22 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         initBottomBar();
         initToolbar();
 
+    }
+
+    private void handleSplashScreenDelay(SplashScreen splashScreen) {
+
+        Log.d("debug-SplashScreen", "Init splash screen timer");
+
+        splashScreen.setKeepOnScreenCondition(() -> keep);
+
+        int DELAY = 2000;
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+
+            setFragment(homeTag);
+            keep = false;
+
+        }, DELAY);
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {

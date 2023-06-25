@@ -39,6 +39,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    // splash screen
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
     // for date.time
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
