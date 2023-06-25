@@ -6,6 +6,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.jgm.mybudgetapp.objects.Balance;
+import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.HomeAccounts;
 import com.jgm.mybudgetapp.objects.HomeCategory;
 import com.jgm.mybudgetapp.objects.MonthResponse;
@@ -32,25 +33,39 @@ public interface TransactionDao {
     @Query("UPDATE transactions SET paid = :isPaid WHERE id = :id")
     void updatePaid(int id, boolean isPaid);
 
-    // Transactions fragment
-
+    /* ------------------------------------------------------------------------------
+                                  TRANSACTIONS FRAGMENT
+    ------------------------------------------------------------------------------- */
     @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE transactions.year = :year " +
             "AND transactions.month = :month " +
             "AND transactions.type = :type " +
-            "ORDER BY transactions.day")
+            "ORDER BY transactions.day, transactions.cardId ")
     List<TransactionResponse> getTransactions(int type, int month, int year);
 
-    // Account fragment
+    @Query("SELECT SUM(transactions.amount) AS total, cards.* " +
+            "FROM transactions " +
+            "JOIN cards ON transactions.cardId = cards.id " +
+            "WHERE transactions.cardId = :cardId " +
+            "AND transactions.day = :billingDay " +
+            "AND transactions.month = :month " +
+            "AND transactions.year = :year ")
+    Card getCreditCardWithTotal(int cardId, int billingDay, int month, int year);
+
+    /* ------------------------------------------------------------------------------
+                                     ACCOUNT FRAGMENT
+    ------------------------------------------------------------------------------- */
     @Query("SELECT * FROM transactions " +
             "WHERE accountId = :accountId " +
             "AND year = :year " +
             "AND month = :month ")
     List<Transaction> getAccountTransactions(int accountId, int year, int month);
 
-    // Pending fragment
+    /* ------------------------------------------------------------------------------
+                                     PENDING FRAGMENT
+    ------------------------------------------------------------------------------- */
     @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
@@ -59,7 +74,10 @@ public interface TransactionDao {
             "ORDER BY year, month, day")
     List<TransactionResponse> getPendingList(int day, int month, int year);
 
-    // Home fragment
+
+    /* ------------------------------------------------------------------------------
+                                     HOME FRAGMENT
+    ------------------------------------------------------------------------------- */
 
     @Query("SELECT COUNT(paid) FROM transactions " +
             "WHERE paid = 0 " +

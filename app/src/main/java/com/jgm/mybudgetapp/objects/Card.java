@@ -6,15 +6,15 @@ public class Card {
     private String name;
     private int colorId;
     private int billingDay;
-    private boolean isActive;
+    private boolean active;
     private float total;
 
-    public Card(int id, String name, int colorId, int billingDay, boolean isActive) {
+    public Card(int id, String name, int colorId, int billingDay, boolean active) {
         this.id = id;
         this.name = name;
         this.colorId = colorId;
         this.billingDay = billingDay;
-        this.isActive = isActive;
+        this.active = active;
     }
 
     public int getId() {
@@ -34,7 +34,7 @@ public class Card {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public float getTotal() {
@@ -58,7 +58,7 @@ public class Card {
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
     public void setTotal(float total) {

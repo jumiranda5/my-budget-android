@@ -21,12 +21,12 @@ import android.widget.ToggleButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionsOutBinding;
+import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
-import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
@@ -41,7 +41,6 @@ public class TransactionsOutFragment extends Fragment {
 
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
     private List<TransactionResponse> expenses;
-
     private float accumulated = 0.0f;
 
     // UI
@@ -93,6 +92,20 @@ public class TransactionsOutFragment extends Fragment {
 
     }
 
+    /* ------------------------------------------------------------------------------
+                                         LIST
+    ------------------------------------------------------------------------------- */
+    private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(listLayoutManager);
+        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups);
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    /* ------------------------------------------------------------------------------
+                                        INTERFACE
+     ------------------------------------------------------------------------------- */
+
     public void updateOnTransactionDeleted(int id) {
         TransactionResponse transaction = expenses.stream()
                 .filter(t -> id == t.getId())
@@ -122,14 +135,22 @@ public class TransactionsOutFragment extends Fragment {
 
     }
 
+    /* ------------------------------------------------------------------------------
+                                         SET DATA
+    ------------------------------------------------------------------------------- */
+
     private void setExpensesData(int month, int year) {
 
         float total = 0f;
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
+        boolean hasCreditCard = false;
 
         for (int i = 0; i < expenses.size(); i++) {
             TransactionResponse transaction = expenses.get(i);
             int day = transaction.getDay();
+
+            // check if payment method credit card is present
+            if (transaction.getCardId() != null || transaction.getCardId() > 0) hasCreditCard = true;
 
             // set total
             total = total + expenses.get(i).getAmount();
@@ -164,8 +185,12 @@ public class TransactionsOutFragment extends Fragment {
         String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
         mTotal.setText(totalCurrency);
 
-        // init list view
+        // init list
         initRecyclerView(dayGroups);
+
+        // handle credit card items and re-init list view
+        if (hasCreditCard) setCreditCardItems(dayGroups);
+
     }
 
     private void setAccumulated(float total) {
@@ -194,11 +219,80 @@ public class TransactionsOutFragment extends Fragment {
         return new DayGroup(day, month, year, list);
     }
 
-    private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
-        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(listLayoutManager);
-        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups);
-        mRecyclerView.setAdapter(adapter);
+    /* ------------------------------------------------------------------------------
+                                    SET CREDIT CARD ITEMS
+    ------------------------------------------------------------------------------- */
+
+    private void setCreditCardItems(ArrayList<DayGroup> dayGroups) {
+
+        // loop through days lists to add credit card item
+        for (int i = 0; i < dayGroups.size(); i++) {
+            List<TransactionResponse> list = dayGroups.get(i).getTransactions();
+            int day = dayGroups.get(i).getDay();
+            int month = dayGroups.get(i).getMonth();
+            int year = dayGroups.get(i).getYear();
+
+            // Get card id(s)
+            ArrayList<Integer> cardIds = new ArrayList<>();
+            ArrayList<Boolean> isPaid = new ArrayList<>();
+            int listPosition = 0;
+            boolean hasFirstItemPos = false;
+            for (int y = 0; y < list.size(); y++) {
+                int cardId = list.get(y).getCardId();
+                if (cardId != 0 && !cardIds.contains(cardId)) {
+                    cardIds.add(cardId);
+                    isPaid.add(list.get(y).isPaid());
+                    if (!hasFirstItemPos) {
+                        listPosition = y;
+                        hasFirstItemPos = true;
+                    }
+                }
+            }
+
+            // Get card data and update day list
+            if (cardIds.size() == 1) addSingleCard(dayGroups, i, listPosition,
+                    cardIds.get(0), day, month, year, isPaid.get(0));
+            else {
+                // probably rare usage... but terrible implementation... find a better solution...
+                for (int x = 0; x < cardIds.size(); x++) {
+                    addSingleCard(dayGroups, i, listPosition, cardIds.get(x), day, month, year, isPaid.get(x));
+                }
+            }
+
+        }
+
     }
+
+    private void addSingleCard(ArrayList<DayGroup> dayGroups, int dayPos, int listPos,
+                               int id, int day, int month, int year, boolean isPaid) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
+            Card card = transactionDao.getCreditCardWithTotal(id, day, month, year);
+            handler.post(() -> {
+                TransactionResponse transaction = new TransactionResponse(
+                        -1,
+                        Tags.TYPE_OUT,
+                        card.getName(),
+                        card.getTotal(),
+                        year, month, day,
+                        0, 0,
+                        card.getId(),
+                        isPaid,
+                        1, null, null,
+                        null,
+                        card.getColorId(),
+                        Tags.cardIconId);
+
+                dayGroups.get(dayPos).getTransactions().add(listPos, transaction);
+
+                // init list
+                initRecyclerView(dayGroups);
+            });
+
+        });
+    }
+
 
 }

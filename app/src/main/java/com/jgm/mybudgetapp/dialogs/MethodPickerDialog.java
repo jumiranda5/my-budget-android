@@ -106,12 +106,12 @@ public class MethodPickerDialog extends DialogFragment {
                     }
                 }
 
+                MethodPickerAdapter adapter = new MethodPickerAdapter(mContext, paymentMethods, MethodPickerDialog.this);
+                recyclerView.setAdapter(adapter);
+
                 Log.d(Tags.LOG_DB, "Methods list size: " + paymentMethods.size());
             });
         });
-
-        MethodPickerAdapter adapter = new MethodPickerAdapter(mContext, paymentMethods, MethodPickerDialog.this);
-        recyclerView.setAdapter(adapter);
 
         return builder.create();
     }
