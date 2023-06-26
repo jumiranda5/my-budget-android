@@ -9,11 +9,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:fontFamily">@font/red_hat_text</item>
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
         <item name="android:textSize">@dimen/main_text</item>
     </style>
 
     <style name="SecondaryText" parent="MainText">
+        <item name="android:fontFamily">@font/nunito_sans_light</item>
         <item name="android:textColor">@color/medium_emphasis_text</item>
         <item name="android:textSize">@dimen/secondary_text</item>
     </style>
@@ -58,12 +59,12 @@
 
     <style name="ToolbarMonth" parent="MainTextEllipse">
         <item name="android:textSize">@dimen/toolbar_month_text</item>
-        <item name="android:fontFamily">@font/red_hat_display_semi_bold</item>
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
     </style>
 
     <style name="ToolbarNotCurrentMonth" parent="MainTextEllipse">
         <item name="android:textSize">@dimen/main_text</item>
-        <item name="android:fontFamily">@font/red_hat_display_medium</item>
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
         <item name="android:textColor">@color/medium_emphasis_text</item>
     </style>
 
@@ -84,18 +85,18 @@
 
     <style name="NumberImpact" parent="MainText">
         <item name="android:layout_width">0dp</item>
-        <item name="android:fontFamily">@font/overpass_semi_bold</item>
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
         <item name="android:textSize">@dimen/number_impact</item>
     </style>
 
     <style name="NumberRegular" parent="MainText">
         <item name="android:layout_width">0dp</item>
-        <item name="android:fontFamily">@font/overpass_regular</item>
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
         <item name="android:textAlignment">textEnd</item>
     </style>
 
     <style name="NumberMedium" parent="NumberRegular">
-        <item name="android:fontFamily">@font/overpass_medium</item>
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
     </style>
 
     <style name="NumberCurrency" parent="NumberMedium">

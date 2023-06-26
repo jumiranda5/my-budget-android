@@ -44,7 +44,7 @@
                     style="@style/MainTextEllipse"
                     android:text="You have 0 backlogs"
                     android:textColor="@color/text_error"
-                    android:fontFamily="@font/red_hat_text_medium"
+                    android:fontFamily="@font/nunito_sans_semi_bold"
                     android:layout_marginStart="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -73,6 +73,7 @@
                 <TextView
                     android:id="@+id/home_month_balance"
                     style="@style/NumberImpact"
+                    android:layout_marginTop="1dp"
                     android:text="@string/test_month_balance"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/home_month_label"
@@ -83,10 +84,10 @@
                     style="@style/HomeExpensesProgress"
                     android:layout_marginTop="@dimen/home_progress_margin_top"
                     android:layout_marginBottom="@dimen/home_progress_margin_bottom"
-                    android:layout_marginStart="@dimen/home_progress_margin_start"
+                    android:layout_marginEnd="@dimen/home_progress_margin_start"
                     android:contentDescription="@string/desc_balance_progress"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/home_month_balance" />
 
                 <TextView
@@ -97,22 +98,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/home_month_progress"
                     app:layout_constraintStart_toStartOf="@+id/home_month_progress"
                     app:layout_constraintTop_toTopOf="@+id/home_month_progress" />
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_cumulated"
-                    style="@style/MySwitchButton"
-                    android:checked="true"
-                    android:text="@string/label_accrued"
-                    app:layout_constraintBottom_toTopOf="@+id/switch_expected"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/switch_expected"
-                    style="@style/MySwitchButton"
-                    android:text="@string/label_expected"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -330,6 +315,17 @@
                     tools:listitem="@layout/item_home_category"
                     tools:itemCount="3"/>
 
+                <TextView
+                    android:id="@+id/home_income_categories_label"
+                    style="@style/SecondaryText"
+                    android:layout_width="0dp"
+                    android:text="Income by category"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/home_income_categories_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/home_income_categories_list" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Expenses Categories -->
@@ -360,6 +356,17 @@
                     tools:listitem="@layout/item_home_category"
                     tools:itemCount="3"/>
 
+                <TextView
+                    android:id="@+id/home_expenses_categories_label"
+                    style="@style/SecondaryText"
+                    android:layout_width="0dp"
+                    android:text="Expenses by category"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/home_expenses_categories_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/home_expenses_categories_list" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- Year -->
@@ -376,7 +383,7 @@
                 <TextView
                     android:id="@+id/home_year_text"
                     style="@style/MainText"
-                    android:fontFamily="@font/red_hat_text_semi_bold"
+                    android:fontFamily="@font/nunito_sans_medium"
                     android:text="@string/test_year"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

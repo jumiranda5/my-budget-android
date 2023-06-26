@@ -73,10 +73,13 @@ public class Populate {
             list.add(c7);
 
             CategoryDao categoryDao = AppDatabase.getDatabase(context).CategoryDao();
+            AppDatabase.dbExecutor.execute(() -> {
 
-            for (int i = 0; i < list.size(); i++) {
-                categoryDao.insert(list.get(i));
-            }
+                for (int i = 0; i < list.size(); i++) {
+                    categoryDao.insert(list.get(i));
+                }
+
+            });
 
             SettingsPrefs.setSettingsPrefsBoolean(context, "hasInitialCategories", true);
         }

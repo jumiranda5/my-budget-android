@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.jgm.mybudgetapp.adapters.HomeCategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentHomeBinding;
 import com.jgm.mybudgetapp.objects.Balance;
@@ -54,7 +55,9 @@ public class HomeFragment extends Fragment {
     private ImageView mIncomeChart, mExpensesChart, mYearChart;
     private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
     private TextView mBalanceText, mIncomeText, mExpensesText,
-                     mCash, mChecking, mSavings, mYearBalance, mPendingMsg;
+                     mCash, mChecking, mSavings, mYearBalance, mPendingMsg,
+                     mCategoriesIncomeLabel, mCategoriesExpensesLabel, mProgressText;
+    private CircularProgressIndicator mBalanceProgress;
 
     private void bindViews() {
         mCardIncome = binding.homeCardIncome;
@@ -79,6 +82,10 @@ public class HomeFragment extends Fragment {
         mYearBalance = binding.homeYearBalance;
         mPendingMsg = binding.homePendingText;
         mCardPending = binding.homePending;
+        mCategoriesExpensesLabel = binding.homeExpensesCategoriesLabel;
+        mCategoriesIncomeLabel = binding.homeIncomeCategoriesLabel;
+        mBalanceProgress = binding.homeMonthProgress;
+        mProgressText = binding.homeMonthProgressText;
     }
 
     // Interfaces
@@ -199,6 +206,19 @@ public class HomeFragment extends Fragment {
         mBalanceText.setText(formattedBalance);
         mExpensesText.setText(formattedExpenses);
         mIncomeText.setText(formattedIncome);
+
+        // Progress
+        float percentage = (Math.abs(monthExpenses)/Math.abs(monthIncome)) * 100;
+        if (percentage < 0) percentage = 0;
+        int progress = (int) percentage;
+        String progressText = progress + "%";
+        mProgressText.setText(progressText);
+        mBalanceProgress.setProgress(progress);
+
+        Log.d("debug-home", "======> " + Math.abs(monthExpenses) + "/" + Math.abs(monthIncome));
+        Log.d("debug-home", "======> " + percentage);
+        Log.d("debug-home", "======> " + progress);
+
     }
 
     private void setAccountsData(HomeAccounts homeAccounts) {
@@ -216,8 +236,11 @@ public class HomeFragment extends Fragment {
         ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
 
         mIncomeChart.post(() -> {
-            mIncomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 10);
+            if (percents.size() > 0) {
+                mCategoriesIncomeLabel.setVisibility(View.GONE);
+                mIncomeChart.setImageTintList(null);
+                Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 10);
+            }
         });
 
     }
@@ -228,8 +251,11 @@ public class HomeFragment extends Fragment {
         ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
 
         mExpensesChart.post(() -> {
-            mExpensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 10);
+            if (percents.size() > 0) {
+                mCategoriesExpensesLabel.setVisibility(View.GONE);
+                mExpensesChart.setImageTintList(null);
+                Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 10);
+            }
         });
 
     }

@@ -58,7 +58,7 @@
         <item name="android:paddingStart">@dimen/card_padding</item>
         <item name="android:paddingTop">@dimen/card_padding</item>
         <item name="android:paddingEnd">@dimen/card_padding</item>
-        <item name="android:paddingBottom">@dimen/card_padding</item>
+        <item name="android:paddingBottom">@dimen/card_padding_bottom</item>
     </style>
 
     <style name="CardContainerClickable" parent="CardContainer">
@@ -82,7 +82,7 @@
 
     <style name="CategoriesListSmall" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/category_small_list_height</item>
         <item name="android:layout_marginTop">@dimen/home_categories_list_margin</item>
         <item name="android:isScrollContainer">false</item>
         <item name="android:nestedScrollingEnabled">false</item>
