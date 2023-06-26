@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My Budget App</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
     <!-- Default categories -->
     <string name="category_home">Home</string>
@@ -26,27 +26,27 @@
     <string name="nav_back">Back</string>
 
     <!-- Actions (buttons) -->
-    <string name="action_add_transaction">Add transaction</string>
-    <string name="action_archive">Archive</string>
-    <string name="action_edit">Edit</string>
-    <string name="action_add_credit_card">Add Credit Card</string>
-    <string name="action_add_account">Add Account</string>
-    <string name="action_add_category">Add Category</string>
-    <string name="action_save">Save</string>
-    <string name="action_close">Close</string>
-    <string name="action_out">Out</string>
-    <string name="action_in">In</string>
-    <string name="action_transfer">Transfer</string>
-    <string name="action_increase">Increase</string>
-    <string name="action_decrease">Decrease</string>
-    <string name="action_dark_mode">Dark mode</string>
-    <string name="action_menage_categories">Menage Categories</string>
-    <string name="action_become_a_premium_user">Become a Premium User</string>
-    <string name="action_support">Support</string>
-    <string name="action_privacy_policy">Privacy Policy</string>
-    <string name="action_biometric_lock">Biometric Lock</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="action_confirm">Confirm</string>
+    <string name="action_add_transaction" translatable="false">Add transaction</string>
+    <string name="action_archive" translatable="false">Archive</string>
+    <string name="action_edit" translatable="false">Edit</string>
+    <string name="action_add_credit_card" translatable="false">Add Credit Card</string>
+    <string name="action_add_account" translatable="false">Add Account</string>
+    <string name="action_add_category" translatable="false">Add Category</string>
+    <string name="action_save" translatable="false">Save</string>
+    <string name="action_close" translatable="false">Close</string>
+    <string name="action_out" translatable="false">Out</string>
+    <string name="action_in" translatable="false">In</string>
+    <string name="action_transfer" translatable="false">Transfer</string>
+    <string name="action_increase" translatable="false">Increase</string>
+    <string name="action_decrease" translatable="false">Decrease</string>
+    <string name="action_dark_mode" translatable="false">Dark mode</string>
+    <string name="action_menage_categories" translatable="false">Menage Categories</string>
+    <string name="action_become_a_premium_user" translatable="false">Become a Premium User</string>
+    <string name="action_support" translatable="false">Support</string>
+    <string name="action_privacy_policy" translatable="false">Privacy Policy</string>
+    <string name="action_biometric_lock" translatable="false">Biometric Lock</string>
+    <string name="action_cancel" translatable="false">Cancel</string>
+    <string name="action_confirm" translatable="false">Confirm</string>
 
     <!-- Descriptions -->
     <string name="desc_categories_tabs">Categories tabs</string>
@@ -61,70 +61,73 @@
     <string name="desc_categories_chart">Categories chart</string>
 
     <!-- Hints -->
-    <string name="hint_account_nickname">Account Nickname</string>
-    <string name="hint_card_nickname">Card Nickname</string>
-    <string name="hint_amount">Value (Decimal: 0.0)</string>
-    <string name="hint_description">Description</string>
-    <string name="hint_today">Today</string>
-    <string name="hint_category_name">Category Name</string>
+    <string name="hint_account_nickname" translatable="false">Account Nickname</string>
+    <string name="hint_card_nickname" translatable="false">Card Nickname</string>
+    <string name="hint_amount" translatable="false">Value (Decimal: 0.0)</string>
+    <string name="hint_description" translatable="false">Description</string>
+    <string name="hint_today" translatable="false">Today</string>
+    <string name="hint_category_name" translatable="false">Category Name</string>
 
     <!-- Labels -->
-    <string name="label_month_balance">Month Balance</string>
-    <string name="label_accrued">Accrued</string>
-    <string name="label_expected">Expected</string>
+    <string name="label_month_balance">Balance</string>
+    <string name="label_accrued" translatable="false">Accrued</string>
+    <string name="label_expected" translatable="false">Expected</string>
     <string name="label_savings">Savings</string>
     <string name="label_cash">Cash</string>
     <string name="label_checking_account">Checking Account</string>
     <string name="label_income">Income</string>
     <string name="label_expenses">Expenses</string>
-    <string name="label_color">Color</string>
-    <string name="label_billing_day">Billing day:</string>
-    <string name="label_category">Category</string>
-    <string name="label_billing_month">Billing Month:</string>
-    <string name="label_paid">Paid</string>
-    <string name="label_fixed">Fixed</string>
-    <string name="label_repeat">Repeat</string>
-    <string name="label_icon">Icon</string>
-    <string name="label_today">Today</string>
-    <string name="label_transfer_from">Transfer from</string>
-    <string name="label_transfer_to">Transfer to</string>
+    <string name="label_expenses_by_category">Expenses by category</string>
+    <string name="label_income_by_category">Income by category</string>
+    <string name="label_color" translatable="false">Color</string>
+    <string name="label_billing_day" translatable="false">Billing day:</string>
+    <string name="label_category" translatable="false">Category</string>
+    <string name="label_billing_month" translatable="false">Billing Month:</string>
+    <string name="label_paid" translatable="false">Paid</string>
+    <string name="label_fixed" translatable="false">Fixed</string>
+    <string name="label_repeat" translatable="false">Repeat</string>
+    <string name="label_icon" translatable="false">Icon</string>
+    <string name="label_today" translatable="false">Today</string>
+    <string name="label_transfer_from" translatable="false">Transfer from</string>
+    <string name="label_transfer_to" translatable="false">Transfer to</string>
 
     <!-- Title -->
-    <string name="title_add_credit_card">Add Credit Card</string>
-    <string name="title_add_account">Add Account</string>
-    <string name="title_edit_credit_card">Edit Credit Card</string>
-    <string name="title_edit_account">Edit Account</string>
-    <string name="title_credit_card">Credit Card</string>
-    <string name="title_categories_list">Categories</string>
-    <string name="title_add_category">Add Category</string>
-    <string name="title_edit_category">Edit Category</string>
+    <string name="title_add_credit_card" translatable="false">Add Credit Card</string>
+    <string name="title_add_account" translatable="false">Add Account</string>
+    <string name="title_edit_credit_card" translatable="false">Edit Credit Card</string>
+    <string name="title_edit_account" translatable="false">Edit Account</string>
+    <string name="title_credit_card" translatable="false">Credit Card</string>
+    <string name="title_categories_list" translatable="false">Categories</string>
+    <string name="title_add_category" translatable="false">Add Category</string>
+    <string name="title_edit_category" translatable="false">Edit Category</string>
 
     <!-- Initial values -->
-    <string name="test_month_balance">$5,000.00</string>
-    <string name="test_balance_progress_percent">70%</string>
-    <string name="test_income_value">$8,000.00</string>
-    <string name="test_expenses_value">$3,000.00</string>
-    <string name="test_year">2023</string>
-    <string name="test_category_value">Category</string>
-    <string name="test_month">Dezembro</string>
-    <string name="test_currency_value">3,000.00</string>
-    <string name="test_currency_symbol">$</string>
-    <string name="test_billing_day_1">Billing day: 1</string>
-    <string name="test_account_name">Account</string>
-    <string name="test_1">1</string>
-    <string name="test_formatted_price">$0.00</string>
-    <string name="test_january">January</string>
-    <string name="test_february">February</string>
+    <string name="test_month_balance" translatable="false">$0.00</string>
+    <string name="test_balance_progress_percent" translatable="false">0%</string>
+    <string name="test_income_value" translatable="false">$8,000.00</string>
+    <string name="test_expenses_value" translatable="false">$3,000.00</string>
+    <string name="test_year" translatable="false">2023</string>
+    <string name="test_category_value" translatable="false">Category</string>
+    <string name="test_month" translatable="false">Dezembro</string>
+    <string name="test_currency_value" translatable="false">3,000.00</string>
+    <string name="test_currency_symbol" translatable="false">$</string>
+    <string name="test_billing_day_1" translatable="false">Billing day: 1</string>
+    <string name="test_account_name" translatable="false">Account</string>
+    <string name="test_1" translatable="false">1</string>
+    <string name="test_formatted_price" translatable="false">$0.00</string>
+    <string name="test_january" translatable="false">January</string>
+    <string name="test_february" translatable="false">February</string>
 
     <!-- Messages -->
-    <string name="msg_archive_default">Would you like to permanently archive this item?</string>
-    <string name="msg_archive_category">Would you like to permanently archive this category?</string>
-    <string name="msg_archive_credit_card">Would you like to permanently archive this credit card?</string>
-    <string name="msg_archive_account">Would you like to permanently archive this account?</string>
+    <string name="msg_archive_default" translatable="false">Would you like to permanently archive this item?</string>
+    <string name="msg_archive_category" translatable="false">Would you like to permanently archive this category?</string>
+    <string name="msg_archive_credit_card" translatable="false">Would you like to permanently archive this credit card?</string>
+    <string name="msg_archive_account" translatable="false">Would you like to permanently archive this account?</string>
     <string name="msg_backlogs_part1">You have</string>
     <string name="msg_backlogs_part2">pending payment.</string>
     <string name="msg_backlogs_part2_plural">pending payments.</string>
-    <string name="title_pending">Pending</string>
-    <string name="label_not_paid">Not paid</string>
+    <string name="title_pending" translatable="false">Pending</string>
+    <string name="label_not_paid" translatable="false">Not paid</string>
+    <string name="msg_you_have_0_backlogs">You have 0 backlogs</string>
 
 </resources>
