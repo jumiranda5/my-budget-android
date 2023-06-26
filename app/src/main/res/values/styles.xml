@@ -41,7 +41,7 @@
     <style name="ProgressPercentageImpact" parent="SecondaryText">
         <item name="android:fontFamily">@font/nunito_sans_regular</item>
         <item name="android:textSize">@dimen/progress_text_size</item>
-        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingTop">2dp</item>
     </style>
 
 

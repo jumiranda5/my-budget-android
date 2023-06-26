@@ -210,6 +210,7 @@ public class HomeFragment extends Fragment {
         // Progress
         float percentage = (Math.abs(monthExpenses)/Math.abs(monthIncome)) * 100;
         if (percentage < 0) percentage = 0;
+        if (percentage > 999) percentage = 100; // todo... ?
         int progress = (int) percentage;
         String progressText = progress + "%";
         mProgressText.setText(progressText);
