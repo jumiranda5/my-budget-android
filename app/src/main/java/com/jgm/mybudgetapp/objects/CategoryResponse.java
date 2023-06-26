@@ -1,15 +1,17 @@
 package com.jgm.mybudgetapp.objects;
 
-public class HomeCategory {
+public class CategoryResponse {
 
     private float total;
     private String category;
     private int colorId;
+    private int iconId;
 
-    public HomeCategory(float total, String category, int colorId) {
+    public CategoryResponse(float total, String category, int colorId, int iconId) {
         this.category = category;
         this.total = total;
         this.colorId = colorId;
+        this.iconId = iconId;
     }
 
     public float getTotal() {
@@ -22,5 +24,9 @@ public class HomeCategory {
 
     public String getCategory() {
         return category;
+    }
+
+    public int getIconId() {
+        return iconId;
     }
 }

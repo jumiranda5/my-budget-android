@@ -24,13 +24,14 @@ import com.jgm.mybudgetapp.adapters.HomeCategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentHomeBinding;
 import com.jgm.mybudgetapp.objects.Balance;
 import com.jgm.mybudgetapp.objects.CategoryPercent;
+import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.HomeAccounts;
-import com.jgm.mybudgetapp.objects.HomeCategory;
 import com.jgm.mybudgetapp.objects.MonthResponse;
 import com.jgm.mybudgetapp.objects.MonthTotal;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.utils.CategoryUtils;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -157,8 +158,8 @@ public class HomeFragment extends Fragment {
             float prevTotal = transactionDao.getAccumulated(month, year);
             Balance balance = transactionDao.getHomeBalance(month, year);
             HomeAccounts homeAccounts = transactionDao.getAccountsTotals();
-            List<HomeCategory> incomeCategories = transactionDao.getHomeCategories(month, year, 1);
-            List<HomeCategory> expensesCategories = transactionDao.getHomeCategories(month, year, -1);
+            List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
+            List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
             List<MonthResponse> yearBalance = transactionDao.getYearBalance(year);
 
             handler.post(() -> {
@@ -231,10 +232,10 @@ public class HomeFragment extends Fragment {
         mSavings.setText(formattedSavings);
     }
 
-    private void setIncomeCategories(List<HomeCategory> categories) {
+    private void setIncomeCategories(List<CategoryResponse> categories) {
 
         initCategoriesIncomeList(categories);
-        ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
+        ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
         mIncomeChart.post(() -> {
             if (percents.size() > 0) {
@@ -246,10 +247,10 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setExpensesCategories(List<HomeCategory> categories) {
+    private void setExpensesCategories(List<CategoryResponse> categories) {
 
         initCategoriesExpensesList(categories);
-        ArrayList<CategoryPercent> percents = getCategoriesPercents(categories);
+        ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
         mExpensesChart.post(() -> {
             if (percents.size() > 0) {
@@ -326,32 +327,9 @@ public class HomeFragment extends Fragment {
                                     CATEGORIES CONTAINERS
      =============================================================================== */
 
-    private ArrayList<CategoryPercent> getCategoriesPercents(List<HomeCategory> categories) {
-        float total = 0.0f;
-        ArrayList<CategoryPercent> percents = new ArrayList<>();
+    private void initCategoriesIncomeList(List<CategoryResponse> categories) {
 
-        // Get total from list
-        for(int i =0; i < categories.size(); i++){
-            total = total + categories.get(i).getTotal();
-        }
-
-        // Set percentage for each category
-        for(int i =0; i < categories.size(); i++){
-            float percent =
-                    NumberUtils.roundFloat((categories.get(i).getTotal() * 100) / total);
-            HomeCategory category = categories.get(i);
-            CategoryPercent categoryPercent =
-                    new CategoryPercent(0,category.getCategory(), category.getColorId(), 0);
-            categoryPercent.setPercent(percent);
-            percents.add(categoryPercent);
-        }
-
-        return percents;
-    }
-
-    private void initCategoriesIncomeList(List<HomeCategory> categories) {
-
-        List<HomeCategory> cat;
+        List<CategoryResponse> cat;
 
         if (categories.size() > 3) cat = categories.subList(0, 3);
         else cat = categories;
@@ -363,9 +341,9 @@ public class HomeFragment extends Fragment {
         mIncomeCategoryListView.setAdapter(adapter);
     }
 
-    private void initCategoriesExpensesList(List<HomeCategory> categories) {
+    private void initCategoriesExpensesList(List<CategoryResponse> categories) {
 
-        List<HomeCategory> cat;
+        List<CategoryResponse> cat;
 
         if (categories.size() > 3) cat = categories.subList(0, 3);
         else cat = categories;

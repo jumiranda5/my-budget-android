@@ -32,7 +32,7 @@
 
     <style name="MyTabText" parent="AppTheme">
         <item name="android:textSize">@dimen/secondary_text</item>
-        <item name="android:fontFamily">@font/red_hat_display_semi_bold</item>
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
     </style>
 
     <!-- ==========================================================

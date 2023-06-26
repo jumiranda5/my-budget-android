@@ -6,24 +6,16 @@
     android:layout_height="@dimen/item_simple_height"
     android:focusable="true"
     android:clickable="true"
+    android:background="@drawable/bg_list_item"
     android:id="@+id/category_item">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_start"
-        style="@style/GuidelineStart"
-        android:orientation="vertical" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_end"
-        style="@style/GuidelineEnd"
-        android:orientation="vertical" />
 
     <ImageView
         android:id="@+id/category_icon"
         style="@style/Icon"
         android:contentDescription="@null"
+        android:layout_marginStart="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_app_home" />
 
@@ -43,9 +35,10 @@
         style="@style/NumberMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00,00%"
+        android:layout_marginEnd="16dp"
+        android:text="@string/test_0_percent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_item_end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

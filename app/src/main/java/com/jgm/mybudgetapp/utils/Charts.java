@@ -51,7 +51,7 @@ public class Charts {
             float start = 90;
 
             // Loop through list to set the pie slices
-            for(int i =0; i < categories.size(); i++) {
+            for(int i = 0; i < categories.size(); i++) {
 
                 CategoryPercent category = categories.get(i);
                 int color = ColorUtils.getColor(category.getColorId()).getColor();

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.HomeCategory;
+import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 
 import java.util.List;
@@ -20,10 +20,10 @@ import java.util.List;
 public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapter.ListViewHolder> {
 
     private final Context mContext;
-    private final List<HomeCategory> mDataList;
+    private final List<CategoryResponse> mDataList;
     private final LayoutInflater layoutInflater;
 
-    public HomeCategoryAdapter(Context context, List<HomeCategory> mDataList) {
+    public HomeCategoryAdapter(Context context, List<CategoryResponse> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         layoutInflater = LayoutInflater.from(context);
@@ -39,7 +39,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
-        HomeCategory category = mDataList.get(position);
+        CategoryResponse category = mDataList.get(position);
         int color = ColorUtils.getColor(category.getColorId()).getColor();
 
         // Set color

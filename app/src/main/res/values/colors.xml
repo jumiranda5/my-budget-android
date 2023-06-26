@@ -28,6 +28,7 @@
     <color name="bg_16dp">@color/bg_01dp</color>
     <color name="bg_24dp">@color/bg_01dp</color>
     <color name="bg_error">#FFCDD2</color>
+    <color name="light_grey">#DADADA</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>

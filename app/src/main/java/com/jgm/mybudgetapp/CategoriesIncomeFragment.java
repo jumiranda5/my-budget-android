@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,18 +17,19 @@ import android.widget.TextView;
 import com.jgm.mybudgetapp.adapters.CategoryPercentAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesPagerBinding;
 import com.jgm.mybudgetapp.objects.CategoryPercent;
+import com.jgm.mybudgetapp.objects.CategoryResponse;
+import com.jgm.mybudgetapp.utils.CategoryUtils;
+import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoriesIncomeFragment extends Fragment {
 
     public CategoriesIncomeFragment() {
         // Required empty public constructor
     }
-    // List
-    private final ArrayList<CategoryPercent> categories = new ArrayList<>();
-    private final float total = 3408.75f;
 
     // UI
     private FragmentCategoriesPagerBinding binding;
@@ -62,50 +62,44 @@ public class CategoriesIncomeFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    /* ===============================================================================
+                                          DATA
+     =============================================================================== */
 
-        String currencySymbol = NumberUtils.getCurrencyFormat(mContext, total)[0];
-        String totalFormatted = NumberUtils.getCurrencyFormat(mContext, total)[1];
-        String totalCurrency = currencySymbol + totalFormatted;
-        mTotal.setText(totalCurrency);
-        setDummyList();
-        initCategoriesList();
-        // todo Charts.setCategoriesChart(mContext, categories, mChartImage, 220, 16);
+    public void setIncomeCategoriesData(List<CategoryResponse> categories) {
 
-    }
+        mChartImage.post(() -> {
 
-    private void setDummyList() {
-//        CategoryPercent c1 = new CategoryPercent(0, "Home", R.color.savings, 0, true);
-//        CategoryPercent c2 = new CategoryPercent(0, "Restaurant", R.color.colorAccent, 0, true);
-//        CategoryPercent c3 = new CategoryPercent(0, "Groceries", R.color.expense, 0, true);
-//        CategoryPercent c4 = new CategoryPercent(0, "Clothes", R.color.colorSecondary, 0, true);
-//        CategoryPercent c5 = new CategoryPercent(0, "Car", R.color.main_text, 0, true);
-//
-//        c1.setTotal(2034.80f);
-//        c2.setTotal(323.95f);
-//        c3.setTotal(200f);
-//        c4.setTotal(350f);
-//        c5.setTotal(500f);
-//
-//        categories.add(c1);
-//        categories.add(c2);
-//        categories.add(c3);
-//        categories.add(c4);
-//        categories.add(c5);
-//
-//        for(int i =0; i < categories.size(); i++){
-//            float percent = NumberUtils.roundFloat((categories.get(i).getTotal() * 100) / total);
-//            categories.get(i).setPercent(percent);
-//        }
+            ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
+            initCategoriesList(percents);
+
+            float total = 0f;
+            for(int i =0; i < categories.size(); i++){
+                total = NumberUtils.roundFloat(total + categories.get(i).getTotal());
+            }
+
+            String totalFormatted = NumberUtils.getCurrencyFormat(mContext, total)[2];
+            mTotal.setText(totalFormatted);
+
+            if (total > 0) {
+                Charts.setCategoriesChart(mContext, percents, mChartImage, 220, 16);
+            }
+            else {
+                ArrayList<CategoryPercent> empty = new ArrayList<>();
+                CategoryPercent categoryPercent = new CategoryPercent(0, "empty", 22, 0);
+                categoryPercent.setTotal(1.0f);
+                categoryPercent.setPercent(100);
+                empty.add(categoryPercent);
+                Charts.setCategoriesChart(mContext, empty, mChartImage, 220, 16);
+            }
+        });
     }
 
     /* ===============================================================================
                                           LIST
      =============================================================================== */
 
-    private void initCategoriesList() {
+    private void initCategoriesList(ArrayList<CategoryPercent> categories) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -113,4 +107,5 @@ public class CategoriesIncomeFragment extends Fragment {
         CategoryPercentAdapter adapter = new CategoryPercentAdapter(mContext, categories);
         mRecyclerView.setAdapter(adapter);
     }
+
 }

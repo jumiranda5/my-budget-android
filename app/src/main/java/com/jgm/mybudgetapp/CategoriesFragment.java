@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,10 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.jgm.mybudgetapp.adapters.TextTabsAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesBinding;
+import com.jgm.mybudgetapp.objects.CategoryResponse;
+import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.TransactionDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +56,13 @@ public class CategoriesFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
+    private MainInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+        mInterface = (MainInterface) context;
     }
 
     @Override
@@ -71,10 +79,34 @@ public class CategoriesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        prepareTabs();
-        setTabs();
-        setInitialTab(OUT);
+        if (savedInstanceState == null) {
+            prepareTabs();
+            setTabs();
+            setInitialTab(OUT);
+            MyDate date = mInterface.getDate();
+            getCategoriesData(date.getMonth(), date.getYear());
+        }
 
+    }
+
+    /* -------------------------------------------------------------------------------------------
+                                                DATA
+    --------------------------------------------------------------------------------------------- */
+
+    public void getCategoriesData(int month, int year) {
+        TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
+            List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
+
+            handler.post(() -> {
+                expensesFragment.setExpensesCategoriesData(expensesCategories);
+                incomeFragment.setIncomeCategoriesData(incomeCategories);
+            });
+
+        });
     }
 
     /* -------------------------------------------------------------------------------------------
@@ -83,8 +115,8 @@ public class CategoriesFragment extends Fragment {
 
     private void prepareTabs() {
         tabsAdapter = new TextTabsAdapter(getChildFragmentManager(), tabFragments, tabTitles);
-        addTab(incomeFragment, "Income");
-        addTab(expensesFragment, "Expenses");
+        addTab(incomeFragment, getString(R.string.label_income));
+        addTab(expensesFragment, getString(R.string.label_expenses));
     }
 
     private void addTab(Fragment fragment, String title) {

@@ -7,8 +7,8 @@ import androidx.room.Update;
 
 import com.jgm.mybudgetapp.objects.Balance;
 import com.jgm.mybudgetapp.objects.Card;
+import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.HomeAccounts;
-import com.jgm.mybudgetapp.objects.HomeCategory;
 import com.jgm.mybudgetapp.objects.MonthResponse;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Transaction;
@@ -102,13 +102,13 @@ public interface TransactionDao {
             "WHERE transactions.paid = 1")
     HomeAccounts getAccountsTotals();
 
-    @Query("SELECT SUM(transactions.amount) AS total, categories.name AS category, categories.colorId " +
+    @Query("SELECT SUM(transactions.amount) AS total, categories.name AS category, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE transactions.year = :year AND transactions.month = :month AND transactions.type = :type " +
             "GROUP BY categories.id " +
             "ORDER BY total")
-    List<HomeCategory> getHomeCategories(int month, int year, int type);
+    List<CategoryResponse> getCategoriesWithTotals(int month, int year, int type);
 
     @Query("SELECT month, " +
             "    SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +

@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.CategoryPercent;
+import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.IconUtils;
 
 import java.util.List;
 
@@ -39,10 +43,13 @@ public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercent
     public void onBindViewHolder(@NonNull GridViewHolder holder, int position) {
 
         CategoryPercent category = mDataList.get(position);
+        Color color = ColorUtils.getColor(category.getColorId());
+        Icon icon = IconUtils.getIcon(category.getIconId());
 
         // Set Icon and color
-        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, category.getColorId()));
-        holder.mPercent.setTextColor(ContextCompat.getColorStateList(mContext, category.getColorId()));
+        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+        holder.mPercent.setTextColor(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         // Set category name
         String percent = category.getPercent() + "%";
