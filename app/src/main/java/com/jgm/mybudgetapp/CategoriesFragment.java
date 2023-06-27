@@ -22,14 +22,12 @@ import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesFragment extends Fragment {
-
-    private static final String OUT = "OUT";
-    private static final String IN = "IN";
 
     public CategoriesFragment() {
         // Required empty public constructor
@@ -43,6 +41,7 @@ public class CategoriesFragment extends Fragment {
     private final List<Fragment> tabFragments = new ArrayList<>();
     private final List<String> tabTitles = new ArrayList<>();
     private TextTabsAdapter tabsAdapter;
+    private int type = Tags.TYPE_OUT;
 
     // UI
     private FragmentCategoriesBinding binding;
@@ -82,11 +81,15 @@ public class CategoriesFragment extends Fragment {
         if (savedInstanceState == null) {
             prepareTabs();
             setTabs();
-            setInitialTab(OUT);
+            setInitialTab(type);
             MyDate date = mInterface.getDate();
             getCategoriesData(date.getMonth(), date.getYear());
         }
 
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     /* -------------------------------------------------------------------------------------------
@@ -130,9 +133,10 @@ public class CategoriesFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void setInitialTab(String param) {
-        Log.d("debug-categories", "PARAM => " + param);
-        if (param.equals("OUT")) viewPager.setCurrentItem(1);
+    private void setInitialTab(int tab) {
+        Log.d("debug-categories", "TYPE => " + tab);
+        if (tab == Tags.TYPE_OUT) viewPager.setCurrentItem(1);
         else viewPager.setCurrentItem(0);
     }
+
 }

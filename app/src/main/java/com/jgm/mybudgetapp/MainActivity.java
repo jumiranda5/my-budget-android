@@ -69,10 +69,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private static final String STATE_MONTH = "month";
     private static final String STATE_YEAR = "year";
 
-    // Params
-    private static final String PARAM_OUT = "OUT";
-    private static final String PARAM_IN = "IN";
-
     // FRAGMENTS
     private AccountsFragment mAccounts;
     private AccountFormFragment mAccountForm;
@@ -254,6 +250,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsOut != null)
             mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mCategories != null)
+            mCategories.getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
     }
 
     private void setToolbarVisibilities(String tag) {
@@ -350,14 +348,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openExpensesCategories() {
-        if (mCategories != null) mCategories.setInitialTab(PARAM_OUT);
         openFragment(categoriesTag);
+        if (mCategories != null) mCategories.setType(Tags.TYPE_OUT);
     }
 
     @Override
     public void openIncomeCategories() {
-        if (mCategories != null) mCategories.setInitialTab(PARAM_IN);
         openFragment(categoriesTag);
+        if (mCategories != null) mCategories.setType(Tags.TYPE_IN);
     }
 
     @Override

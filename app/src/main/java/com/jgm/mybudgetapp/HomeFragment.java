@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.jgm.mybudgetapp.adapters.HomeCategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentHomeBinding;
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
 
     // UI
     private FragmentHomeBinding binding;
-    private ConstraintLayout mCardIncome, mCardExpenses, mCardSavings,
+    private MaterialCardView mCardIncome, mCardExpenses, mCardSavings,
             mCardCash, mCardChecking, mCardIncomeCategories,
             mCardExpensesCategories, mCardYear, mCardPending;
     private ImageView mIncomeChart, mExpensesChart, mYearChart;

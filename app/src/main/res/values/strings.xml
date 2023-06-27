@@ -70,6 +70,7 @@
 
     <!-- Labels -->
     <string name="label_month_balance">Balance</string>
+    <string name="label_accumulated">Accumulated</string>
     <string name="label_accrued" translatable="false">Accrued</string>
     <string name="label_expected" translatable="false">Expected</string>
     <string name="label_savings">Savings</string>
@@ -130,5 +131,8 @@
     <string name="title_pending" translatable="false">Pending</string>
     <string name="label_not_paid" translatable="false">Not paid</string>
     <string name="msg_you_have_0_backlogs">You have 0 backlogs</string>
+
+    <string name="initial_value" translatable="false">$0.00</string>
+    <string name="initial_percent" translatable="false">0%</string>
 
 </resources>

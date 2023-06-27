@@ -80,7 +80,7 @@ public class CategoriesExpensesFragment extends Fragment {
             String totalFormatted = NumberUtils.getCurrencyFormat(mContext, total)[2];
             mTotal.setText(totalFormatted);
 
-            if (total > 0) {
+            if (Math.abs(total) > 0) {
                 Charts.setCategoriesChart(mContext, percents, mChartImage, 220, 16);
             }
             else {

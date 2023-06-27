@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN  ================== -->
+
+    <!-- Normal text - Landscape -->
+    <dimen name="text_normal_home_land">18sp</dimen>
+    <dimen name="text_secondary_home_land">16sp</dimen>
+
+    <!-- Numbers -->
+    <dimen name="number_impact_home_land">34sp</dimen>
+
+    <!-- App Margins -->
+    <dimen name="app_inner_space">18dp</dimen>
+
+    <!-- Containers -->
+    <dimen name="card_padding_home_land">18dp</dimen>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">16dp</dimen>
+    <dimen name="year_chart_margin_top">24dp</dimen>
+
+
+    <!-- ==================  FRAGMENTS  ================== -->
+
+    <!-- Home -->
+    <dimen name="home_padding">8dp</dimen>
+    <dimen name="home_account_height_land">132dp</dimen>
+    <dimen name="home_currency_margin">24dp</dimen>
+    <dimen name="home_progress_margin_start">4dp</dimen>
+    <dimen name="home_progress_margin_bottom">8dp</dimen>
+    <dimen name="home_pie_margin">12dp</dimen>
+    <dimen name="home_pie_margin_top">8dp</dimen>
+    <dimen name="home_categories_width_land">160dp</dimen>
+    <dimen name="progress_text_size">34sp</dimen>
+    <dimen name="progress_indicator">176dp</dimen>
+
+
+    <!-- ******** TO BE REFACTORED ******** -->
+
     <!-- Guideline -->
     <item name="guideline_start" format="float" type="dimen">0.06</item>
     <item name="guideline_end" format="float" type="dimen">0.94</item>
 
     <!-- Landscape -->
-    <dimen name="main_text_home_land">18sp</dimen>
-    <dimen name="secondary_text_home_land">16sp</dimen>
     <dimen name="icon_medium_home_land">32dp</dimen>
-    <dimen name="card_padding_home_land">18dp</dimen>
 
     <!-- Buttons -->
     <dimen name="toolbar_button">50dp</dimen>
@@ -35,21 +69,6 @@
 
     <!-- Lists -->
     <dimen name="side_list_padding">16dp</dimen>
-
-    <!-- Bar chart -->
-    <dimen name="year_chart_margin">16dp</dimen>
-    <dimen name="year_chart_margin_top">24dp</dimen>
-
-    <!-- Home -->
-    <dimen name="home_padding">8dp</dimen>
-    <dimen name="home_inner_margin">18dp</dimen>
-    <dimen name="home_account_height_land">132dp</dimen>
-    <dimen name="home_currency_margin">24dp</dimen>
-    <dimen name="home_progress_margin_start">4dp</dimen>
-    <dimen name="home_progress_margin_bottom">8dp</dimen>
-    <dimen name="home_pie_margin">12dp</dimen>
-    <dimen name="home_pie_margin_top">8dp</dimen>
-    <dimen name="home_categories_width_land">160dp</dimen>
 
     <!-- Credit Cards and Accounts (Main page) -->
     <dimen name="main_title_large">36sp</dimen>

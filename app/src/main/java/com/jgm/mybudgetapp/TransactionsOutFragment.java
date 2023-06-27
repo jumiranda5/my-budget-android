@@ -45,17 +45,17 @@ public class TransactionsOutFragment extends Fragment {
 
     // UI
     private FragmentTransactionsOutBinding binding;
-    private FloatingActionButton mFab;
+    //private FloatingActionButton mFab;
     private TextView mTotal, mAccumulated;
     private RecyclerView mRecyclerView;
-    private ToggleButton mToggleAccumulated;
+//    private ToggleButton mToggleAccumulated;
 
     private void setBinding() {
-        mFab = binding.transactionOutAdd;
+        //mFab = binding.transactionOutAdd;
         mTotal = binding.outTotal;
         mRecyclerView = binding.outList;
         mAccumulated = binding.outAccumulatedTotal;
-        mToggleAccumulated = binding.outAccumulatedToggle;
+//        mToggleAccumulated = binding.outAccumulatedToggle;
     }
 
     // Interfaces
@@ -85,7 +85,7 @@ public class TransactionsOutFragment extends Fragment {
 
         if (savedInstanceState == null) {
             Log.d(LOG_LIFECYCLE, "saved instance is null => init transactions data");
-            mToggleAccumulated.setChecked(true);
+//            mToggleAccumulated.setChecked(true);
             MyDate date = mInterface.getDate();
             getExpensesData(date.getMonth(), date.getYear());
         }
@@ -196,19 +196,20 @@ public class TransactionsOutFragment extends Fragment {
     private void setAccumulated(float total) {
 
         float totalWithPrev = total + accumulated;
-        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
+//        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
         String prevTotalCurrency = NumberUtils.getCurrencyFormat(mContext, accumulated)[2];
         String totalWithPrevCurrency = NumberUtils.getCurrencyFormat(mContext, totalWithPrev)[2];
 
         mAccumulated.setText(prevTotalCurrency);
+        mTotal.setText(totalWithPrevCurrency);
 
-        if (mToggleAccumulated.isChecked()) mTotal.setText(totalWithPrevCurrency);
-        else mTotal.setText(totalCurrency);
+//        if (mToggleAccumulated.isChecked()) mTotal.setText(totalWithPrevCurrency);
+//        else mTotal.setText(totalCurrency);
 
-        mToggleAccumulated.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) mTotal.setText(totalWithPrevCurrency);
-            else mTotal.setText(totalCurrency);
-        });
+//        mToggleAccumulated.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) mTotal.setText(totalWithPrevCurrency);
+//            else mTotal.setText(totalCurrency);
+//        });
 
     }
 

@@ -28,23 +28,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:indeterminate">false</item>
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:progress">70</item>
+        <item name="android:progress">0</item>
         <item name="android:rotation">180</item>
         <item name="indicatorColor">@color/expense</item>
         <item name="indicatorInset">0dp</item>
         <item name="indicatorSize">@dimen/progress_indicator</item>
-        <item name="trackColor">@color/colorSecondaryContainer</item>
+        <item name="trackColor">@color/bg_progress_track</item>
         <item name="trackCornerRadius">@dimen/progress_corners</item>
         <item name="trackThickness">@dimen/progress_track</item>
     </style>
-
-    <style name="ProgressPercentageImpact" parent="SecondaryText">
-        <item name="android:fontFamily">@font/nunito_sans_regular</item>
-        <item name="android:textSize">@dimen/progress_text_size</item>
-        <item name="android:paddingTop">2dp</item>
-    </style>
-
-
 
 
 

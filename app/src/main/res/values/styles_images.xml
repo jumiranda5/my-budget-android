@@ -2,7 +2,7 @@
 <resources>
 
     <!-- ==========================================================
-                              IMAGES
+                            IMAGES STYLES
     ============================================================ -->
 
     <style name="MyImage" parent="AppTheme">
@@ -10,6 +10,57 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="tint">@color/high_emphasis_text</item>
     </style>
+
+    <!-- Regular icons -->
+
+    <style name="IconNormal" parent="AppTheme">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <style name="IconSmall" parent="IconNormal">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+    </style>
+
+    <!-- Home Accounts Icons -->
+
+    <style name="HomeIcon" parent="IconNormal">
+        <item name="android:layout_width">@dimen/home_icon_size</item>
+        <item name="android:layout_height">@dimen/home_icon_size</item>
+        <item name="tint">@color/medium_emphasis_text</item>
+    </style>
+
+    <!-- Charts -->
+
+    <style name="ChartImage" parent="MyImage">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="tint">@color/light_grey</item>
+    </style>
+
+    <style name="PieChartSmall" parent="ChartImage">
+        <item name="layout_constraintWidth_max">@dimen/home_pie_max</item>
+        <item name="android:layout_marginTop">@dimen/home_pie_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/home_pie_margin</item>
+        <item name="android:layout_marginEnd">@dimen/home_pie_margin</item>
+        <item name="layout_constraintDimensionRatio">w,1:1</item>
+        <item name="srcCompat">@drawable/ic_app_donut_large</item>
+    </style>
+
+    <style name="BarChart" parent="ChartImage">
+        <item name="android:layout_marginTop">@dimen/year_chart_margin_top</item>
+        <item name="android:layout_marginStart">@dimen/year_chart_margin</item>
+        <item name="android:layout_marginEnd">@dimen/year_chart_margin</item>
+        <item name="android:src">@drawable/ic_bar_chart</item>
+        <item name="layout_constraintDimensionRatio">w,3:1</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <!-- ==========================================================
+                              IMAGES
+    ============================================================ -->
 
     <style name="Icon" parent="AppTheme">
         <item name="android:layout_width">24dp</item>
@@ -42,30 +93,6 @@
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:padding">12dp</item>
-    </style>
-
-    <style name="ChartImage" parent="MyImage">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="tint">@color/colorSecondaryContainer</item>
-    </style>
-
-    <style name="PieChartSmall" parent="ChartImage">
-        <item name="layout_constraintWidth_max">@dimen/home_pie_max</item>
-        <item name="android:layout_marginTop">@dimen/home_pie_margin_top</item>
-        <item name="android:layout_marginStart">@dimen/home_pie_margin</item>
-        <item name="android:layout_marginEnd">@dimen/home_pie_margin</item>
-        <item name="layout_constraintDimensionRatio">w,1:1</item>
-        <item name="srcCompat">@drawable/ic_app_donut_large</item>
-    </style>
-
-    <style name="BarChart" parent="ChartImage">
-        <item name="android:layout_marginTop">@dimen/year_chart_margin_top</item>
-        <item name="android:layout_marginStart">@dimen/year_chart_margin</item>
-        <item name="android:layout_marginEnd">@dimen/year_chart_margin</item>
-        <item name="android:src">@drawable/ic_bar_chart</item>
-        <item name="layout_constraintDimensionRatio">w,3:1</item>
-        <item name="android:scaleType">fitXY</item>
     </style>
 
     <style name="FormDivisor" parent="AppTheme">

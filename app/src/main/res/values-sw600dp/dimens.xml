@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN  ================== -->
+
+    <!-- Normal text -->
+    <dimen name="text_normal">18sp</dimen>
+    <dimen name="text_secondary">16sp</dimen>
+
+    <!-- Numbers -->
+    <dimen name="number_impact">34sp</dimen>
+    <dimen name="number_impact_home">38sp</dimen>
+
+    <!-- App Margins -->
+    <dimen name="app_inner_space">18dp</dimen>
+
+    <!-- Containers -->
+    <dimen name="card_padding">20dp</dimen>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">24dp</dimen>
+    <dimen name="year_chart_margin_top">48dp</dimen>
+
+
+    <!-- ==================  FRAGMENTS  ================== -->
+
+    <!-- Home -->
+    <dimen name="home_padding">16dp</dimen>
+    <dimen name="home_progress_margin">8dp</dimen>
+    <dimen name="progress_text_size">32sp</dimen>
+    <dimen name="progress_indicator">168dp</dimen>
+    <dimen name="home_currency_margin">24dp</dimen>
+    <dimen name="home_icon_size">28dp</dimen>
+    <dimen name="home_pie_margin">16dp</dimen>
+    <dimen name="home_pie_margin_top">8dp</dimen>
+    <dimen name="home_pie_max">120dp</dimen>
+    <dimen name="home_categories_list_margin">24dp</dimen>
+    <dimen name="home_category_list_height">84dp</dimen>
+    <dimen name="home_category_item_height">28dp</dimen>
+
+
+    <!-- ******** TO BE REFACTORED ******** -->
+
     <!-- Guidelines -->
     <item name="guideline_start" format="float" type="dimen">0.1</item>
     <item name="guideline_end" format="float" type="dimen">0.9</item>
@@ -11,7 +51,6 @@
     <dimen name="toolbar_title_size">20sp</dimen>
     <dimen name="main_text">18sp</dimen>
     <dimen name="secondary_text">16sp</dimen>
-    <dimen name="number_impact">34sp</dimen>
     <dimen name="form_title_size">26sp</dimen>
     <dimen name="toggle_pill_text_size">14sp</dimen>
     <!-- Text margins and widths -->
@@ -45,33 +84,6 @@
     <dimen name="bottomBar_width">460dp</dimen>
     <dimen name="bottomBar_icon_size">28dp</dimen>
     <dimen name="main_fab_size">50dp</dimen>
-
-    <!-- Cards -->
-    <dimen name="card_padding">20dp</dimen>
-
-    <!-- Progress -->
-    <dimen name="progress_text_size">32sp</dimen>
-    <dimen name="progress_indicator">140dp</dimen>
-    <dimen name="progress_track">10dp</dimen>
-    <dimen name="progress_corners">5dp</dimen>
-
-    <!-- Bar chart -->
-    <dimen name="year_chart_margin">24dp</dimen>
-    <dimen name="year_chart_margin_top">48dp</dimen>
-
-    <!-- Home -->
-    <dimen name="home_inner_margin">18dp</dimen>
-    <dimen name="home_padding">16dp</dimen>
-    <dimen name="home_progress_margin_start">8dp</dimen>
-    <dimen name="home_progress_margin_bottom">12dp</dimen>
-    <dimen name="home_currency_margin">24dp</dimen>
-    <dimen name="home_pie_max">120dp</dimen>
-    <dimen name="home_pie_margin_top">8dp</dimen>
-    <dimen name="home_categories_padding_bottom">20dp</dimen>
-    <dimen name="home_categories_list_margin">24dp</dimen>
-
-    <!-- Home categories list item -->
-    <dimen name="category_item_height_small">28dp</dimen>
 
     <!-- Cards and Accounts (Main page) -->
     <dimen name="main_title">20sp</dimen>

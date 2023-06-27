@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +9,12 @@
 
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
-        android:paddingBottom="100dp">
+        android:paddingBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -17,8 +22,10 @@
             <TextView
                 android:id="@+id/out_title"
                 style="@style/MainTitle"
-                android:layout_margin="16dp"
-                android:text="Expenses"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/label_expenses"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -26,9 +33,10 @@
             <TextView
                 android:id="@+id/out_total"
                 style="@style/NumberImpact"
-                android:text="$0,00"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="16dp"
+                android:text="@string/initial_value"
                 android:textColor="@color/expense"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,87 +44,89 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/out_accumulated_container"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/out_total"
-                android:id="@+id/out_accumulated_container">
+                app:layout_constraintTop_toBottomOf="@+id/out_total">
 
                 <ImageView
                     android:id="@+id/out_accumulated_icon"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:contentDescription="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_app_autorenew" />
-
-                <TextView
-                    android:id="@+id/out_accumulated_name"
-                    style="@style/MainTextEllipse"
-                    android:text="Previous month"
-                    android:textSize="@dimen/secondary_text"
-                    android:textAlignment="textEnd"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/out_accumulated_toggle"
-                    app:layout_constraintStart_toEndOf="@+id/out_accumulated_total"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:srcCompat="@drawable/ic_app_autorenew"
+                    app:tint="@color/medium_emphasis_text" />
 
                 <TextView
                     android:id="@+id/out_accumulated_total"
-                    style="@style/NumberRegular"
+                    style="@style/NumberMedium"
+                    android:layout_width="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="12dp"
-                    android:text="@string/test_currency_value"
-                    android:textColor="@color/income"
+                    android:text="@string/initial_value"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/medium_emphasis_text"
                     android:textSize="@dimen/secondary_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/out_accumulated_icon"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <ToggleButton
-                    android:id="@+id/out_accumulated_toggle"
-                    style="@style/IconButton"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/button_toggle_paid"
-                    android:checked="false"
-                    android:contentDescription="@null"
-                    android:textOff="@string/label_not_paid"
-                    android:textOn="@string/label_paid"
-                    android:textSize="0sp"
+                <TextView
+                    android:id="@+id/out_accumulated_name"
+                    style="@style/SecondaryTextEllipse"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/nunito_sans_medium"
+                    android:text="@string/label_accumulated"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/out_accumulated_total"
                     app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/out_list"
                 style="@style/MainList"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/out_accumulated_container"
-                tools:listitem="@layout/item_transaction_day"
-                tools:itemCount="2"/>
+                tools:itemCount="2"
+                tools:listitem="@layout/item_transaction_day" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/transaction_out_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/action_add_transaction"
-        android:layout_gravity="center|bottom"
-        android:src="@drawable/ic_app_add_400"
-        android:backgroundTint="@color/expense"
-        app:tint="@color/white"
-        android:layout_marginBottom="24dp"/>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/transaction_out_add"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="@string/action_add_transaction"-->
+<!--        android:layout_gravity="center|bottom"-->
+<!--        android:src="@drawable/ic_app_add_400"-->
+<!--        android:backgroundTint="@color/expense"-->
+<!--        app:tint="@color/white"-->
+<!--        android:layout_marginBottom="24dp"/>-->
 
-</FrameLayout>
+    <Button
+        android:id="@+id/save_button"
+        style="@style/ButtonSave"
+        android:layout_width="0dp"
+        android:text="Add"
+        android:background="@drawable/button_save_expense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

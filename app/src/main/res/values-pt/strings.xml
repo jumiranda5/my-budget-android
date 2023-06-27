@@ -44,7 +44,8 @@
     <string name="label_income">Receita</string>
     <string name="label_expenses">Despesas</string>
     <string name="label_expenses_by_category">Despesas por categoria</string>
-    <string name="label_income_by_category">Income by category</string>
+    <string name="label_income_by_category">Receita por categoria</string>
+    <string name="label_accumulated">Acumulado</string>
 
     <!-- Messages -->
     <string name="msg_backlogs_part1">Você tem</string>

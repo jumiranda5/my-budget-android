@@ -2,6 +2,91 @@
 <resources>
 
     <!-- ==========================================================
+                             TEXT STYLES
+    ============================================================ -->
+
+    <!-- Normal Text -->
+
+    <style name="TextNormal" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+
+    <style name="TextNormalMedium" parent="TextNormal">
+        <item name="android:fontFamily">@font/nunito_sans_medium</item>
+    </style>
+
+    <style name="TextNormalEllipse" parent="TextNormal">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TextPending" parent="TextNormalEllipse">
+        <item name="android:textColor">@color/text_error</item>
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
+    </style>
+
+    <style name="TextSecondary" parent="TextNormal">
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:textSize">@dimen/text_secondary</item>
+    </style>
+
+    <style name="TextSecondaryEllipse" parent="TextSecondary">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- Labels -->
+
+    <style name="Label" parent="MainText">
+        <item name="android:fontFamily">@font/nunito_sans_light</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:textSize">@dimen/text_secondary</item>
+    </style>
+
+    <style name="ProgressText" parent="SecondaryText">
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
+        <item name="android:textSize">@dimen/progress_text_size</item>
+        <item name="android:paddingTop">2dp</item>
+    </style>
+
+    <!-- Titles -->
+
+    <!-- Numbers -->
+
+    <style name="Number" parent="MainText">
+        <item name="android:text">@string/initial_value</item>
+    </style>
+
+    <style name="NumberImpact" parent="Number">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="android:textSize">@dimen/number_impact</item>
+    </style>
+
+    <style name="NumberMedium" parent="Number">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
+    </style>
+
+    <style name="NumberMediumEnd" parent="NumberMedium">
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+
+
+
+
+
+    <!-- ************************************************************************** -->
+
+
+
+    <!-- ==========================================================
                              PARAGRAPHS
     ============================================================ -->
 
@@ -53,7 +138,7 @@
     ============================================================ -->
 
     <style name="MainTitle" parent="MainTextEllipse">
-        <item name="android:fontFamily">@font/red_hat_display_medium</item>
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
         <item name="android:textSize">@dimen/main_title</item>
     </style>
 
@@ -83,21 +168,15 @@
                              NUMBERS
     ============================================================ -->
 
-    <style name="NumberImpact" parent="MainText">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:fontFamily">@font/nunito_sans_bold</item>
-        <item name="android:textSize">@dimen/number_impact</item>
-    </style>
-
     <style name="NumberRegular" parent="MainText">
         <item name="android:layout_width">0dp</item>
         <item name="android:fontFamily">@font/nunito_sans_regular</item>
         <item name="android:textAlignment">textEnd</item>
     </style>
 
-    <style name="NumberMedium" parent="NumberRegular">
-        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
-    </style>
+<!--    <style name="NumberMedium" parent="NumberRegular">-->
+<!--        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>-->
+<!--    </style>-->
 
     <style name="NumberCurrency" parent="NumberMedium">
         <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>

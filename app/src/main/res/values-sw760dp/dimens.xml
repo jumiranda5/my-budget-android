@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN  ================== -->
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">56dp</dimen>
+    <dimen name="year_chart_margin_top">64dp</dimen>
+
+    <!-- Containers -->
+    <dimen name="card_padding">24dp</dimen>
+
+    <!-- ==================  FRAGMENTS  ================== -->
+
+    <!-- Home -->
+    <dimen name="home_padding">24dp</dimen>
+    <dimen name="home_pie_max">160dp</dimen>
+    <dimen name="home_categories_width_land">160dp</dimen>
+    <dimen name="progress_text_size">34sp</dimen>
+    <dimen name="progress_indicator">200dp</dimen>
+
+
+    <!-- ******** TO BE REFACTORED ******** -->
+
     <!-- Guideline -->
     <item name="guideline_start" format="float" type="dimen">0.16</item>
     <item name="guideline_end" format="float" type="dimen">0.84</item>
@@ -20,18 +41,6 @@
     <dimen name="bottomBar_width">500dp</dimen>
     <dimen name="bottomBar_icon_size">30dp</dimen>
     <dimen name="main_fab_size">52dp</dimen>
-
-    <!-- Bar chart -->
-    <dimen name="year_chart_margin">56dp</dimen>
-    <dimen name="year_chart_margin_top">64dp</dimen>
-
-    <!-- Home -->
-    <dimen name="home_padding">24dp</dimen>
-    <dimen name="home_pie_max">160dp</dimen>
-    <dimen name="home_categories_width_land">160dp</dimen>
-
-    <!-- Home categories list item -->
-    <dimen name="category_item_height_small">28dp</dimen>
 
     <!-- Cards and Accounts (Main page) -->
     <dimen name="main_title">22sp</dimen>

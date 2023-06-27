@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN  ================== -->
+
+    <!-- Normal text -->
+    <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_secondary">14sp</dimen>
+
+    <!-- Numbers -->
+    <dimen name="number_impact">32sp</dimen>
+    <dimen name="number_impact_home">30sp</dimen>
+    <dimen name="number_impact_home_land">30sp</dimen>
+
+    <!-- App Margins -->
+    <dimen name="app_inner_space">14dp</dimen>
+
+    <!-- Containers -->
+    <dimen name="card_corner">6dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+
+    <!-- Landscape -->
+    <dimen name="text_normal_home_land">16sp</dimen>
+    <dimen name="text_secondary_home_land">14sp</dimen>
+    <dimen name="card_padding_home_land">16dp</dimen>
+
+    <!-- Bar chart -->
+    <dimen name="year_chart_margin">0dp</dimen>
+    <dimen name="year_chart_margin_top">24dp</dimen>
+
+    <!-- ==================  FRAGMENTS  ================== -->
+
+    <!-- Home -->
+    <dimen name="home_padding">0dp</dimen>
+    <dimen name="home_progress_margin">8dp</dimen>
+    <dimen name="progress_text_size">26sp</dimen>
+    <dimen name="progress_indicator">120dp</dimen>
+    <dimen name="progress_track">8dp</dimen>
+    <dimen name="progress_corners">4dp</dimen>
+    <dimen name="home_currency_margin">20dp</dimen>
+    <dimen name="home_icon_size">28dp</dimen>
+    <dimen name="home_pie_margin">16dp</dimen>
+    <dimen name="home_pie_margin_top">4dp</dimen>
+    <dimen name="home_pie_max">90dp</dimen>
+    <dimen name="home_categories_list_margin">12dp</dimen>
+    <dimen name="home_category_list_height">72dp</dimen>
+    <dimen name="home_category_item_height">24dp</dimen>
+
+
+    <!-- ******** TO BE REFACTORED ******** -->
+
     <!-- Guidelines -->
     <item name="guideline_start" format="float" type="dimen">0.06</item>
     <item name="guideline_end" format="float" type="dimen">0.94</item>
@@ -13,8 +61,6 @@
     <dimen name="main_text">16sp</dimen>
     <dimen name="secondary_text">14sp</dimen>
     <dimen name="toolbar_title_size">18sp</dimen>
-    <dimen name="number_impact">28sp</dimen>
-    <dimen name="number_impact_home_land">30sp</dimen>
     <dimen name="toggle_pill_text_size">14sp</dimen>
     <dimen name="form_title_size">22sp</dimen>
     <!-- Text margins and widths -->
@@ -63,8 +109,8 @@
     <dimen name="main_fab_size">48dp</dimen>
 
     <!-- Cards -->
-    <dimen name="card_corner">6dp</dimen>
-    <dimen name="card_padding">16dp</dimen>
+<!--    <dimen name="card_corner">6dp</dimen>-->
+<!--    <dimen name="card_padding">16dp</dimen>-->
     <dimen name="card_padding_bottom">14dp</dimen>
     <dimen name="card_padding_sm">14dp</dimen>
 
@@ -73,28 +119,12 @@
     <dimen name="category_small_list_height">72dp</dimen>
     <dimen name="side_list_padding">8dp</dimen>
 
-    <!-- Progress -->
-    <dimen name="progress_text_size">26sp</dimen>
-    <dimen name="progress_indicator">120dp</dimen>
-    <dimen name="progress_track">8dp</dimen>
-    <dimen name="progress_corners">4dp</dimen>
-
-    <!-- Bar chart -->
-    <dimen name="year_chart_margin">0dp</dimen>
-    <dimen name="year_chart_margin_top">24dp</dimen>
-
     <!-- Home -->
-    <dimen name="home_padding">0dp</dimen>
     <dimen name="home_inner_margin">12dp</dimen>
     <dimen name="home_progress_margin_top">8dp</dimen>
     <dimen name="home_progress_margin_start">6dp</dimen>
     <dimen name="home_progress_margin_bottom">8dp</dimen>
-    <dimen name="home_currency_margin">20dp</dimen>
-    <dimen name="home_pie_margin">16dp</dimen>
-    <dimen name="home_pie_margin_top">4dp</dimen>
-    <dimen name="home_pie_max">90dp</dimen>
     <dimen name="home_categories_padding_bottom">12dp</dimen>
-    <dimen name="home_categories_list_margin">12dp</dimen>
     <dimen name="home_month_width_land">0dp</dimen>
     <dimen name="home_home_min_height_land">0dp</dimen>
     <dimen name="home_account_height_land">0dp</dimen>
@@ -146,10 +176,7 @@
     <dimen name="item_double_height">70dp</dimen>
 
     <!-- Landscape -->
-    <dimen name="main_text_home_land">16sp</dimen>
-    <dimen name="secondary_text_home_land">14sp</dimen>
     <dimen name="icon_medium_home_land">28dp</dimen>
-    <dimen name="card_padding_home_land">16dp</dimen>
     <dimen name="list_width_land">500dp</dimen>
 
 </resources>

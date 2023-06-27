@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN  ================== -->
+
+    <!-- Numbers -->
+    <dimen name="number_impact_home">32sp</dimen>
+
+    <!-- App Margins -->
+    <dimen name="app_inner_space">16dp</dimen>
+
+
+    <!-- ==================  FRAGMENTS  ================== -->
+
+    <!-- Home -->
+    <dimen name="home_padding">2dp</dimen>
+    <dimen name="progress_text_size">28sp</dimen>
+    <dimen name="progress_indicator">136dp</dimen>
+    <dimen name="home_pie_margin">20dp</dimen>
+    <dimen name="home_categories_list_margin">16dp</dimen>
+
+
+    <!-- ******** TO BE REFACTORED ******** -->
+
     <!-- Guidelines -->
     <item name="guideline_start" format="float" type="dimen">0.06</item>
     <item name="guideline_end" format="float" type="dimen">0.94</item>
 
     <!-- Text -->
-    <dimen name="number_impact">32sp</dimen>
     <!-- Text margins and widths -->
     <dimen name="form_title_margin">8dp</dimen>
     <dimen name="currency_width_min">96dp</dimen>
@@ -38,12 +58,6 @@
     <dimen name="toolbar_month_text_other">18sp</dimen>
     <dimen name="toolbar_month_width">120dp</dimen>
 
-    <!-- Progress -->
-    <dimen name="progress_text_size">28sp</dimen>
-    <dimen name="progress_indicator">120dp</dimen>
-    <dimen name="progress_track">10dp</dimen>
-    <dimen name="progress_corners">5dp</dimen>
-
     <!-- Bar chart -->
     <dimen name="year_chart_margin">4dp</dimen>
     <dimen name="year_chart_margin_top">32dp</dimen>
@@ -53,9 +67,6 @@
     <dimen name="home_progress_margin_top">24dp</dimen>
     <dimen name="home_progress_margin_start">4dp</dimen>
     <dimen name="home_progress_margin_bottom">12dp</dimen>
-    <dimen name="home_pie_margin">20dp</dimen>
-    <dimen name="home_pie_margin_top">4dp</dimen>
-    <dimen name="home_categories_list_margin">16dp</dimen>
 
     <!-- Credit Cards and Accounts (Main page) -->
     <dimen name="main_title_large">26sp</dimen>

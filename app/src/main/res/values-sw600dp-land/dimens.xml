@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Guideline -->
-    <item name="guideline_start" format="float" type="dimen">0.04</item>
-    <item name="guideline_end" format="float" type="dimen">0.96</item>
+    <!-- ==================  MAIN  ================== -->
 
-    <!-- Landscape -->
-    <dimen name="main_text_home_land">16sp</dimen>
-    <dimen name="secondary_text_home_land">14sp</dimen>
-    <dimen name="icon_medium_home_land">28dp</dimen>
+    <!-- Normal text - Landscape -->
+    <dimen name="text_normal_home_land">16sp</dimen>
+    <dimen name="text_secondary_home_land">14sp</dimen>
+
+    <!-- Numbers -->
+    <dimen name="number_impact_home_land">34sp</dimen>
+
+    <!-- Containers -->
     <dimen name="card_padding_home_land">16dp</dimen>
 
-    <!-- Toolbar -->
-    <dimen name="toolbar_month_width">200dp</dimen>
-    <dimen name="toolbar_inset_start">8dp</dimen>
-
-    <!-- Bottom Bar -->
-    <dimen name="bottomBar_width">480dp</dimen>
-
-    <!-- Lists -->
-    <dimen name="side_list_padding">16dp</dimen>
-
-    <!-- Progress -->
-    <dimen name="progress_text_size">34sp</dimen>
-    <dimen name="progress_indicator">160dp</dimen>
-    <dimen name="progress_track">10dp</dimen>
-    <dimen name="progress_corners">5dp</dimen>
+    <!-- App Margins -->
+    <dimen name="app_inner_space">16dp</dimen>
 
     <!-- Bar chart -->
     <dimen name="year_chart_margin">24dp</dimen>
     <dimen name="year_chart_margin_top">24dp</dimen>
 
+
+    <!-- ==================  FRAGMENTS  ================== -->
+
     <!-- Home -->
     <dimen name="home_padding">0dp</dimen>
-    <dimen name="home_inner_margin">16dp</dimen>
     <dimen name="home_month_width_land">368dp</dimen>
+    <dimen name="progress_text_size">34sp</dimen>
+    <dimen name="progress_indicator">168dp</dimen>
     <dimen name="home_progress_margin_start">4dp</dimen>
     <dimen name="home_progress_margin_bottom">4dp</dimen>
     <dimen name="home_currency_margin">18dp</dimen>
@@ -45,6 +38,26 @@
     <dimen name="home_categories_padding_bottom">12dp</dimen>
     <dimen name="home_categories_list_margin">12dp</dimen>
     <dimen name="home_categories_width_land">152dp</dimen>
+
+    <!-- ******** TO BE REFACTORED ******** -->
+
+
+    <!-- Guideline -->
+    <item name="guideline_start" format="float" type="dimen">0.04</item>
+    <item name="guideline_end" format="float" type="dimen">0.96</item>
+
+    <!-- Landscape -->
+    <dimen name="icon_medium_home_land">28dp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">8dp</dimen>
+
+    <!-- Bottom Bar -->
+    <dimen name="bottomBar_width">480dp</dimen>
+
+    <!-- Lists -->
+    <dimen name="side_list_padding">16dp</dimen>
 
     <!-- Cards and Accounts (Main page) -->
     <dimen name="main_title_space">36dp</dimen>
