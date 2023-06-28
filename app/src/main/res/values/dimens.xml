@@ -15,6 +15,16 @@
     <!-- App Margins -->
     <dimen name="app_inner_space">14dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_month_text">18sp</dimen>
+    <dimen name="toolbar_month_text_other">16sp</dimen>
+    <dimen name="toolbar_month_width">100dp</dimen>
+    <dimen name="toolbar_inset_start">0dp</dimen>
+    <dimen name="toolbar_inset_end">0dp</dimen>
+    <dimen name="toolbar_year_size">14sp</dimen>
+    <dimen name="toolbar_button">56dp</dimen>
+
     <!-- Containers -->
     <dimen name="card_corner">6dp</dimen>
     <dimen name="card_padding">16dp</dimen>
@@ -77,7 +87,6 @@
     <dimen name="input_icon_padding">12dp</dimen>
 
     <!-- Buttons -->
-    <dimen name="toolbar_button">48dp</dimen>
     <dimen name="toggle_pill_min_width">80dp</dimen>
     <dimen name="toggle_pill_max_width">96dp</dimen>
     <dimen name="toggle_pill_padding_start">2dp</dimen>
@@ -93,14 +102,6 @@
     <!-- Icons -->
     <dimen name="icon_medium">28dp</dimen>
     <dimen name="icon_large">40dp</dimen>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_height">56dp</dimen>
-    <dimen name="toolbar_month_text">18sp</dimen>
-    <dimen name="toolbar_month_text_other">16sp</dimen>
-    <dimen name="toolbar_month_width">100dp</dimen>
-    <dimen name="toolbar_inset_start">2dp</dimen>
-    <dimen name="toolbar_inset_end">2dp</dimen>
 
     <!-- Bottom Bar -->
     <dimen name="bottomBar_height">60dp</dimen>

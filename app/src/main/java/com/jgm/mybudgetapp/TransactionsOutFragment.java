@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
@@ -41,21 +40,17 @@ public class TransactionsOutFragment extends Fragment {
 
     private static final String LOG_LIFECYCLE = "debug-lifecycle";
     private List<TransactionResponse> expenses;
-    private float accumulated = 0.0f;
 
     // UI
     private FragmentTransactionsOutBinding binding;
     //private FloatingActionButton mFab;
-    private TextView mTotal, mAccumulated;
+    private TextView mTotal;
     private RecyclerView mRecyclerView;
-//    private ToggleButton mToggleAccumulated;
 
     private void setBinding() {
         //mFab = binding.transactionOutAdd;
         mTotal = binding.outTotal;
         mRecyclerView = binding.outList;
-        mAccumulated = binding.outAccumulatedTotal;
-//        mToggleAccumulated = binding.outAccumulatedToggle;
     }
 
     // Interfaces
@@ -85,7 +80,6 @@ public class TransactionsOutFragment extends Fragment {
 
         if (savedInstanceState == null) {
             Log.d(LOG_LIFECYCLE, "saved instance is null => init transactions data");
-//            mToggleAccumulated.setChecked(true);
             MyDate date = mInterface.getDate();
             getExpensesData(date.getMonth(), date.getYear());
         }
@@ -127,7 +121,10 @@ public class TransactionsOutFragment extends Fragment {
             float prevTotal = transactionDao.getAccumulated(month, year);
 
             handler.post(() -> {
-                accumulated = prevTotal;
+                if (Math.abs(prevTotal) > 0) {
+                    TransactionResponse accumulated = setAccumulated(prevTotal, month, year);
+                    expenses.add(0, accumulated);
+                }
                 setExpensesData(month, year);
             });
 
@@ -138,6 +135,19 @@ public class TransactionsOutFragment extends Fragment {
     /* ------------------------------------------------------------------------------
                                          SET DATA
     ------------------------------------------------------------------------------- */
+
+    private TransactionResponse setAccumulated(float value, int month, int year) {
+        return new TransactionResponse(0,
+                Tags.TYPE_OUT,
+                getString(R.string.label_accumulated),
+                value,
+                year, month, 1,
+                0, 0, 0, false,
+                1, 1, null,
+                "",
+                23,
+                71);
+    }
 
     private void setExpensesData(int month, int year) {
 
@@ -177,10 +187,6 @@ public class TransactionsOutFragment extends Fragment {
             }
         }
 
-        // Add accumulated amount from previous months
-        setAccumulated(total);
-        total = total + accumulated;
-
         // Set total in currency format
         String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
         mTotal.setText(totalCurrency);
@@ -190,26 +196,6 @@ public class TransactionsOutFragment extends Fragment {
 
         // handle credit card items and re-init list view
         if (hasCreditCard) setCreditCardItems(dayGroups);
-
-    }
-
-    private void setAccumulated(float total) {
-
-        float totalWithPrev = total + accumulated;
-//        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
-        String prevTotalCurrency = NumberUtils.getCurrencyFormat(mContext, accumulated)[2];
-        String totalWithPrevCurrency = NumberUtils.getCurrencyFormat(mContext, totalWithPrev)[2];
-
-        mAccumulated.setText(prevTotalCurrency);
-        mTotal.setText(totalWithPrevCurrency);
-
-//        if (mToggleAccumulated.isChecked()) mTotal.setText(totalWithPrevCurrency);
-//        else mTotal.setText(totalCurrency);
-
-//        mToggleAccumulated.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            if (isChecked) mTotal.setText(totalWithPrevCurrency);
-//            else mTotal.setText(totalCurrency);
-//        });
 
     }
 

@@ -6,6 +6,10 @@
     <!-- Numbers -->
     <dimen name="number_impact_home_land">38sp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_inset_start">72dp</dimen>
+    <dimen name="toolbar_inset_end">64dp</dimen>
+
     <!-- Bar chart -->
     <dimen name="year_chart_margin">40dp</dimen>
     <dimen name="year_chart_margin_top">32dp</dimen>
@@ -34,11 +38,6 @@
     <!-- Guidelines -->
     <item name="guideline_home_start" format="float" type="dimen">0.06</item>
     <item name="guideline_home_end" format="float" type="dimen">0.94</item>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_inset_start">72dp</dimen>
-    <dimen name="toolbar_inset_end">64dp</dimen>
-
 
 
 

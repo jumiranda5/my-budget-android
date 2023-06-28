@@ -10,6 +10,13 @@
     <!-- Containers -->
     <dimen name="card_padding">24dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">72dp</dimen>
+    <dimen name="toolbar_month_text">24sp</dimen>
+    <dimen name="toolbar_month_width">180dp</dimen>
+    <dimen name="toolbar_inset_start">16dp</dimen>
+    <dimen name="toolbar_button">60dp</dimen>
+
     <!-- ==================  FRAGMENTS  ================== -->
 
     <!-- Home -->
@@ -25,16 +32,6 @@
     <!-- Guideline -->
     <item name="guideline_start" format="float" type="dimen">0.16</item>
     <item name="guideline_end" format="float" type="dimen">0.84</item>
-
-    <!-- Buttons -->
-    <dimen name="toolbar_button">50dp</dimen>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_height">72dp</dimen>
-    <dimen name="toolbar_month_text">24sp</dimen>
-    <dimen name="toolbar_month_width">180dp</dimen>
-    <dimen name="toolbar_inset_start">28dp</dimen>
-    <dimen name="toolbar_inset_end">16dp</dimen>
 
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">72dp</dimen>

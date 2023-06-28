@@ -5,6 +5,21 @@
                           CONTAINERS STYLES
     ============================================================ -->
 
+    <!-- Toolbar -->
+
+    <style name="MainToolbar" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:background">@drawable/bg_toolbar</item>
+        <item name="contentInsetStart">@dimen/toolbar_inset_start</item>
+        <item name="contentInsetEnd">@dimen/toolbar_inset_end</item>
+    </style>
+
+    <style name="TransparentToolbar" parent="MainToolbar">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <!-- Home Cards -->
 
     <style name="HomeCard" parent="AppTheme">
@@ -44,19 +59,6 @@
     <!-- ==========================================================
                                 NAV BARS
     ============================================================ -->
-
-    <style name="MainToolbar" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/toolbar_height</item>
-        <item name="android:elevation">0dp</item>
-        <item name="android:background">@drawable/bg_toolbar</item>
-        <item name="contentInsetStart">@dimen/toolbar_inset_start</item>
-        <item name="contentInsetEnd">@dimen/toolbar_inset_end</item>
-    </style>
-
-    <style name="TransparentToolbar" parent="MainToolbar">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
 
     <style name="BottomNav" parent="AppTheme">
         <item name="android:layout_width">@dimen/bottomBar_width</item>

@@ -54,7 +54,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         TransactionResponse transaction = mDataList.get(position);
         Icon icon = IconUtils.getIcon(transaction.getIconId());
         Color color = ColorUtils.getColor(transaction.getColorId());
-        // todo: set default values for color and icon on db
 
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
@@ -104,8 +103,18 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             }
         });
 
+        // Set accumulated
+        boolean isAccumulated = transaction.getId() == 0;
+        if (isAccumulated) {
+            holder.mPaid.setVisibility(View.GONE);
+            holder.mName.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
+        }
+
         // Open transaction details dialog
-        holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
+        if (!isAccumulated)
+            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
 
     }
 

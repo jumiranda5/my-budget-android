@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_01dp"
+    android:background="@color/bg_00dp"
     tools:context=".MainActivity">
 
     <!-- Toolbar -->
@@ -35,35 +35,33 @@
 
             <TextView
                 android:id="@+id/toolbar_year"
-                style="@style/SecondaryText"
-                android:fontFamily="@font/nunito_sans_regular"
+                style="@style/TextNormal"
                 android:layout_marginStart="16dp"
                 android:text="@string/test_year"
+                android:textSize="@dimen/toolbar_year_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <ImageButton
                 android:id="@+id/toolbar_prev_month_button"
                 style="@style/IconButton"
+                android:padding="10dp"
                 android:contentDescription="@string/desc_previous_month"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/toolbar_month"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_arrow_back_ios"
-                app:tint="@color/secondary_icon" />
+                app:srcCompat="@drawable/ic_app_navigate_before"/>
 
             <ImageButton
                 android:id="@+id/toolbar_next_month_button"
                 style="@style/IconButton"
                 android:contentDescription="@string/desc_next_month"
-                android:padding="12dp"
+                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/toolbar_month"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_arrow_forward_ios"
-                app:tint="@color/secondary_icon" />
+                app:srcCompat="@drawable/ic_app_navigate_next"/>
 
             <ImageButton
                 android:id="@+id/settings_button"

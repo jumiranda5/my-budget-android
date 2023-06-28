@@ -16,6 +16,10 @@
     <!-- App Margins -->
     <dimen name="app_inner_space">16dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">16dp</dimen>
+
     <!-- Bar chart -->
     <dimen name="year_chart_margin">24dp</dimen>
     <dimen name="year_chart_margin_top">24dp</dimen>
@@ -48,10 +52,6 @@
 
     <!-- Landscape -->
     <dimen name="icon_medium_home_land">28dp</dimen>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_month_width">200dp</dimen>
-    <dimen name="toolbar_inset_start">8dp</dimen>
 
     <!-- Bottom Bar -->
     <dimen name="bottomBar_width">480dp</dimen>

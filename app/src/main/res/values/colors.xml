@@ -73,6 +73,8 @@
     <color name="savings">#720EC1</color>
     <color name="savings_pressed">#5A0C97</color>
 
+    <color name="accumulated">#C67700</color>
+
     <!-- Color Picker -->
     <color name="red">#E41E1E</color>
     <color name="pink">#EE0055</color>

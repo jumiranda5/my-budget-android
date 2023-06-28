@@ -9,6 +9,11 @@
     <!-- App Margins -->
     <dimen name="app_inner_space">16dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_text">20sp</dimen>
+    <dimen name="toolbar_month_text_other">18sp</dimen>
+    <dimen name="toolbar_month_width">120dp</dimen>
+
 
     <!-- ==================  FRAGMENTS  ================== -->
 
@@ -37,7 +42,6 @@
     <dimen name="input_padding">16dp</dimen>
 
     <!-- Buttons -->
-    <dimen name="toolbar_button">48dp</dimen>
     <dimen name="toggle_pill_min_width">80dp</dimen>
     <dimen name="toggle_pill_max_width">104dp</dimen>
     <dimen name="toggle_pill_padding_start">4dp</dimen>
@@ -52,11 +56,6 @@
 
     <!-- Cards -->
     <dimen name="card_padding_sm">16dp</dimen>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_month_text">20sp</dimen>
-    <dimen name="toolbar_month_text_other">18sp</dimen>
-    <dimen name="toolbar_month_width">120dp</dimen>
 
     <!-- Bar chart -->
     <dimen name="year_chart_margin">4dp</dimen>

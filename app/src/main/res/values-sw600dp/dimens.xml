@@ -14,6 +14,13 @@
     <!-- App Margins -->
     <dimen name="app_inner_space">18dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">64dp</dimen>
+    <dimen name="toolbar_month_text">22sp</dimen>
+    <dimen name="toolbar_month_text_other">20sp</dimen>
+    <dimen name="toolbar_month_width">140dp</dimen>
+    <dimen name="toolbar_year_size">18sp</dimen>
+
     <!-- Containers -->
     <dimen name="card_padding">20dp</dimen>
 
@@ -73,11 +80,6 @@
     <!-- Icons -->
     <dimen name="icon_medium">32dp</dimen>
     <dimen name="icon_large">44dp</dimen>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_height">64dp</dimen>
-    <dimen name="toolbar_month_text">22sp</dimen>
-    <dimen name="toolbar_month_width">140dp</dimen>
 
     <!-- Main Activity -->
     <dimen name="bottomBar_height">64dp</dimen>

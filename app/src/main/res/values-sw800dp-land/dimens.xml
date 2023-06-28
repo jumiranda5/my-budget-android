@@ -6,6 +6,13 @@
     <!-- Numbers -->
     <dimen name="number_impact_home_land">38sp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">80dp</dimen>
+    <dimen name="toolbar_month_text">26sp</dimen>
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">32dp</dimen>
+    <dimen name="toolbar_inset_end">24dp</dimen>
+
     <!-- Bar chart -->
     <dimen name="year_chart_margin">32dp</dimen>
     <dimen name="year_chart_margin_top">32dp</dimen>
@@ -32,13 +39,6 @@
 
     <!-- ******** TO BE REFACTORED ******** -->
 
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_height">80dp</dimen>
-    <dimen name="toolbar_month_text">26sp</dimen>
-    <dimen name="toolbar_month_width">200dp</dimen>
-    <dimen name="toolbar_inset_start">32dp</dimen>
-    <dimen name="toolbar_inset_end">24dp</dimen>
 
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">80dp</dimen>

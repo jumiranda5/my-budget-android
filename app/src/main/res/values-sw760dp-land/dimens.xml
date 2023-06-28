@@ -13,6 +13,14 @@
     <!-- App Margins -->
     <dimen name="app_inner_space">18dp</dimen>
 
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">72dp</dimen>
+    <dimen name="toolbar_month_text">24sp</dimen>
+    <dimen name="toolbar_month_width">200dp</dimen>
+    <dimen name="toolbar_inset_start">16dp</dimen>
+    <dimen name="toolbar_inset_end">8dp</dimen>
+    <dimen name="toolbar_button">60dp</dimen>
+
     <!-- Containers -->
     <dimen name="card_padding_home_land">18dp</dimen>
 
@@ -45,18 +53,8 @@
     <!-- Landscape -->
     <dimen name="icon_medium_home_land">32dp</dimen>
 
-    <!-- Buttons -->
-    <dimen name="toolbar_button">50dp</dimen>
-
     <!-- Icons -->
     <dimen name="icon_large">48dp</dimen>
-
-    <!-- Toolbar -->
-    <dimen name="toolbar_height">72dp</dimen>
-    <dimen name="toolbar_month_text">24sp</dimen>
-    <dimen name="toolbar_month_width">200dp</dimen>
-    <dimen name="toolbar_inset_start">16dp</dimen>
-    <dimen name="toolbar_inset_end">8dp</dimen>
 
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">72dp</dimen>
