@@ -22,20 +22,24 @@
 
     <!-- Home Cards -->
 
-    <style name="HomeCard" parent="AppTheme">
+    <style name="Card" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="rippleColor">@color/light_grey</item>
-        <item name="contentPadding">@dimen/card_padding</item>
-        <item name="cardElevation">0dp</item>
         <item name="cardCornerRadius">@dimen/card_corner</item>
         <item name="cardBackgroundColor">@color/bg_01dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="HomeCard" parent="Card">
+        <item name="contentPadding">@dimen/card_padding</item>
         <item name="strokeColor">@color/border</item>
     </style>
 
-    <style name="ErrorCard" parent="HomeCard">
+    <style name="ErrorCard" parent="Card">
+        <item name="contentPadding">@dimen/card_padding</item>
         <item name="cardBackgroundColor">@color/bg_error</item>
         <item name="strokeColor">@color/border_error</item>
         <item name="rippleColor">@color/border_error</item>
@@ -51,7 +55,15 @@
         <item name="android:nestedScrollingEnabled">false</item>
     </style>
 
+    <!-- Lists -->
 
+    <style name="NestedListNoScroll" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:isScrollContainer">false</item>
+        <item name="android:nestedScrollingEnabled">false</item>
+    </style>
 
 
 

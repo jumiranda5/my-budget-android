@@ -134,5 +134,6 @@
 
     <string name="initial_value" translatable="false">$0.00</string>
     <string name="initial_percent" translatable="false">0%</string>
+    <string name="test_monday_2">Monday, 2</string>
 
 </resources>

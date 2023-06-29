@@ -81,7 +81,7 @@ public class TransactionsOutFragment extends Fragment {
         if (savedInstanceState == null) {
             Log.d(LOG_LIFECYCLE, "saved instance is null => init transactions data");
             MyDate date = mInterface.getDate();
-            getExpensesData(date.getMonth(), date.getYear());
+            getExpensesData(date.getMonth(), date.getYear()); // todo: called twice...
         }
 
     }

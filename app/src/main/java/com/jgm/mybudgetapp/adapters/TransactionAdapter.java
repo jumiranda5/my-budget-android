@@ -1,6 +1,7 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,6 @@ import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
-import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.List;
 
@@ -55,6 +55,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Icon icon = IconUtils.getIcon(transaction.getIconId());
         Color color = ColorUtils.getColor(transaction.getColorId());
 
+        Log.d("debug-transaction", "Item: " + transaction.getId() + " | " + transaction.getDescription() +
+                " | " + transaction.getCardId());
+
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
         holder.mIcon.setContentDescription(icon.getIconName());
@@ -67,15 +70,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
-
-        if (transaction.getType() == Tags.TYPE_IN) {
-            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-        }
-        else {
-            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-        }
 
         // Toggle paid
         if (transaction.isPaid()) holder.mPaid.setChecked(true);
@@ -112,6 +106,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
         }
 
+        // Set credit card item
+        if (transaction.getId() != -1 && transaction.getCardId() > 0) {
+            holder.mPaid.setVisibility(View.GONE);
+            holder.mCardIcon.setVisibility(View.VISIBLE);
+            holder.mCardSpace.setVisibility(View.VISIBLE);
+            holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
+            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
+            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
+        }
+
         // Open transaction details dialog
         if (!isAccumulated)
             holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
@@ -125,9 +129,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mIcon;
+        private final ImageView mIcon, mCardIcon, mCardSpace;
         private final TextView mName, mTotal, mCurrencySymbol;
-        private final ConstraintLayout mContainer;
+        private final CardView mContainer;
         private final ToggleButton mPaid;
 
         private ListViewHolder(@NonNull View itemView) {
@@ -139,6 +143,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mTotal = itemView.findViewById(R.id.item_transaction_total);
             mCurrencySymbol = itemView.findViewById(R.id.item_transaction_currency_symbol);
             mPaid = itemView.findViewById(R.id.item_transaction_toggle);
+            mCardIcon = itemView.findViewById(R.id.item_transaction_card_icon);
+            mCardSpace = itemView.findViewById(R.id.empty_view);
 
         }
     }

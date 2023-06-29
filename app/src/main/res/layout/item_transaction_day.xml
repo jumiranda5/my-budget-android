@@ -8,36 +8,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_start"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_end"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp"/>
 
     <TextView
         android:id="@+id/item_day_title"
-        style="@style/MainTitle"
+        style="@style/TextNormalEllipse"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/nunito_sans_semi_bold"
-        android:text="Monday, 2"
-        android:textSize="@dimen/main_text"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_item_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
+        android:text="@string/test_monday_2"
+        android:textColor="@color/medium_emphasis_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_day_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_day_title"

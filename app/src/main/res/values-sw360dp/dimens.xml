@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Guidelines -->
+    <dimen name="guideline_start_list">16dp</dimen>
+    <dimen name="guideline_end_list">16dp</dimen>
+
     <!-- ==================  MAIN  ================== -->
 
     <!-- Numbers -->
@@ -24,6 +28,14 @@
     <dimen name="home_pie_margin">20dp</dimen>
     <dimen name="home_categories_list_margin">16dp</dimen>
 
+    <!-- Transactions -->
+    <dimen name="trans_item_text_size">16sp</dimen>
+    <dimen name="trans_day_text_size">18sp</dimen>
+    <dimen name="trans_title_margin_top">56dp</dimen>
+    <dimen name="trans_title_margin_bottom">40dp</dimen>
+    <dimen name="currency_width_min">88dp</dimen>
+    <dimen name="currency_width_max">160dp</dimen>
+
 
     <!-- ******** TO BE REFACTORED ******** -->
 
@@ -34,8 +46,6 @@
     <!-- Text -->
     <!-- Text margins and widths -->
     <dimen name="form_title_margin">8dp</dimen>
-    <dimen name="currency_width_min">96dp</dimen>
-    <dimen name="currency_width_max">160dp</dimen>
 
     <!-- Inputs -->
     <dimen name="input_height">60dp</dimen>

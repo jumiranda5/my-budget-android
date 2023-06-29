@@ -57,6 +57,11 @@
 
     <!-- Titles -->
 
+    <style name="Title" parent="MainTextEllipse">
+        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
+        <item name="android:textSize">@dimen/main_title</item>
+    </style>
+
     <!-- Numbers -->
 
     <style name="Number" parent="MainText">
@@ -76,6 +81,17 @@
 
     <style name="NumberMediumEnd" parent="NumberMedium">
         <item name="android:textAlignment">textEnd</item>
+    </style>
+
+    <style name="NumberCurrency" parent="NumberMediumEnd">
+        <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>
+    </style>
+
+    <style name="NumberCurrencyRegular" parent="NumberCurrency">
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
     </style>
 
 
@@ -177,12 +193,5 @@
 <!--    <style name="NumberMedium" parent="NumberRegular">-->
 <!--        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>-->
 <!--    </style>-->
-
-    <style name="NumberCurrency" parent="NumberMedium">
-        <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">0dp</item>
-        <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>
-    </style>
 
 </resources>

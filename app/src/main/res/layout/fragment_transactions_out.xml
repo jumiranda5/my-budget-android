@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/toolbar_height"
+    android:background="@color/bg_00dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TransactionsOutFragment">
 
@@ -19,114 +20,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_start_list"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_end_list"/>
+
             <TextView
                 android:id="@+id/out_title"
-                style="@style/MainTitle"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="16dp"
+                style="@style/Title"
+                android:layout_marginTop="48dp"
                 android:text="@string/label_expenses"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/out_total"
                 style="@style/NumberImpact"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginEnd="16dp"
                 android:text="@string/initial_value"
                 android:textColor="@color/expense"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/out_title" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/out_accumulated_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/out_total">
-
-                <ImageView
-                    android:id="@+id/out_accumulated_icon"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:contentDescription="@null"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_app_autorenew"
-                    app:tint="@color/medium_emphasis_text" />
-
-                <TextView
-                    android:id="@+id/out_accumulated_total"
-                    style="@style/NumberMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/initial_value"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/medium_emphasis_text"
-                    android:textSize="@dimen/secondary_text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/out_accumulated_icon"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/out_accumulated_name"
-                    style="@style/SecondaryTextEllipse"
-                    android:layout_marginStart="12dp"
-                    android:fontFamily="@font/nunito_sans_medium"
-                    android:text="@string/label_accumulated"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/out_accumulated_total"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/out_list"
-                style="@style/MainList"
+                style="@style/NestedListNoScroll"
                 android:layout_marginTop="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/out_accumulated_container"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/out_total"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_transaction_day" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/transaction_out_add"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:contentDescription="@string/action_add_transaction"-->
-<!--        android:layout_gravity="center|bottom"-->
-<!--        android:src="@drawable/ic_app_add_400"-->
-<!--        android:backgroundTint="@color/expense"-->
-<!--        app:tint="@color/white"-->
-<!--        android:layout_marginBottom="24dp"/>-->
-
-    <Button
-        android:id="@+id/save_button"
-        style="@style/ButtonSave"
-        android:layout_width="0dp"
-        android:text="Add"
-        android:background="@drawable/button_save_expense"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/transaction_out_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/expense"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/action_add_transaction"
+        android:src="@drawable/ic_app_add_400"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:tint="@color/white" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
