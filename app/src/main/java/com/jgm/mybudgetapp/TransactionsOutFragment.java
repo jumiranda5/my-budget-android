@@ -46,6 +46,7 @@ public class TransactionsOutFragment extends Fragment {
     //private FloatingActionButton mFab;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
+    DayGroupAdapter adapter;
 
     private void setBinding() {
         //mFab = binding.transactionOutAdd;
@@ -81,7 +82,7 @@ public class TransactionsOutFragment extends Fragment {
         if (savedInstanceState == null) {
             Log.d(LOG_LIFECYCLE, "saved instance is null => init transactions data");
             MyDate date = mInterface.getDate();
-            getExpensesData(date.getMonth(), date.getYear()); // todo: called twice...
+            getExpensesData(date.getMonth(), date.getYear());
         }
 
     }
@@ -92,7 +93,7 @@ public class TransactionsOutFragment extends Fragment {
     private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups);
+        adapter = new DayGroupAdapter(mContext, dayGroups);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -121,7 +122,7 @@ public class TransactionsOutFragment extends Fragment {
             float prevTotal = transactionDao.getAccumulated(month, year);
 
             handler.post(() -> {
-                if (Math.abs(prevTotal) > 0) {
+                if (prevTotal < 0) {
                     TransactionResponse accumulated = setAccumulated(prevTotal, month, year);
                     expenses.add(0, accumulated);
                 }
@@ -160,7 +161,7 @@ public class TransactionsOutFragment extends Fragment {
             int day = transaction.getDay();
 
             // check if payment method credit card is present
-            if (transaction.getCardId() != null || transaction.getCardId() > 0) hasCreditCard = true;
+            if (transaction.getCardId() > 0) hasCreditCard = true;
 
             // set total
             total = total + expenses.get(i).getAmount();
@@ -191,11 +192,9 @@ public class TransactionsOutFragment extends Fragment {
         String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
         mTotal.setText(totalCurrency);
 
-        // init list
-        initRecyclerView(dayGroups);
-
-        // handle credit card items and re-init list view
+        // handle credit card items and init list view
         if (hasCreditCard) setCreditCardItems(dayGroups);
+        else initRecyclerView(dayGroups);
 
     }
 
