@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -80,7 +81,10 @@ public class TransactionDialog extends BottomSheetDialogFragment {
 
         // Description
         TextView description = view.findViewById(R.id.dialog_transaction_desc);
-        description.setText(transaction.getDescription());
+        String descString = transaction.getDescription();
+        if (transaction.getRepeat() > 1)
+            descString = transaction.getDescription() + " (" + transaction.getRepeatCount() + "/" + transaction.getRepeat() + ")";
+        description.setText(descString);
 
         // Amount
         TextView amount = view.findViewById(R.id.dialog_transaction_amount);
@@ -160,22 +164,30 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         });
 
         // Delete transaction
+        Group textGroup = view.findViewById(R.id.group_transaction);
+        Group deleteItemGroup = view.findViewById(R.id.group_delete_item);
         ImageButton deleteBtn = view.findViewById(R.id.dialog_transaction_delete);
+
         deleteBtn.setOnClickListener(v -> {
+
+            // Show progressBar to indicate that the item is being deleted
+            textGroup.setVisibility(View.INVISIBLE);
+            deleteItemGroup.setVisibility(View.VISIBLE);
+
             Handler handler = new Handler(Looper.getMainLooper());
             AppDatabase.dbExecutor.execute(() -> {
+
                 Log.d(Tags.LOG_DB, "Transaction id to delete: " + transaction.getId());
                 AppDatabase db = AppDatabase.getDatabase(mContext);
                 int res = db.TransactionDao().deleteById(transaction.getId());
-                handler.post(() -> {
+
+                handler.postDelayed(() -> {
                     Log.d(Tags.LOG_DB, "delete response: " + res);
                     mInterface.handleTransactionDeleted(transaction.getId());
                     dismiss();
-                });
+                }, 600);
             });
         });
-
-        // todo: confirm delete
 
         return view;
     }

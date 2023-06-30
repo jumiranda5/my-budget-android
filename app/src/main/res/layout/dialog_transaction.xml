@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="16dp">
@@ -11,11 +11,11 @@
         android:layout_width="50dp"
         android:layout_height="2dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="@null"
         android:background="@color/disabled_text"
+        android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/dialog_transaction_dismiss"
@@ -30,8 +30,8 @@
     <ImageButton
         android:id="@+id/dialog_transaction_delete"
         style="@style/IconButton"
-        android:contentDescription="Delete"
         android:layout_marginEnd="4dp"
+        android:contentDescription="Delete"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_dismiss"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
@@ -40,8 +40,8 @@
     <ImageButton
         android:id="@+id/dialog_transaction_edit"
         style="@style/IconButton"
-        android:contentDescription="@string/action_edit"
         android:layout_marginEnd="4dp"
+        android:contentDescription="@string/action_edit"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_delete"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
@@ -62,8 +62,8 @@
     <ImageView
         android:id="@+id/dialog_transaction_desc_icon"
         style="@style/IconImage"
-        android:contentDescription="Description"
         android:layout_marginTop="24dp"
+        android:contentDescription="Description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title"
         app:srcCompat="@drawable/ic_app_description" />
@@ -140,10 +140,10 @@
         android:id="@+id/dialog_transaction_paid_icon"
         style="@style/IconImage"
         android:contentDescription="Paid"
-        app:tint="@color/disabled_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_method_icon"
-        app:srcCompat="@drawable/ic_app_check_circle_300" />
+        app:srcCompat="@drawable/ic_app_check_circle_300"
+        app:tint="@color/disabled_text" />
 
     <TextView
         android:id="@+id/dialog_transaction_paid"
@@ -153,5 +153,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_transaction_paid_icon"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_paid_icon" />
+
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="dialog_transaction_desc_icon,dialog_transaction_desc,dialog_transaction_amount_icon,dialog_transaction_amount,dialog_transaction_category_icon,dialog_transaction_category,dialog_transaction_method_icon,dialog_transaction_method,dialog_transaction_paid_icon,dialog_transaction_paid" />
+
+    <ProgressBar
+        android:id="@+id/progress_delete"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:indeterminateTint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/progress_delete_text"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_dismiss" />
+
+    <TextView
+        android:id="@+id/progress_delete_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Deleting item..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_dismiss" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_delete_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="progress_delete_text, progress_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
