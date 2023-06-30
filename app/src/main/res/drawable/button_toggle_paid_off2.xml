@@ -10,6 +10,6 @@
         android:height="26dp"
         android:width="26dp"
         android:gravity="center"
-        android:drawable="@drawable/ic_app_pending_fill">
+        android:drawable="@drawable/ic_app_pending_fill_red">
     </item>
 </layer-list>

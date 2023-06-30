@@ -2,95 +2,156 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
+
+    <ImageView
+        android:id="@+id/drag_indicator"
+        android:layout_width="50dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@null"
+        android:background="@color/disabled_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/dialog_transaction_dismiss"
         style="@style/IconButton"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/action_close"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
         app:srcCompat="@drawable/ic_app_close" />
+
+    <ImageButton
+        android:id="@+id/dialog_transaction_delete"
+        style="@style/IconButton"
+        android:contentDescription="Delete"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_dismiss"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
+        app:srcCompat="@drawable/ic_app_delete" />
+
+    <ImageButton
+        android:id="@+id/dialog_transaction_edit"
+        style="@style/IconButton"
+        android:contentDescription="@string/action_edit"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_delete"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
+        app:srcCompat="@drawable/ic_app_edit" />
 
     <TextView
         android:id="@+id/dialog_transaction_title"
         style="@style/MainTitle"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Expense"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_dismiss"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_edit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/drag_indicator" />
+
+    <!-- Description -->
+
+    <ImageView
+        android:id="@+id/dialog_transaction_desc_icon"
+        style="@style/IconImage"
+        android:contentDescription="Description"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title"
+        app:srcCompat="@drawable/ic_app_description" />
 
     <TextView
         android:id="@+id/dialog_transaction_desc"
         style="@style/MainTextEllipse"
         android:text="Description"
-        android:layout_marginTop="40dp"
-        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_desc_icon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_transaction_desc_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_desc_icon" />
+
+    <!-- Amount -->
+
+    <ImageView
+        android:id="@+id/dialog_transaction_amount_icon"
+        style="@style/IconImage"
+        android:contentDescription="Amount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_desc_icon"
+        app:srcCompat="@drawable/ic_app_paid" />
 
     <TextView
         android:id="@+id/dialog_transaction_amount"
         style="@style/MainTextEllipse"
-        android:padding="16dp"
         android:text="$ 10.00"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_amount_icon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_transaction_amount_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_amount_icon" />
+
+    <!-- Category -->
+
+    <ImageView
+        android:id="@+id/dialog_transaction_category_icon"
+        style="@style/IconImage"
+        android:contentDescription="Category"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_amount_icon"
+        app:srcCompat="@drawable/ic_app_category" />
 
     <TextView
         android:id="@+id/dialog_transaction_category"
         style="@style/MainTextEllipse"
-        android:padding="16dp"
         android:text="Category"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_category_icon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_transaction_category_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_category_icon" />
+
+    <!-- Payment Method -->
+
+    <ImageView
+        android:id="@+id/dialog_transaction_method_icon"
+        style="@style/IconImage"
+        android:contentDescription="Payment Method"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_amount" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_category_icon"
+        app:srcCompat="@drawable/ic_app_cash" />
 
     <TextView
         android:id="@+id/dialog_transaction_method"
         style="@style/MainTextEllipse"
-        android:padding="16dp"
         android:text="Payment Method"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_method_icon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_transaction_method_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_method_icon" />
+
+    <!-- Paid -->
+
+    <ImageView
+        android:id="@+id/dialog_transaction_paid_icon"
+        style="@style/IconImage"
+        android:contentDescription="Paid"
+        app:tint="@color/disabled_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_category" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_method_icon"
+        app:srcCompat="@drawable/ic_app_check_circle_300" />
 
     <TextView
         android:id="@+id/dialog_transaction_paid"
         style="@style/MainTextEllipse"
-        android:padding="16dp"
         android:text="Paid"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_paid_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_method" />
-
-    <Button
-        android:id="@+id/dialog_transaction_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        android:text="Edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_paid" />
-
-    <Button
-        android:id="@+id/dialog_transaction_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_edit"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_edit"
-        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_edit" />
+        app:layout_constraintStart_toEndOf="@+id/dialog_transaction_paid_icon"
+        app:layout_constraintTop_toTopOf="@+id/dialog_transaction_paid_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

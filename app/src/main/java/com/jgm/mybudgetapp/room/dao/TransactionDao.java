@@ -33,6 +33,12 @@ public interface TransactionDao {
     @Query("UPDATE transactions SET paid = :isPaid WHERE id = :id")
     void updatePaid(int id, boolean isPaid);
 
+    @Query("UPDATE transactions SET paid = :isPaid " +
+            "WHERE cardId = :cardId " +
+            "AND month = :month " +
+            "AND year = :year")
+    void updatePaidCard(int cardId, boolean isPaid, int month, int year);
+
     /* ------------------------------------------------------------------------------
                                   TRANSACTIONS FRAGMENT
     ------------------------------------------------------------------------------- */

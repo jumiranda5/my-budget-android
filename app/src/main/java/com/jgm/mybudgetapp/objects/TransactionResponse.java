@@ -127,4 +127,8 @@ public class TransactionResponse {
     public String getCategoryName() {
         return categoryName;
     }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
 }

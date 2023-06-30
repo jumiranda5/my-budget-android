@@ -54,9 +54,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         TransactionResponse transaction = mDataList.get(position);
         Icon icon = IconUtils.getIcon(transaction.getIconId());
         Color color = ColorUtils.getColor(transaction.getColorId());
-
-        Log.d("debug-transaction", "Item: " + transaction.getId() + " | " + transaction.getDescription() +
-                " | " + transaction.getCardId());
+        boolean isCardTotal = transaction.getId() == -1;
+        boolean isAccumulated = transaction.getId() == 0;
 
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
@@ -71,10 +70,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
 
-        // Toggle paid
+        // Set initial paid value
         if (transaction.isPaid()) holder.mPaid.setChecked(true);
         else {
-            holder.mPaid.setChecked(true);
+            holder.mPaid.setChecked(false);
             MyDate today = MyDateUtils.getCurrentDate(mContext);
             if (transaction.getDay() < today.getDay() &&
                     transaction.getMonth() <= today.getMonth() &&
@@ -83,22 +82,29 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             }
         }
 
+        // Toggle paid
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
+            if (isCardTotal) {
                 AppDatabase.dbExecutor.execute(() -> {
-                    db.TransactionDao().updatePaid(transaction.getId(), true);
+                    db.TransactionDao().updatePaidCard(
+                            transaction.getCardId(),
+                            isChecked,
+                            transaction.getMonth(),
+                            transaction.getYear());
+
+                    transaction.setPaid(isChecked);
                 });
             }
             else {
                 AppDatabase.dbExecutor.execute(() -> {
-                    db.TransactionDao().updatePaid(transaction.getId(), false);
+                    db.TransactionDao().updatePaid(transaction.getId(), isChecked);
+                    transaction.setPaid(isChecked);
                 });
             }
         });
 
         // Set accumulated
-        boolean isAccumulated = transaction.getId() == 0;
         if (isAccumulated) {
             holder.mPaid.setVisibility(View.GONE);
             holder.mName.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
@@ -117,9 +123,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
 
         // Open transaction details dialog
-        if (!isAccumulated)
+        if (transaction.getId() > 0) {
             holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
-
+        }
     }
 
     @Override
