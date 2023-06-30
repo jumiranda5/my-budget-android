@@ -11,6 +11,7 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,11 +52,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        TransactionResponse transaction = mDataList.get(position);
-        Icon icon = IconUtils.getIcon(transaction.getIconId());
-        Color color = ColorUtils.getColor(transaction.getColorId());
-        boolean isCardTotal = transaction.getId() == -1;
-        boolean isAccumulated = transaction.getId() == 0;
+        TransactionResponse item = mDataList.get(position);
+        Icon icon = IconUtils.getIcon(item.getIconId());
+        Color color = ColorUtils.getColor(item.getColorId());
+        boolean isCardTotal = item.getId() == -1;
+        boolean isAccumulated = item.getId() == 0;
 
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
@@ -63,21 +64,24 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         // Set description
-        holder.mName.setText(transaction.getDescription());
+        String description = item.getDescription();
+        if (item.getRepeat() > 1)
+            description = "(" + item.getRepeatCount() + "/" + item.getRepeat() + ") " + item.getDescription();
+        holder.mName.setText(description);
 
         // Set amount
-        String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
+        String[] currency = NumberUtils.getCurrencyFormat(mContext, item.getAmount());
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
 
         // Set initial paid value
-        if (transaction.isPaid()) holder.mPaid.setChecked(true);
+        if (item.isPaid()) holder.mPaid.setChecked(true);
         else {
             holder.mPaid.setChecked(false);
             MyDate today = MyDateUtils.getCurrentDate(mContext);
-            if (transaction.getDay() < today.getDay() &&
-                    transaction.getMonth() <= today.getMonth() &&
-                    transaction.getYear() <= today.getYear()) {
+            if (item.getDay() < today.getDay() &&
+                    item.getMonth() <= today.getMonth() &&
+                    item.getYear() <= today.getYear()) {
                 holder.mPaid.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_toggle_paid_pending));
             }
         }
@@ -88,18 +92,18 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             if (isCardTotal) {
                 AppDatabase.dbExecutor.execute(() -> {
                     db.TransactionDao().updatePaidCard(
-                            transaction.getCardId(),
+                            item.getCardId(),
                             isChecked,
-                            transaction.getMonth(),
-                            transaction.getYear());
+                            item.getMonth(),
+                            item.getYear());
 
-                    transaction.setPaid(isChecked);
+                    item.setPaid(isChecked);
                 });
             }
             else {
                 AppDatabase.dbExecutor.execute(() -> {
-                    db.TransactionDao().updatePaid(transaction.getId(), isChecked);
-                    transaction.setPaid(isChecked);
+                    db.TransactionDao().updatePaid(item.getId(), isChecked);
+                    item.setPaid(isChecked);
                 });
             }
         });
@@ -113,7 +117,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
 
         // Set credit card item
-        if (transaction.getId() != -1 && transaction.getCardId() > 0) {
+        if (item.getId() != -1 && item.getCardId() > 0) {
             holder.mPaid.setVisibility(View.GONE);
             holder.mCardIcon.setVisibility(View.VISIBLE);
             holder.mCardSpace.setVisibility(View.VISIBLE);
@@ -123,8 +127,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
 
         // Open transaction details dialog
-        if (transaction.getId() > 0) {
-            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(transaction));
+        if (item.getId() > 0) {
+            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
         }
     }
 
@@ -137,7 +141,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         private final ImageView mIcon, mCardIcon, mCardSpace;
         private final TextView mName, mTotal, mCurrencySymbol;
-        private final CardView mContainer;
+        private final ConstraintLayout mContainer;
         private final ToggleButton mPaid;
 
         private ListViewHolder(@NonNull View itemView) {

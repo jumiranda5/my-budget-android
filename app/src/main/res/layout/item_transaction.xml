@@ -3,97 +3,85 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_simple_height">
+    android:layout_height="@dimen/item_simple_height"
+    android:background="@drawable/bg_list_item"
+    android:id="@+id/item_transaction">
 
     <ImageView
         style="@style/IconImage"
         android:id="@+id/empty_view"
-        android:layout_width="32dp"
+        android:layout_width="20dp"
         android:layout_height="match_parent"
-        android:padding="8dp"
+        android:layout_marginStart="12dp"
+        android:padding="0dp"
         android:visibility="gone"
+        app:tint="@color/medium_emphasis_text"
         app:srcCompat="@drawable/ic_app_subdirectory_arrow_right"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/item_transaction"
-        style="@style/Card"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
+    <ImageView
+        android:id="@+id/item_transaction_icon"
+        style="@style/IconImage"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/empty_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_app_category" />
+
+    <TextView
+        android:id="@+id/item_transaction_name"
+        style="@style/TextNormalEllipse"
+        android:layout_marginEnd="16dp"
+        android:text="@string/hint_description"
+        android:textSize="@dimen/trans_item_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
+        app:layout_constraintStart_toEndOf="@+id/item_transaction_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_transaction_total"
+        style="@style/NumberCurrencyRegular"
+        android:layout_marginEnd="52dp"
+        android:text="@string/test_currency_value"
+        android:textSize="@dimen/trans_item_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
+        app:layout_constraintEnd_toEndOf="@+id/item_transaction_toggle" />
+
+    <TextView
+        android:id="@+id/item_transaction_currency_symbol"
+        style="@style/NumberRegular"
+        android:text="@string/test_currency_symbol"
+        android:textSize="@dimen/trans_item_text_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
+        app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
+
+    <ToggleButton
+        android:id="@+id/item_transaction_toggle"
+        style="@style/ToolbarButton"
+        android:background="@drawable/button_toggle_paid"
+        android:checked="false"
+        android:contentDescription="@null"
+        android:textOff="@string/label_not_paid"
+        android:textOn="@string/label_paid"
+        android:textSize="0sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/empty_view"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/item_transaction_icon"
-                style="@style/IconImage"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_category" />
-
-            <TextView
-                android:id="@+id/item_transaction_name"
-                style="@style/TextNormalEllipse"
-                android:layout_marginEnd="16dp"
-                android:text="@string/hint_description"
-                android:textSize="@dimen/trans_item_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
-                app:layout_constraintStart_toEndOf="@+id/item_transaction_icon"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/item_transaction_total"
-                style="@style/NumberCurrencyRegular"
-                android:layout_marginEnd="48dp"
-                android:text="@string/test_currency_value"
-                android:textSize="@dimen/trans_item_text_size"
-                app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
-                app:layout_constraintEnd_toEndOf="@+id/item_transaction_toggle" />
-
-            <TextView
-                android:id="@+id/item_transaction_currency_symbol"
-                style="@style/NumberRegular"
-                android:text="@string/test_currency_symbol"
-                android:textSize="@dimen/trans_item_text_size"
-                app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
-                app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
-
-            <ToggleButton
-                android:id="@+id/item_transaction_toggle"
-                style="@style/IconButton"
-                android:background="@drawable/button_toggle_paid"
-                android:checked="false"
-                android:contentDescription="@null"
-                android:textOff="@string/label_not_paid"
-                android:textOn="@string/label_paid"
-                android:textSize="0sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/item_transaction_card_icon"
-                style="@style/IconImage"
-                android:contentDescription="@null"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_credit_card"
-                app:tint="@color/medium_emphasis_text" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/item_transaction_card_icon"
+        style="@style/IconImage"
+        android:contentDescription="@null"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_app_credit_card"
+        app:tint="@color/medium_emphasis_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

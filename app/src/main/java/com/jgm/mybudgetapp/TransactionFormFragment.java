@@ -684,8 +684,8 @@ public class TransactionFormFragment extends Fragment {
                 0, transferAccountOut.getId(), null,
                 isPaid, repeat, null, null);
 
-        saveTransaction(out);
-        saveTransaction(in);
+        insertTransactionOnDb(out);
+        insertTransactionOnDb(in);
     }
 
     private void setTransaction() {
@@ -713,7 +713,7 @@ public class TransactionFormFragment extends Fragment {
                 transactionType, description, amount,
                 year, month, day,
                 selectedCategoryId,
-                0, 0, isPaid, repeat, 0, null);
+                0, 0, isPaid, repeat, 1, null);
 
         if (repeat > 1) {
            long repeatId = System.currentTimeMillis();
@@ -729,36 +729,8 @@ public class TransactionFormFragment extends Fragment {
             transaction.setId(selectedTransaction.getId());
             editTransaction(transaction);
         }
-        else saveTransaction(transaction);
+        else insertTransactionOnDb(transaction);
 
-    }
-
-    // todo: save as null when not used, instead of 0...
-    private void saveTransaction(Transaction transaction) {
-
-        logTransaction(transaction);
-        insertTransactionOnDb(transaction);
-
-        if (repeat > 1) {
-            int i = 1;
-            while (i < repeat) {
-                // if repeat => update next transaction month and year
-                int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
-                transaction.setMonth(nextDate[0]);
-                transaction.setYear(nextDate[1]);
-                transaction.setRepeatCount(i);
-
-                // if repeat => update isPaid
-                if (transaction.getYear() >= today.getYear()
-                        && transaction.getMonth() >= today.getMonth()
-                        && transaction.getDay() >= today.getDay()) isPaid = false;
-
-                logTransaction(transaction);
-                insertTransactionOnDb(transaction);
-
-                i++;
-            }
-        }
     }
 
     private void insertTransactionOnDb(Transaction transaction) {
@@ -768,7 +740,30 @@ public class TransactionFormFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
+            logTransaction(transaction);
             transactionDao.insert(transaction);
+
+            // If repeat => save from second parcel on...
+            if (repeat > 1) {
+                int i = 1;
+                while (i < repeat) {
+                    // update next transaction month and year
+                    int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
+                    transaction.setMonth(nextDate[0]);
+                    transaction.setYear(nextDate[1]);
+                    transaction.setRepeatCount(i+1);
+
+                    // if repeat => update isPaid
+                    if (transaction.getYear() >= today.getYear()
+                            && transaction.getMonth() >= today.getMonth()
+                            && transaction.getDay() >= today.getDay()) transaction.setPaid(false);
+
+                    logTransaction(transaction);
+                    transactionDao.insert(transaction);
+
+                    i++;
+                }
+            }
 
             handler.post(() -> {
                 Log.d(Tags.LOG_DB, "Transaction saved on db... update ui");
