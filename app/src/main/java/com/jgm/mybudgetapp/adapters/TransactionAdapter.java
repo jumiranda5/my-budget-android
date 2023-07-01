@@ -90,15 +90,18 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isCardTotal) {
-                AppDatabase.dbExecutor.execute(() -> {
-                    db.TransactionDao().updatePaidCard(
-                            item.getCardId(),
-                            isChecked,
-                            item.getMonth(),
-                            item.getYear());
-
-                    item.setPaid(isChecked);
-                });
+                if (isChecked) mInterface.showMethodPickerDialog(false, item, position);
+                else {
+                    AppDatabase.dbExecutor.execute(() -> {
+                        db.TransactionDao().updatePaidCard(
+                                item.getCardId(),
+                                false,
+                                item.getMonth(),
+                                item.getYear(),
+                                0);
+                        item.setPaid(false);
+                    });
+                }
             }
             else {
                 AppDatabase.dbExecutor.execute(() -> {

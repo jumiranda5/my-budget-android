@@ -166,7 +166,14 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         // Delete transaction
         Group textGroup = view.findViewById(R.id.group_transaction);
         Group deleteItemGroup = view.findViewById(R.id.group_delete_item);
+        TextView deleteMessage = view.findViewById(R.id.progress_delete_text);
         ImageButton deleteBtn = view.findViewById(R.id.dialog_transaction_delete);
+
+        Log.d("debug-repeat", "Transaction repeat id: " + transaction.getRepeatId());
+
+        if (transaction.getRepeatId() != null) {
+            deleteMessage.setText("Deleting all parcels...");
+        }
 
         deleteBtn.setOnClickListener(v -> {
 
@@ -177,12 +184,18 @@ public class TransactionDialog extends BottomSheetDialogFragment {
             Handler handler = new Handler(Looper.getMainLooper());
             AppDatabase.dbExecutor.execute(() -> {
 
-                Log.d(Tags.LOG_DB, "Transaction id to delete: " + transaction.getId());
                 AppDatabase db = AppDatabase.getDatabase(mContext);
-                int res = db.TransactionDao().deleteById(transaction.getId());
+
+                if (transaction.getRepeatId() == null) {
+                    Log.d(Tags.LOG_DB, "Transaction id to delete: " + transaction.getId());
+                    db.TransactionDao().deleteById(transaction.getId());
+                }
+                else {
+                    Log.d(Tags.LOG_DB, "Transactions repeatId to delete: " + transaction.getRepeatId());
+                    db.TransactionDao().deleteByRepeatId(transaction.getRepeatId());
+                }
 
                 handler.postDelayed(() -> {
-                    Log.d(Tags.LOG_DB, "delete response: " + res);
                     mInterface.handleTransactionDeleted(transaction.getId());
                     dismiss();
                 }, 600);

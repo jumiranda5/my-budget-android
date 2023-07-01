@@ -420,7 +420,7 @@ public class TransactionFormFragment extends Fragment {
         mMethodPicker.setOnClickListener(view -> {
             currentMethodPicker = MAIN_METHOD_PICKER;
             boolean isExpense = formType.equals(Tags.expense);
-            mInterface.showMethodPickerDialog(isExpense);
+            mInterface.showMethodPickerDialog(isExpense, null, 0);
         });
     }
 
@@ -528,11 +528,11 @@ public class TransactionFormFragment extends Fragment {
     private void initTransferMethodPicker() {
         mAccountPickerOut.setOnClickListener(view -> {
             currentMethodPicker = 1;
-            mInterface.showMethodPickerDialog(false);
+            mInterface.showMethodPickerDialog(false, null, 0);
         });
         mAccountPickerIn.setOnClickListener(view -> {
             currentMethodPicker = 2;
-            mInterface.showMethodPickerDialog(false);
+            mInterface.showMethodPickerDialog(false, null, 0);
         });
     }
 

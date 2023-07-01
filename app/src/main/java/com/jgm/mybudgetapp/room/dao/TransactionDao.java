@@ -30,14 +30,18 @@ public interface TransactionDao {
     @Query("DELETE FROM transactions WHERE id=:id")
     int deleteById(int id);
 
+    @Query("DELETE FROM transactions WHERE repeatId=:repeatId")
+    void deleteByRepeatId(long repeatId);
+
     @Query("UPDATE transactions SET paid = :isPaid WHERE id = :id")
     void updatePaid(int id, boolean isPaid);
 
-    @Query("UPDATE transactions SET paid = :isPaid " +
+    @Query("UPDATE transactions " +
+            "SET paid = :isPaid, accountId = :accountId " +
             "WHERE cardId = :cardId " +
             "AND month = :month " +
             "AND year = :year")
-    void updatePaidCard(int cardId, boolean isPaid, int month, int year);
+    void updatePaidCard(int cardId, boolean isPaid, int month, int year, int accountId);
 
     /* ------------------------------------------------------------------------------
                                   TRANSACTIONS FRAGMENT

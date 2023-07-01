@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import com.jgm.mybudgetapp.databinding.FragmentTransactionsOutBinding;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
@@ -109,6 +111,23 @@ public class TransactionsOutFragment extends Fragment {
         expenses.remove(transaction);
 
         if (transaction != null) setExpensesData(transaction.getMonth(), transaction.getYear());
+    }
+
+    public void updateOnCreditCardPaid(TransactionResponse item, PaymentMethod paymentMethod, int position) {
+        AppDatabase db = AppDatabase.getDatabase(mContext);
+        Handler handler = new Handler();
+        AppDatabase.dbExecutor.execute(() -> {
+            db.TransactionDao().updatePaidCard(
+                    item.getCardId(),
+                    true,
+                    item.getMonth(),
+                    item.getYear(),
+                    paymentMethod.getId());
+            handler.post(() -> {
+                expenses.get(position).setPaid(true);
+                setExpensesData(item.getMonth(), item.getYear());
+            });
+        });
     }
 
     public void getExpensesData(int month, int year) {

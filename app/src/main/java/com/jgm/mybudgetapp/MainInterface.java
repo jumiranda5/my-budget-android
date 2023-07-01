@@ -39,7 +39,7 @@ public interface MainInterface {
     void showIconPickerDialog();
     void handleIconSelection(Icon icon);
     void showDatePickerDialog();
-    void showMethodPickerDialog(boolean isExpense);
+    void showMethodPickerDialog(boolean isExpense, TransactionResponse item, int position);
     boolean getMethodDialogType();
     void setSelectedPaymentMethod(PaymentMethod paymentMethod);
 

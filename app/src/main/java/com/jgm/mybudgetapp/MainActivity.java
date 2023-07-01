@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
     private String currentFragment;
     private boolean isExpenseMethodDialog;
+    private TransactionResponse transactionDialogItem;
+    private int transactionDialogItemPosition;
     private MyDate selectedDate;
     private MyDate today;
     private TransactionResponse selectedTransaction;
@@ -508,9 +510,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void showMethodPickerDialog(boolean isExpense) {
+    public void showMethodPickerDialog(boolean isExpense, TransactionResponse item, int position) {
         Log.d(Tags.LOG_NAV, "Show method picker dialog");
         isExpenseMethodDialog = isExpense;
+        transactionDialogItem = item;
+        transactionDialogItemPosition = position;
         MethodPickerDialog methodDialog = new MethodPickerDialog();
         methodDialog.show(getSupportFragmentManager(), "methodPicker");
     }
@@ -522,7 +526,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void setSelectedPaymentMethod(PaymentMethod paymentMethod) {
-        mTransactionForm.setSelectedPaymentMethod(paymentMethod);
+        if (mTransactionForm != null) mTransactionForm.setSelectedPaymentMethod(paymentMethod);
+        else if (mTransactionsOut != null && transactionDialogItem != null)
+            mTransactionsOut.updateOnCreditCardPaid(transactionDialogItem, paymentMethod, transactionDialogItemPosition);
     }
 
     /* ========================  SETTINGS ======================== */
