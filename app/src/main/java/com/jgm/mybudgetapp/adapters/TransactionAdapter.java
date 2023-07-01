@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +56,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Color color = ColorUtils.getColor(item.getColorId());
         boolean isCardTotal = item.getId() == -1;
         boolean isAccumulated = item.getId() == 0;
+
+        Log.d("debug-item", "category: " + item.getCategoryId() + " " + item.getCategoryName() + "/" + item.getDescription());
 
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));

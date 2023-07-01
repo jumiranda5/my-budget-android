@@ -99,7 +99,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         PaymentMethod paymentMethod = new PaymentMethod(0,0,"", 0, 0, 0);
         TextView method = view.findViewById(R.id.dialog_transaction_method);
 
-        if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
+        if (transaction.getAccountId() != null && transaction.getAccountId() > 0 && transaction.getCardId() == 0) {
             AppDatabase.dbExecutor.execute(() -> {
                 Account account = AppDatabase.getDatabase(mContext).AccountDao()
                         .getAccountById(transaction.getAccountId());

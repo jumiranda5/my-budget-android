@@ -329,6 +329,16 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_divisor_2" />
 
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/add_switch_edit_all"
+                style="@style/FormSwitch"
+                android:layout_marginTop="@dimen/form_divisor_space"
+                android:checked="true"
+                android:text="Edit all parcels"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_switch_paid" />
 
             <!-- Repeat -->
 
@@ -339,7 +349,7 @@
                 android:text="@string/label_repeat"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@id/add_switch_paid" />
+                app:layout_constraintTop_toBottomOf="@id/add_switch_edit_all" />
 
             <ImageButton
                 android:id="@+id/button_repeat_increase"

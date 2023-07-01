@@ -70,6 +70,7 @@ public class TransactionFormFragment extends Fragment {
     private int selectedCategoryId;
     private float amount;
     private int repeat = 1;
+    private boolean isEditAll = false;
     private boolean isPaid;
     private MyDate today;
     private MyDate selectedDate;
@@ -86,9 +87,9 @@ public class TransactionFormFragment extends Fragment {
     private ToggleButton mToggleExpense, mToggleIncome, mToggleTransfer;
     private Group mTransferGroup, mMainGroup;
     private ConstraintLayout mCreditCardMonthContainer;
-    private TextView mFormattedPrice;
+    private TextView mFormattedPrice, mRepeatLabel;
     private EditText mAmountInput, mRepeatInput;
-    private MaterialSwitch mSwitchPaid;
+    private MaterialSwitch mSwitchPaid, mSwitchEditAll;
     private RadioButton mMonth1, mMonth2;
     private AutoCompleteTextView mDescription;
     private ProgressBar mProgressBar;
@@ -116,6 +117,8 @@ public class TransactionFormFragment extends Fragment {
         mDecreaseRepeat = binding.buttonRepeatDecrease;
         mDescription = binding.addDescription;
         mProgressBar = binding.addProgressBar;
+        mRepeatLabel = binding.repeatLabel;
+        mSwitchEditAll = binding.addSwitchEditAll;
         // Icons
         mCategoryIcon = binding.addIconCategory;
         mDescIcon = binding.addIconDesc;
@@ -209,9 +212,19 @@ public class TransactionFormFragment extends Fragment {
         initMethod();
         setSelectedPaymentMethod(paymentMethod);
         initSwitchPayed();
-        initRepeat();
-        initSaveButton();
 
+        if (repeat == 1) initRepeat();
+        else {
+            mRepeatLabel.setVisibility(View.GONE);
+            mIncreaseRepeat.setVisibility(View.GONE);
+            hideRepeatInput();
+            mSwitchPaid.setVisibility(View.GONE);
+            mSwitchEditAll.setVisibility(View.VISIBLE);
+            mSwitchEditAll.setChecked(false);
+            mSwitchEditAll.setOnCheckedChangeListener((buttonView, isChecked) -> isEditAll = isChecked);
+        }
+
+        initSaveButton();
     }
 
     /* ===============================================================================
@@ -362,6 +375,7 @@ public class TransactionFormFragment extends Fragment {
         if (isEdit) {
             String weekday = MyDateUtils.getDayOfWeek(mContext, day, month, year)[0];
             btnText = weekday + " - " + formattedDate;
+            if (repeat > 1) btnText = "Day: " + day;
         }
         else btnText = getString(R.string.label_today) + " - " + formattedDate;
 
@@ -381,6 +395,7 @@ public class TransactionFormFragment extends Fragment {
 
         String dateFormatted = MyDateUtils.getFormattedFieldDate(mContext, year, month, day);
         String dateField = weekday + " - " + dateFormatted;
+        if (isEdit && repeat > 1) dateField = "Day: " + day;
         mDatePicker.setText(dateField);
 
         selectedDate = new MyDate(day, month, year);
@@ -397,6 +412,7 @@ public class TransactionFormFragment extends Fragment {
      =============================================================================== */
 
     private void initCategory(Category category) {
+        // todo: set default category...
         if (category == null) selectedCategoryId = 0;
         else setSelectedCategory(category);
         mCategoryPicker.setOnClickListener(view -> mInterface.openCategoriesList(false));
@@ -440,10 +456,11 @@ public class TransactionFormFragment extends Fragment {
         if (paymentMethod.getType() == 3) {
             selectedCardId = paymentMethod.getId();
             selectedAccountId = 0;
-            mSwitchPaid.setChecked(false);
+            mSwitchPaid.setVisibility(View.GONE);
             isPaid = false;
         }
         else {
+            mSwitchPaid.setVisibility(View.VISIBLE);
             selectedAccountId = paymentMethod.getId();
             selectedCardId = 0;
         }
@@ -720,6 +737,12 @@ public class TransactionFormFragment extends Fragment {
            transaction.setRepeatId(repeatId);
         }
 
+        // keep accountId and repeatId if editing credit card transaction
+        if (isEdit) {
+            transaction.setAccountId(selectedTransaction.getAccountId());
+            transaction.setRepeatId(selectedTransaction.getRepeatId());
+        }
+
         if (paymentMethod != null) {
             if (paymentMethod.getType() == 3) transaction.setCardId(selectedCardId);
             else transaction.setAccountId(selectedAccountId);
@@ -780,8 +803,25 @@ public class TransactionFormFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
-            transactionDao.update(transaction);
-            // todo: edit repeated transactions...
+            if (repeat == 1) transactionDao.update(transaction);
+            else if (isEditAll) {
+                transactionDao.updateAllParcels(transaction.getRepeatId(),
+                        transaction.getAmount(),
+                        transaction.getDescription(),
+                        transaction.getCardId(),
+                        transaction.getAccountId(),
+                        transaction.getCategoryId(),
+                        selectedDate.getDay());
+            }
+            else {
+                transactionDao.updateParcel(transaction.getId(),
+                        transaction.getAmount(),
+                        transaction.getDescription(),
+                        transaction.getCardId(),
+                        transaction.getAccountId(),
+                        transaction.getCategoryId(),
+                        selectedDate.getDay());
+            }
 
             handler.post(() -> {
                 Log.d(Tags.LOG_DB, "Transaction updated on db... update ui");

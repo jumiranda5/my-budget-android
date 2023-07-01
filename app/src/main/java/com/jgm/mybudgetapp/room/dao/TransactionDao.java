@@ -37,6 +37,20 @@ public interface TransactionDao {
     void updatePaid(int id, boolean isPaid);
 
     @Query("UPDATE transactions " +
+            "SET description = :description, amount = :amount, " +
+            "cardId = :cardId, accountId = :accountId, day = :day, categoryId = :categoryId " +
+            "WHERE repeatId = :repeatId ")
+    void updateAllParcels(long repeatId, float amount, String description,
+                       int cardId, int accountId, int categoryId, int day);
+
+    @Query("UPDATE transactions " +
+            "SET description = :description, amount = :amount, " +
+            "cardId = :cardId, accountId = :accountId, day = :day, categoryId = :categoryId " +
+            "WHERE id = :id ")
+    void updateParcel(int id, float amount, String description,
+                          int cardId, int accountId, int categoryId, int day);
+
+    @Query("UPDATE transactions " +
             "SET paid = :isPaid, accountId = :accountId " +
             "WHERE cardId = :cardId " +
             "AND month = :month " +
