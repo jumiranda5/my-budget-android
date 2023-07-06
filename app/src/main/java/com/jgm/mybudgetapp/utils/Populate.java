@@ -56,6 +56,7 @@ public class Populate {
 
             ArrayList<com.jgm.mybudgetapp.room.entity.Category> list = new ArrayList<>();
 
+            // todo: set default category...(id should be 1)
             Category c1 = new Category(context.getString(R.string.category_home), 3, 6, true);
             Category c2 = new Category(context.getString(R.string.category_health), 5, 34, true);
             Category c3 = new Category(context.getString(R.string.category_groceries), 14, 9, true);

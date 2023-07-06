@@ -412,8 +412,7 @@ public class TransactionFormFragment extends Fragment {
      =============================================================================== */
 
     private void initCategory(Category category) {
-        // todo: set default category...
-        if (category == null) selectedCategoryId = 0;
+        if (category == null) selectedCategoryId = 1;
         else setSelectedCategory(category);
         mCategoryPicker.setOnClickListener(view -> mInterface.openCategoriesList(false));
     }

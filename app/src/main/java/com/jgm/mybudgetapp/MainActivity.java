@@ -63,6 +63,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements MainInterface {
 
     // Constants
+    private static final String LOG_MAIN = "debug-main";
     private static final String STATE_FRAGMENT = "current-fragment";
     private static final String STATE_TAG_LIST = "fragment-tag-list";
     private static final String STATE_DAY = "day";
@@ -117,8 +118,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Log.d(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
+
         // set dark/light mode
         if (savedInstanceState == null) {
+            Log.d(LOG_MAIN, "Set dark/light mode");
             boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(this, "isDark");
             switchDarkMode(isDark);
         }
@@ -126,13 +130,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
 
-        Log.d(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBinding();
 
         if (savedInstanceState == null) {
+            Log.d(LOG_MAIN, "savedInstance is null => init splash screen delay, get date " +
+                    "and populate accounts and categories tables if empty");
             handleSplashScreenDelay(splashScreen);
             selectedDate = MyDateUtils.getCurrentDate(this);
             Populate.initDefaultAccounts(this);
@@ -140,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
         else {
             // Set toolbar date
+            Log.d(LOG_MAIN, "savedInstance NOT null => get saved info and set toolbar date");
             int day = savedInstanceState.getInt(STATE_DAY);
             int month = savedInstanceState.getInt(STATE_MONTH);
             int year = savedInstanceState.getInt(STATE_YEAR);
@@ -156,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void handleSplashScreenDelay(SplashScreen splashScreen) {
 
-        Log.d("debug-SplashScreen", "Init splash screen timer");
+        Log.d(LOG_MAIN, "Init splash screen timer");
 
         splashScreen.setKeepOnScreenCondition(() -> keep);
 
@@ -210,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      =============================================================================== */
 
     private void initToolbar() {
+        Log.d(LOG_MAIN, "=> Init toolbar");
         // set toolbar date
         mToolbarMonth.setText(selectedDate.getMonthName());
         mToolbarYear.setText(String.valueOf(selectedDate.getYear()));
@@ -228,6 +234,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarYear.setText(String.valueOf(nextDate.getYear()));
         setToolbarMonthStyle();
         updateMonthOnCurrentFragment();
+
+        Log.d(LOG_MAIN, "Next month: " + nextDate.getMonthName());
     }
 
     private void setToolbarPrevMonth() {
@@ -237,6 +245,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarYear.setText(String.valueOf(prevDate.getYear()));
         setToolbarMonthStyle();
         updateMonthOnCurrentFragment();
+
+        Log.d(LOG_MAIN, "Previous month: " + prevDate.getMonthName());
     }
 
     private void setToolbarMonthStyle() {
@@ -259,11 +269,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private void setToolbarVisibilities(String tag) {
 
         if (tag.equals(homeTag) || tag.equals(categoriesTag) || tag.equals(transactionsOutTag)) {
+            Log.d(LOG_MAIN, "Toolbar visible");
             toolbar.setVisibility(View.VISIBLE);
             if (tag.equals(homeTag)) settingsButton.setVisibility(View.VISIBLE);
             else settingsButton.setVisibility(View.GONE);
         }
         else {
+            Log.d(LOG_MAIN, "Toolbar gone");
             toolbar.setVisibility(View.GONE);
         }
 
@@ -274,6 +286,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      =============================================================================== */
 
     private void initBottomBar() {
+        Log.d(LOG_MAIN, "=> Init bottom bar");
+
         MenuItem itemHome = bottomNavigationView.getMenu().getItem(0);
         MenuItem itemCategories = bottomNavigationView.getMenu().getItem(1);
         MenuItem itemAdd = bottomNavigationView.getMenu().getItem(2);
@@ -309,6 +323,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void updateBottomNav(String tag) {
 
+        Log.d(LOG_MAIN, "=> Update bottom nav");
+
         showBottomNav();
 
         switch (tag) {
@@ -329,12 +345,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
     }
 
-
     private void hideBottomNav() {
+        Log.d(LOG_MAIN, "Hide bottom nav");
         bottomNavigationView.setVisibility(View.GONE);
     }
 
     private void showBottomNav() {
+        Log.d(LOG_MAIN, "Show bottom nav");
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
@@ -343,31 +360,38 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                                          INTERFACE
      =============================================================================== */
 
-    /* ==========  NAVIGATION ========== */
+    /* ====  NAVIGATION ==== */
 
     @Override
-    public void open(String tag) { openFragment(tag); }
+    public void open(String tag) {
+        Log.d(LOG_MAIN, "-- Interface => open");
+        openFragment(tag);
+    }
 
     @Override
     public void openExpensesCategories() {
+        Log.d(LOG_MAIN, "-- Interface => open expenses categories");
         openFragment(categoriesTag);
         if (mCategories != null) mCategories.setType(Tags.TYPE_OUT);
     }
 
     @Override
     public void openIncomeCategories() {
+        Log.d(LOG_MAIN, "-- Interface => open income categories");
         openFragment(categoriesTag);
         if (mCategories != null) mCategories.setType(Tags.TYPE_IN);
     }
 
     @Override
     public void openCategoriesList(boolean isEdit) {
+        Log.d(LOG_MAIN, "-- Interface => open categories list");
         openFragment(categoriesListTag);
         if (mCategoriesList != null) mCategoriesList.setListType(isEdit);
     }
 
     @Override
     public void openCategoryForm(boolean isEdit, Category category, int position) {
+        Log.d(LOG_MAIN, "-- Interface => open category form");
         openFragment(categoriesFormTag);
         if (mCategoriesForm != null) {
             mCategoriesForm.setFormType(isEdit);
@@ -377,12 +401,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openAccountDetails(AccountTotal accountTotal, int position) {
+        Log.d(LOG_MAIN, "-- Interface => open account details");
         openFragment(accountDetailsTag);
         if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, position);
     }
 
     @Override
     public void openAccountForm(boolean isEdit, Account account, int position) {
+        Log.d(LOG_MAIN, "-- Interface => open account form");
         openFragment(accountFormTag);
         if (mAccountForm != null) {
             mAccountForm.setFormType(isEdit);
@@ -392,12 +418,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openCardDetails(CreditCard card, int position) {
+        Log.d(LOG_MAIN, "-- Interface => open card details");
         openFragment(cardDetailsTag);
         if (mCreditCardDetails != null) mCreditCardDetails.setCreditCard(card, position);
     }
 
     @Override
     public void openCardForm(boolean isEdit, CreditCard card, int position) {
+        Log.d(LOG_MAIN, "-- Interface => open card form");
         openFragment(cardFormTag);
         if (mCreditCardForm != null) {
             mCreditCardForm.setFormType(isEdit);
@@ -409,6 +437,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void openTransactionForm(
             boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
 
+        Log.d(LOG_MAIN, "-- Interface => open transaction form");
+
         setFragment(transactionFormTag);
 
         if (mTransactionForm != null) {
@@ -419,15 +449,17 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void navigateBack() {
+        Log.d(LOG_MAIN, "-- Interface => navigate back");
         onBackPressed();
     }
 
 
-    /* ========================  DIALOGS ======================== */
+    /* ==== DIALOGS ==== */
 
 
     @Override
     public void showConfirmationDialog(String message) {
+        Log.d(LOG_MAIN, "-- Interface => show confirmation dialog");
         FragmentManager fm = getSupportFragmentManager();
         ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message);
         confirmationDialog.show(fm, "CONFIRMATION_DIALOG");
@@ -435,6 +467,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void handleConfirmation() {
+        Log.d(LOG_MAIN, "-- Interface => handle confirmation");
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null)
             mCategoriesForm.handleArchiveConfirmation();
         else if (currentFragment.equals(cardFormTag) && mCreditCardForm != null)
@@ -445,6 +478,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void showTransactionDialog(TransactionResponse transaction) {
+        Log.d(LOG_MAIN, "-- Interface => show transaction dialog");
         selectedTransaction = transaction;
         BottomSheetDialogFragment transactionDialog = new TransactionDialog();
         transactionDialog.show(getSupportFragmentManager(), "TRANSACTION DIALOG");
@@ -452,23 +486,26 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public TransactionResponse getSelectedTransactionData() {
+        Log.d(LOG_MAIN, "-- Interface => getSelectedTransactionData");
         return selectedTransaction;
     }
 
     @Override
     public void handleTransactionDeleted(int id) {
+        Log.d(LOG_MAIN, "-- Interface => handleTransactionDeleted");
         if (mTransactionsOut != null) mTransactionsOut.updateOnTransactionDeleted(id);
     }
 
     @Override
     public void showColorPickerDialog() {
-        Log.d(Tags.LOG_NAV, "Show color picker dialog");
+        Log.d(LOG_MAIN, "-- Interface => Show color picker dialog");
         BottomSheetDialogFragment colorPicker = new ColorPickerDialog();
         colorPicker.show(getSupportFragmentManager(), "colorPicker");
     }
 
     @Override
     public void handleColorSelection(Color color) {
+        Log.d(LOG_MAIN, "-- Interface => handleColorSelection");
         if (currentFragment.equals(cardFormTag) && mCreditCardForm != null) {
             mCreditCardForm.setSelectedColor(color);
         }
@@ -482,20 +519,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void showIconPickerDialog() {
-        Log.d(Tags.LOG_NAV, "Show icon picker dialog");
+        Log.d(LOG_MAIN, "-- Interface => showIconPickerDialog");
         BottomSheetDialogFragment iconPicker = new IconPickerDialog();
         iconPicker.show(getSupportFragmentManager(), "iconPicker");
     }
 
     @Override
     public void handleIconSelection(Icon icon) {
-        Log.d("debug-icon-picker", "Icon: " + icon.getIconName());
+        Log.d(LOG_MAIN, "-- Interface => handleIconSelection "  + icon.getIconName());
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) mCategoriesForm.setSelectedIcon(icon);
     }
 
     @Override
     public void showDatePickerDialog() {
-        Log.d(Tags.LOG_NAV, "Show date picker dialog");
+        Log.d(LOG_MAIN, "-- Interface => showDatePickerDialog");
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build();
@@ -511,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void showMethodPickerDialog(boolean isExpense, TransactionResponse item, int position) {
-        Log.d(Tags.LOG_NAV, "Show method picker dialog");
+        Log.d(LOG_MAIN, "-- Interface => showMethodPickerDialog");
         isExpenseMethodDialog = isExpense;
         transactionDialogItem = item;
         transactionDialogItemPosition = position;
@@ -521,48 +558,56 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public boolean getMethodDialogType() {
+        Log.d(LOG_MAIN, "-- Interface => getMethodDialogType");
         return isExpenseMethodDialog;
     }
 
     @Override
     public void setSelectedPaymentMethod(PaymentMethod paymentMethod) {
+        Log.d(LOG_MAIN, "-- Interface => setSelectedPaymentMethod");
         if (mTransactionForm != null) mTransactionForm.setSelectedPaymentMethod(paymentMethod);
         else if (mTransactionsOut != null && transactionDialogItem != null)
             mTransactionsOut.updateOnCreditCardPaid(transactionDialogItem, paymentMethod, transactionDialogItemPosition);
     }
 
-    /* ========================  SETTINGS ======================== */
+    /* ==== SETTINGS ==== */
 
 
     @Override
     public void switchDarkMode(boolean isDark) {
+        Log.d(LOG_MAIN, "-- Interface => switchDarkMode");
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (isDark) {
+            Log.d(LOG_MAIN, "Dark Mode");
             if (currentNightMode != Configuration.UI_MODE_NIGHT_YES)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
         else {
+            Log.d(LOG_MAIN, "Light Mode");
             if (currentNightMode != Configuration.UI_MODE_NIGHT_NO)
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
 
-    /* ========== CATEGORIES ========== */
+    /* ==== CATEGORIES ==== */
 
     @Override
     public void setSelectedCategory(Category category) {
+        Log.d(LOG_MAIN, "-- Interface => setSelectedCategory: " + category.getName());
         if (mTransactionForm != null) mTransactionForm.setSelectedCategory(category);
         onBackPressed();
     }
 
     @Override
     public void handleCategoryInserted(Category category) {
+        Log.d(LOG_MAIN, "-- Interface => handleCategoryInserted: " + category.getName());
         if (mCategoriesList != null) mCategoriesList.updateListAfterDbInsertion(category);
     }
 
     @Override
     public void handleCategoryEdited(int position, Category category) {
+        Log.d(LOG_MAIN, "-- Interface => handleCategoryEdited: " + category.getName() + " pos: " + position);
         if (mCategoriesList != null) {
             if (category.isActive()) mCategoriesList.updateListAfterEdit(position, category);
             else mCategoriesList.updateListAfterDelete(position);
@@ -570,10 +615,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ========== ACCOUNTS ========== */
+    /* ==== ACCOUNTS ==== */
 
     @Override
     public void updateAccountInserted(Account account, boolean isEdit, int position) {
+        Log.d(LOG_MAIN, "-- Interface => updateAccountInserted: " + account.getName());
         if (!isEdit){
             if (mAccounts != null) mAccounts.updateUiAfterInsertion(account);
         }
@@ -593,15 +639,17 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ==========  CREDIT CARDS ========== */
+    /* ====  CREDIT CARDS ==== */
 
     @Override
     public void handleCreditCardInserted(CreditCard card) {
+        Log.d(LOG_MAIN, "-- Interface => handleCreditCardInserted: " + card.getName());
         if (mCreditCards != null) mCreditCards.updateUiAfterInsertion(card);
     }
 
     @Override
     public void handleCreditCardEdited(int position, CreditCard card) {
+        Log.d(LOG_MAIN, "-- Interface => handleCreditCardEdited: " + card.getName() + " pos: " + position);
         if (card.isActive()) {
             if (mCreditCards != null) mCreditCards.updateListAfterEdit(position, card);
             if (mCreditCardDetails != null) mCreditCardDetails.updateCreditCardAfterEdit(card);
@@ -614,9 +662,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
-    /* ==========  DATE ========== */
+    /* ====  DATE ==== */
     @Override
     public MyDate getDate() {
+        Log.d(LOG_MAIN, "-- Interface => getDate: " +
+                selectedDate.getDay() + "/" + selectedDate.getMonthName() + "/" + selectedDate.getYear());
         return selectedDate;
     }
 
@@ -626,8 +676,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
      =============================================================================== */
 
     private void openFragment(String tag) {
-        Log.d(Tags.LOG_NAV, "== openFragment / " + tag);
-        Log.d(Tags.LOG_NAV, "currentFragment " + currentFragment);
+        Log.d(Tags.LOG_NAV, "== openFragment / " + tag + " | " + "currentFragment " + currentFragment);
         if (!currentFragment.equals(tag)) {
             if (tag.equals(homeTag)) resetFragmentStack();
             setFragment(tag);
@@ -718,15 +767,20 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 || tag.equals(cardFormTag)
                 || tag.equals(cardDetailsTag)
                 || tag.equals(accountFormTag)
-                || tag.equals(accountDetailsTag)) addFragment(fragment, tag);
-        else replaceFragment(fragment, tag);
+                || tag.equals(accountDetailsTag)) {
+            Log.d(Tags.LOG_NAV, "Add fragment: " + tag);
+            addFragment(fragment, tag);
+        }
+        else {
+            Log.d(Tags.LOG_NAV, "Replace fragment: " + tag);
+            replaceFragment(fragment, tag);
+        }
 
     }
 
     private void replaceFragment(Fragment fragment, String tag) {
 
-        Log.d(Tags.LOG_NAV, "== replaceFragment / new fragment: " + tag);
-        Log.d(Tags.LOG_NAV, "Fragment to be replaced: " + currentFragment);
+        Log.d(Tags.LOG_NAV, "== replaceFragment: new fragment = " + tag + "old fragment = " + currentFragment);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_content_frame, fragment, tag);
@@ -746,18 +800,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         // Set current fragment tag
         currentFragment = tag;
 
-        Log.d(Tags.LOG_NAV, "Fragment loaded: " + tag);
+        Log.d(Tags.LOG_NAV, "New fragment loaded: " + tag);
 
     }
 
     private void addFragment(Fragment fragment, String tag) {
 
-        Log.d(Tags.LOG_NAV, "Fragment to be added: " + tag);
+        Log.d(Tags.LOG_NAV, "== Fragment to be added: " + tag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.main_content_frame, fragment, tag);
         transaction.commit();
 
         // hide prev fragment
+        Log.d(Tags.LOG_NAV, "Hide prev fragment: " + currentFragment);
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
         switch (tag) {
             case categoriesListTag:
@@ -790,12 +845,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         // Set current fragment tag
         currentFragment = tag;
-        Log.d(Tags.LOG_NAV, "Fragment added: " + tag);
+        Log.d(Tags.LOG_NAV, "New fragment loaded: " + tag);
     }
 
     private void showHiddenFragment(String tag, String prevTag) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Log.d(Tags.LOG_NAV, "== Show hidden fragment: " + tag);
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (prevTag) {
             case categoriesListTag:
                 if (tag.equals(transactionFormTag)) transaction.show(mTransactionForm);
@@ -825,12 +881,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void destroyFragment(Fragment fragment, String tag) {
-        Log.d(Tags.LOG_NAV, "Fragment to be removed: " + tag);
+        Log.d(Tags.LOG_NAV, "== Destroy fragment: " + tag);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(fragment);
         transaction.commit();
 
         // show prev fragment
+        Log.d(Tags.LOG_NAV, "Show hidden fragment: " + currentFragment);
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
         switch (tag) {
             case categoriesListTag:
@@ -869,8 +926,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if(backStackCount > 1){
             // Get previous fragment from stack
             String newTopFragmentTag = mFragmentTagList.get(backStackCount - 2);
-            Log.d(Tags.LOG_NAV, "previous fragment (return to): " + newTopFragmentTag);
             Log.d(Tags.LOG_NAV, "current fragment (remove): " + topFragmentTag);
+            Log.d(Tags.LOG_NAV, "previous fragment (return to): " + newTopFragmentTag);
 
             mFragmentTagList.remove(topFragmentTag);
 
@@ -907,6 +964,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                     || topFragmentTag.equals(categoriesFormTag)
                     || topFragmentTag.equals(categoriesListTag)) {
 
+                Log.d(Tags.LOG_NAV, "show hidden newTopFragment");
                 showHiddenFragment(newTopFragmentTag, topFragmentTag);
 
             }
@@ -925,7 +983,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     // for screen rotation...
     private void reReferenceFragment(String tag) {
 
-        Log.d(Tags.LOG_NAV, "========= re-reference: " + currentFragment);
+        Log.d(Tags.LOG_NAV, "========= re-reference: " + tag);
 
         switch (tag) {
             case accountsTag:
@@ -977,6 +1035,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void deReferenceFragment(String tag) {
+
+        Log.d(Tags.LOG_NAV, "========= de-reference: " + tag);
 
         if (tag != null) {
             switch (tag) {
