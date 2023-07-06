@@ -50,6 +50,12 @@ public class Charts {
             // Start from the bottom
             float start = 90;
 
+            // Draw empty chart if categories.size() = 0
+            if (categories.size() == 0) {
+                paint.setColor(context.getColor(R.color.light_grey));
+                canvas.drawArc(box, start, 360.0f, true, paint);
+            }
+
             // Loop through list to set the pie slices
             for(int i = 0; i < categories.size(); i++) {
 

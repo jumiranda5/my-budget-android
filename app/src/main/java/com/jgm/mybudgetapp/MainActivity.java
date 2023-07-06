@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
+        Log.i(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
 
         // set dark/light mode
         if (savedInstanceState == null) {
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         currentFragment = savedInstanceState.getString(STATE_FRAGMENT);
         mFragmentTagList = savedInstanceState.getStringArrayList(STATE_TAG_LIST);
 
-        Log.d(Tags.LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
+        Log.i(Tags.LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
 
         for (int i = 0; i < mFragmentTagList.size(); i++) {
             reReferenceFragment(mFragmentTagList.get(i));
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(Tags.LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
+        Log.i(Tags.LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
         outState.putString(STATE_FRAGMENT, currentFragment);
         outState.putStringArrayList(STATE_TAG_LIST, mFragmentTagList);
         outState.putInt(STATE_DAY, selectedDate.getDay());

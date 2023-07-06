@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +46,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private static final String LOG_LIFECYCLE = "debug-lifecycle-home";
+    private final static String LOG_HOME = "debug-home";
 
     // UI
     private FragmentHomeBinding binding;
@@ -97,6 +96,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        Log.i(Tags.LOG_LIFECYCLE, "Home fragment onAttach");
         mContext = context;
         mInterface = (MainInterface) context;
     }
@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(Tags.LOG_LIFECYCLE, "Home fragment onCreateView");
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -115,10 +116,12 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.i(Tags.LOG_LIFECYCLE, "Home fragment onViewCreated");
+
         initNavigation();
 
         if (savedInstanceState == null) {
-            Log.d(LOG_LIFECYCLE, "saved instance is null => init home data");
+            Log.d(LOG_HOME, "saved instance is null => init home data");
             mCardPending.setVisibility(View.GONE);
             MyDate today = MyDateUtils.getCurrentDate(mContext);
             getHomeData(today.getMonth(), today.getYear());
@@ -147,16 +150,19 @@ public class HomeFragment extends Fragment {
      =============================================================================== */
 
     public void getHomeData(int month, int year) {
+        Log.d(LOG_HOME, "== getHomeData: month = " + month + ", year = " + year);
 
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
+            Log.d(LOG_HOME, "Retrieving data from db...");
+
             MyDate today = MyDateUtils.getCurrentDate(mContext);
             int pendingCount = transactionDao.getPendingCount(today.getDay(), today.getMonth(), today.getYear());
 
-            float prevTotal = transactionDao.getAccumulated(month, year);
+            float accumulated = transactionDao.getAccumulated(month, year);
             Balance balance = transactionDao.getHomeBalance(month, year);
             HomeAccounts homeAccounts = transactionDao.getAccountsTotals();
             List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
@@ -164,19 +170,20 @@ public class HomeFragment extends Fragment {
             List<MonthResponse> yearBalance = transactionDao.getYearBalance(year);
 
             handler.post(() -> {
-                setBalanceData(balance, prevTotal);
+                Log.d(LOG_HOME, "Data successfully retrieved");
+                setBacklogMessage(pendingCount);
+                setBalanceData(balance, accumulated);
                 setAccountsData(homeAccounts);
                 setIncomeCategories(incomeCategories);
                 setExpensesCategories(expensesCategories);
                 setYearChart(yearBalance, year);
-                setBacklogMessage(pendingCount);
             });
 
         });
     }
 
     private void setBacklogMessage(int count) {
-        Log.d(Tags.LOG_DB, "Pending => " + count);
+        Log.d(Tags.LOG_DB, "== Pending => " + count);
 
         if (count == 0) mCardPending.setVisibility(View.GONE);
         else {
@@ -193,14 +200,20 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setBalanceData(Balance balance, float prevTotal) {
+    private void setBalanceData(Balance balance, float accumulated) {
 
-        float monthBalance = balance.getBalance() + prevTotal;
+        Log.d(LOG_HOME, "== setBalanceData: \n" +
+                "balance = " + balance.getBalance() + "\n" +
+                "accumulated: " + accumulated + "\n" +
+                "income: " + balance.getIncome() + "\n" +
+                "expenses: " + balance.getExpenses());
+
+        float monthBalance = balance.getBalance() + accumulated;
         float monthExpenses = balance.getExpenses();
         float monthIncome = balance.getIncome();
 
-        if (prevTotal < 0.0f) monthExpenses = monthExpenses + prevTotal;
-        else monthIncome = monthIncome + prevTotal;
+        if (accumulated < 0.0f) monthExpenses = monthExpenses + accumulated;
+        else monthIncome = monthIncome + accumulated;
 
         String formattedBalance = NumberUtils.getCurrencyFormat(mContext, monthBalance)[2];
         String formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome)[2];
@@ -212,19 +225,19 @@ public class HomeFragment extends Fragment {
         // Progress
         float percentage = (Math.abs(monthExpenses)/Math.abs(monthIncome)) * 100;
         if (percentage < 0) percentage = 0;
-        if (percentage > 999) percentage = 100; // todo... ?
+        if (percentage > 999) percentage = 100;
         int progress = (int) percentage;
         String progressText = progress + "%";
         mProgressText.setText(progressText);
         mBalanceProgress.setProgress(progress);
 
-        Log.d("debug-home", "======> " + Math.abs(monthExpenses) + "/" + Math.abs(monthIncome));
-        Log.d("debug-home", "======> " + percentage);
-        Log.d("debug-home", "======> " + progress);
+        Log.d(LOG_HOME, "percentage: " + percentage);
+        Log.d(LOG_HOME, "progress: " + progress);
 
     }
 
     private void setAccountsData(HomeAccounts homeAccounts) {
+        Log.d(LOG_HOME, "== setAccountsData");
         String formattedCash = NumberUtils.getCurrencyFormat(mContext, homeAccounts.getCash())[2];
         String formattedChecking = NumberUtils.getCurrencyFormat(mContext, homeAccounts.getChecking())[2];
         String formattedSavings = NumberUtils.getCurrencyFormat(mContext, homeAccounts.getSavings())[2];
@@ -235,35 +248,38 @@ public class HomeFragment extends Fragment {
 
     private void setIncomeCategories(List<CategoryResponse> categories) {
 
+        Log.d(LOG_HOME, "== setIncomeCategories: " + categories.size());
+
         initCategoriesIncomeList(categories);
         ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
         mIncomeChart.post(() -> {
-            if (percents.size() > 0) {
-                mCategoriesIncomeLabel.setVisibility(View.GONE);
-                mIncomeChart.setImageTintList(null);
-                Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 10);
-            }
+            mIncomeChart.setImageTintList(null);
+            if (percents.size() > 0) mCategoriesIncomeLabel.setVisibility(View.GONE);
+            else mCategoriesIncomeLabel.setVisibility(View.VISIBLE);
+            Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 10);
         });
-
     }
 
     private void setExpensesCategories(List<CategoryResponse> categories) {
+
+        Log.d(LOG_HOME, "== setExpensesCategories: " + categories.size());
 
         initCategoriesExpensesList(categories);
         ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
         mExpensesChart.post(() -> {
-            if (percents.size() > 0) {
-                mCategoriesExpensesLabel.setVisibility(View.GONE);
-                mExpensesChart.setImageTintList(null);
-                Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 10);
-            }
+            mExpensesChart.setImageTintList(null);
+            if (percents.size() > 0) mCategoriesExpensesLabel.setVisibility(View.GONE);
+            else mCategoriesExpensesLabel.setVisibility(View.VISIBLE);
+            Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 10);
         });
 
     }
 
     private void setYearChart(List<MonthResponse> response, int year) {
+
+        Log.d(LOG_HOME, "== setYearChart: " + response.size());
 
         mYearChart.post(() -> {
             ArrayList<MonthTotal> yearList = new ArrayList<>();
@@ -330,6 +346,8 @@ public class HomeFragment extends Fragment {
 
     private void initCategoriesIncomeList(List<CategoryResponse> categories) {
 
+        Log.d(LOG_HOME, "== initCategoriesIncomeList: " + categories.size());
+
         List<CategoryResponse> cat;
 
         if (categories.size() > 3) cat = categories.subList(0, 3);
@@ -343,6 +361,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void initCategoriesExpensesList(List<CategoryResponse> categories) {
+
+        Log.d(LOG_HOME, "== initCategoriesExpensesList: " + categories.size());
 
         List<CategoryResponse> cat;
 
