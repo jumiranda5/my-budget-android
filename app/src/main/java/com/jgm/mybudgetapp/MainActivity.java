@@ -456,7 +456,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     /* ==== DIALOGS ==== */
 
-
     @Override
     public void showConfirmationDialog(String message) {
         Log.d(LOG_MAIN, "-- Interface => show confirmation dialog");
@@ -474,6 +473,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mCreditCardForm.handleArchiveConfirmation();
         else if (currentFragment.equals(accountFormTag) && mAccountForm != null)
             mAccountForm.handleArchiveConfirmation();
+        else if (currentFragment.equals(settingsTag) && mSettings != null)
+            mSettings.clearDatabase();
     }
 
     @Override
@@ -780,7 +781,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void replaceFragment(Fragment fragment, String tag) {
 
-        Log.d(Tags.LOG_NAV, "== replaceFragment: new fragment = " + tag + "old fragment = " + currentFragment);
+        Log.d(Tags.LOG_NAV, "== replaceFragment: new fragment = " + tag + " old fragment = " + currentFragment);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_content_frame, fragment, tag);

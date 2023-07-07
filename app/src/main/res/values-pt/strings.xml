@@ -3,6 +3,7 @@
     <string name="app_name">My Budget App</string>
 
     <!-- Default categories -->
+    <string name="category_default">Categoria</string>
     <string name="category_home">Lar</string>
     <string name="category_health">Saúde</string>
     <string name="category_groceries">Mercado</string>

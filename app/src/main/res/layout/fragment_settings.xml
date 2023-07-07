@@ -8,6 +8,7 @@
     tools:context=".SettingsFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/settings_container"
         style="@style/MyNestedScrollView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -187,9 +188,36 @@
                 app:layout_constraintTop_toTopOf="@+id/settings_privacy_policy"
                 app:srcCompat="@drawable/ic_app_policy" />
 
+            <Button
+                android:id="@+id/settings_clear_data"
+                style="@style/SettingsButton"
+                android:text="Reset Database"
+                android:textColor="@color/text_error"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintTop_toBottomOf="@+id/settings_privacy_policy" />
+
+            <ImageView
+                android:id="@+id/settings_clear_data_icon"
+                style="@style/InputIcon"
+                android:contentDescription="@null"
+                app:tint="@color/text_error"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_clear_data"
+                app:layout_constraintStart_toStartOf="@+id/settings_clear_data"
+                app:layout_constraintTop_toTopOf="@+id/settings_clear_data"
+                app:srcCompat="@drawable/ic_app_dangerous" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/settings_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center" />
 
 </FrameLayout>

@@ -24,4 +24,7 @@ public interface CardDao {
     @Query("SELECT * FROM cards WHERE id = :id LIMIT 1")
     CreditCard getCreditCardById(int id);
 
+    @Query("DELETE FROM cards")
+    void clearCardsTable();
+
 }

@@ -27,6 +27,9 @@ public interface TransactionDao {
     @Update
     void update(Transaction transaction);
 
+    @Query("DELETE FROM transactions")
+    void clearTransactionsTable();
+
     @Query("DELETE FROM transactions WHERE id=:id")
     int deleteById(int id);
 

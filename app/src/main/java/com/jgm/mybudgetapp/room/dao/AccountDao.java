@@ -27,6 +27,12 @@ public interface AccountDao {
     @Query("SELECT * FROM accounts WHERE id = :id LIMIT 1")
     Account getAccountById(int id);
 
+    @Query("DELETE FROM accounts")
+    void clearAccountsTable();
+
+    @Query("SELECT COUNT(id) FROM accounts AS count")
+    int getAccountsCount();
+
     // Get accounts with totals by type
     @MapInfo(valueColumn = "total")
     @Query("SELECT accounts.*, SUM(transactions.amount) AS total " +
@@ -35,6 +41,5 @@ public interface AccountDao {
             "GROUP BY accounts.id " +
             "ORDER BY type, name ASC")
     Map<Account, String> getAccountsWithTotals();
-
 
 }

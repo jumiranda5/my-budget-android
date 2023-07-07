@@ -21,4 +21,10 @@ public interface CategoryDao {
     @Update
     void update(Category category);
 
+    @Query("SELECT COUNT(id) FROM categories AS count")
+    int getCategoriesCount();
+
+    @Query("DELETE FROM categories")
+    void clearCategoriesTable();
+
 }
