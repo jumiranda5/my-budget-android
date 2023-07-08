@@ -33,6 +33,9 @@ public interface AccountDao {
     @Query("SELECT COUNT(id) FROM accounts AS count")
     int getAccountsCount();
 
+    @Query("SELECT * FROM accounts LIMIT 1")
+    Account getDefaultPaymentMethod();
+
     // Get accounts with totals by type
     @MapInfo(valueColumn = "total")
     @Query("SELECT accounts.*, SUM(transactions.amount) AS total " +

@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public interface CategoryDao {
 
     @Query("SELECT COUNT(id) FROM categories AS count")
     int getCategoriesCount();
+
+    @Query("SELECT * FROM categories LIMIT 1")
+    Category getDefaultCategory();
 
     @Query("DELETE FROM categories")
     void clearCategoriesTable();
