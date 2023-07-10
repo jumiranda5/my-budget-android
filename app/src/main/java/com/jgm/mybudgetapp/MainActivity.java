@@ -13,6 +13,7 @@ import static com.jgm.mybudgetapp.utils.Tags.homeTag;
 import static com.jgm.mybudgetapp.utils.Tags.pendingTag;
 import static com.jgm.mybudgetapp.utils.Tags.settingsTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
+import static com.jgm.mybudgetapp.utils.Tags.transactionsInTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionsOutTag;
 import static com.jgm.mybudgetapp.utils.Tags.yearTag;
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private SettingsFragment mSettings;
     private TransactionFormFragment mTransactionForm;
     private TransactionsOutFragment mTransactionsOut;
+    private TransactionsInFragment mTransactionsIn;
     private YearFragment mYear;
     private PendingFragment mPending;
 
@@ -262,17 +264,24 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsOut != null)
             mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mTransactionsIn != null)
+            mTransactionsIn.getIncomeData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mCategories != null)
             mCategories.getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
     }
 
     private void setToolbarVisibilities(String tag) {
 
-        if (tag.equals(homeTag) || tag.equals(categoriesTag) || tag.equals(transactionsOutTag)) {
+        if (tag.equals(homeTag)
+                || tag.equals(categoriesTag)
+                || tag.equals(transactionsOutTag)
+                || tag.equals(transactionsInTag)) {
+
             Log.d(LOG_MAIN, "Toolbar visible");
             toolbar.setVisibility(View.VISIBLE);
             if (tag.equals(homeTag)) settingsButton.setVisibility(View.VISIBLE);
             else settingsButton.setVisibility(View.GONE);
+
         }
         else {
             Log.d(LOG_MAIN, "Toolbar gone");
@@ -495,6 +504,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void handleTransactionDeleted(int id) {
         Log.d(LOG_MAIN, "-- Interface => handleTransactionDeleted");
         if (mTransactionsOut != null) mTransactionsOut.updateOnTransactionDeleted(id);
+        else if (mTransactionsIn != null) mTransactionsIn.updateOnTransactionDeleted(id);
     }
 
     @Override
@@ -572,7 +582,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     /* ==== SETTINGS ==== */
-
 
     @Override
     public void switchDarkMode(boolean isDark) {
@@ -746,6 +755,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case transactionsOutTag:
                 mTransactionsOut = new TransactionsOutFragment();
                 fragment = mTransactionsOut;
+                break;
+            case transactionsInTag:
+                mTransactionsIn = new TransactionsInFragment();
+                fragment = mTransactionsIn;
                 break;
             case transactionFormTag:
                 mTransactionForm = new TransactionFormFragment();
@@ -1023,6 +1036,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case transactionsOutTag:
                 mTransactionsOut = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsOutTag);
                 break;
+            case transactionsInTag:
+                mTransactionsIn = (TransactionsInFragment) getSupportFragmentManager().findFragmentByTag(transactionsInTag);
+                break;
             case transactionFormTag:
                 mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);
                 break;
@@ -1053,6 +1069,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case homeTag: mHome = null; break;
                 case settingsTag: mSettings = null; break;
                 case transactionsOutTag: mTransactionsOut = null; break;
+                case transactionsInTag: mTransactionsIn = null; break;
                 case transactionFormTag: mTransactionForm = null; break;
                 case yearTag: mYear = null; break;
                 case pendingTag: mPending = null; break;
