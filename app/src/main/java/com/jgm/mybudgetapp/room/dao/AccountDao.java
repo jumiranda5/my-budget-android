@@ -38,11 +38,13 @@ public interface AccountDao {
 
     // Get accounts with totals by type
     @MapInfo(valueColumn = "total")
-    @Query("SELECT accounts.*, SUM(transactions.amount) AS total " +
+    @Query("SELECT accounts.*, " +
+            "SUM(CASE WHEN transactions.paid = 1 THEN transactions.amount ELSE 0 END) AS total " +
             "FROM accounts " +
             "LEFT JOIN transactions ON transactions.accountId = accounts.id " +
+            "WHERE accounts.active = 1 " +
             "GROUP BY accounts.id " +
-            "ORDER BY type, name ASC")
+            "ORDER BY accounts.type, accounts.name ASC")
     Map<Account, String> getAccountsWithTotals();
 
 }

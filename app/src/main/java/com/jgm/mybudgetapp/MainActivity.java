@@ -268,6 +268,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mTransactionsIn.getIncomeData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mCategories != null)
             mCategories.getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mAccountDetails != null)
+            mAccountDetails.updateAccountOnMonthChange(selectedDate);
     }
 
     private void setToolbarVisibilities(String tag) {
@@ -275,7 +277,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (tag.equals(homeTag)
                 || tag.equals(categoriesTag)
                 || tag.equals(transactionsOutTag)
-                || tag.equals(transactionsInTag)) {
+                || tag.equals(transactionsInTag)
+                || tag.equals(accountDetailsTag)) {
 
             Log.d(LOG_MAIN, "Toolbar visible");
             toolbar.setVisibility(View.VISIBLE);
@@ -412,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void openAccountDetails(AccountTotal accountTotal, int position) {
         Log.d(LOG_MAIN, "-- Interface => open account details");
         openFragment(accountDetailsTag);
-        if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, position);
+        if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, position, selectedDate);
     }
 
     @Override
