@@ -23,7 +23,6 @@ public interface MainInterface {
     void openCategoryForm(boolean isEdit, Category category, int position);
     void openAccountDetails(AccountTotal accountTotal, int position);
     void openAccountForm(boolean isEdit, Account account, int position);
-    void openCardDetails(CreditCard card, int position);
     void openCardForm(boolean isEdit, CreditCard card, int position);
     void openTransactionForm(boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
     void navigateBack();

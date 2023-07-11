@@ -31,7 +31,6 @@ public class Tags {
     public static final String categoriesListTag = "CATEGORIES_LIST";
     public static final String cardsTag = "CARDS";
     public static final String cardFormTag = "CARD_FORM";
-    public static final String cardDetailsTag = "CARD_DETAILS";
     public static final String homeTag = "HOME";
     public static final String settingsTag = "SETTINGS";
     public static final String transactionFormTag = "TRANSACTION_FORM";

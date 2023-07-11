@@ -16,14 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.jgm.mybudgetapp.adapters.CardAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardsBinding;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.CardDao;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
-import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +42,10 @@ public class CreditCardsFragment extends Fragment {
     // UI
     private FragmentCreditCardsBinding binding;
     private Button mAddCard;
-    private TextView mTotal;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         mAddCard = binding.buttonAddCreditCard;
-        mTotal = binding.creditCardsTotal;
         mRecyclerView = binding.cardsList;
     }
 
@@ -59,6 +56,7 @@ public class CreditCardsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        Log.d(Tags.LOG_LIFECYCLE, "Credit Cards onAttach");
         mContext = context;
         mInterface = (MainInterface) context;
     }
@@ -67,6 +65,7 @@ public class CreditCardsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(Tags.LOG_LIFECYCLE, "Credit Cards onCreateView");
         binding = FragmentCreditCardsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setBinding();
@@ -77,9 +76,9 @@ public class CreditCardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAddCard.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
+        Log.d(Tags.LOG_LIFECYCLE, "Credit Cards onViewCreated");
 
-        initRecyclerView();
+        mAddCard.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
 
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
@@ -88,9 +87,8 @@ public class CreditCardsFragment extends Fragment {
             cardsList = cardDao.getCreditCards();
 
             handler.post(() -> {
-                Log.d("debug-database", "Done reading all credit cards from db: " + cardsList.size());
+                Log.d(Tags.LOG_DB, "Done reading all credit cards from db: " + cardsList.size());
                 initRecyclerView();
-                setTotal();
             });
         });
 
@@ -105,29 +103,15 @@ public class CreditCardsFragment extends Fragment {
     }
 
     public void updateListAfterDelete(int pos) {
-        Log.d("debug-cards", "Update ui list after item delete");
+        Log.d(LOG, "Update ui list after item delete");
         adapter.deleteItem(pos);
     }
 
     public void updateListAfterEdit(int pos, CreditCard editedCard) {
-        Log.d("debug-cards", "Update ui list after item edit");
+        Log.d(LOG, "Update ui list after item edit");
         adapter.updateItem(pos, editedCard);
     }
 
-
-    /* ===============================================================================
-                                         TOTAL
-     =============================================================================== */
-
-    private void setTotal() {
-        float total = 0.0f;
-        for (int i = 0; i < cardsList.size(); i++) {
-            total = total + 0.0f; // todo
-        }
-        String[] currencyFormat = NumberUtils.getCurrencyFormat(mContext, total);
-        String formattedValue = currencyFormat[0] + currencyFormat[1];
-        mTotal.setText(formattedValue);
-    }
 
     /* ===============================================================================
                                         LIST

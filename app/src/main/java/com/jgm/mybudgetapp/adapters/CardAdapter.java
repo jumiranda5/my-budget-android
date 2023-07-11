@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,13 +57,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
         holder.mName.setText(card.getName());
         holder.mDay.setText(billingDay);
 
-        // Set total
-        String[] total = NumberUtils.getCurrencyFormat(mContext, 0.0f);
-        holder.mSymbol.setText(total[0]);
-        holder.mTotal.setText(total[1]);
-
-        // Container
-        holder.mContainer.setOnClickListener(v -> mInterface.openCardDetails(card, position));
+        // Edit
+        holder.mEdit.setOnClickListener(v -> mInterface.openCardForm(true, card, position));
 
     }
 
@@ -96,8 +92,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
     public static class GridViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mIcon;
-        private final TextView mName, mDay, mTotal, mSymbol;
-        private final ConstraintLayout mContainer;
+        private final TextView mName, mDay;
+        private final ImageButton mEdit;
 
         private GridViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,9 +101,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
             mIcon = itemView.findViewById(R.id.item_card_icon);
             mName = itemView.findViewById(R.id.item_card_name);
             mDay = itemView.findViewById(R.id.item_card_billing_day);
-            mTotal = itemView.findViewById(R.id.item_card_total);
-            mContainer = itemView.findViewById(R.id.item_card_container);
-            mSymbol = itemView.findViewById(R.id.item_card_currency_symbol);
+            mEdit = itemView.findViewById(R.id.item_card_edit);
 
         }
     }

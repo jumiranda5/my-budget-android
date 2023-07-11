@@ -37,13 +37,15 @@ public class SettingsFragment extends Fragment {
     private ProgressBar mProgressBar;
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
-    private Button mOpenCategories, mClearDatabase;
+    private Button mOpenCategories, mOpenCreditCards, mOpenAccounts, mClearDatabase;
 
     private void setBinding() {
         mNestedScrollView = binding.settingsContainer;
         mProgressBar = binding.settingsProgressBar;
         switchDarkMode = binding.switchDarkMode;
         mOpenCategories = binding.settingsEditCategories;
+        mOpenCreditCards = binding.settingsEditCards;
+        mOpenAccounts = binding.settingsEditAccounts;
         mClearDatabase = binding.settingsClearData;
     }
 
@@ -84,7 +86,8 @@ public class SettingsFragment extends Fragment {
         });
 
         mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
-
+        mOpenCreditCards.setOnClickListener(v -> mInterface.open(Tags.cardsTag));
+        // todo: open accounts list
         mClearDatabase.setOnClickListener(v -> mInterface.showConfirmationDialog(getString(R.string.msg_clear_database)));
     }
 

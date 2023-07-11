@@ -24,10 +24,10 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menu_cards"
-        android:icon="@drawable/nav_credit_cards"
-        android:contentDescription="@string/nav_credit_cards"
-        android:title="@string/nav_credit_cards"
+        android:id="@+id/menu_year"
+        android:icon="@drawable/ic_bar_chart"
+        android:contentDescription="Year"
+        android:title="Year"
         app:showAsAction="ifRoom"/>
 
     <item

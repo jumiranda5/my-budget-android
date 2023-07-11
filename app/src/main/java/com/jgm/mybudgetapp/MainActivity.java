@@ -3,7 +3,6 @@ package com.jgm.mybudgetapp;
 import static com.jgm.mybudgetapp.utils.Tags.accountDetailsTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountsTag;
-import static com.jgm.mybudgetapp.utils.Tags.cardDetailsTag;
 import static com.jgm.mybudgetapp.utils.Tags.cardFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.cardsTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private CategoriesFragment mCategories;
     private CreditCardsFragment mCreditCards;
     private CreditCardFormFragment mCreditCardForm;
-    private CreditCardDetailsFragment mCreditCardDetails;
     private HomeFragment mHome;
     private SettingsFragment mSettings;
     private TransactionFormFragment mTransactionForm;
@@ -303,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         MenuItem itemHome = bottomNavigationView.getMenu().getItem(0);
         MenuItem itemCategories = bottomNavigationView.getMenu().getItem(1);
         MenuItem itemAdd = bottomNavigationView.getMenu().getItem(2);
-        MenuItem itemCards = bottomNavigationView.getMenu().getItem(3);
+        MenuItem itemYear = bottomNavigationView.getMenu().getItem(3);
         MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
 
         itemHome.setOnMenuItemClickListener(item -> {
@@ -321,8 +319,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             return false;
         });
 
-        itemCards.setOnMenuItemClickListener(item -> {
-            openFragment(cardsTag);
+        itemYear.setOnMenuItemClickListener(item -> {
+            openFragment(yearTag);
             return false;
         });
 
@@ -346,8 +344,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case accountsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
                 break;
-            case cardsTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_cards);
+            case yearTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_year);
                 break;
             case homeTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_home);
@@ -426,13 +424,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mAccountForm.setFormType(isEdit);
             if (isEdit) mAccountForm.setAccount(account, position);
         }
-    }
-
-    @Override
-    public void openCardDetails(CreditCard card, int position) {
-        Log.d(LOG_MAIN, "-- Interface => open card details");
-        openFragment(cardDetailsTag);
-        if (mCreditCardDetails != null) mCreditCardDetails.setCreditCard(card, position);
     }
 
     @Override
@@ -663,9 +654,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void handleCreditCardEdited(int position, CreditCard card) {
         Log.d(LOG_MAIN, "-- Interface => handleCreditCardEdited: " + card.getName() + " pos: " + position);
-        if (card.isActive()) {
-            if (mCreditCards != null) mCreditCards.updateListAfterEdit(position, card);
-            if (mCreditCardDetails != null) mCreditCardDetails.updateCreditCardAfterEdit(card);
+        if (card.isActive() && mCreditCards != null) {
+            mCreditCards.updateListAfterEdit(position, card);
         }
         else {
             // close cards details fragment and update main
@@ -743,10 +733,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mCreditCardForm = new CreditCardFormFragment();
                 fragment = mCreditCardForm;
                 break;
-            case cardDetailsTag:
-                mCreditCardDetails = new CreditCardDetailsFragment();
-                fragment = mCreditCardDetails;
-                break;
             case homeTag:
                 mHome = new HomeFragment();
                 fragment = mHome;
@@ -782,7 +768,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (tag.equals(categoriesListTag)
                 || tag.equals(categoriesFormTag)
                 || tag.equals(cardFormTag)
-                || tag.equals(cardDetailsTag)
                 || tag.equals(accountFormTag)
                 || tag.equals(accountDetailsTag)) {
             Log.d(Tags.LOG_NAV, "Add fragment: " + tag);
@@ -840,10 +825,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 transaction2.hide(mCategoriesList);
                 break;
             case cardFormTag:
-                if (currentFragment.equals(cardsTag)) transaction2.hide(mCreditCards);
-                if (currentFragment.equals(cardDetailsTag)) transaction2.hide(mCreditCardDetails);
-                break;
-            case cardDetailsTag:
                 transaction2.hide(mCreditCards);
                 break;
             case accountFormTag:
@@ -878,10 +859,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 transaction.show(mCategoriesList);
                 break;
             case cardFormTag:
-                if (tag.equals(cardsTag)) transaction.show(mCreditCards);
-                if (tag.equals(cardDetailsTag)) transaction.show(mCreditCardDetails);
-                break;
-            case cardDetailsTag:
                 transaction.show(mCreditCards);
                 break;
             case accountFormTag:
@@ -915,10 +892,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 transaction2.show(mCategoriesList);
                 break;
             case cardFormTag:
-                if (currentFragment.equals(cardsTag)) transaction2.show(mCreditCards);
-                if (currentFragment.equals(cardDetailsTag)) transaction2.show(mCreditCardDetails);
-                break;
-            case cardDetailsTag:
                 transaction2.show(mCreditCards);
                 break;
             case accountFormTag:
@@ -959,9 +932,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case cardFormTag:
                     destroyFragment(mCreditCardForm, cardFormTag);
                     break;
-                case cardDetailsTag:
-                    destroyFragment(mCreditCardDetails, cardDetailsTag);
-                    break;
                 case accountFormTag:
                     destroyFragment(mAccountForm, accountFormTag);
                     break;
@@ -976,7 +946,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             // show hidden newTopFragment
             if (topFragmentTag.equals(accountDetailsTag)
                     || topFragmentTag.equals(accountFormTag)
-                    || topFragmentTag.equals(cardDetailsTag)
                     || topFragmentTag.equals(cardFormTag)
                     || topFragmentTag.equals(categoriesFormTag)
                     || topFragmentTag.equals(categoriesListTag)) {
@@ -1027,9 +996,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case cardFormTag:
                 mCreditCardForm = (CreditCardFormFragment) getSupportFragmentManager().findFragmentByTag(cardFormTag);
                 break;
-            case cardDetailsTag:
-                mCreditCardDetails = (CreditCardDetailsFragment) getSupportFragmentManager().findFragmentByTag(cardDetailsTag);
-                break;
             case homeTag:
                 mHome = (HomeFragment) getSupportFragmentManager().findFragmentByTag(homeTag);
                 break;
@@ -1068,7 +1034,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case categoriesFormTag: mCategoriesForm = null; break;
                 case cardsTag: mCreditCards = null; break;
                 case cardFormTag: mCreditCardForm = null; break;
-                case cardDetailsTag: mCreditCardDetails = null; break;
                 case homeTag: mHome = null; break;
                 case settingsTag: mSettings = null; break;
                 case transactionsOutTag: mTransactionsOut = null; break;
