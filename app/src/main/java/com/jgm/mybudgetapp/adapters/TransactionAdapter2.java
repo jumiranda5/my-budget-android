@@ -47,9 +47,16 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
         Color color = ColorUtils.getColor(item.getColorId());
 
         // Set icon
-        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-        holder.mIcon.setContentDescription(icon.getIconName());
-        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+        if (item.getType() == 2) {
+            holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_arrow_swap_vert));
+            holder.mIcon.setContentDescription("Transfer");
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.savings));
+        }
+        else {
+            holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+            holder.mIcon.setContentDescription(icon.getIconName());
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+        }
 
         // Set description
         String description = item.getDescription();

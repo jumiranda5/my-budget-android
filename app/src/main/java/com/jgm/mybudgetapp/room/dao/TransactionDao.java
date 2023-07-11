@@ -84,11 +84,6 @@ public interface TransactionDao {
     /* ------------------------------------------------------------------------------
                                      ACCOUNT FRAGMENT
     ------------------------------------------------------------------------------- */
-//    @Query("SELECT * FROM transactions " +
-//            "WHERE accountId = :accountId " +
-//            "AND year = :year " +
-//            "AND month = :month ")
-//    List<TransactionResponse> getAccountTransactions(int accountId, int year, int month);
 
     @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
             "FROM transactions " +

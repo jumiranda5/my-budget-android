@@ -69,6 +69,7 @@ public class TransactionFormFragment extends Fragment {
     private MyDate today;
     private MyDate selectedDate;
     private Category selectedCategory;
+    private Category defaultCategory;
     private MyDate cardBillingDate;
     private PaymentMethod paymentMethod;
     private PaymentMethod transferAccountIn;
@@ -263,6 +264,7 @@ public class TransactionFormFragment extends Fragment {
                 Log.d(LOG, "default category: " + category.getName());
                 Log.d(LOG, "default method: " + account.getName());
 
+                defaultCategory = category;
                 transaction.setAccountId(account.getId());
                 transaction.setCategoryId(category.getId());
                 paymentMethod = new PaymentMethod(
@@ -318,6 +320,7 @@ public class TransactionFormFragment extends Fragment {
         mToggleExpense.setChecked(true);
         formType = Tags.expense;
         transaction.setType(Tags.TYPE_OUT);
+        setAdvancedOptionsVisibility(true);
         setMainGroup(R.drawable.button_save_expense);
         changeColorOnTypeSwitch(R.color.expense);
     }
@@ -327,6 +330,7 @@ public class TransactionFormFragment extends Fragment {
         mToggleIncome.setChecked(true);
         formType = Tags.income;
         transaction.setType(Tags.TYPE_IN);
+        setAdvancedOptionsVisibility(true);
         setMainGroup(R.drawable.button_save);
         changeColorOnTypeSwitch(R.color.income);
     }
@@ -336,9 +340,25 @@ public class TransactionFormFragment extends Fragment {
         mToggleTransfer.setChecked(true);
         formType = Tags.transfer;
         mTransferGroup.setVisibility(View.VISIBLE);
+        mSwitchPaid.setVisibility(View.GONE);
         mMainGroup.setVisibility(View.GONE);
+        setAdvancedOptionsVisibility(false);
         changeColorOnTypeSwitch(R.color.savings);
         mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_transfer));
+        mSave.setEnabled(false);
+    }
+
+    private void setAdvancedOptionsVisibility(boolean isVisible) {
+        if (isVisible) {
+            mIncreaseRepeat.setVisibility(View.VISIBLE);
+            mRepeatLabel.setVisibility(View.VISIBLE);
+        }
+        else {
+            hideRepeatInput();
+            transaction.setRepeat(1);
+            mIncreaseRepeat.setVisibility(View.GONE);
+            mRepeatLabel.setVisibility(View.GONE);
+        }
     }
 
     private void setMainGroup(int buttonDrawable) {
@@ -524,7 +544,7 @@ public class TransactionFormFragment extends Fragment {
             if (!isEdit) transaction.setPaid(false);
         }
         else {
-            mSwitchPaid.setVisibility(View.VISIBLE);
+            if (!formType.equals(Tags.transfer)) mSwitchPaid.setVisibility(View.VISIBLE);
             transaction.setAccountId(paymentMethod.getId());
             transaction.setCardId(0);
         }
@@ -619,13 +639,14 @@ public class TransactionFormFragment extends Fragment {
     private void updateTransferOut(PaymentMethod paymentMethod) {
         transferAccountOut = paymentMethod;
         mAccountPickerOut.setText(paymentMethod.getName());
+        if (transferAccountIn != null) mSave.setEnabled(true);
     }
 
     private void updateTransferIn(PaymentMethod paymentMethod) {
         transferAccountIn = paymentMethod;
         mAccountPickerIn.setText(paymentMethod.getName());
+        if (transferAccountOut != null) mSave.setEnabled(true);
     }
-
 
     /* ===============================================================================
                                         SWITCH PAYED
@@ -904,30 +925,36 @@ public class TransactionFormFragment extends Fragment {
     }
 
     private void setTransfer() {
+        // Transfer don't allow credit card => set accountId and selected date
 
+        String descTransferTo = getString(R.string.label_transfer_to) + " " + transferAccountIn.getName();
+        String descTransferFrom = getString(R.string.label_transfer_from) + " " + transferAccountOut.getName();
+
+        Transaction in = new Transaction(2, descTransferFrom, transaction.getAmount(),
+                selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
+                defaultCategory.getId(), transferAccountIn.getId(), null,
+                true, 1, null, null);
+
+        Transaction out = new Transaction(2, descTransferTo, transaction.getAmount()*-1,
+                selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
+                defaultCategory.getId(), transferAccountOut.getId(), null,
+                true, 1, null, null);
+
+        TransactionDao transactionDao = db.TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            transactionDao.insert(out);
+            transactionDao.insert(in);
+
+            handler.post(() -> {
+                Log.d(Tags.LOG_DB, "Transfer saved on db");
+                mProgressBar.setVisibility(View.GONE);
+                mSave.setText(getText(R.string.action_save));
+                mInterface.navigateBack();
+            });
+        });
     }
-
-    //    private void setTransfer() {
-//
-//        // Transfer don't allow credit card => set accountId and selected date
-//
-//        String descTransferTo = getString(R.string.label_transfer_to) + " " + transferAccountIn.getName();
-//        String descTransferFrom = getString(R.string.label_transfer_from) + " " + transferAccountOut.getName();
-//
-//        Transaction in = new Transaction(1, descTransferFrom, amount,
-//                selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-//                0, transferAccountIn.getId(), null,
-//                isPaid, repeat, null, null);
-//
-//        Transaction out = new Transaction(-1, descTransferTo, amount*-1,
-//                selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-//                0, transferAccountOut.getId(), null,
-//                isPaid, repeat, null, null);
-//
-//        insertTransactionOnDb(out);
-//        insertTransactionOnDb(in);
-//    }
-//
 
     private void logTransaction(Transaction t) {
         Log.d(LOG, "Transaction data to save => " + "\n" +
