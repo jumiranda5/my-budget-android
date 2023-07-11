@@ -66,8 +66,6 @@
     </style>
 
 
-
-
     <!-- ==========================================================
                                 NAV BARS
     ============================================================ -->
@@ -81,7 +79,17 @@
         <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
         <item name="itemIconTint">@color/bottom_nav_icon_color</item>
         <item name="itemTextColor">@color/bottom_nav_icon_color</item>
-        <item name="labelVisibilityMode">unlabeled</item>
+        <item name="itemPaddingTop">10dp</item>
+        <item name="itemPaddingBottom">10dp</item>
+        <item name="itemActiveIndicatorStyle">@null</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
+        <item name="labelVisibilityMode">selected</item>
+    </style>
+
+    <style name="BottomNavTextStyle" parent="AppTheme">
+        <item name="android:fontFamily">@font/nunito_sans_regular</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="MyTabText" parent="AppTheme">

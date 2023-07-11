@@ -280,9 +280,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             Log.d(LOG_MAIN, "Toolbar visible");
             toolbar.setVisibility(View.VISIBLE);
-            if (tag.equals(homeTag)) settingsButton.setVisibility(View.VISIBLE);
-            else settingsButton.setVisibility(View.GONE);
-
         }
         else {
             Log.d(LOG_MAIN, "Toolbar gone");

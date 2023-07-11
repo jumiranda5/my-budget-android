@@ -12,7 +12,7 @@
         android:id="@+id/empty_view"
         android:layout_width="20dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:padding="0dp"
         android:visibility="gone"
         app:tint="@color/medium_emphasis_text"
@@ -36,7 +36,6 @@
         style="@style/TextNormalEllipse"
         android:layout_marginEnd="16dp"
         android:text="@string/hint_description"
-        android:textSize="@dimen/trans_item_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
         app:layout_constraintStart_toEndOf="@+id/item_transaction_icon"
@@ -45,17 +44,14 @@
     <TextView
         android:id="@+id/item_transaction_total"
         style="@style/NumberCurrencyRegular"
-        android:layout_marginEnd="52dp"
         android:text="@string/test_currency_value"
-        android:textSize="@dimen/trans_item_text_size"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
-        app:layout_constraintEnd_toEndOf="@+id/item_transaction_toggle" />
+        app:layout_constraintEnd_toStartOf="@+id/item_transaction_toggle" />
 
     <TextView
         android:id="@+id/item_transaction_currency_symbol"
         style="@style/NumberRegular"
         android:text="@string/test_currency_symbol"
-        android:textSize="@dimen/trans_item_text_size"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
         app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
 

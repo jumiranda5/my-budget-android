@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionsOutBinding;
 import com.jgm.mybudgetapp.objects.Card;
@@ -45,10 +46,10 @@ public class TransactionsOutFragment extends Fragment {
     //private FloatingActionButton mFab;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
-    DayGroupAdapter adapter;
+    private FloatingActionButton mFab;
 
     private void setBinding() {
-        //mFab = binding.transactionOutAdd;
+        mFab = binding.transactionOutAdd;
         mTotal = binding.outTotal;
         mRecyclerView = binding.outList;
     }
@@ -84,6 +85,8 @@ public class TransactionsOutFragment extends Fragment {
             getExpensesData(date.getMonth(), date.getYear());
         }
 
+        mFab.setOnClickListener(v -> mInterface.openTransactionForm(false, null, null));
+
     }
 
     /* ------------------------------------------------------------------------------
@@ -92,7 +95,7 @@ public class TransactionsOutFragment extends Fragment {
     private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        adapter = new DayGroupAdapter(mContext, dayGroups, 1);
+        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups, 1);
         mRecyclerView.setAdapter(adapter);
     }
 

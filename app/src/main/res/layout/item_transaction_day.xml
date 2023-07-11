@@ -5,31 +5,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:focusable="false"
     android:clickable="false"
+    android:background="@color/bg_00dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_start"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/guideline_start_list"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_end"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/guideline_end_list"/>
+    <ImageView
+        android:id="@+id/item_day_text_bg"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:contentDescription="@null"
+        android:background="@drawable/bg_day"
+        android:backgroundTint="@color/light_grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/item_day_title"
+        app:layout_constraintEnd_toEndOf="@+id/item_day_title"
+        app:layout_constraintStart_toStartOf="@+id/item_day_title"
+        app:layout_constraintTop_toTopOf="@+id/item_day_title" />
 
     <TextView
         android:id="@+id/item_day_title"
-        style="@style/TextNormalEllipse"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/nunito_sans_semi_bold"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nunito_sans_bold"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:text="@string/test_monday_2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        android:textSize="@dimen/text_secondary"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView

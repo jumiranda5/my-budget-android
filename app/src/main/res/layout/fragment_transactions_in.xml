@@ -37,10 +37,9 @@
 
             <TextView
                 android:id="@+id/in_title"
-                style="@style/Title"
+                style="@style/TransactionsTitle"
                 android:layout_marginTop="56dp"
                 android:text="@string/label_income"
-                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -49,8 +48,8 @@
                 android:id="@+id/in_total"
                 style="@style/NumberImpact"
                 android:layout_marginTop="2dp"
-                android:textAlignment="center"
                 android:text="@string/initial_value"
+                android:textAlignment="center"
                 android:textColor="@color/income"
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -59,7 +58,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/in_list"
                 style="@style/NestedListNoScroll"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/in_total"
