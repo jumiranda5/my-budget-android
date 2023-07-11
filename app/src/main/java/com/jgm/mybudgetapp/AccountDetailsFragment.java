@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -18,15 +20,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentAccountDetailsBinding;
 import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.room.entity.Account;
-import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -48,13 +52,13 @@ public class AccountDetailsFragment extends Fragment {
     private AccountTotal accountTotal;
     private Account account;
     private MyDate date;
-    private ArrayList<Transaction> accountTransactions = new ArrayList<>();
 
     // UI
     private FragmentAccountDetailsBinding binding;
     private ImageButton buttonBack, buttonEdit;
     private TextView mAccountName, mTotal;
     private ImageView mAccountIcon;
+    private RecyclerView mRecyclerView;
 
     private void setBinding() {
         buttonBack = binding.accountDetailsBackButton;
@@ -62,6 +66,7 @@ public class AccountDetailsFragment extends Fragment {
         mAccountName = binding.accountDetailsTitle;
         mAccountIcon = binding.accountDetailsIcon;
         mTotal = binding.accountDetailsTotal;
+        mRecyclerView = binding.accountDetailsList;
     }
 
     // Interfaces
@@ -97,6 +102,17 @@ public class AccountDetailsFragment extends Fragment {
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
 
+    }
+
+    /* ------------------------------------------------------------------------------
+                                         LIST
+    ------------------------------------------------------------------------------- */
+
+    private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(listLayoutManager);
+        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups, 2);
+        mRecyclerView.setAdapter(adapter);
     }
 
     /* ===============================================================================
@@ -170,35 +186,56 @@ public class AccountDetailsFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
-            List<Transaction> transactions = transactionDao.getAccountTransactions(
-                    accountTotal.getId(), date.getYear(), date.getMonth());
+            Log.d(LOG, "account id: " + account.getId());
+
+            List<TransactionResponse> transactions = transactionDao.getAccountTransactions(
+                    account.getId(), date.getMonth(), date.getYear());
             Log.d(LOG, "list size: " + transactions.size());
 
             handler.post(() -> {
-
-                for (int i = 0; i < transactions.size(); i++) {
-                    Transaction t = transactions.get(i);
-                    Log.d(LOG, "Transaction data to save => " + "\n" +
-                            "type: " + t.getType() + "\n" +
-                            "description: " + t.getDescription() + "\n" +
-                            "amount: " + t.getAmount() + "\n" +
-                            "date: " + t.getDay() + "/" + t.getMonth() + "/" + t.getYear() + "\n" +
-                            "category id: " + t.getCategoryId() + "\n" +
-                            "account id: " + t.getAccountId() + "\n" +
-                            "card id: " + t.getCardId() + "\n" +
-                            "isPaid: " + t.isPaid() + "\n" +
-                            "repeat: " + t.getRepeat() + " | " + "repeatCount: "
-                            + t.getRepeatCount() + " | " + "repeat id: " + t.getRepeatId());
-                }
-
-                accountTransactions = (ArrayList<Transaction>) transactions;
-                initRecyclerView();
+                setListData(transactions, date.getMonth(), date.getYear());
             });
 
         });
     }
 
-    private void initRecyclerView() {
-        // todo...
+    private void setListData(List<TransactionResponse> transactions, int month, int year) {
+
+        ArrayList<DayGroup> dayGroups = new ArrayList<>();
+
+        for (int i = 0; i < transactions.size(); i++) {
+            TransactionResponse transaction = transactions.get(i);
+            int day = transaction.getDay();
+
+            // set transactions grouped by day
+            // if first item => create new dayGroup obj and add to dayGroups list
+            if (i == 0) {
+                DayGroup dayGroup = createDayGroup(transaction, month, year);
+                dayGroups.add(dayGroup);
+            }
+            // else => check if same day and update list
+            else {
+                int prevDay = transactions.get(i-1).getDay();
+                if (day == prevDay) {
+                    int dayGroupIndex = dayGroups.size() - 1;
+                    dayGroups.get(dayGroupIndex).getTransactions().add(transaction);
+                }
+                else {
+                    DayGroup newDayGroup = createDayGroup(transaction, month, year);
+                    dayGroups.add(newDayGroup);
+                }
+            }
+        }
+
+        // init list view
+        initRecyclerView(dayGroups);
+
+    }
+
+    private DayGroup createDayGroup(TransactionResponse transaction, int month, int year) {
+        int day = transaction.getDay();
+        List<TransactionResponse> list = new ArrayList<>();
+        list.add(transaction);
+        return new DayGroup(day, month, year, list);
     }
 }

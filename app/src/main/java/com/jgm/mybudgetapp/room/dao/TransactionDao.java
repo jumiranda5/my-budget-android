@@ -84,11 +84,20 @@ public interface TransactionDao {
     /* ------------------------------------------------------------------------------
                                      ACCOUNT FRAGMENT
     ------------------------------------------------------------------------------- */
-    @Query("SELECT * FROM transactions " +
-            "WHERE accountId = :accountId " +
-            "AND year = :year " +
-            "AND month = :month ")
-    List<Transaction> getAccountTransactions(int accountId, int year, int month);
+//    @Query("SELECT * FROM transactions " +
+//            "WHERE accountId = :accountId " +
+//            "AND year = :year " +
+//            "AND month = :month ")
+//    List<TransactionResponse> getAccountTransactions(int accountId, int year, int month);
+
+    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
+            "FROM transactions " +
+            "JOIN categories ON transactions.categoryId = categories.id " +
+            "WHERE transactions.accountId = :accountId " +
+            "AND transactions.year = :year " +
+            "AND transactions.month = :month " +
+            "ORDER BY transactions.day ")
+    List<TransactionResponse> getAccountTransactions(int accountId, int month, int year);
 
     /* ------------------------------------------------------------------------------
                                      PENDING FRAGMENT

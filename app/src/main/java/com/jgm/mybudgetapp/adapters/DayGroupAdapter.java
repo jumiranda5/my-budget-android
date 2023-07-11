@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
@@ -23,12 +22,12 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
     private final Context mContext;
     private final List<DayGroup> mDataList;
     private final LayoutInflater layoutInflater;
-    private final MainInterface mInterface;
+    private final int type;
 
-    public DayGroupAdapter(Context context, List<DayGroup> mDataList) {
+    public DayGroupAdapter(Context context, List<DayGroup> mDataList, int type) {
         this.mContext = context;
         this.mDataList = mDataList;
-        this.mInterface = (MainInterface) context;
+        this.type = type;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -56,9 +55,14 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
         List<TransactionResponse> transactions = dayGroup.getTransactions();
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         holder.mRecyclerView.setLayoutManager(listLayoutManager);
-        TransactionAdapter adapter = new TransactionAdapter(mContext, transactions);
-        holder.mRecyclerView.setAdapter(adapter);
-
+        if (type == 1) {
+            TransactionAdapter adapter = new TransactionAdapter(mContext, transactions);
+            holder.mRecyclerView.setAdapter(adapter);
+        }
+        else {
+            TransactionAdapter2 adapter = new TransactionAdapter2(mContext, transactions);
+            holder.mRecyclerView.setAdapter(adapter);
+        }
     }
 
     @Override

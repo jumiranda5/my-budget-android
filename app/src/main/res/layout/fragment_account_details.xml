@@ -9,6 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/account_details_toolbar"
         style="@style/MainToolbar"
+        android:layout_marginTop="@dimen/toolbar_height"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,60 +93,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/account_details_title">
 
-        <TextView
-            android:id="@+id/account_details_month"
-            style="@style/ToolbarMonth"
-            android:layout_width="@dimen/details_month_width"
-            android:layout_height="48dp"
-            android:fontFamily="@font/red_hat_display_medium"
-            android:textSize="@dimen/details_month_size"
-            android:gravity="center"
-            android:text="@string/test_month"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/toolbar_prev_month_button"
-            style="@style/IconButton"
-            android:contentDescription="@string/desc_previous_month"
-            android:padding="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/account_details_month"
-            app:layout_constraintEnd_toStartOf="@+id/account_details_month"
-            app:layout_constraintTop_toTopOf="@+id/account_details_month"
-            app:srcCompat="@drawable/ic_app_arrow_back_ios"
-            app:tint="@color/secondary_icon" />
-
-        <ImageButton
-            android:id="@+id/toolbar_next_month_button"
-            style="@style/IconButton"
-            android:contentDescription="@string/desc_next_month"
-            android:padding="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/account_details_month"
-            app:layout_constraintStart_toEndOf="@+id/account_details_month"
-            app:layout_constraintTop_toTopOf="@+id/account_details_month"
-            app:srcCompat="@drawable/ic_app_arrow_forward_ios"
-            app:tint="@color/secondary_icon" />
-
-        <TextView
-            android:id="@+id/account_details_year"
-            style="@style/MainText"
-            android:layout_marginStart="12dp"
-            android:fontFamily="@font/red_hat_text_semi_bold"
-            android:textSize="@dimen/details_year_size"
-            android:text="@string/test_year"
-            app:layout_constraintBottom_toBottomOf="@+id/account_details_month"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/account_details_month" />
-
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/account_details_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_details_month"
-            tools:listitem="@layout/item_transaction2_day"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_transaction2_day" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

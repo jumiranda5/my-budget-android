@@ -91,7 +91,7 @@ public class TransactionsInFragment extends Fragment {
     private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        adapter = new DayGroupAdapter(mContext, dayGroups);
+        adapter = new DayGroupAdapter(mContext, dayGroups, 1);
         mRecyclerView.setAdapter(adapter);
     }
 

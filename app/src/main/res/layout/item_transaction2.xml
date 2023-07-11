@@ -6,42 +6,42 @@
     android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_start"
-        style="@style/GuidelineStart"
-        android:orientation="vertical" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_end"
-        style="@style/GuidelineEnd"
-        android:orientation="vertical" />
+    <ImageView
+        android:id="@+id/item_transaction2_icon"
+        style="@style/IconImage"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_app_category" />
 
     <TextView
-        android:id="@+id/item_transaction_name"
+        android:id="@+id/item_transaction2_name"
         style="@style/MainTextEllipse"
         android:text="@string/hint_description"
         android:textSize="@dimen/secondary_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
-        app:layout_constraintStart_toEndOf="@+id/guideline_item_start"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toStartOf="@+id/item_transaction2_total"
+        app:layout_constraintStart_toEndOf="@+id/item_transaction2_icon"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/item_transaction_total"
+        android:id="@+id/item_transaction2_total"
         style="@style/NumberCurrency"
         android:textSize="@dimen/secondary_text"
         android:text="@string/test_currency_value"
+        android:layout_marginEnd="12dp"
         android:textColor="@color/income"
-        app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
-        app:layout_constraintEnd_toEndOf="@id/guideline_item_end" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_name"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/item_transaction_currency_symbol"
+        android:id="@+id/item_transaction2_currency_symbol"
         style="@style/NumberMedium"
         android:text="@string/test_currency_symbol"
         android:textColor="@color/income"
         android:textSize="@dimen/secondary_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
-        app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_total"
+        app:layout_constraintStart_toStartOf="@id/item_transaction2_total" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
