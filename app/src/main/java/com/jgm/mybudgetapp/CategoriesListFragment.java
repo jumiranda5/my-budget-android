@@ -46,12 +46,12 @@ public class CategoriesListFragment extends Fragment {
     // UI
     private FragmentCategoriesListBinding binding;
     private RecyclerView mRecyclerView;
-    private Button mOpenForm;
+    private ImageButton mOpenForm;
     private ImageButton mClose;
 
     private void setBinding() {
         mRecyclerView = binding.categoriesList;
-        mOpenForm = binding.buttonAddCategory;
+        mOpenForm = binding.catListAdd;
         mClose = binding.catListToolbarClose;
     }
 

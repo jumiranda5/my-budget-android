@@ -106,11 +106,11 @@ public class CreditCardFormFragment extends Fragment {
         mSave.setEnabled(false);
         mNicknameInput.addTextChangedListener(cardNameWatcher);
         if (isEdit) {
-            mToolbarTitle.setText(getString(R.string.title_edit_credit_card));
+            mToolbarTitle.setText(getString(R.string.title_edit_card));
             setEditOptions();
         }
         else {
-            mToolbarTitle.setText(getString(R.string.title_add_credit_card));
+            mToolbarTitle.setText(getString(R.string.title_add_card));
             setDefaultOptions();
         }
     }

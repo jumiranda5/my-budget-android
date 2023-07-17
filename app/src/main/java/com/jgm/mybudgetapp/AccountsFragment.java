@@ -15,20 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.AccountAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentAccountsBinding;
 import com.jgm.mybudgetapp.objects.AccountTotal;
-import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.entity.Account;
-import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
-import com.jgm.mybudgetapp.utils.MyDateUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class AccountsFragment extends Fragment {
@@ -46,7 +42,7 @@ public class AccountsFragment extends Fragment {
     // UI
     private FragmentAccountsBinding binding;
     private RecyclerView mRecyclerView;
-    private Button mAddAccount;
+    private ImageButton mAddAccount;
 
     private void setBinding() {
         mRecyclerView = binding.accountsList;

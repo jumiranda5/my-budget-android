@@ -33,7 +33,7 @@ public class ColorUtils {
     private static final Color income = new Color(19, R.color.income, "Green");
     private static final Color savings = new Color(20, R.color.savings, "Purple");
     private static final Color cash = new Color(21, R.color.cash, "Green");
-    private static final Color light_grey = new Color(22, R.color.light_grey, "Light Grey");
+    private static final Color light_grey = new Color(22, R.color.bg_progress_track, "Light Grey");
     private static final Color accumulated = new Color(23, R.color.accumulated, "Gold");
 
 

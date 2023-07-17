@@ -5,28 +5,28 @@
         <shape>
             <solid android:color="@color/expense_pressed"/>
             <stroke android:color="@color/expense" android:width="1dp"/>
-            <corners android:radius="@dimen/card_corner"/>
+            <corners android:radius="@dimen/corners"/>
         </shape>
     </item>
 
     <item android:state_pressed="true">
         <shape>
             <solid android:color="@color/expense_pressed"/>
-            <corners android:radius="@dimen/card_corner"/>
+            <corners android:radius="@dimen/corners"/>
         </shape>
     </item>
 
     <item android:state_enabled="false">
         <shape>
             <solid android:color="@color/disabled_button"/>
-            <corners android:radius="@dimen/card_corner"/>
+            <corners android:radius="@dimen/corners"/>
         </shape>
     </item>
 
     <item>
         <shape>
             <solid android:color="@color/expense"/>
-            <corners android:radius="@dimen/card_corner"/>
+            <corners android:radius="@dimen/corners"/>
         </shape>
     </item>
 

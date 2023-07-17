@@ -472,7 +472,7 @@
                         android:id="@+id/home_year_label"
                         style="@style/HomeLabel"
                         android:layout_marginStart="@dimen/card_padding"
-                        android:text="@string/year"
+                        android:text="@string/initial_year"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

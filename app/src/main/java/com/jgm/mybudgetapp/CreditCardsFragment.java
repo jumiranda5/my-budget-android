@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.CardAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardsBinding;
@@ -41,11 +42,11 @@ public class CreditCardsFragment extends Fragment {
 
     // UI
     private FragmentCreditCardsBinding binding;
-    private Button mAddCard;
+    private ImageButton mAddCard;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
-        mAddCard = binding.buttonAddCreditCard;
+        mAddCard = binding.buttonAddCard;
         mRecyclerView = binding.cardsList;
     }
 

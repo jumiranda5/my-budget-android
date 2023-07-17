@@ -46,10 +46,10 @@ public class TransactionsOutFragment extends Fragment {
     //private FloatingActionButton mFab;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
-    private FloatingActionButton mFab;
+    //private FloatingActionButton mFab;
 
     private void setBinding() {
-        mFab = binding.transactionOutAdd;
+        //mFab = binding.transactionOutAdd;
         mTotal = binding.outTotal;
         mRecyclerView = binding.outList;
     }
@@ -85,7 +85,7 @@ public class TransactionsOutFragment extends Fragment {
             getExpensesData(date.getMonth(), date.getYear());
         }
 
-        mFab.setOnClickListener(v -> mInterface.openTransactionForm(false, null, null));
+        //mFab.setOnClickListener(v -> mInterface.openTransactionForm(false, null, null));
 
     }
 

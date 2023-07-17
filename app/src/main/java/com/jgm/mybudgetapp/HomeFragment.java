@@ -50,9 +50,8 @@ public class HomeFragment extends Fragment {
 
     // UI
     private FragmentHomeBinding binding;
-    private MaterialCardView mCardIncome, mCardExpenses, mCardSavings,
-            mCardCash, mCardChecking, mCardIncomeCategories,
-            mCardExpensesCategories, mCardYear, mCardPending;
+    private MaterialCardView mCardIncome, mCardExpenses, mCardAccounts,
+            mCardIncomeCategories, mCardExpensesCategories, mCardYear, mCardPending;
     private ImageView mIncomeChart, mExpensesChart, mYearChart;
     private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
     private TextView mBalanceText, mIncomeText, mExpensesText,
@@ -63,9 +62,7 @@ public class HomeFragment extends Fragment {
     private void bindViews() {
         mCardIncome = binding.homeCardIncome;
         mCardExpenses = binding.homeCardExpenses;
-        mCardSavings = binding.homeCardSavings;
-        mCardCash = binding.homeCardCash;
-        mCardChecking = binding.homeCardChecking;
+        mCardAccounts = binding.homeCardAccounts;
         mCardIncomeCategories = binding.homeCardIncomeCategories;
         mCardExpensesCategories = binding.homeCardExpensesCategories;
         mCardYear = binding.homeCardYear;
@@ -137,9 +134,7 @@ public class HomeFragment extends Fragment {
         mCardPending.setOnClickListener(v -> mInterface.open(Tags.pendingTag));
         mCardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
         mCardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
-        mCardSavings.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        mCardCash.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        mCardChecking.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
+        mCardAccounts.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
         mCardExpensesCategories.setOnClickListener(v -> mInterface.openExpensesCategories());
         mCardIncomeCategories.setOnClickListener(v -> mInterface.openIncomeCategories());
         mCardYear.setOnClickListener(v -> mInterface.open(Tags.yearTag));
@@ -188,13 +183,13 @@ public class HomeFragment extends Fragment {
         if (count == 0) mCardPending.setVisibility(View.GONE);
         else {
             mCardPending.setVisibility(View.VISIBLE);
-            String msg = getString(R.string.msg_backlogs_part1) + " " + count + " ";
+            String msg = getString(R.string.msg_pending_part1) + " " + count + " ";
             if (count == 1) {
-                String msg1 = msg + getString(R.string.msg_backlogs_part2);
+                String msg1 = msg + getString(R.string.msg_pending_part2);
                 mPendingMsg.setText(msg1);
             }
             else {
-                String msg2 = msg + getString(R.string.msg_backlogs_part2_plural);
+                String msg2 = msg + getString(R.string.msg_pending_part2_plural);
                 mPendingMsg.setText(msg2);
             }
         }

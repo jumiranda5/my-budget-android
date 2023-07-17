@@ -52,7 +52,7 @@ public class Charts {
 
             // Draw empty chart if categories.size() = 0
             if (categories.size() == 0) {
-                paint.setColor(context.getColor(R.color.light_grey));
+                paint.setColor(context.getColor(R.color.bg_progress_track));
                 canvas.drawArc(box, start, 360.0f, true, paint);
             }
 

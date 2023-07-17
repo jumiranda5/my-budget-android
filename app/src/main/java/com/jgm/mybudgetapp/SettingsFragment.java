@@ -40,7 +40,7 @@ public class SettingsFragment extends Fragment {
     private Button mOpenCategories, mOpenCreditCards, mClearDatabase;
 
     private void setBinding() {
-        mNestedScrollView = binding.settingsContainer;
+        mNestedScrollView = binding.settingsScrollView;
         mProgressBar = binding.settingsProgressBar;
         switchDarkMode = binding.switchDarkMode;
         mOpenCategories = binding.settingsEditCategories;

@@ -61,11 +61,11 @@ public class AccountDetailsFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
-        buttonBack = binding.accountDetailsBackButton;
-        buttonEdit = binding.accountDetailsEditButton;
+        buttonBack = binding.accountBackButton;
+        buttonEdit = binding.accountEditButton;
         mAccountName = binding.accountDetailsTitle;
-        mAccountIcon = binding.accountDetailsIcon;
-        mTotal = binding.accountDetailsTotal;
+        mAccountIcon = binding.accountIcon;
+        mTotal = binding.accountTotal;
         mRecyclerView = binding.accountDetailsList;
     }
 

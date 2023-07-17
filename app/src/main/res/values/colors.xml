@@ -18,6 +18,7 @@
     <!-- Backgrounds -->
     <color name="bg_00dp">#F3F3F3</color>
     <color name="bg_01dp">#FFFFFF</color>
+    <color name="bg_04dp">@color/bg_01dp</color> <!-- resource not found error -->
     <color name="bg_progress_track">#EAEAEA</color>
     <color name="bg_day">#EBEBEB</color>
     <color name="bg_indicator">#dadada</color>
@@ -56,6 +57,11 @@
     <color name="ripple_error">#FF7B7B</color>
     <color name="text_error">#B71C1C</color>
 
+    <!-- Items -->
+    <color name="item_pressed">#F3FFF9</color>
+    <color name="item_focused">#F3FFF9</color>
+    <color name="item_stroke_focused">#8BEDBE</color>
+
     <!-- transactions colors -->
     <color name="expense">#D91414</color>
     <color name="expense_pressed">#BC1616</color>
@@ -68,6 +74,26 @@
 
     <color name="savings">#720EC1</color>
     <color name="savings_pressed">#5A0C97</color>
+    <color name="accumulated">#C67700</color>
+
+    <!-- Color Picker -->
+    <color name="red">#E41E1E</color>
+    <color name="pink">#EE0055</color>
+    <color name="purple">#9C27B0</color>
+    <color name="deep_purple">#673AB7</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="blue">#2196F3</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="teal">#009688</color>
+    <color name="green">#4CAF50</color>
+    <color name="light_green">#00D76E</color>
+    <color name="lime">#C6FF00</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="amber">#FFC107</color>
+    <color name="orange">#FF9800</color>
+    <color name="deep_orange">#FF5722</color>
+    <color name="brown">#795548</color>
+    <color name="grey">#616161</color>
 
 <!--    &lt;!&ndash; Main &ndash;&gt;-->
 <!--    <color name="click">#EEEEEE</color>-->
@@ -104,10 +130,7 @@
 <!--    <color name="secondary_icon">#8A8A8A</color>-->
 <!--    <color name="text_error">#B71C1C</color>-->
 
-<!--    &lt;!&ndash; Items &ndash;&gt;-->
-<!--    <color name="item_pressed">#F3FFF9</color>-->
-<!--    <color name="item_focused">#F3FFF9</color>-->
-<!--    <color name="item_stroke_focused">#8BEDBE</color>-->
+
 
 <!--    &lt;!&ndash; Inputs &ndash;&gt;-->
 <!--    <color name="input_stroke">#E3E3E3</color>-->
@@ -132,27 +155,6 @@
 
 <!--    <color name="savings">#720EC1</color>-->
 <!--    <color name="savings_pressed">#5A0C97</color>-->
-
-<!--    <color name="accumulated">#C67700</color>-->
-
-<!--    &lt;!&ndash; Color Picker &ndash;&gt;-->
-<!--    <color name="red">#E41E1E</color>-->
-<!--    <color name="pink">#EE0055</color>-->
-<!--    <color name="purple">#9C27B0</color>-->
-<!--    <color name="deep_purple">#673AB7</color>-->
-<!--    <color name="indigo">#3F51B5</color>-->
-<!--    <color name="blue">#2196F3</color>-->
-<!--    <color name="cyan">#00BCD4</color>-->
-<!--    <color name="teal">#009688</color>-->
-<!--    <color name="green">#4CAF50</color>-->
-<!--    <color name="light_green">#00D76E</color>-->
-<!--    <color name="lime">#C6FF00</color>-->
-<!--    <color name="yellow">#FFEB3B</color>-->
-<!--    <color name="amber">#FFC107</color>-->
-<!--    <color name="orange">#FF9800</color>-->
-<!--    <color name="deep_orange">#FF5722</color>-->
-<!--    <color name="brown">#795548</color>-->
-<!--    <color name="grey">#616161</color>-->
 
 
 </resources>

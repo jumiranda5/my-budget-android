@@ -120,7 +120,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/account_form_color">
 
                 <RadioButton
-                    android:id="@+id/account_option_cass"
+                    android:id="@+id/account_option_cash"
                     style="@style/RadioWithIcon"
                     android:checked="true"
                     android:text="@string/account_cash" />

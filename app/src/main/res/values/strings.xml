@@ -82,9 +82,17 @@
     <string name="label_categories_income">Income Categories:</string>
     <string name="label_categories_expense">Expense Categories:</string>
 
+    <!-- Transactions -->
+    <string name="label_accumulated">Accumulated</string>
+    <string name="label_today">Today</string>
+    <string name="action_edit">Edit</string>
+    <string name="label_transfer_from">Transfer from</string>
+    <string name="label_transfer_to">Transfer to</string>
+
     <!-- Accounts -->
     <string name="title_accounts">Accounts</string>
     <string name="title_add_account">Add Account</string>
+    <string name="title_edit_account">Edit Account</string>
     <string name="desc_add_account">Add new account.</string>
 
     <!-- Settings -->
@@ -99,14 +107,16 @@
 
     <!-- Categories -->
     <string name="title_categories_list">Categories</string>
-    <string name="desc_add_category">Add new category.</string>
     <string name="title_add_category">Add Category</string>
+    <string name="title_edit_category">Edit Category</string>
+    <string name="desc_add_category">Add new category.</string>
     <string name="desc_categories_tabs">Categories tabs</string>
 
     <!-- Credit Cards -->
     <string name="credit_cards">Credit Cards</string>
     <string name="credit_card">Credit Card</string>
     <string name="title_add_card">Add Credit Card</string>
+    <string name="title_edit_card">Edit Credit Card</string>
     <string name="label_billing_day">Billing day:</string>
 
     <!-- Pending -->
@@ -114,10 +124,17 @@
 
     <!-- Dialogs -->
     <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
     <string name="title_expense">Expense</string>
     <string name="title_income">Income</string>
     <string name="desc_amount">Amount</string>
     <string name="progress_msg_delete">Deleting item…</string>
+    <string name="msg_archive_account" translatable="false">Would you like to permanently archive this account?</string>
+    <string name="msg_archive_default" translatable="false">Would you like to permanently archive this item?</string>
+    <string name="msg_archive_category" translatable="false">Would you like to permanently archive this category?</string>
+    <string name="msg_archive_credit_card" translatable="false">Would you like to permanently archive this credit card?</string>
+    <string name="msg_clear_database" translatable="false">This will delete everything stored on this application database. Are you sure you want to proceed?</string>
 
 
 <!--    &lt;!&ndash; Actions (buttons) &ndash;&gt;-->

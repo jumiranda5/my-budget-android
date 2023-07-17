@@ -39,13 +39,13 @@
                 android:layout_marginEnd="16dp"
                 android:text="@string/title_accounts"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                app:layout_constraintEnd_toStartOf="@+id/button_add_account"
                 app:layout_constraintStart_toEndOf="@+id/accounts_toolbar_icon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Add button -->
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/button_add_account"
                 style="@style/ToolbarButtonWithBg"
                 android:layout_marginEnd="4dp"
                 android:contentDescription="@string/desc_add_account"
