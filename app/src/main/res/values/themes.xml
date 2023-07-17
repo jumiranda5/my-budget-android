@@ -3,7 +3,7 @@
     <style name="Base.Theme.MyBudgetApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/grey</item>
+        <item name="colorPrimaryVariant">@color/disabled_text</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorSecondary</item>
@@ -47,7 +47,7 @@
     </style>
 
     <style name="ThemeOverlay.App.RadioButton" parent="">
-        <item name="colorPrimary">@color/button_save</item>
+        <item name="colorPrimary">@color/button_accent</item>
     </style>
 
     <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">

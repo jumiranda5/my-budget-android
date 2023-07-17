@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ==================  MAIN  ================== -->
+<!--    &lt;!&ndash; ==================  MAIN  ================== &ndash;&gt;-->
 
-    <!-- Bar chart -->
-    <dimen name="year_chart_margin">56dp</dimen>
-    <dimen name="year_chart_margin_top">64dp</dimen>
+<!--    &lt;!&ndash; Bar chart &ndash;&gt;-->
+<!--    <dimen name="year_chart_margin">56dp</dimen>-->
+<!--    <dimen name="year_chart_margin_top">64dp</dimen>-->
 
-    <!-- Containers -->
-    <dimen name="card_padding">24dp</dimen>
+<!--    &lt;!&ndash; Containers &ndash;&gt;-->
+<!--    <dimen name="card_padding">24dp</dimen>-->
 
-    <!-- Toolbar -->
-    <dimen name="toolbar_height">72dp</dimen>
-    <dimen name="toolbar_month_text">24sp</dimen>
-    <dimen name="toolbar_month_width">180dp</dimen>
-    <dimen name="toolbar_inset_start">16dp</dimen>
-    <dimen name="toolbar_button">60dp</dimen>
+<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
+<!--    <dimen name="toolbar_height">72dp</dimen>-->
+<!--    <dimen name="toolbar_month_text">24sp</dimen>-->
+<!--    <dimen name="toolbar_month_width">180dp</dimen>-->
+<!--    <dimen name="toolbar_inset_start">16dp</dimen>-->
+<!--    <dimen name="toolbar_button">60dp</dimen>-->
 
-    <!-- ==================  FRAGMENTS  ================== -->
+<!--    &lt;!&ndash; ==================  FRAGMENTS  ================== &ndash;&gt;-->
 
-    <!-- Home -->
-    <dimen name="home_padding">24dp</dimen>
-    <dimen name="home_pie_max">160dp</dimen>
-    <dimen name="home_categories_width_land">160dp</dimen>
-    <dimen name="progress_text_size">34sp</dimen>
-    <dimen name="progress_indicator">200dp</dimen>
+<!--    &lt;!&ndash; Home &ndash;&gt;-->
+<!--    <dimen name="home_padding">24dp</dimen>-->
+<!--    <dimen name="home_pie_max">160dp</dimen>-->
+<!--    <dimen name="home_categories_width_land">160dp</dimen>-->
+<!--    <dimen name="progress_text_size">34sp</dimen>-->
+<!--    <dimen name="progress_indicator">200dp</dimen>-->
 
 
-    <!-- ******** TO BE REFACTORED ******** -->
+<!--    &lt;!&ndash; ******** TO BE REFACTORED ******** &ndash;&gt;-->
 
-    <!-- Guideline -->
-    <item name="guideline_start" format="float" type="dimen">0.16</item>
-    <item name="guideline_end" format="float" type="dimen">0.84</item>
+<!--    &lt;!&ndash; Guideline &ndash;&gt;-->
+<!--    <item name="guideline_start" format="float" type="dimen">0.16</item>-->
+<!--    <item name="guideline_end" format="float" type="dimen">0.84</item>-->
 
-    <!-- Bottom bar -->
-    <dimen name="bottomBar_height">72dp</dimen>
-    <dimen name="bottomBar_width">500dp</dimen>
-    <dimen name="bottomBar_icon_size">30dp</dimen>
-    <dimen name="main_fab_size">52dp</dimen>
+<!--    &lt;!&ndash; Bottom bar &ndash;&gt;-->
+<!--    <dimen name="bottomBar_height">72dp</dimen>-->
+<!--    <dimen name="bottomBar_width">500dp</dimen>-->
+<!--    <dimen name="bottomBar_icon_size">30dp</dimen>-->
+<!--    <dimen name="main_fab_size">52dp</dimen>-->
 
-    <!-- Cards and Accounts (Main page) -->
-    <dimen name="main_title">22sp</dimen>
-    <dimen name="main_title_large">34sp</dimen>
-    <dimen name="main_title_space">56dp</dimen>
-    <dimen name="main_title_space_top">88dp</dimen>
-    <dimen name="main_total">40sp</dimen>
-    <dimen name="main_accounts_icon_size">38dp</dimen>
+<!--    &lt;!&ndash; Cards and Accounts (Main page) &ndash;&gt;-->
+<!--    <dimen name="main_title">22sp</dimen>-->
+<!--    <dimen name="main_title_large">34sp</dimen>-->
+<!--    <dimen name="main_title_space">56dp</dimen>-->
+<!--    <dimen name="main_title_space_top">88dp</dimen>-->
+<!--    <dimen name="main_total">40sp</dimen>-->
+<!--    <dimen name="main_accounts_icon_size">38dp</dimen>-->
 
-    <!-- Item Card -->
-    <dimen name="item_card_height">88dp</dimen>
-    <dimen name="item_account_height">64dp</dimen>
+<!--    &lt;!&ndash; Item Card &ndash;&gt;-->
+<!--    <dimen name="item_card_height">88dp</dimen>-->
+<!--    <dimen name="item_account_height">64dp</dimen>-->
 
-    <!-- Items -->
-    <dimen name="item_simple_height">64dp</dimen>
-    <dimen name="item_double_height">88dp</dimen>
+<!--    &lt;!&ndash; Items &ndash;&gt;-->
+<!--    <dimen name="item_simple_height">64dp</dimen>-->
+<!--    <dimen name="item_double_height">88dp</dimen>-->
 
-    <!-- Categories -->
-    <dimen name="categories_chart_margin">80dp</dimen>
-    <dimen name="categories_chart_list_margin">80dp</dimen>
+<!--    &lt;!&ndash; Categories &ndash;&gt;-->
+<!--    <dimen name="categories_chart_margin">80dp</dimen>-->
+<!--    <dimen name="categories_chart_list_margin">80dp</dimen>-->
 
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,45 +21,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_start"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/guideline_start_list"/>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_end"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/guideline_end_list"/>
 
             <TextView
                 android:id="@+id/out_title"
                 style="@style/TransactionsTitle"
                 android:layout_marginTop="56dp"
-                android:textAlignment="center"
                 android:text="@string/label_expenses"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/out_total"
                 style="@style/NumberImpact"
-                android:textAlignment="center"
                 android:layout_marginTop="2dp"
                 android:text="@string/initial_value"
+                android:textAlignment="center"
                 android:textColor="@color/expense"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/out_title" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/out_list"
                 style="@style/NestedListNoScroll"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="44dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/out_total"
@@ -68,17 +55,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/transaction_out_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/expense"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/action_add_transaction"
-        android:src="@drawable/ic_app_add_400"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/transaction_out_add"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@color/expense"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:contentDescription="@string/action_add_transaction"-->
+<!--        android:src="@drawable/ic_app_add_400"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:tint="@color/white" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

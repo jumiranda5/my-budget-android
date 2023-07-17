@@ -5,19 +5,19 @@
                               GUIDELINES
     ============================================================ -->
 
-    <style name="MyGuideline" parent="AppTheme">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-    </style>
+<!--    <style name="MyGuideline" parent="AppTheme">-->
+<!--        <item name="android:layout_width">wrap_content</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:orientation">vertical</item>-->
+<!--    </style>-->
 
-    <style name="GuidelineStart" parent="MyGuideline">
-        <item name="layout_constraintGuide_percent">@dimen/guideline_start</item>
-    </style>
+<!--    <style name="GuidelineStart" parent="MyGuideline">-->
+<!--        <item name="layout_constraintGuide_percent">@dimen/guideline_start</item>-->
+<!--    </style>-->
 
-    <style name="GuidelineEnd" parent="MyGuideline">
-        <item name="layout_constraintGuide_percent">@dimen/guideline_end</item>
-    </style>
+<!--    <style name="GuidelineEnd" parent="MyGuideline">-->
+<!--        <item name="layout_constraintGuide_percent">@dimen/guideline_end</item>-->
+<!--    </style>-->
 
     <!-- ==========================================================
                               PROGRESS

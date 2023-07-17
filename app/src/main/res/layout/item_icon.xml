@@ -9,9 +9,7 @@
     <ImageButton
         android:id="@+id/icon_item"
         style="@style/ItemButton"
-        android:contentDescription="@string/label_color"
-        android:padding="14dp"
-        app:tint="@color/high_emphasis_text"
+        android:contentDescription="@null"
         app:srcCompat="@drawable/ic_category_fill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

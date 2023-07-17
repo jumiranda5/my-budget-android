@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_simple_height"
+    android:layout_height="@dimen/item_height"
     android:focusable="true"
     android:clickable="true"
     android:background="@drawable/bg_list_item"
@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/category_icon"
-        style="@style/Icon"
+        style="@style/IconNormal"
         android:contentDescription="@null"
         android:layout_marginStart="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,10 +21,10 @@
 
     <TextView
         android:id="@+id/category_name"
-        style="@style/MainText"
+        style="@style/TextNormalEllipse"
         android:layout_width="0dp"
         android:layout_marginStart="12dp"
-        android:text="@string/label_category"
+        android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/category_percent"
         app:layout_constraintStart_toEndOf="@+id/category_icon"
@@ -32,11 +32,11 @@
 
     <TextView
         android:id="@+id/category_percent"
-        style="@style/NumberMedium"
+        style="@style/Currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/test_0_percent"
+        android:text="@string/initial_percent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

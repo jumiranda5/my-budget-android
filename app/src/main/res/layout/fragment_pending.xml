@@ -21,7 +21,7 @@
             <ImageButton
                 android:id="@+id/pending_toolbar_close"
                 style="@style/ToolbarButton"
-                android:contentDescription="@string/action_close"
+                android:contentDescription="@string/nav_close"
                 android:src="@drawable/ic_app_close"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
 
             <ImageView
                 android:id="@+id/pending_icon"
-                style="@style/Icon"
+                style="@style/IconNormal"
                 android:contentDescription="@null"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
@@ -44,7 +44,6 @@
                 android:id="@+id/pending_toolbar_title"
                 style="@style/ToolbarTitle"
                 android:text="@string/title_pending"
-                android:textSize="@dimen/categories_title_size"
                 android:layout_marginStart="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/pending_toolbar_close"

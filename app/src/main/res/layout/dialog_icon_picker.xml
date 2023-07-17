@@ -6,26 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/dialog_icon_title"
-        style="@style/MainText"
-        android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:paddingStart="16dp"
-        android:text="Icon"
+    <ImageView
+        android:id="@+id/drag_indicator"
+        style="@style/DragIndicator"
+        android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_icon_title"
+        style="@style/DialogTitle"
+        android:text="@string/hint_icon"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_icon_dismiss"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
 
     <ImageButton
         android:id="@+id/dialog_icon_dismiss"
         style="@style/IconButton"
         android:layout_marginEnd="4dp"
-        android:contentDescription="@string/action_close"
+        android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_icon_title"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_icon_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dialog_icon_title"
         app:srcCompat="@drawable/ic_app_close" />
 
@@ -34,17 +37,15 @@
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:clipToPadding="false"
-        android:isScrollContainer="true"
-        android:paddingTop="12dp"
+        android:paddingTop="24dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="16dp"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_icon_title"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="5"
         tools:listitem="@layout/item_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

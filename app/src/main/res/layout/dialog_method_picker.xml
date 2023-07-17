@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageButton
-        android:id="@+id/method_picker_close"
-        style="@style/IconButton"
-        android:contentDescription="@string/action_close"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/method_picker_title"
-        app:layout_constraintEnd_toEndOf="@+id/method_picker_title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_close" />
-
-    <TextView
-        android:id="@+id/method_picker_title"
-        style="@style/ToolbarTitle"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@drawable/bg_toolbar"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Choose a payment method"
+    <ImageView
+        android:id="@+id/drag_indicator"
+        style="@style/DragIndicator"
+        android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/method_picker_title"
+        style="@style/DialogTitle"
+        android:text="@string/hint_payment_method"
+        app:layout_constraintEnd_toStartOf="@id/method_picker_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
+
+    <ImageButton
+        android:id="@+id/method_picker_close"
+        style="@style/IconButton"
+        android:contentDescription="@string/nav_close"
+        app:layout_constraintBottom_toBottomOf="@+id/method_picker_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/method_picker_title"
+        app:srcCompat="@drawable/ic_app_close" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/payment_method_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintHeight_max="400dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="32dp"
         android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

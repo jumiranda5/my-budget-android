@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ==================  MAIN  ================== -->
+<!--    &lt;!&ndash; ==================  MAIN  ================== &ndash;&gt;-->
 
-    <!-- Numbers -->
-    <dimen name="number_impact_home_land">38sp</dimen>
+<!--    &lt;!&ndash; Numbers &ndash;&gt;-->
+<!--    <dimen name="number_impact_home_land">38sp</dimen>-->
 
-    <!-- Toolbar -->
-    <dimen name="toolbar_inset_start">72dp</dimen>
-    <dimen name="toolbar_inset_end">64dp</dimen>
+<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
+<!--    <dimen name="toolbar_inset_start">72dp</dimen>-->
+<!--    <dimen name="toolbar_inset_end">64dp</dimen>-->
 
-    <!-- Bar chart -->
-    <dimen name="year_chart_margin">40dp</dimen>
-    <dimen name="year_chart_margin_top">32dp</dimen>
+<!--    &lt;!&ndash; Bar chart &ndash;&gt;-->
+<!--    <dimen name="year_chart_margin">40dp</dimen>-->
+<!--    <dimen name="year_chart_margin_top">32dp</dimen>-->
 
-    <!-- ==================  FRAGMENTS  ================== -->
+<!--    &lt;!&ndash; ==================  FRAGMENTS  ================== &ndash;&gt;-->
 
-    <!-- Home -->
-    <dimen name="home_padding">32dp</dimen>
-    <dimen name="home_categories_width_land">200dp</dimen>
-    <dimen name="home_pie_margin">20dp</dimen>
-    <dimen name="home_pie_margin_top">16dp</dimen>
-    <dimen name="home_currency_margin">40dp</dimen>
-    <dimen name="home_progress_margin_start">8dp</dimen>
-    <dimen name="home_progress_margin_bottom">16dp</dimen>
-    <dimen name="progress_text_size">38sp</dimen>
-    <dimen name="progress_indicator">220dp</dimen>
-    <dimen name="progress_track">10dp</dimen>
-    <dimen name="progress_corners">5dp</dimen>
-
-
-
-    <!-- Guideline -->
-    <item name="guideline_start" format="float" type="dimen">0.1</item>
-    <item name="guideline_end" format="float" type="dimen">0.9</item>
-
-    <!-- Guidelines -->
-    <item name="guideline_home_start" format="float" type="dimen">0.06</item>
-    <item name="guideline_home_end" format="float" type="dimen">0.94</item>
+<!--    &lt;!&ndash; Home &ndash;&gt;-->
+<!--    <dimen name="home_padding">32dp</dimen>-->
+<!--    <dimen name="home_categories_width_land">200dp</dimen>-->
+<!--    <dimen name="home_pie_margin">20dp</dimen>-->
+<!--    <dimen name="home_pie_margin_top">16dp</dimen>-->
+<!--    <dimen name="home_currency_margin">40dp</dimen>-->
+<!--    <dimen name="home_progress_margin_start">8dp</dimen>-->
+<!--    <dimen name="home_progress_margin_bottom">16dp</dimen>-->
+<!--    <dimen name="progress_text_size">38sp</dimen>-->
+<!--    <dimen name="progress_indicator">220dp</dimen>-->
+<!--    <dimen name="progress_track">10dp</dimen>-->
+<!--    <dimen name="progress_corners">5dp</dimen>-->
 
 
+
+<!--    &lt;!&ndash; Guideline &ndash;&gt;-->
+<!--    <item name="guideline_start" format="float" type="dimen">0.1</item>-->
+<!--    <item name="guideline_end" format="float" type="dimen">0.9</item>-->
+
+<!--    &lt;!&ndash; Guidelines &ndash;&gt;-->
+<!--    <item name="guideline_home_start" format="float" type="dimen">0.06</item>-->
+<!--    <item name="guideline_home_end" format="float" type="dimen">0.94</item>-->
 
 </resources>

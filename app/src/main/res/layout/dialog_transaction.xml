@@ -8,10 +8,7 @@
 
     <ImageView
         android:id="@+id/drag_indicator"
-        android:layout_width="50dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/disabled_text"
+        style="@style/DragIndicator"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +18,7 @@
         android:id="@+id/dialog_transaction_dismiss"
         style="@style/IconButton"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@string/action_close"
+        android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
@@ -31,7 +28,7 @@
         android:id="@+id/dialog_transaction_delete"
         style="@style/IconButton"
         android:layout_marginEnd="4dp"
-        android:contentDescription="Delete"
+        android:contentDescription="@string/action_delete"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_dismiss"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
@@ -41,7 +38,7 @@
         android:id="@+id/dialog_transaction_edit"
         style="@style/IconButton"
         android:layout_marginEnd="4dp"
-        android:contentDescription="@string/action_edit"
+        android:contentDescription="@string/nav_edit"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_delete"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
@@ -49,10 +46,8 @@
 
     <TextView
         android:id="@+id/dialog_transaction_title"
-        style="@style/MainTitle"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Expense"
+        style="@style/DialogTitle"
+        android:text="@string/title_expense"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drag_indicator" />
@@ -63,15 +58,15 @@
         android:id="@+id/dialog_transaction_desc_icon"
         style="@style/IconImage"
         android:layout_marginTop="24dp"
-        android:contentDescription="Description"
+        android:contentDescription="@string/hint_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title"
         app:srcCompat="@drawable/ic_app_description" />
 
     <TextView
         android:id="@+id/dialog_transaction_desc"
-        style="@style/MainTextEllipse"
-        android:text="Description"
+        style="@style/TextNormalEllipse"
+        android:text="@string/hint_description"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_desc_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_transaction_desc_icon"
@@ -82,15 +77,15 @@
     <ImageView
         android:id="@+id/dialog_transaction_amount_icon"
         style="@style/IconImage"
-        android:contentDescription="Amount"
+        android:contentDescription="@string/desc_amount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_desc_icon"
         app:srcCompat="@drawable/ic_app_paid" />
 
     <TextView
         android:id="@+id/dialog_transaction_amount"
-        style="@style/MainTextEllipse"
-        android:text="$ 10.00"
+        style="@style/TextNormalEllipse"
+        android:text="@string/initial_value"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_amount_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_transaction_amount_icon"
@@ -101,15 +96,15 @@
     <ImageView
         android:id="@+id/dialog_transaction_category_icon"
         style="@style/IconImage"
-        android:contentDescription="Category"
+        android:contentDescription="@string/hint_category_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_amount_icon"
         app:srcCompat="@drawable/ic_app_category" />
 
     <TextView
         android:id="@+id/dialog_transaction_category"
-        style="@style/MainTextEllipse"
-        android:text="Category"
+        style="@style/TextNormalEllipse"
+        android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_category_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_transaction_category_icon"
@@ -120,15 +115,15 @@
     <ImageView
         android:id="@+id/dialog_transaction_method_icon"
         style="@style/IconImage"
-        android:contentDescription="Payment Method"
+        android:contentDescription="@string/hint_payment_method"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_category_icon"
         app:srcCompat="@drawable/ic_app_cash" />
 
     <TextView
         android:id="@+id/dialog_transaction_method"
-        style="@style/MainTextEllipse"
-        android:text="Payment Method"
+        style="@style/TextNormalEllipse"
+        android:text="@string/hint_payment_method"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_method_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_transaction_method_icon"
@@ -139,7 +134,7 @@
     <ImageView
         android:id="@+id/dialog_transaction_paid_icon"
         style="@style/IconImage"
-        android:contentDescription="Paid"
+        android:contentDescription="@string/label_paid"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_method_icon"
         app:srcCompat="@drawable/ic_app_check_circle_300"
@@ -147,8 +142,8 @@
 
     <TextView
         android:id="@+id/dialog_transaction_paid"
-        style="@style/MainTextEllipse"
-        android:text="Paid"
+        style="@style/TextNormalEllipse"
+        android:text="@string/label_paid"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_paid_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_transaction_paid_icon"
@@ -167,7 +162,7 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="10dp"
         android:indeterminateTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/progress_delete_text"
@@ -175,10 +170,10 @@
 
     <TextView
         android:id="@+id/progress_delete_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TextSecondary"
+        android:fontFamily="@font/titillium_web_semi_bold"
         android:layout_marginStart="32dp"
-        android:text="Deleting item..."
+        android:text="@string/progress_msg_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

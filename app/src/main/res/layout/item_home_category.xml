@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/home_category_item_height">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/item_home_cat_circle"
@@ -17,9 +17,8 @@
     <TextView
         android:id="@+id/item_home_cat_text"
         style="@style/TextSecondaryEllipse"
-        android:textSize="@dimen/text_secondary"
         android:layout_marginStart="8dp"
-        android:text="@string/test_category_value"
+        android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_home_cat_circle"

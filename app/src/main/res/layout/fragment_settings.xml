@@ -1,88 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_00dp"
     tools:context=".SettingsFragment">
 
+    <!-- Toolbar -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settings_toolbar"
+        style="@style/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/toolbar_settings_icon"
+                style="@style/IconNormal"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_settings_400" />
+
+            <TextView
+                android:id="@+id/settings_toolbar_title"
+                style="@style/ToolbarTitle"
+                android:text="@string/nav_settings"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/toolbar_settings_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/settings_toolbar_close"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/nav_close"
+                android:src="@drawable/ic_app_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/settings_container"
-        style="@style/MyNestedScrollView">
+        android:id="@+id/settings_scroll_view"
+        style="@style/MyNestedScrollView"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <!-- Toolbar -->
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/settings_toolbar"
-                style="@style/MainToolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/toolbar_settings_icon"
-                        style="@style/IconImage"
-                        android:contentDescription="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_app_settings_400" />
-
-                    <TextView
-                        android:id="@+id/settings_toolbar_title"
-                        style="@style/ToolbarTitle"
-                        android:text="@string/nav_settings"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/toolbar_settings_icon"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/settings_toolbar_close"
-                        style="@style/ToolbarButton"
-                        android:contentDescription="@string/action_close"
-                        android:src="@drawable/ic_app_close"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-            <!-- Guidelines -->
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_settings_start"
-                style="@style/GuidelineStart"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.02"/>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_settings_end"
-                style="@style/GuidelineEnd"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.98"/>
 
             <!-- Biometric lock -->
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/settings_switch_lock"
                 style="@style/SettingsSwitch"
-                android:layout_marginTop="@dimen/settings_margin_top"
                 android:checked="true"
                 android:text="@string/action_biometric_lock"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
-                app:layout_constraintTop_toBottomOf="@+id/settings_toolbar" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/settings_lock_icon"
@@ -99,8 +92,8 @@
                 android:id="@+id/switch_dark_mode"
                 style="@style/SettingsSwitch"
                 android:text="@string/action_dark_mode"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/settings_switch_lock" />
 
             <ImageView
@@ -118,8 +111,8 @@
                 android:id="@+id/settings_edit_categories"
                 style="@style/SettingsButton"
                 android:text="@string/action_menage_categories"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch_dark_mode" />
 
             <ImageView
@@ -136,9 +129,9 @@
             <Button
                 android:id="@+id/settings_edit_cards"
                 style="@style/SettingsButton"
-                android:text="Menage Credit Cards"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                android:text="@string/action_menage_cards"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/settings_edit_categories" />
 
             <ImageView
@@ -156,8 +149,8 @@
                 android:id="@+id/settings_premium_member"
                 style="@style/SettingsButton"
                 android:text="@string/action_become_a_premium_user"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/settings_edit_cards" />
 
             <ImageView
@@ -175,8 +168,8 @@
                 android:id="@+id/settings_support"
                 style="@style/SettingsButton"
                 android:text="@string/action_support"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/settings_premium_member" />
 
             <ImageView
@@ -194,8 +187,8 @@
                 android:id="@+id/settings_privacy_policy"
                 style="@style/SettingsButton"
                 android:text="@string/action_privacy_policy"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/settings_support" />
 
             <ImageView
@@ -210,21 +203,21 @@
             <Button
                 android:id="@+id/settings_clear_data"
                 style="@style/SettingsButton"
-                android:text="Reset Database"
-                android:textColor="@color/text_error"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_settings_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_settings_start"
+                android:text="@string/action_reset_database"
+                android:textColor="@color/danger"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/settings_privacy_policy" />
 
             <ImageView
                 android:id="@+id/settings_clear_data_icon"
                 style="@style/InputIcon"
                 android:contentDescription="@null"
-                app:tint="@color/text_error"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_clear_data"
                 app:layout_constraintStart_toStartOf="@+id/settings_clear_data"
                 app:layout_constraintTop_toTopOf="@+id/settings_clear_data"
-                app:srcCompat="@drawable/ic_app_dangerous" />
+                app:srcCompat="@drawable/ic_app_dangerous"
+                app:tint="@color/danger" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,6 +230,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_gravity="center" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,7 @@
 
     <item>
         <shape>
-            <solid android:color="@android:color/black"/>
+            <solid android:color="@color/bg_day"/>
             <corners android:topRightRadius="18dp"
                 android:bottomRightRadius="18dp"/>
         </shape>

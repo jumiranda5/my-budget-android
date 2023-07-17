@@ -20,6 +20,30 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <!-- Bottom nav -->
+
+    <style name="BottomNav" parent="AppTheme">
+        <item name="android:layout_width">@dimen/bottomBar_width</item>
+        <item name="android:layout_height">@dimen/bottomBar_height</item>
+        <item name="android:background">@color/bg_01dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="itemBackground">@drawable/bg_bottom_bar</item>
+        <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
+        <item name="itemIconTint">@color/high_emphasis_text</item>
+        <item name="itemTextColor">@color/high_emphasis_text</item>
+        <item name="itemPaddingTop">10dp</item>
+        <item name="itemPaddingBottom">10dp</item>
+        <item name="itemActiveIndicatorStyle">@null</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
+        <item name="labelVisibilityMode">selected</item>
+    </style>
+
+    <style name="BottomNavTextStyle" parent="AppTheme">
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <!-- Home Cards -->
 
     <style name="Card" parent="AppTheme">
@@ -27,35 +51,73 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="rippleColor">@color/light_grey</item>
-        <item name="cardCornerRadius">@dimen/card_corner</item>
+        <item name="rippleColor">@color/ripple</item>
+        <item name="cardCornerRadius">@dimen/corners</item>
         <item name="cardBackgroundColor">@color/bg_01dp</item>
         <item name="cardElevation">0dp</item>
     </style>
 
     <style name="HomeCard" parent="Card">
-        <item name="contentPadding">@dimen/card_padding</item>
         <item name="strokeColor">@color/border</item>
+    </style>
+
+    <style name="HomeCardContainer" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/card_padding</item>
+        <item name="android:paddingEnd">@dimen/card_padding</item>
+        <item name="android:paddingTop">@dimen/card_padding_top</item>
+        <item name="android:paddingBottom">@dimen/card_padding_top</item>
+    </style>
+
+    <style name="HomeCardContainer2" parent="HomeCardContainer">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
     </style>
 
     <style name="ErrorCard" parent="Card">
         <item name="contentPadding">@dimen/card_padding</item>
         <item name="cardBackgroundColor">@color/bg_error</item>
         <item name="strokeColor">@color/border_error</item>
-        <item name="rippleColor">@color/border_error</item>
+        <item name="rippleColor">@color/ripple_error</item>
+    </style>
+
+    <!-- ==========================================================
+                              SCROLL VIEWS
+      ============================================================ -->
+
+    <style name="MyNestedScrollView" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fillViewport">true</item>
+        <item name="android:clipToPadding">false</item>
     </style>
 
     <!-- Home lists -->
 
     <style name="CategoriesListSmall" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/home_category_list_height</item>
-        <item name="android:layout_marginTop">@dimen/home_categories_list_margin</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:isScrollContainer">false</item>
         <item name="android:nestedScrollingEnabled">false</item>
+        <item name="android:layout_marginTop">@dimen/card_padding</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
     </style>
 
     <!-- Lists -->
+
+    <style name="MainList" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="ClickableListItem" parent="AppTheme">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/bg_list_item</item>
+    </style>
 
     <style name="NestedListNoScroll" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
@@ -67,93 +129,51 @@
 
 
     <!-- ==========================================================
-                                NAV BARS
-    ============================================================ -->
-
-    <style name="BottomNav" parent="AppTheme">
-        <item name="android:layout_width">@dimen/bottomBar_width</item>
-        <item name="android:layout_height">@dimen/bottomBar_height</item>
-        <item name="android:background">@color/bg_01dp</item>
-        <item name="android:elevation">0dp</item>
-        <item name="itemBackground">@drawable/bg_bottom_bar</item>
-        <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
-        <item name="itemIconTint">@color/bottom_nav_icon_color</item>
-        <item name="itemTextColor">@color/bottom_nav_icon_color</item>
-        <item name="itemPaddingTop">10dp</item>
-        <item name="itemPaddingBottom">10dp</item>
-        <item name="itemActiveIndicatorStyle">@null</item>
-        <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
-        <item name="labelVisibilityMode">selected</item>
-    </style>
-
-    <style name="BottomNavTextStyle" parent="AppTheme">
-        <item name="android:fontFamily">@font/nunito_sans_regular</item>
-        <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="MyTabText" parent="AppTheme">
-        <item name="android:textSize">@dimen/secondary_text</item>
-        <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
-    </style>
-
-    <!-- ==========================================================
-                           SCROLL VIEWS
-    ============================================================ -->
-
-    <style name="MyNestedScrollView" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:fillViewport">true</item>
-        <item name="android:clipToPadding">false</item>
-    </style>
-
-    <!-- ==========================================================
                             CARD VIEW
     ============================================================ -->
 
-    <style name="CardContainer" parent="AppTheme">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/bg_card</item>
-        <item name="android:paddingStart">@dimen/card_padding</item>
-        <item name="android:paddingTop">@dimen/card_padding</item>
-        <item name="android:paddingEnd">@dimen/card_padding</item>
-        <item name="android:paddingBottom">@dimen/card_padding_bottom</item>
-    </style>
+<!--    <style name="CardContainer" parent="AppTheme">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:background">@drawable/bg_card</item>-->
+<!--        <item name="android:paddingStart">@dimen/card_padding</item>-->
+<!--        <item name="android:paddingTop">@dimen/card_padding</item>-->
+<!--        <item name="android:paddingEnd">@dimen/card_padding</item>-->
+<!--        <item name="android:paddingBottom">@dimen/card_padding_bottom</item>-->
+<!--    </style>-->
 
-    <style name="CardContainerClickable" parent="CardContainer">
-        <item name="android:clickable">true</item>
-        <item name="android:state_focused">true</item>
-        <item name="android:background">@drawable/bg_card_click</item>
-    </style>
+<!--    <style name="CardContainerClickable" parent="CardContainer">-->
+<!--        <item name="android:clickable">true</item>-->
+<!--        <item name="android:state_focused">true</item>-->
+<!--        <item name="android:background">@drawable/bg_card_click</item>-->
+<!--    </style>-->
 
 
     <!-- ==========================================================
                                LISTS
     ============================================================ -->
 
-    <style name="MainList" parent="AppTheme">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:clipToPadding">false</item>
-        <item name="android:isScrollContainer">false</item>
-        <item name="android:nestedScrollingEnabled">false</item>
-    </style>
+<!--    <style name="MainList" parent="AppTheme">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:clipToPadding">false</item>-->
+<!--        <item name="android:isScrollContainer">false</item>-->
+<!--        <item name="android:nestedScrollingEnabled">false</item>-->
+<!--    </style>-->
 
-    <style name="SideList" parent="AppTheme">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:clipToPadding">false</item>
-        <item name="android:background">@drawable/bg_card</item>
-        <item name="android:padding">@dimen/side_list_padding</item>
-        <item name="android:layout_marginBottom">24dp</item>
-    </style>
+<!--    <style name="SideList" parent="AppTheme">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:layout_height">0dp</item>-->
+<!--        <item name="android:clipToPadding">false</item>-->
+<!--        <item name="android:background">@drawable/bg_card</item>-->
+<!--        <item name="android:padding">@dimen/side_list_padding</item>-->
+<!--        <item name="android:layout_marginBottom">24dp</item>-->
+<!--    </style>-->
 
-    <style name="ClickableListItem" parent="AppTheme">
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:background">@drawable/bg_list_item</item>
-    </style>
+<!--    <style name="ClickableListItem" parent="AppTheme">-->
+<!--        <item name="android:clickable">true</item>-->
+<!--        <item name="android:focusable">true</item>-->
+<!--        <item name="android:background">@drawable/bg_list_item</item>-->
+<!--    </style>-->
 
 </resources>

@@ -6,26 +6,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/dialog_color_title"
-        style="@style/MainText"
-        android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:paddingStart="16dp"
-        android:text="@string/label_color"
+    <ImageView
+        android:id="@+id/drag_indicator"
+        style="@style/DragIndicator"
+        android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_color_title"
+        style="@style/DialogTitle"
+        android:text="@string/hint_color"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_color_dismiss"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
 
     <ImageButton
         android:id="@+id/dialog_color_dismiss"
         style="@style/IconButton"
         android:layout_marginEnd="4dp"
-        android:contentDescription="@string/action_close"
+        android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_color_title"
-        app:layout_constraintEnd_toEndOf="@+id/dialog_color_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dialog_color_title"
         app:srcCompat="@drawable/ic_app_close" />
 
@@ -33,12 +36,13 @@
         android:id="@+id/dialog_color_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/desc_list_of_colors"
         android:isScrollContainer="false"
         android:layout_margin="12dp"
         tools:listitem="@layout/item_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_color_title" />
+        app:layout_constraintTop_toBottomOf="@+id/dialog_color_title"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

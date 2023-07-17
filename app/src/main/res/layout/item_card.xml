@@ -1,38 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_card_height"
+    android:layout_height="@dimen/item_double_height"
     android:id="@+id/item_card_container"
     android:focusable="true"
     android:clickable="true"
     android:background="@drawable/bg_list_item"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_card_start"
-        style="@style/GuidelineStart"
-        android:orientation="vertical" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_card_end"
-        style="@style/GuidelineEnd"
-        android:orientation="vertical" />
-
     <ImageView
         android:id="@+id/item_card_icon"
-        style="@style/Icon"
+        style="@style/IconNormal"
         android:contentDescription="@null"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_card_start"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_credit_card" />
 
     <TextView
         android:id="@+id/item_card_name"
-        style="@style/MainText"
+        style="@style/TextNormalEllipse"
         android:layout_width="0dp"
-        android:layout_marginStart="@dimen/main_item_icon_margin"
-        android:text="@string/title_credit_card"
+        android:layout_marginStart="16dp"
+        android:text="@string/credit_card"
         app:layout_constraintBottom_toTopOf="@+id/item_card_billing_day"
         app:layout_constraintEnd_toStartOf="@+id/item_card_edit"
         app:layout_constraintStart_toEndOf="@+id/item_card_icon"
@@ -41,10 +32,10 @@
 
     <TextView
         android:id="@+id/item_card_billing_day"
-        style="@style/SecondaryText"
+        style="@style/TextSecondary"
         android:layout_width="0dp"
-        android:text="@string/test_billing_day_1"
-        android:layout_marginTop="@dimen/item_card_day_margin_top"
+        android:text="@string/initial_billing_day"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_card_edit"
         app:layout_constraintStart_toStartOf="@+id/item_card_name"
@@ -55,11 +46,10 @@
         style="@style/IconButton"
         android:padding="12dp"
         android:src="@drawable/ic_app_edit"
-        android:contentDescription="@string/action_edit"
-        android:layout_marginEnd="-12dp"
-        app:tint="@color/secondary_icon"
+        android:contentDescription="@string/nav_edit"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_card_end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

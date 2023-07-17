@@ -8,8 +8,11 @@
 
     <ImageView
         android:id="@+id/item_transaction2_icon"
-        style="@style/IconImage"
+        style="@style/IconNormal"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:contentDescription="@null"
+        android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,9 +20,10 @@
 
     <TextView
         android:id="@+id/item_transaction2_name"
-        style="@style/MainTextEllipse"
-        android:text="@string/hint_description"
-        android:textSize="@dimen/secondary_text"
+        style="@style/TextNormalEllipse"
+        android:text="Transaction"
+        android:layout_marginStart="16dp"
+        android:textSize="@dimen/text_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction2_total"
         app:layout_constraintStart_toEndOf="@+id/item_transaction2_icon"
@@ -27,20 +31,20 @@
 
     <TextView
         android:id="@+id/item_transaction2_total"
-        style="@style/NumberCurrency"
-        android:textSize="@dimen/secondary_text"
-        android:text="@string/test_currency_value"
-        android:layout_marginEnd="12dp"
+        style="@style/CurrencySpace"
+        android:textSize="@dimen/text_secondary"
+        android:text="@string/initial_value_no_symbol"
+        android:layout_marginEnd="24dp"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/item_transaction2_currency_symbol"
-        style="@style/NumberMedium"
-        android:text="@string/test_currency_symbol"
+        style="@style/Currency"
+        android:text="@string/currency_symbol"
         android:textColor="@color/income"
-        android:textSize="@dimen/secondary_text"
+        android:textSize="@dimen/text_secondary"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_total"
         app:layout_constraintStart_toStartOf="@id/item_transaction2_total" />
 

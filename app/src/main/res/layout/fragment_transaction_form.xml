@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,49 +7,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TransactionFormFragment">
 
+    <!-- Toolbar -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/add_toolbar"
+        style="@style/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/add_toolbar_title"
+                style="@style/ToolbarTitle"
+                android:text="@string/action_add"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/add_close_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/add_close_button"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/nav_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_close" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.core.widget.NestedScrollView
-        style="@style/MyNestedScrollView">
+        style="@style/MyNestedScrollView"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <!-- Guidelines -->
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_start"
-                style="@style/GuidelineStart"
-                android:orientation="vertical" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_end"
-                style="@style/GuidelineEnd"
-                android:orientation="vertical" />
-
-            <!-- Toolbar -->
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/add_toolbar"
-                style="@style/TransparentToolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/add_close_button"
-                        style="@style/ToolbarButton"
-                        android:contentDescription="@string/action_close"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_app_close" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.appcompat.widget.Toolbar>
 
             <!-- Toggle Transaction type -->
 
@@ -58,10 +61,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/form_toggle_pill_margin"
-                android:paddingBottom="@dimen/form_toggle_pill_margin"
-                app:layout_constraintStart_toStartOf="@+id/add_amount"
-                app:layout_constraintTop_toBottomOf="@+id/add_toolbar">
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ToggleButton
                     android:id="@+id/toggle_expense"
@@ -103,8 +107,8 @@
                 android:id="@+id/add_formatted_price"
                 style="@style/NumberImpact"
                 android:layout_width="0dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/test_formatted_price"
+                android:layout_marginTop="8dp"
+                android:text="@string/initial_value"
                 app:layout_constraintEnd_toEndOf="@+id/add_amount"
                 app:layout_constraintStart_toStartOf="@+id/add_amount"
                 app:layout_constraintTop_toBottomOf="@id/add_toggle_group" />
@@ -117,14 +121,14 @@
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_formatted_price" />
 
             <ImageView
                 android:id="@+id/add_icon_amount"
                 style="@style/InputIcon"
-                android:contentDescription="@string/desc_payment_value"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_app_paid"
                 app:layout_constraintBottom_toBottomOf="@+id/add_amount"
                 app:layout_constraintStart_toStartOf="@+id/add_amount"
@@ -138,8 +142,8 @@
                 android:layout_marginTop="12dp"
                 android:hint="@string/hint_description"
                 android:imeOptions="actionNext"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_amount" />
 
             <ImageView
@@ -151,15 +155,15 @@
                 app:layout_constraintStart_toStartOf="@+id/add_description"
                 app:layout_constraintTop_toTopOf="@+id/add_description" />
 
-            <!-- Date -->
+                <!-- Date -->
 
             <Button
                 android:id="@+id/add_date_picker"
                 style="@style/ButtonPicker"
                 android:layout_marginTop="12dp"
                 android:text="@string/hint_today"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_description" />
 
             <ImageView
@@ -182,13 +186,14 @@
                 app:layout_constraintTop_toBottomOf="@id/add_date_picker" />
 
             <!-- Category -->
+
             <Button
                 android:id="@+id/add_category_picker"
                 style="@style/ButtonPicker"
                 android:layout_marginTop="@dimen/form_divisor_space"
-                android:text="@string/label_category"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                android:text="@string/category_default"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_divisor_1" />
 
             <ImageView
@@ -200,16 +205,15 @@
                 app:layout_constraintTop_toTopOf="@+id/add_category_picker"
                 app:srcCompat="@drawable/ic_app_category" />
 
-
             <!-- Method -->
 
             <Button
                 android:id="@+id/add_method_picker"
                 style="@style/ButtonPicker"
                 android:layout_marginTop="12dp"
-                android:text="@string/label_payment_method"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                android:text="@string/hint_payment_method"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_category_picker" />
 
             <ImageView
@@ -236,7 +240,7 @@
 
                 <TextView
                     android:id="@+id/credit_card_month_picker_label"
-                    style="@style/SecondaryText"
+                    style="@style/TextSecondary"
                     android:text="@string/label_billing_month"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -252,13 +256,13 @@
 
                     <RadioButton
                         android:id="@+id/billing_month1"
-                        style="@style/MainText"
+                        style="@style/TextNormal"
                         android:checked="true"
-                        android:text="@string/test_january" />
+                        android:text="@string/initial_month" />
 
                     <RadioButton
                         android:id="@+id/billing_month2"
-                        style="@style/MainText"
+                        style="@style/TextNormal"
                         android:layout_marginStart="32dp"
                         android:text="@string/test_february" />
 
@@ -272,8 +276,8 @@
                 style="@style/ButtonPicker"
                 android:layout_marginTop="24dp"
                 android:text="@string/action_out"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/credit_card_month_picker" />
 
             <ImageView
@@ -286,15 +290,15 @@
                 app:layout_constraintTop_toTopOf="@+id/add_account_picker_out"
                 app:tint="@color/expense" />
 
-            <!-- Account Picker In -->
+                <!-- Account Picker In -->
 
             <Button
                 android:id="@+id/add_account_picker_in"
                 style="@style/ButtonPicker"
                 android:layout_marginTop="12dp"
                 android:text="@string/action_in"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_account_picker_out" />
 
             <ImageView
@@ -325,19 +329,21 @@
                 android:layout_marginTop="@dimen/form_divisor_space"
                 android:checked="true"
                 android:text="@string/label_paid"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_divisor_2" />
+
+            <!-- Edit All -->
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/add_switch_edit_all"
                 style="@style/FormSwitch"
                 android:layout_marginTop="@dimen/form_divisor_space"
                 android:checked="true"
-                android:text="Edit all parcels"
+                android:text="@string/label_edit_all"
                 android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/add_switch_paid" />
 
             <!-- Repeat -->
@@ -347,14 +353,14 @@
                 style="@style/WrappingLabel"
                 android:layout_marginTop="12dp"
                 android:text="@string/label_repeat"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/add_switch_edit_all" />
 
             <ImageButton
                 android:id="@+id/button_repeat_increase"
                 style="@style/IconButton"
-                android:contentDescription="@string/action_increase"
+                android:contentDescription="@string/desc_increase"
                 app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
                 app:layout_constraintEnd_toEndOf="@id/repeat_label"
                 app:layout_constraintTop_toTopOf="@+id/repeat_label"
@@ -364,7 +370,7 @@
                 android:id="@+id/add_quantity_input"
                 style="@style/InputQuantity"
                 android:layout_marginEnd="8dp"
-                android:hint="@string/test_1"
+                android:hint="@string/initial_1"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:visibility="visible"
@@ -376,8 +382,7 @@
                 android:id="@+id/button_repeat_decrease"
                 style="@style/IconButton"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="@string/action_decrease"
-                android:text="@string/action_decrease"
+                android:contentDescription="@string/desc_decrease"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@id/add_quantity_input"
                 app:layout_constraintEnd_toStartOf="@+id/add_quantity_input"
@@ -390,9 +395,11 @@
                 android:id="@+id/save_button"
                 style="@style/ButtonSave"
                 android:layout_width="0dp"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/repeat_label" />
 
             <androidx.constraintlayout.widget.Group
@@ -419,8 +426,7 @@
                 app:layout_constraintStart_toStartOf="@+id/save_button"
                 app:layout_constraintTop_toTopOf="@+id/save_button" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

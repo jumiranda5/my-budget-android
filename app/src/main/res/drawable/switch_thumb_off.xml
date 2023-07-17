@@ -13,7 +13,7 @@
         android:height="17dp"
         android:gravity="center">
         <shape android:shape="oval">
-            <solid android:color="@color/secondary_icon" />
+            <solid android:color="@color/switch_border_off" />
             <corners android:radius="10dp"/>
         </shape>
     </item>

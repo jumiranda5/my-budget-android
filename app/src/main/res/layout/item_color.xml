@@ -9,8 +9,8 @@
     <ImageButton
         android:id="@+id/item_color"
         style="@style/ItemButton"
-        android:contentDescription="@string/label_color"
-        android:padding="4dp"
+        android:contentDescription="@null"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

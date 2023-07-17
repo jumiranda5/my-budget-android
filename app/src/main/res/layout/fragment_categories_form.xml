@@ -1,87 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_00dp"
     tools:context=".CategoriesFormFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cat_form_toolbar"
+        style="@style/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/cat_form_title"
+                style="@style/ToolbarTitle"
+                android:layout_marginStart="20dp"
+                android:text="@string/title_add_category"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_archive"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/cat_form_toolbar_close"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/nav_close"
+                app:srcCompat="@drawable/ic_app_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/cat_form_toolbar_archive"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/action_archive"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_close"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_archive"
+                app:tint="@color/danger" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.core.widget.NestedScrollView
-        style="@style/MyNestedScrollView">
+        style="@style/MyNestedScrollView"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cat_form_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Guidelines -->
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_cat_form_start"
-                style="@style/GuidelineStart"
-                android:orientation="vertical" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_cat_form_end"
-                style="@style/GuidelineEnd"
-                android:orientation="vertical" />
-
-            <!-- Toolbar -->
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/cat_form_toolbar"
-                style="@style/TransparentToolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/cat_form_toolbar_close"
-                        style="@style/ToolbarButton"
-                        android:contentDescription="@string/action_close"
-                        app:srcCompat="@drawable/ic_app_close"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/cat_form_toolbar_archive"
-                        style="@style/ToolbarButton"
-                        android:contentDescription="@string/action_archive"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_close"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_app_archive"
-                        app:tint="@color/red" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.appcompat.widget.Toolbar>
-
-            <TextView
-                android:id="@+id/cat_form_title"
-                style="@style/FormTitle"
-                android:text="@string/title_add_category"
-                app:layout_constraintEnd_toEndOf="@+id/category_name_input"
-                app:layout_constraintStart_toStartOf="@+id/category_name_input"
-                app:layout_constraintTop_toBottomOf="@+id/cat_form_toolbar" />
-
             <EditText
                 android:id="@+id/category_name_input"
                 style="@style/InputWithIcon"
+                android:layout_margin="48dp"
                 android:hint="@string/hint_category_name"
-                android:layout_marginStart="@dimen/form_margin"
-                android:layout_marginEnd="@dimen/form_margin"
-                android:layout_marginTop="@dimen/form_margin_top"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_cat_form_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_cat_form_start"
-                app:layout_constraintTop_toBottomOf="@+id/cat_form_title" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/category_form_name_icon"
@@ -96,7 +88,7 @@
                 android:id="@+id/category_icon_button"
                 style="@style/ButtonPicker"
                 android:layout_marginTop="@dimen/input_margin"
-                android:text="@string/label_icon"
+                android:text="@string/hint_icon"
                 app:layout_constraintEnd_toStartOf="@+id/category_color_button"
                 app:layout_constraintStart_toStartOf="@+id/category_name_input"
                 app:layout_constraintTop_toBottomOf="@+id/category_name_input" />
@@ -115,7 +107,7 @@
                 style="@style/ButtonPicker"
                 android:layout_marginStart="@dimen/input_margin"
                 android:layout_marginTop="@dimen/input_margin"
-                android:text="@string/label_color"
+                android:text="@string/hint_color"
                 app:layout_constraintEnd_toEndOf="@id/category_name_input"
                 app:layout_constraintStart_toEndOf="@+id/category_icon_button"
                 app:layout_constraintTop_toBottomOf="@+id/category_name_input" />
@@ -141,4 +133,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

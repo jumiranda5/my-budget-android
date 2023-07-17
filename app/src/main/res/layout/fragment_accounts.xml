@@ -1,75 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AccountsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/bottomBar_height">
+    android:layout_marginBottom="@dimen/bottomBar_height"
+    android:background="@color/bg_00dp">
 
-    <androidx.core.widget.NestedScrollView
-        style="@style/MyNestedScrollView">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/accounts_toolbar"
+        style="@style/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/main_button_margin">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_accounts_start"
-                style="@style/GuidelineStart"
-                android:orientation="vertical" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_accounts_end"
-                style="@style/GuidelineEnd"
-                android:orientation="vertical" />
-
-            <!-- Title -->
-
+            <!-- Icon -->
             <ImageView
-                android:id="@+id/accounts_icon"
-                style="@style/Icon"
-                android:layout_width="@dimen/main_accounts_icon_size"
-                android:layout_height="@dimen/main_accounts_icon_size"
-                android:layout_marginTop="@dimen/main_title_space_top"
+                android:id="@+id/accounts_toolbar_icon"
+                style="@style/IconNormal"
                 android:contentDescription="@null"
-                app:layout_constraintStart_toStartOf="@+id/guideline_accounts_start"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_app_account_balance_400" />
 
+            <!-- Title -->
             <TextView
-                android:id="@+id/accounts_title"
-                style="@style/MainTitle"
-                android:textSize="@dimen/main_title_large"
-                android:fontFamily="@font/red_hat_display"
-                android:layout_marginTop="8dp"
-                android:text="@string/nav_accounts"
-                app:layout_constraintStart_toStartOf="@+id/guideline_accounts_start"
-                app:layout_constraintTop_toBottomOf="@+id/accounts_icon" />
+                android:id="@+id/accounts_toolbar_title"
+                style="@style/ToolbarTitle"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/title_accounts"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageButton"
+                app:layout_constraintStart_toEndOf="@+id/accounts_toolbar_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/accounts_list"
-                style="@style/MainList"
-                android:layout_marginTop="@dimen/main_title_space"
+            <!-- Add button -->
+            <ImageButton
+                android:id="@+id/imageButton"
+                style="@style/ToolbarButtonWithBg"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/desc_add_account"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/accounts_title"
-                tools:listitem="@layout/item_account"
-                tools:itemCount="3"/>
-
-            <Button
-                android:id="@+id/button_add_account"
-                style="@style/BorderButton"
-                android:layout_marginTop="@dimen/main_button_margin"
-                android:text="@string/action_add_account"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_accounts_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_accounts_start"
-                app:layout_constraintTop_toBottomOf="@+id/accounts_list" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_add_400" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.appcompat.widget.Toolbar>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/accounts_list"
+        style="@style/MainList"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accounts_toolbar"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_account" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
