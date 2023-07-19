@@ -30,6 +30,7 @@
     <style name="ItemButton" parent="IconButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
+        <item name="android:padding">14dp</item>
         <item name="layout_constraintHeight_max">56dp</item>
         <item name="android:background">@drawable/bg_list_item</item>
         <item name="android:scaleType">fitXY</item>
@@ -53,7 +54,7 @@
         <item name="android:background">@drawable/button_save</item>
         <item name="android:layout_marginTop">40dp</item>
         <item name="android:drawableEnd">@drawable/ic_app_done_all_24</item>
-        <item name="android:paddingStart">48dp</item>
+        <item name="android:paddingStart">52dp</item>
         <item name="android:drawableTint">@color/button_accent_text</item>
     </style>
 

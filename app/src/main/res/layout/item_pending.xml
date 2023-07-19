@@ -20,8 +20,7 @@
 
     <ImageView
         android:id="@+id/item_pending_icon"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        style="@style/IconNormal"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@null"

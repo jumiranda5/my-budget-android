@@ -12,8 +12,8 @@
     <ImageView
         android:id="@+id/category_icon"
         style="@style/IconNormal"
+        android:layout_marginStart="@dimen/inner_space"
         android:contentDescription="@null"
-        android:layout_marginStart="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +23,7 @@
         android:id="@+id/category_name"
         style="@style/TextNormalEllipse"
         android:layout_width="0dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="@dimen/inner_space"
         android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/category_percent"
@@ -35,10 +35,23 @@
         style="@style/Currency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/initial_percent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/category_percent_nav_icon"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/category_percent_nav_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="4dp"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/medium_emphasis_text"
+        app:srcCompat="@drawable/ic_app_navigate_next" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

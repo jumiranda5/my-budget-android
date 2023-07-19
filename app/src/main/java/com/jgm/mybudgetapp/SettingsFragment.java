@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.jgm.mybudgetapp.databinding.FragmentSettingsBinding;
@@ -38,8 +39,10 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
     private Button mOpenCategories, mOpenCreditCards, mClearDatabase;
+    private ImageButton mClose;
 
     private void setBinding() {
+        mClose = binding.settingsToolbarClose;
         mNestedScrollView = binding.settingsScrollView;
         mProgressBar = binding.settingsProgressBar;
         switchDarkMode = binding.switchDarkMode;
@@ -80,14 +83,22 @@ public class SettingsFragment extends Fragment {
         switchDarkMode.setChecked(isDark);
 
         switchDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            mInterface.switchDarkMode(isChecked);
-            SettingsPrefs.setSettingsPrefsBoolean(mContext, "isDark", isChecked);
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                SettingsPrefs.setSettingsPrefsBoolean(mContext, "isDark", isChecked);
+                mInterface.switchDarkMode(isChecked);
+            }, 200);
         });
 
         mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
         mOpenCreditCards.setOnClickListener(v -> mInterface.open(Tags.cardsTag));
-        // todo: open accounts list
-        mClearDatabase.setOnClickListener(v -> mInterface.showConfirmationDialog(getString(R.string.msg_clear_database)));
+        mClearDatabase.setOnClickListener(v -> {
+            mInterface.showConfirmationDialog(
+                    getString(R.string.msg_clear_database),
+                    getString(R.string.action_reset_database),
+                    R.drawable.ic_app_dangerous);
+        });
+        mClose.setOnClickListener(v -> mInterface.navigateBack());
     }
 
     /* -------------------------------------------------------------------

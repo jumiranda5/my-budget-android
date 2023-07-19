@@ -55,6 +55,7 @@
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
         android:layout_height="0dp"
+        android:paddingBottom="@dimen/form_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,10 +68,11 @@
             <EditText
                 android:id="@+id/category_name_input"
                 style="@style/InputWithIcon"
-                android:layout_margin="48dp"
+                android:layout_margin="@dimen/form_padding"
                 android:hint="@string/hint_category_name"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
+                android:imeOptions="actionDone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

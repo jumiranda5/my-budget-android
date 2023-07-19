@@ -69,7 +69,32 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_settings_400" />
+                app:srcCompat="@drawable/ic_app_settings" />
+
+            <!-- Add button -->
+            <ImageButton
+                android:id="@+id/button_add_transaction_in"
+                style="@style/ToolbarButtonWithBg"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone"
+                android:background="@drawable/button_toolbar_add_income_inset"
+                android:contentDescription="@string/desc_add_account"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_add_400" />
+
+            <ImageButton
+                android:id="@+id/button_add_transaction_out"
+                style="@style/ToolbarButtonWithBg"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone"
+                android:background="@drawable/button_toolbar_add_expense_inset"
+                android:contentDescription="@string/desc_add_account"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_add_400" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>

@@ -17,7 +17,7 @@
     <ImageButton
         android:id="@+id/dialog_transaction_dismiss"
         style="@style/IconButton"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,15 +52,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drag_indicator" />
 
+    <ImageView
+        android:id="@+id/divisor"
+        style="@style/DialogDivisor"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title" />
+
     <!-- Description -->
 
     <ImageView
         android:id="@+id/dialog_transaction_desc_icon"
         style="@style/IconImage"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/hint_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title"
+        app:layout_constraintTop_toBottomOf="@+id/divisor"
         app:srcCompat="@drawable/ic_app_description" />
 
     <TextView

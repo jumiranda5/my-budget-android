@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
-import com.jgm.mybudgetapp.databinding.FragmentTransactionsInBinding;
-import com.jgm.mybudgetapp.databinding.FragmentTransactionsOutBinding;
+import com.jgm.mybudgetapp.databinding.FragmentTransactionsBinding;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
@@ -40,16 +41,16 @@ public class TransactionsInFragment extends Fragment {
     private List<TransactionResponse> income;
 
     // UI
-    private FragmentTransactionsInBinding binding;
-    //private FloatingActionButton mFab;
+    private FragmentTransactionsBinding binding;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
-    DayGroupAdapter adapter;
+    private ImageButton mBack;
+    private DayGroupAdapter adapter;
 
     private void setBinding() {
-        //mFab = binding.transactionOutAdd;
-        mTotal = binding.inTotal;
-        mRecyclerView = binding.inList;
+        mTotal = binding.transactionsTotal;
+        mRecyclerView = binding.transactionsList;
+        mBack = binding.transactionsClose;
     }
 
     // Interfaces
@@ -67,7 +68,7 @@ public class TransactionsInFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentTransactionsInBinding.inflate(inflater, container, false);
+        binding = FragmentTransactionsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setBinding();
         return view;
@@ -82,6 +83,10 @@ public class TransactionsInFragment extends Fragment {
             MyDate date = mInterface.getDate();
             getIncomeData(date.getMonth(), date.getYear());
         }
+
+        mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        mBack.setOnClickListener(v -> mInterface.navigateBack());
+
     }
 
     /* ------------------------------------------------------------------------------

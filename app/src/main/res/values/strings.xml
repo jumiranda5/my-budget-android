@@ -54,7 +54,7 @@
     <string name="hint_category_name">Category name</string>
     <string name="hint_color">Color</string>
     <string name="hint_icon">Icon</string>
-    <string name="hint_amount">0.0 (amount in decimal format)</string>
+    <string name="hint_amount">0.0 (amount in decimals)</string>
     <string name="hint_description">Description</string>
     <string name="hint_today">Today</string>
     <string name="hint_payment_method">Payment Method</string>
@@ -111,6 +111,7 @@
     <string name="title_edit_category">Edit Category</string>
     <string name="desc_add_category">Add new category.</string>
     <string name="desc_categories_tabs">Categories tabs</string>
+    <string name="title_expenses">Expenses</string>
 
     <!-- Credit Cards -->
     <string name="credit_cards">Credit Cards</string>
@@ -125,16 +126,16 @@
     <!-- Dialogs -->
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
-    <string name="action_confirm">Confirm</string>
+    <string name="action_confirm">Continue</string>
     <string name="title_expense">Expense</string>
     <string name="title_income">Income</string>
     <string name="desc_amount">Amount</string>
     <string name="progress_msg_delete">Deleting item…</string>
-    <string name="msg_archive_account" translatable="false">Would you like to permanently archive this account?</string>
-    <string name="msg_archive_default" translatable="false">Would you like to permanently archive this item?</string>
-    <string name="msg_archive_category" translatable="false">Would you like to permanently archive this category?</string>
-    <string name="msg_archive_credit_card" translatable="false">Would you like to permanently archive this credit card?</string>
-    <string name="msg_clear_database" translatable="false">This will delete everything stored on this application database. Are you sure you want to proceed?</string>
+    <string name="msg_archive_account">Do you want to permanently archive this account? You will not have access to it anymore, but the items related to it will not be affected.</string>
+    <string name="msg_archive_default">Do you want to permanently archive this item?</string>
+    <string name="msg_archive_category">Do you want to permanently archive this category? You will not have access to it anymore, but the items related to it will not be affected.</string>
+    <string name="msg_archive_credit_card">Would you like to permanently archive this credit card? You will not have access to it anymore, but the items related to it will not be affected.</string>
+    <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
 
 
 <!--    &lt;!&ndash; Actions (buttons) &ndash;&gt;-->

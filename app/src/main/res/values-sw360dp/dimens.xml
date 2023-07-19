@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  FORMS  ================== -->
+
+    <dimen name="form_padding">48dp</dimen>
+
+    <!-- ==================  HOME FRAGMENT ================== -->
+
+    <dimen name="home_inner_margin">16dp</dimen>
+    <dimen name="progress_info_margin_start">40dp</dimen>
+    <dimen name="progress_info_margin_end">32dp</dimen>
+
+
+
+
+
 <!--    &lt;!&ndash; Guidelines &ndash;&gt;-->
 <!--    <dimen name="guideline_start_list">16dp</dimen>-->
 <!--    <dimen name="guideline_end_list">16dp</dimen>-->

@@ -1,6 +1,5 @@
 package com.jgm.mybudgetapp.dialogs;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,15 +7,15 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.MethodPickerAdapter;
@@ -31,7 +30,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MethodPickerDialog extends DialogFragment {
+public class MethodPickerDialog extends BottomSheetDialogFragment {
 
     public MethodPickerDialog() {}
 
@@ -45,20 +44,19 @@ public class MethodPickerDialog extends DialogFragment {
         mContext = context;
     }
 
-    @NonNull
+    @Nullable
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        super.onCreateDialog(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View mView = inflater.inflate(R.layout.dialog_method_picker, null);
-        builder.setView(mView);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.dialog_method_picker, container, false);
 
-        ImageButton btnClose = mView.findViewById(R.id.method_picker_close);
+        // Dismiss
+        ImageButton btnClose = view.findViewById(R.id.method_picker_close);
         btnClose.setOnClickListener(v -> dismiss());
 
-        final RecyclerView recyclerView = mView.findViewById(R.id.payment_method_list);
+        // List
+        final RecyclerView recyclerView = view.findViewById(R.id.payment_method_list);
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(listLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -113,6 +111,6 @@ public class MethodPickerDialog extends DialogFragment {
             });
         });
 
-        return builder.create();
+        return view;
     }
 }

@@ -24,7 +24,7 @@
     <ImageView
         android:id="@+id/item_transaction_icon"
         style="@style/IconNormal"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/inner_space"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/empty_view"
@@ -34,8 +34,8 @@
     <TextView
         android:id="@+id/item_transaction_name"
         style="@style/TextNormalEllipse"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="@dimen/inner_space"
+        android:layout_marginStart="@dimen/inner_space"
         android:text="@string/hint_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
@@ -45,8 +45,7 @@
     <TextView
         android:id="@+id/item_transaction_total"
         style="@style/CurrencyItem"
-        android:layout_marginEnd="56dp"
-        android:text="@string/initial_value_no_symbol"
+        android:layout_marginEnd="@dimen/item_end_button_width"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
         app:layout_constraintEnd_toEndOf="@+id/item_transaction_toggle" />
 
@@ -61,8 +60,8 @@
     <ToggleButton
         android:id="@+id/item_transaction_toggle"
         style="@style/IconButton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/item_end_button_width"
+        android:layout_height="0dp"
         android:background="@drawable/button_toggle_paid"
         android:checked="false"
         android:contentDescription="@null"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="inner_space">16dp</dimen>
+    <dimen name="inner_space">14dp</dimen>
 
     <!-- Text -->
     <dimen name="text_normal">16sp</dimen>
@@ -22,6 +22,7 @@
     <!-- List Items -->
     <dimen name="item_height">56dp</dimen>
     <dimen name="item_double_height">70dp</dimen>
+    <dimen name="item_end_button_width">48dp</dimen>
 
     <!-- ==================  FORMS  ================== -->
 
@@ -38,6 +39,8 @@
     <dimen name="toggle_pill_padding_start">2dp</dimen>
     <dimen name="toggle_pill_padding_end">10dp</dimen>
     <dimen name="form_divisor_space">24dp</dimen>
+    <dimen name="form_padding">32dp</dimen>
+    <dimen name="transaction_form_padding">24dp</dimen>
 
 
     <!-- ==================  MAIN ACTIVITY ================== -->
@@ -56,23 +59,28 @@
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
-    <dimen name="home_inner_margin">16dp</dimen>
+    <dimen name="home_inner_margin">12dp</dimen>
     <dimen name="home_balance_size">28sp</dimen>
     <dimen name="progress_text_size">22sp</dimen>
     <dimen name="progress_indicator">100dp</dimen>
     <dimen name="progress_track">8dp</dimen>
     <dimen name="progress_corners">4dp</dimen>
+    <dimen name="progress_info_margin_start">32dp</dimen>
+    <dimen name="progress_info_margin_end">32dp</dimen>
     <dimen name="home_pie_width">72dp</dimen>
 
 
     <!-- ==================  CATEGORIES FRAGMENT ================== -->
 
+    <integer name="categories_chart_size_int">208</integer>
+    <integer name="categories_chart_indicator_int">14</integer>
     <dimen name="categories_chart_text_size">20sp</dimen>
     <dimen name="categories_chart_text_padding">32sp</dimen>
     <dimen name="categories_chart_size">208dp</dimen>
     <dimen name="categories_chart_margin">40dp</dimen>
-    <dimen name="categories_chart_list_margin">40dp</dimen>
-    <dimen name="categories_chart_list_margin_start">0dp</dimen>
+    <dimen name="categories_chart_list_margin">32dp</dimen>
+    <dimen name="categories_chart_list_margin_start">4dp</dimen>
+
 
 <!--    &lt;!&ndash; Guidelines &ndash;&gt;-->
 <!--    <dimen name="guideline_start_list">16dp</dimen>-->

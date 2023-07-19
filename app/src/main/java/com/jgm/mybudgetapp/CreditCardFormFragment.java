@@ -91,7 +91,12 @@ public class CreditCardFormFragment extends Fragment {
 
         mBack.setOnClickListener(v -> mInterface.navigateBack());
         mSave.setOnClickListener(v -> mInterface.navigateBack());
-        mArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(getString(R.string.msg_archive_credit_card)));
+        mArchive.setOnClickListener(v-> {
+            mInterface.showConfirmationDialog(
+                    getString(R.string.msg_archive_credit_card),
+                    getString(R.string.action_archive),
+                    R.drawable.ic_app_archive);
+        });
         mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
         mSave.setOnClickListener(v -> {
             if (isEdit) editCreditCard(true);

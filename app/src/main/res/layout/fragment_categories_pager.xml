@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_01dp"
+    android:background="@color/bg_00dp"
     android:paddingBottom="@dimen/bottomBar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CategoriesExpensesFragment">
@@ -44,13 +44,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories_percent_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/categories_chart_list_margin_start"
-                android:layout_marginEnd="@dimen/categories_chart_list_margin_start"
+                style="@style/NestedListNoScroll"
+                android:paddingStart="@dimen/categories_chart_list_margin_start"
+                android:paddingEnd="@dimen/categories_chart_list_margin_start"
+                android:paddingBottom="32dp"
                 android:layout_marginTop="@dimen/categories_chart_list_margin"
-                android:nestedScrollingEnabled="false"
-                android:isScrollContainer="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/categories_donut_chart"

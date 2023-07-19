@@ -65,7 +65,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
         if (isEdit) {
             holder.mEdit.setVisibility(View.VISIBLE);
             holder.mEdit.setOnClickListener(v -> mInterface.openCategoryForm(true, category, position));
-            holder.mContainer.setOnClickListener(v -> mInterface.openCategoryForm(true, category, position));
+            holder.mContainer.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.transparent));
         }
         else {
             holder.mEdit.setVisibility(View.GONE);

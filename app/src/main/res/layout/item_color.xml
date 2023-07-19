@@ -9,7 +9,7 @@
     <ImageButton
         android:id="@+id/item_color"
         style="@style/ItemButton"
-        android:contentDescription="@null"
+        android:contentDescription="@string/hint_color"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

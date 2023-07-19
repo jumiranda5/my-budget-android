@@ -46,11 +46,12 @@
     </style>
 
     <!-- Titles -->
+
     <style name="DialogTitle" parent="TextNormalEllipse">
         <item name="android:textSize">@dimen/text_title</item>
         <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
         <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginTop">24dp</item>
     </style>
 
     <!-- Toolbar -->
@@ -107,6 +108,7 @@
     </style>
 
     <style name="CurrencySpace" parent="Currency">
+        <item name="android:text">@string/initial_value_no_symbol</item>
         <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">0dp</item>

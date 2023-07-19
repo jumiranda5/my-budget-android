@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.CardAdapter;
@@ -42,11 +41,12 @@ public class CreditCardsFragment extends Fragment {
 
     // UI
     private FragmentCreditCardsBinding binding;
-    private ImageButton mAddCard;
+    private ImageButton mAddCard, mBack;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         mAddCard = binding.buttonAddCard;
+        mBack = binding.cardsToolbarClose;
         mRecyclerView = binding.cardsList;
     }
 
@@ -80,6 +80,7 @@ public class CreditCardsFragment extends Fragment {
         Log.d(Tags.LOG_LIFECYCLE, "Credit Cards onViewCreated");
 
         mAddCard.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
+        mBack.setOnClickListener(v -> mInterface.navigateBack());
 
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {

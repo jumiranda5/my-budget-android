@@ -21,9 +21,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageButton
+                android:id="@+id/transactions_close"
+                style="@style/IconButton"
+                android:layout_margin="4dp"
+                android:contentDescription="@string/nav_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_arrow_back" />
+
 
             <TextView
-                android:id="@+id/out_title"
+                android:id="@+id/transactions_title"
                 style="@style/TransactionsTitle"
                 android:layout_marginTop="56dp"
                 android:text="@string/label_expenses"
@@ -32,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/out_total"
+                android:id="@+id/transactions_total"
                 style="@style/NumberImpact"
                 android:layout_marginTop="2dp"
                 android:text="@string/initial_value"
@@ -40,15 +49,15 @@
                 android:textColor="@color/expense"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/out_title" />
+                app:layout_constraintTop_toBottomOf="@+id/transactions_title" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/out_list"
+                android:id="@+id/transactions_list"
                 style="@style/NestedListNoScroll"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/out_total"
+                app:layout_constraintTop_toBottomOf="@+id/transactions_total"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_transaction_day" />
 
@@ -59,9 +68,9 @@
 <!--        android:id="@+id/transaction_out_add"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:backgroundTint="@color/expense"-->
 <!--        android:layout_margin="16dp"-->
-<!--        android:contentDescription="@string/action_add_transaction"-->
+<!--        android:backgroundTint="@color/expense"-->
+<!--        android:contentDescription="Add new expense"-->
 <!--        android:src="@drawable/ic_app_add_400"-->
 <!--        app:layout_constraintBottom_toBottomOf="parent"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->

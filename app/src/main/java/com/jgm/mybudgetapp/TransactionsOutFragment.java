@@ -15,11 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
-import com.jgm.mybudgetapp.databinding.FragmentTransactionsOutBinding;
+import com.jgm.mybudgetapp.databinding.FragmentTransactionsBinding;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.MyDate;
@@ -42,16 +42,15 @@ public class TransactionsOutFragment extends Fragment {
     private List<TransactionResponse> expenses;
 
     // UI
-    private FragmentTransactionsOutBinding binding;
-    //private FloatingActionButton mFab;
+    private FragmentTransactionsBinding binding;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
-    //private FloatingActionButton mFab;
+    private ImageButton mBack;
 
     private void setBinding() {
-        //mFab = binding.transactionOutAdd;
-        mTotal = binding.outTotal;
-        mRecyclerView = binding.outList;
+        mTotal = binding.transactionsTotal;
+        mRecyclerView = binding.transactionsList;
+        mBack = binding.transactionsClose;
     }
 
     // Interfaces
@@ -69,7 +68,7 @@ public class TransactionsOutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentTransactionsOutBinding.inflate(inflater, container, false);
+        binding = FragmentTransactionsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setBinding();
         return view;
@@ -85,7 +84,7 @@ public class TransactionsOutFragment extends Fragment {
             getExpensesData(date.getMonth(), date.getYear());
         }
 
-        //mFab.setOnClickListener(v -> mInterface.openTransactionForm(false, null, null));
+        mBack.setOnClickListener(v -> mInterface.navigateBack());
 
     }
 

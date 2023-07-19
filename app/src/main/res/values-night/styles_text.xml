@@ -30,6 +30,13 @@
 
     <!-- Numbers -->
 
+    <style name="NumberHomeIncome" parent="Number">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">@color/income</item>
+    </style>
+
     <style name="Currency" parent="TextNormal">
         <item name="android:text">@string/initial_value</item>
         <item name="android:fontFamily">@font/titillium_web_regular</item>

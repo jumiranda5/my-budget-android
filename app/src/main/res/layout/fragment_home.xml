@@ -72,7 +72,7 @@
 
                     <TextView
                         android:id="@+id/home_month_label"
-                        style="@style/HomeLabel"
+                        style="@style/TextSecondary"
                         android:text="@string/label_month"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -112,8 +112,7 @@
 
                     <TextView
                         android:id="@+id/home_income_label"
-                        style="@style/HomeLabel"
-                        android:textSize="@dimen/text_secondary"
+                        style="@style/TextSecondary"
                         android:text="@string/label_income"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -153,8 +152,7 @@
 
                     <TextView
                         android:id="@+id/home_expense_label"
-                        style="@style/HomeLabel"
-                        android:textSize="@dimen/text_secondary"
+                        style="@style/TextSecondary"
                         android:text="@string/label_expenses"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -231,10 +229,11 @@
                         app:layout_constraintTop_toTopOf="@+id/home_month_progress" />
 
                     <TextView
+                        android:id="@+id/home_progress_text"
                         style="@style/TextSecondary"
                         android:layout_width="0dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginEnd="32dp"
+                        android:layout_marginStart="@dimen/progress_info_margin_start"
+                        android:layout_marginEnd="@dimen/progress_info_margin_end"
                         android:text="@string/msg_progress"
                         app:layout_constraintBottom_toBottomOf="@+id/home_month_progress"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -299,6 +298,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/home_checking_icon" />
 
+                    <!-- Cash -->
+
                     <TextView
                         android:id="@+id/home_cash_label"
                         style="@style/TextSecondary"
@@ -310,12 +311,24 @@
 
                     <TextView
                         android:id="@+id/home_cash"
-                        style="@style/Currency"
+                        style="@style/CurrencyItem"
                         android:textSize="@dimen/text_secondary"
                         android:layout_marginEnd="@dimen/card_padding"
                         android:textColor="@color/income"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_cash_label"
                         app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/home_cash_currency_symbol"
+                        style="@style/Currency"
+                        android:text="@string/currency_symbol"
+                        android:textColor="@color/income"
+                        android:textSize="@dimen/text_secondary"
+                        android:fontFamily="@font/titillium_web_regular"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/home_cash"
+                        app:layout_constraintStart_toStartOf="@id/home_cash" />
+
+                    <!-- Checking -->
 
                     <TextView
                         android:id="@+id/home_checking_label"
@@ -328,12 +341,24 @@
 
                     <TextView
                         android:id="@+id/home_checking"
-                        style="@style/Currency"
+                        style="@style/CurrencyItem"
                         android:textSize="@dimen/text_secondary"
                         android:layout_marginEnd="@dimen/card_padding"
                         android:textColor="@color/income"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_checking_label"
                         app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/home_checking_currency_symbol"
+                        style="@style/Currency"
+                        android:text="@string/currency_symbol"
+                        android:textColor="@color/income"
+                        android:textSize="@dimen/text_secondary"
+                        android:fontFamily="@font/titillium_web_regular"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/home_checking"
+                        app:layout_constraintStart_toStartOf="@id/home_checking" />
+
+                    <!-- Savings -->
 
                     <TextView
                         android:id="@+id/home_savings_label"
@@ -346,12 +371,22 @@
 
                     <TextView
                         android:id="@+id/home_savings"
-                        style="@style/Currency"
+                        style="@style/CurrencyItem"
                         android:textSize="@dimen/text_secondary"
                         android:layout_marginEnd="@dimen/card_padding"
                         android:textColor="@color/savings"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_savings_label"
                         app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/home_savings_currency_symbol"
+                        style="@style/Currency"
+                        android:text="@string/currency_symbol"
+                        android:textColor="@color/savings"
+                        android:textSize="@dimen/text_secondary"
+                        android:fontFamily="@font/titillium_web_regular"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/home_savings"
+                        app:layout_constraintStart_toStartOf="@id/home_savings" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -389,8 +424,11 @@
                     <ImageView
                         android:id="@+id/home_categories_in"
                         style="@style/PieChartSmall"
-                        android:layout_margin="@dimen/card_padding"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="16dp"
                         android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/home_income_categories_divisor" />
 
@@ -400,6 +438,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/home_categories_in"
                         app:layout_constraintTop_toBottomOf="@+id/home_income_categories_divisor"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_home_category" />
 
@@ -439,9 +478,12 @@
                     <ImageView
                         android:id="@+id/home_categories_out"
                         style="@style/PieChartSmall"
-                        android:layout_margin="@dimen/card_padding"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="16dp"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/home_expenses_categories_divisor" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -450,6 +492,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/home_categories_out"
                         app:layout_constraintTop_toBottomOf="@+id/home_expenses_categories_divisor"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_home_category" />
 

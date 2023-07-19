@@ -98,7 +98,12 @@ public class AccountFormFragment extends Fragment {
 
         mNicknameInput.addTextChangedListener(accountNameWatcher);
         mBack.setOnClickListener(v -> mInterface.navigateBack());
-        mArchive.setOnClickListener(v -> mInterface.showConfirmationDialog(getString(R.string.msg_archive_account)));
+        mArchive.setOnClickListener(v -> {
+            mInterface.showConfirmationDialog(
+                    getString(R.string.msg_archive_account),
+                    getString(R.string.action_archive),
+                    R.drawable.ic_app_archive);
+        });
         mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
 
         mSave.setEnabled(false);

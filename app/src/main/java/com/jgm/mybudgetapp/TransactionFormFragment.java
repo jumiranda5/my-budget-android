@@ -58,6 +58,7 @@ public class TransactionFormFragment extends Fragment {
     private static final int METHOD_PICKER_IN = 2;
 
     // VARS
+    private int type = Tags.TYPE_OUT;
     private boolean isEdit = false;
     private TransactionResponse edit;
     private Transaction transaction;
@@ -79,7 +80,7 @@ public class TransactionFormFragment extends Fragment {
     // UI
     private FragmentTransactionFormBinding binding;
     private Button mCategoryPicker, mDatePicker, mMethodPicker, mAccountPickerOut, mAccountPickerIn, mSave;
-    private ImageButton mIncreaseRepeat, mDecreaseRepeat;
+    private ImageButton mIncreaseRepeat, mDecreaseRepeat, mClose;
     private ImageView mCategoryIcon, mDescIcon, mCalendarIcon, mMethodIcon, mAmountIcon;
     private ToggleButton mToggleExpense, mToggleIncome, mToggleTransfer;
     private Group mTransferGroup, mMainGroup;
@@ -92,6 +93,7 @@ public class TransactionFormFragment extends Fragment {
     private ProgressBar mProgressBar;
 
     private void setBinding() {
+        mClose = binding.addCloseButton;
         mMainGroup = binding.transactionsGroupMain;
         mTransferGroup = binding.transactionsGroupTransfer;
         mToggleExpense = binding.toggleExpense;
@@ -155,11 +157,18 @@ public class TransactionFormFragment extends Fragment {
 
         db = AppDatabase.getDatabase(mContext);
 
-        transaction = new Transaction(Tags.TYPE_OUT, "", 0f, 0, 0, 0,
+        // uncheck toggle buttons
+        mToggleExpense.setChecked(false);
+        mToggleIncome.setChecked(false);
+        mToggleTransfer.setChecked(false);
+
+        transaction = new Transaction(type, "", 0f, 0, 0, 0,
                 0, 0, 0, false, 1, 1, null);
 
         if (isEdit) setEditForm();
         else setDefaults();
+
+        mClose.setOnClickListener(v -> mInterface.navigateBack());
 
     }
 
@@ -180,8 +189,9 @@ public class TransactionFormFragment extends Fragment {
                                        EDIT FORM
      =============================================================================== */
 
-    public void setFormType(boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
+    public void setFormType(int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
         Log.d(LOG, "=> setFormType: isEdit = " + isEdit);
+        this.type = type;
         this.isEdit = isEdit;
         if (isEdit) {
             edit = transaction;
@@ -288,13 +298,13 @@ public class TransactionFormFragment extends Fragment {
     private void initType(int type) {
         Log.d(LOG, "=> initType: " + type);
 
-        if (type == Tags.TYPE_IN) showIncomeForm();
-        else showExpenseForm();
-
         mCreditCardMonthContainer.setVisibility(View.GONE);
         setTypeToggleButton(mToggleExpense, Tags.expense);
         setTypeToggleButton(mToggleIncome, Tags.income);
         setTypeToggleButton(mToggleTransfer, Tags.transfer);
+
+        if (type == Tags.TYPE_IN) showIncomeForm();
+        else showExpenseForm();
     }
 
     private void setTypeToggleButton(ToggleButton button, String tag) {

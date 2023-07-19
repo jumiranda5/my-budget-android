@@ -22,6 +22,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
 
+    <ImageView
+        android:id="@+id/divisor"
+        style="@style/DialogDivisor"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_icon_title" />
+
     <ImageButton
         android:id="@+id/dialog_icon_dismiss"
         style="@style/IconButton"
@@ -37,13 +45,11 @@
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:clipToPadding="false"
-        android:paddingTop="24dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="24dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_icon_title"
+        app:layout_constraintTop_toBottomOf="@+id/divisor"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="5"
         tools:listitem="@layout/item_icon" />

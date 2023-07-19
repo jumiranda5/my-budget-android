@@ -103,7 +103,12 @@ public class CategoriesFormFragment extends Fragment {
 
         // Init buttons
         mClose.setOnClickListener(v -> mInterface.navigateBack());
-        mArchive.setOnClickListener(v -> mInterface.showConfirmationDialog(getString(R.string.msg_archive_category)));
+        mArchive.setOnClickListener(v -> {
+            mInterface.showConfirmationDialog(
+                    getString(R.string.msg_archive_category),
+                    getString(R.string.action_archive),
+                    R.drawable.ic_app_archive);
+        });
         mColorPicker.setOnClickListener(v -> mInterface.showColorPickerDialog());
         mIconPicker.setOnClickListener(v -> mInterface.showIconPickerDialog());
         mSave.setOnClickListener(v -> {

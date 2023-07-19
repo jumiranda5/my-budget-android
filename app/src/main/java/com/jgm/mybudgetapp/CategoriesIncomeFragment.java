@@ -81,8 +81,11 @@ public class CategoriesIncomeFragment extends Fragment {
             String totalFormatted = NumberUtils.getCurrencyFormat(mContext, total)[2];
             mTotal.setText(totalFormatted);
 
+            int size = mContext.getResources().getInteger(R.integer.categories_chart_size_int);
+            int indicator = mContext.getResources().getInteger(R.integer.categories_chart_indicator_int);
+
             if (total > 0) {
-                Charts.setCategoriesChart(mContext, percents, mChartImage, 220, 16);
+                Charts.setCategoriesChart(mContext, percents, mChartImage, size, indicator, false);
             }
             else {
                 ArrayList<CategoryPercent> empty = new ArrayList<>();
@@ -90,7 +93,7 @@ public class CategoriesIncomeFragment extends Fragment {
                 categoryPercent.setTotal(1.0f);
                 categoryPercent.setPercent(100);
                 empty.add(categoryPercent);
-                Charts.setCategoriesChart(mContext, empty, mChartImage, 220, 16);
+                Charts.setCategoriesChart(mContext, empty, mChartImage, size, indicator, false);
             }
         });
     }

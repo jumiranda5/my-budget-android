@@ -23,7 +23,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.res.Configuration;
@@ -38,8 +37,8 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
-import com.jgm.mybudgetapp.dialogs.ConfirmationDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.MethodPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ActivityMainBinding binding;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton settingsButton, mNextMonth, mPrevMonth;
+    private ImageButton settingsButton, mNextMonth, mPrevMonth, mAddIncome, mAddExpense;
     private TextView mToolbarMonth, mToolbarYear;
 
     private void setBinding() {
@@ -113,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarYear = binding.toolbarYear;
         mNextMonth = binding.toolbarNextMonthButton;
         mPrevMonth = binding.toolbarPrevMonthButton;
+        mAddIncome = binding.buttonAddTransactionIn;
+        mAddExpense = binding.buttonAddTransactionOut;
     }
 
     @Override
@@ -225,6 +226,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         settingsButton.setOnClickListener(v -> openFragment(settingsTag));
         mNextMonth.setOnClickListener(v -> setToolbarNextMonth());
         mPrevMonth.setOnClickListener(v -> setToolbarPrevMonth());
+        mAddExpense.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
+        mAddIncome.setOnClickListener(v -> openTransactionForm(Tags.TYPE_IN, false, null, null));
     }
 
     private void setToolbarNextMonth() {
@@ -280,12 +283,25 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             Log.d(LOG_MAIN, "Toolbar visible");
             toolbar.setVisibility(View.VISIBLE);
+            setAddButtonVisibility(tag);
         }
         else {
             Log.d(LOG_MAIN, "Toolbar gone");
             toolbar.setVisibility(View.GONE);
         }
 
+    }
+
+    private void setAddButtonVisibility(String tag) {
+        Log.d(LOG_MAIN, "Toolbar add button visible");
+
+        settingsButton.setVisibility(View.GONE);
+        mAddIncome.setVisibility(View.GONE);
+        mAddExpense.setVisibility(View.GONE);
+
+        if (tag.equals(transactionsOutTag)) mAddExpense.setVisibility(View.VISIBLE);
+        else if (tag.equals(transactionsInTag)) mAddIncome.setVisibility(View.VISIBLE);
+        else settingsButton.setVisibility(View.VISIBLE);
     }
 
     /* ===============================================================================
@@ -435,14 +451,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     @Override
     public void openTransactionForm(
-            boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
+            int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
 
         Log.d(LOG_MAIN, "-- Interface => open transaction form");
 
         setFragment(transactionFormTag);
 
         if (mTransactionForm != null) {
-            mTransactionForm.setFormType(isEdit, transaction, paymentMethod);
+            mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
         }
 
     }
@@ -457,11 +473,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     /* ==== DIALOGS ==== */
 
     @Override
-    public void showConfirmationDialog(String message) {
+    public void showConfirmationDialog(String message, String title, int icon) {
         Log.d(LOG_MAIN, "-- Interface => show confirmation dialog");
-        FragmentManager fm = getSupportFragmentManager();
-        ConfirmationDialog confirmationDialog = ConfirmationDialog.newInstance(message);
-        confirmationDialog.show(fm, "CONFIRMATION_DIALOG");
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this)
+                .setIcon(icon)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(getString(R.string.action_cancel), (dialog, which) -> dialog.dismiss())
+                .setPositiveButton(getString(R.string.action_confirm), (dialog, which) -> {
+                    handleConfirmation();
+                    dialog.dismiss();
+                });
+        builder.create();
+        builder.show();
     }
 
     @Override
@@ -554,7 +578,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         isExpenseMethodDialog = isExpense;
         transactionDialogItem = item;
         transactionDialogItemPosition = position;
-        MethodPickerDialog methodDialog = new MethodPickerDialog();
+        BottomSheetDialogFragment methodDialog = new MethodPickerDialog();
         methodDialog.show(getSupportFragmentManager(), "methodPicker");
     }
 

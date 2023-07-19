@@ -25,23 +25,32 @@
     <ImageButton
         android:id="@+id/method_picker_close"
         style="@style/IconButton"
+        android:layout_marginEnd="4dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/method_picker_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/method_picker_title"
         app:srcCompat="@drawable/ic_app_close" />
 
+    <ImageView
+        android:id="@+id/divisor"
+        style="@style/DialogDivisor"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/method_picker_title" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/payment_method_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintHeight_max="400dp"
-        android:paddingTop="24dp"
-        android:paddingBottom="32dp"
         android:clipToPadding="false"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="400dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/method_picker_title"
+        app:layout_constraintTop_toBottomOf="@+id/divisor"
         tools:listitem="@layout/item_method_picker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,9 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_double_height"
     android:id="@+id/item_card_container"
-    android:focusable="true"
-    android:clickable="true"
-    android:background="@drawable/bg_list_item"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView

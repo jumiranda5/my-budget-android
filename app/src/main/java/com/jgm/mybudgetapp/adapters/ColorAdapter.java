@@ -50,7 +50,6 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.GridViewHold
         String colorName = color.getColorName();
 
         holder.mColor.setImageTintList(ContextCompat.getColorStateList(mContext, colorRes));
-        holder.mColor.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.colorAccentLight));
         holder.mColor.setContentDescription(colorName);
 
         holder.mColor.setOnClickListener(view -> {

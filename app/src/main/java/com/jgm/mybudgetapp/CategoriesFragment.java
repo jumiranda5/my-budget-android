@@ -118,8 +118,8 @@ public class CategoriesFragment extends Fragment {
 
     private void prepareTabs() {
         tabsAdapter = new TextTabsAdapter(getChildFragmentManager(), tabFragments, tabTitles);
-        addTab(incomeFragment, getString(R.string.label_income));
-        addTab(expensesFragment, getString(R.string.label_expenses));
+        addTab(incomeFragment, getString(R.string.title_income));
+        addTab(expensesFragment, getString(R.string.title_expenses));
     }
 
     private void addTab(Fragment fragment, String title) {

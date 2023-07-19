@@ -27,7 +27,8 @@ public class Charts {
             ArrayList<CategoryPercent> categories,
             ImageView imageView,
             int size,
-            int indicator) {
+            int indicator,
+            boolean isCardView) {
 
         ExecutorService canvasService = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
@@ -73,7 +74,8 @@ public class Charts {
             }
 
             // Set inner circle
-            paint.setColor(context.getColor(R.color.bg_01dp));
+            if (isCardView) paint.setColor(context.getColor(R.color.bg_01dp));
+            else paint.setColor(context.getColor(R.color.bg_00dp));
             RectF inner = new RectF(indicatorSize, indicatorSize, indicatorBoundaries, indicatorBoundaries);
             canvas.drawArc(inner,0,360,true, paint);
 

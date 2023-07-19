@@ -159,7 +159,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         // Open edit fragment
         ImageButton editBtn = view.findViewById(R.id.dialog_transaction_edit);
         editBtn.setOnClickListener(v -> {
-            mInterface.openTransactionForm(true, transaction, paymentMethod);
+            mInterface.openTransactionForm(transaction.getType(), true, transaction, paymentMethod);
             dismiss();
         });
 

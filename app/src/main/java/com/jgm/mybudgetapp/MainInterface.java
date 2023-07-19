@@ -24,11 +24,11 @@ public interface MainInterface {
     void openAccountDetails(AccountTotal accountTotal, int position);
     void openAccountForm(boolean isEdit, Account account, int position);
     void openCardForm(boolean isEdit, CreditCard card, int position);
-    void openTransactionForm(boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
+    void openTransactionForm(int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
     void navigateBack();
 
     // Dialogs
-    void showConfirmationDialog(String message);
+    void showConfirmationDialog(String message, String title, int iconDrawable);
     void handleConfirmation();
     void showTransactionDialog(TransactionResponse transaction);
     TransactionResponse getSelectedTransactionData();
