@@ -1,18 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="inner_space">16dp</dimen>
+
+    <!-- Text -->
+    <dimen name="currency_width_min">100dp</dimen>
+    <dimen name="currency_width_max">160dp</dimen>
+
+    <!-- Cards -->
+    <dimen name="card_padding">18dp</dimen>
+    <dimen name="card_padding_top">14dp</dimen>
+
+    <!-- List Items -->
+    <dimen name="item_end_button_width">56dp</dimen>
+    <dimen name="item_nav_icon_space">10dp</dimen>
+    <dimen name="item_edit_margin">4dp</dimen>
+
     <!-- ==================  FORMS  ================== -->
 
     <dimen name="form_padding">48dp</dimen>
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
-    <dimen name="home_inner_margin">16dp</dimen>
-    <dimen name="progress_info_margin_start">40dp</dimen>
-    <dimen name="progress_info_margin_end">32dp</dimen>
+    <dimen name="home_inner_margin">14dp</dimen>
+    <dimen name="home_balance_size">30sp</dimen>
+    <dimen name="home_balance_height">128dp</dimen>
+    <dimen name="home_accounts_icon_margin">14dp</dimen>
 
+    <!-- ==================  TRANSACTIONS  ================== -->
 
+    <dimen name="transactions_total_space">64dp</dimen>
+    <dimen name="transactions_total_space_bottom">54dp</dimen>
 
+    <!-- ==================  CATEGORIES  ================== -->
+
+    <integer name="categories_chart_size_int">220</integer>
+    <dimen name="categories_chart_size">220dp</dimen>
+    <dimen name="categories_chart_margin">56dp</dimen>
+    <dimen name="categories_chart_list_margin">48dp</dimen>
+    <dimen name="categories_chart_list_margin_start">16dp</dimen>
+
+    <!-- ==================  SETTINGS  ================== -->
+
+    <dimen name="settings_icon_width">56dp</dimen>
 
 
 <!--    &lt;!&ndash; Guidelines &ndash;&gt;-->

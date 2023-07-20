@@ -81,8 +81,8 @@
                         android:id="@+id/home_month_balance"
                         style="@style/TextNormal"
                         android:layout_width="0dp"
-                        android:layout_height="108dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_height="@dimen/home_balance_height"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
                         android:text="@string/initial_value"
                         android:textColor="@color/income"
@@ -211,7 +211,7 @@
                     <com.google.android.material.progressindicator.CircularProgressIndicator
                         android:id="@+id/home_month_progress"
                         style="@style/HomeExpensesProgress"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="@dimen/card_padding"
                         android:layout_marginBottom="4dp"
                         android:layout_marginStart="@dimen/card_padding"
                         android:contentDescription="@null"
@@ -276,7 +276,7 @@
                     <ImageView
                         android:id="@+id/home_cash_icon"
                         style="@style/HomeAccountIcon"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="@dimen/card_padding"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_app_cash"
                         app:layout_constraintStart_toStartOf="parent"
@@ -293,10 +293,12 @@
                     <ImageView
                         android:id="@+id/home_savings_icon"
                         style="@style/HomeAccountIcon"
+                        android:layout_marginBottom="@dimen/home_accounts_margin_bottom"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_app_savings"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/home_checking_icon" />
+                        app:layout_constraintTop_toBottomOf="@+id/home_checking_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                     <!-- Cash -->
 
@@ -392,7 +394,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Categories Expenses -->
+            <!-- Categories Income -->
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/home_card_income_categories"
@@ -424,9 +426,9 @@
                     <ImageView
                         android:id="@+id/home_categories_in"
                         style="@style/PieChartSmall"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="@dimen/card_padding"
                         android:layout_marginBottom="4dp"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/card_padding"
                         android:contentDescription="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -437,8 +439,8 @@
                         style="@style/CategoriesListSmall"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/home_categories_in"
-                        app:layout_constraintTop_toBottomOf="@+id/home_income_categories_divisor"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/home_categories_in"
+                        app:layout_constraintBottom_toBottomOf="@id/home_categories_in"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_home_category" />
 
@@ -446,7 +448,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Categories Income -->
+            <!-- Categories Expenses -->
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/home_card_expenses_categories"
@@ -478,9 +480,9 @@
                     <ImageView
                         android:id="@+id/home_categories_out"
                         style="@style/PieChartSmall"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="@dimen/card_padding"
                         android:layout_marginBottom="4dp"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/card_padding"
                         android:contentDescription="@null"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -491,8 +493,8 @@
                         style="@style/CategoriesListSmall"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/home_categories_out"
-                        app:layout_constraintTop_toBottomOf="@+id/home_expenses_categories_divisor"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/home_categories_out"
+                        app:layout_constraintBottom_toBottomOf="@id/home_categories_out"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_home_category" />
 
@@ -540,7 +542,7 @@
                     <ImageView
                         android:id="@+id/home_year_chart"
                         style="@style/BarChart"
-                        android:layout_marginTop="@dimen/card_padding"
+                        android:layout_marginTop="32dp"
                         android:layout_marginStart="@dimen/card_padding"
                         android:layout_marginEnd="@dimen/card_padding"
                         android:contentDescription="@null"

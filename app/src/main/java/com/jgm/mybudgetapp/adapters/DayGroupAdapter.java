@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
         String weekDay = MyDateUtils.getDayOfWeek(mContext, day, month, year)[1];
         String weekDayWithNumber = weekDay + ", " + day;
         holder.mDay.setText(weekDayWithNumber);
+        holder.mDay2.setText(weekDayWithNumber);
 
         // Set list
         List<TransactionResponse> transactions = dayGroup.getTransactions();
@@ -62,6 +64,9 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
         else {
             TransactionAdapter2 adapter = new TransactionAdapter2(mContext, transactions);
             holder.mRecyclerView.setAdapter(adapter);
+            holder.mDayBg.setVisibility(View.GONE);
+            holder.mDay.setVisibility(View.GONE);
+            holder.mDay2.setVisibility(View.VISIBLE);
         }
     }
 
@@ -72,13 +77,16 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView mDay;
+        private final TextView mDay, mDay2;
+        private final ImageView mDayBg;
         private final RecyclerView mRecyclerView;
 
         private ListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mDay = itemView.findViewById(R.id.item_day_title);
+            mDay2 = itemView.findViewById(R.id.item_day_title2);
+            mDayBg = itemView.findViewById(R.id.item_day_text_bg);
             mRecyclerView = itemView.findViewById(R.id.item_day_list);
 
         }

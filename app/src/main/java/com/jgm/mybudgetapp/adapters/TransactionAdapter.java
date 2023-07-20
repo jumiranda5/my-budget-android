@@ -75,16 +75,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
 
-        // Set color for income/expense
-        if (item.getAmount() < 0) {
-            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-        }
-        else {
-            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-        }
-
         // Set initial paid value
         if (item.isPaid()) holder.mPaid.setChecked(true);
         else {

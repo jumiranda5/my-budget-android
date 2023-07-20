@@ -11,7 +11,7 @@
 
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
-        android:paddingBottom="100dp"
+        android:paddingBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/transactions_title"
                 style="@style/TransactionsTitle"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="@dimen/transactions_total_space"
                 android:text="@string/label_expenses"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transactions_list"
                 style="@style/NestedListNoScroll"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="@dimen/transactions_total_space_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/transactions_total"
@@ -63,18 +63,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/transaction_out_add"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:backgroundTint="@color/expense"-->
-<!--        android:contentDescription="Add new expense"-->
-<!--        android:src="@drawable/ic_app_add_400"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:tint="@color/white" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

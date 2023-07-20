@@ -287,7 +287,7 @@ public class HomeFragment extends Fragment {
 
         mIncomeChart.post(() -> {
             mIncomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 10, true);
+            Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 8, true);
         });
     }
 
@@ -300,7 +300,7 @@ public class HomeFragment extends Fragment {
 
         mExpensesChart.post(() -> {
             mExpensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 10, true);
+            Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 8, true);
         });
 
     }

@@ -35,9 +35,9 @@ public class Charts {
         canvasService.execute(() -> {
 
             // Get screen density to set the canvas size
-            int density = (int) context.getResources().getDisplayMetrics().density;
-            int chartSize = size * density;
-            int indicatorSize = indicator * density;
+            float density = context.getResources().getDisplayMetrics().density;
+            int chartSize = (int) (size * density);
+            int indicatorSize = (int) (indicator * density);
             int indicatorBoundaries = chartSize - indicatorSize;
 
             // Create Pie with canvas

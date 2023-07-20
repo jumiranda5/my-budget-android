@@ -81,6 +81,7 @@
             <ImageView
                 android:id="@+id/settings_lock_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_switch_lock"
                 app:layout_constraintStart_toStartOf="@+id/settings_switch_lock"
@@ -100,6 +101,7 @@
             <ImageView
                 android:id="@+id/settings_mode_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/switch_dark_mode"
                 app:layout_constraintStart_toStartOf="@+id/switch_dark_mode"
@@ -119,6 +121,7 @@
             <ImageView
                 android:id="@+id/settings_category_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_edit_categories"
                 app:layout_constraintStart_toStartOf="@+id/settings_edit_categories"
@@ -138,6 +141,7 @@
             <ImageView
                 android:id="@+id/settings_cards_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_edit_cards"
                 app:layout_constraintStart_toStartOf="@+id/settings_edit_cards"
@@ -157,6 +161,7 @@
             <ImageView
                 android:id="@+id/settings_premium_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_premium_member"
                 app:layout_constraintStart_toStartOf="@+id/settings_premium_member"
@@ -176,6 +181,7 @@
             <ImageView
                 android:id="@+id/settings_support_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_support"
                 app:layout_constraintStart_toStartOf="@+id/settings_support"
@@ -195,6 +201,7 @@
             <ImageView
                 android:id="@+id/settings_privacy_policy_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_privacy_policy"
                 app:layout_constraintStart_toStartOf="@+id/settings_privacy_policy"
@@ -213,6 +220,7 @@
             <ImageView
                 android:id="@+id/settings_clear_data_icon"
                 style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_clear_data"
                 app:layout_constraintStart_toStartOf="@+id/settings_clear_data"
