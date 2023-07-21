@@ -124,8 +124,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (item.getId() != -1 && item.getCardId() > 0) {
             holder.mPaid.setVisibility(View.GONE);
             holder.mCardIcon.setVisibility(View.VISIBLE);
-            holder.mCardSpace.setVisibility(View.VISIBLE);
-            holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
@@ -133,6 +131,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Open transaction details dialog
         if (item.getId() > 0) {
             holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
+        }
+        else {
+            holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
     }
 
@@ -143,7 +144,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mIcon, mCardIcon, mCardSpace;
+        private final ImageView mIcon, mCardIcon;
         private final TextView mName, mTotal, mCurrencySymbol;
         private final ConstraintLayout mContainer;
         private final ToggleButton mPaid;
@@ -158,7 +159,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             mCurrencySymbol = itemView.findViewById(R.id.item_transaction_currency_symbol);
             mPaid = itemView.findViewById(R.id.item_transaction_toggle);
             mCardIcon = itemView.findViewById(R.id.item_transaction_card_icon);
-            mCardSpace = itemView.findViewById(R.id.empty_view);
 
         }
     }

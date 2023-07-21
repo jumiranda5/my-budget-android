@@ -13,8 +13,9 @@
 
     <!-- List Items -->
     <dimen name="item_end_button_width">56dp</dimen>
-    <dimen name="item_nav_icon_space">10dp</dimen>
     <dimen name="item_edit_margin">4dp</dimen>
+    <dimen name="item_divisor_margin">12dp</dimen>
+    <dimen name="item_divisor_margin_end">28dp</dimen><!-- 12 + inner_space -->
 
     <!-- ==================  FORMS  ================== -->
 

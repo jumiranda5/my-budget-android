@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_pending_container"
+    style="@style/ListItem"
+    android:paddingEnd="0dp"
     android:layout_width="match_parent"
-    android:layout_height="76dp">
+    android:layout_height="76dp"
+    tools:ignore="RtlSymmetry">
 
     <TextView
         android:id="@+id/item_pending_date"
         style="@style/Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/inner_space"
         android:text="20/06/2023"
         app:layout_constraintBottom_toTopOf="@+id/item_pending_icon"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +23,6 @@
     <ImageView
         android:id="@+id/item_pending_icon"
         style="@style/IconNormal"
-        android:layout_marginStart="@dimen/inner_space"
         android:layout_marginTop="8dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,6 +61,7 @@
     <ToggleButton
         android:id="@+id/item_pending_toggle"
         style="@style/IconButton"
+        android:layout_width="@dimen/item_end_button_width"
         android:contentDescription="@null"
         android:textOn="@string/label_paid"
         android:textOff="@string/label_not_paid"

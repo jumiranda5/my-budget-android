@@ -65,6 +65,11 @@
         <item name="android:background">@color/divisor</item>
     </style>
 
+    <style name="ItemDivisor" parent="HomeDivisor">
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+    </style>
+
     <style name="FormDivisor" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">2dp</item>

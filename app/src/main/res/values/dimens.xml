@@ -20,11 +20,12 @@
     <dimen name="card_padding_top">12dp</dimen>
 
     <!-- List Items -->
-    <dimen name="item_height">56dp</dimen>
+    <dimen name="item_height">60dp</dimen>
     <dimen name="item_double_height">70dp</dimen>
     <dimen name="item_end_button_width">48dp</dimen>
-    <dimen name="item_nav_icon_space">8dp</dimen>
     <dimen name="item_edit_margin">0dp</dimen>
+    <dimen name="item_divisor_margin">12dp</dimen>
+    <dimen name="item_divisor_margin_end">26dp</dimen><!-- 12 + inner_space -->
 
     <!-- ==================  FORMS  ================== -->
 
@@ -94,10 +95,10 @@
     <!-- ==================  ACCOUNTS  ================== -->
 
     <dimen name="account_details_margin">24dp</dimen>
-    <dimen name="account_details_margin_top">40dp</dimen>
+    <dimen name="account_details_margin_top">32dp</dimen>
     <dimen name="account_details_close_margin">8dp</dimen>
-    <dimen name="account_details_padding">16dp</dimen>
-    <dimen name="account_details_form_padding">12dp</dimen>
+    <dimen name="account_details_list_padding">12dp</dimen>
+    <dimen name="account_details_divisor_margin">24dp</dimen>
 
     <!-- ==================  SETTINGS  ================== -->
 

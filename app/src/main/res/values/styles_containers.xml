@@ -112,7 +112,14 @@
         <item name="android:clipToPadding">false</item>
     </style>
 
-    <style name="ClickableListItem" parent="AppTheme">
+    <style name="ListItem" parent="AppTheme">
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingStart">@dimen/inner_space</item>
+        <item name="android:paddingEnd">@dimen/inner_space</item>
+    </style>
+
+    <style name="ClickableListItem" parent="ListItem">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:background">@drawable/bg_list_item</item>
@@ -125,7 +132,6 @@
         <item name="android:isScrollContainer">false</item>
         <item name="android:nestedScrollingEnabled">false</item>
     </style>
-
 
     <!-- ==========================================================
                             CARD VIEW

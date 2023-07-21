@@ -3,14 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/ClickableListItem"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/item_height"
     android:id="@+id/category_item">
 
     <ImageView
         android:id="@+id/category_icon"
         style="@style/IconNormal"
-        android:layout_marginStart="@dimen/inner_space"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,14 +28,17 @@
     <ImageButton
         android:id="@+id/category_item_edit"
         style="@style/IconButton"
-        android:layout_height="0dp"
-        android:layout_width="@dimen/item_height"
-        android:padding="16dp"
-        android:layout_marginEnd="@dimen/item_edit_margin"
         android:src="@drawable/ic_app_edit"
         android:contentDescription="@string/nav_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        style="@style/ItemDivisor"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
