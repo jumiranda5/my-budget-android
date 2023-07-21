@@ -5,7 +5,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#F3F3F3</color>
     <color name="colorSecondary">#767676</color>
-    <color name="colorAccent">#FD7D5D</color>
+    <color name="colorAccent">#FF6859</color>
     <color name="colorAccentLight">#6BFFB489</color>
     <color name="colorControlHighlight">#BABABA</color>
     <color name="colorSecondaryContainer">#424242</color>
@@ -17,8 +17,8 @@
     <color name="button_text">#121212</color>
 
     <!-- Backgrounds -->
-    <color name="bg_00dp">#121212</color>
-    <color name="bg_01dp">#1E1E1E</color>
+    <color name="bg_00dp">#181A1E</color>
+    <color name="bg_01dp">#0DFFFFFF</color>
     <color name="bg_04dp">#17FFFFFF</color>
     <color name="bg_progress_track">#2E2E2E</color>
     <color name="bg_day">#252525</color>
@@ -38,8 +38,9 @@
     <color name="switch_thumb_on">@color/colorAccent</color>
     <color name="switch_track_off">#4DBABABA</color>
     <color name="switch_track_on">#80FFB489</color>
-    <color name="switch_track_on_stroke">#FF6842</color>
+    <color name="switch_track_on_stroke">@color/colorAccent</color>
     <color name="check_circle_color">#13BA7C</color>
+    <color name="active_nav_button">@color/colorAccent</color>
 
     <!-- Interactions -->
     <color name="click">#2C2C2C</color>

@@ -69,7 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_settings" />
+                app:srcCompat="@drawable/ic_app_settings_400" />
 
             <!-- Add button -->
             <ImageButton

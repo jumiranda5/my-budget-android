@@ -25,14 +25,14 @@
     <style name="BottomNav" parent="AppTheme">
         <item name="android:layout_width">@dimen/bottomBar_width</item>
         <item name="android:layout_height">@dimen/bottomBar_height</item>
-        <item name="android:background">@color/bg_01dp</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:elevation">0dp</item>
         <item name="itemBackground">@drawable/bg_bottom_bar</item>
         <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
-        <item name="itemIconTint">@color/high_emphasis_text</item>
-        <item name="itemTextColor">@color/high_emphasis_text</item>
-        <item name="itemPaddingTop">10dp</item>
-        <item name="itemPaddingBottom">10dp</item>
+        <item name="itemIconTint">@color/bottom_nav_color</item>
+        <item name="itemTextColor">@color/bottom_nav_color</item>
+        <item name="itemPaddingTop">@dimen/bottomBar_icon_padding</item>
+        <item name="itemPaddingBottom">@dimen/bottomBar_icon_padding</item>
         <item name="itemActiveIndicatorStyle">@null</item>
         <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
         <item name="labelVisibilityMode">selected</item>
@@ -40,8 +40,7 @@
 
     <style name="BottomNavTextStyle" parent="AppTheme">
         <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/bottomBar_text</item>
     </style>
 
     <!-- Home Cards -->

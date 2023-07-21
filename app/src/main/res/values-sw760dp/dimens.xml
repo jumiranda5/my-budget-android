@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN ACTIVITY ================== -->
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">72dp</dimen>
+    <dimen name="toolbar_button_size">60dp</dimen>
+    <dimen name="toolbar_month">22sp</dimen>
+    <dimen name="toolbar_inset_start">24dp</dimen>
+    <dimen name="toolbar_inset_end">8dp</dimen>
+
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_width">560dp</dimen>
+
 <!--    &lt;!&ndash; ==================  MAIN  ================== &ndash;&gt;-->
 
 <!--    &lt;!&ndash; Bar chart &ndash;&gt;-->

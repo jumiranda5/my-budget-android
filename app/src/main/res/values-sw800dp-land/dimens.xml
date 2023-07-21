@@ -1,50 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    &lt;!&ndash; ==================  MAIN  ================== &ndash;&gt;-->
+    <!-- ==================  MAIN ACTIVITY ================== -->
 
-<!--    &lt;!&ndash; Numbers &ndash;&gt;-->
-<!--    <dimen name="number_impact_home_land">38sp</dimen>-->
-
-<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
-<!--    <dimen name="toolbar_height">80dp</dimen>-->
-<!--    <dimen name="toolbar_month_text">26sp</dimen>-->
-<!--    <dimen name="toolbar_month_width">200dp</dimen>-->
-<!--    <dimen name="toolbar_inset_start">32dp</dimen>-->
-<!--    <dimen name="toolbar_inset_end">24dp</dimen>-->
-
-<!--    &lt;!&ndash; Bar chart &ndash;&gt;-->
-<!--    <dimen name="year_chart_margin">32dp</dimen>-->
-<!--    <dimen name="year_chart_margin_top">32dp</dimen>-->
-
-<!--    &lt;!&ndash; Guidelines &ndash;&gt;-->
-<!--    <item name="guideline_home_start" format="float" type="dimen">0.02</item>-->
-<!--    <item name="guideline_home_end" format="float" type="dimen">0.98</item>-->
-
-<!--    &lt;!&ndash; ==================  FRAGMENTS  ================== &ndash;&gt;-->
-
-<!--    &lt;!&ndash; Home &ndash;&gt;-->
-<!--    <dimen name="home_padding">20dp</dimen>-->
-<!--    <dimen name="home_month_width_land">500dp</dimen>-->
-<!--    <dimen name="home_account_height_land">140dp</dimen>-->
-<!--    <dimen name="home_currency_margin">32dp</dimen>-->
-<!--    <dimen name="home_categories_width_land">170dp</dimen>-->
-<!--    <dimen name="home_pie_margin">16dp</dimen>-->
-<!--    <dimen name="home_pie_margin_top">12dp</dimen>-->
-<!--    <dimen name="progress_text_size">38sp</dimen>-->
-<!--    <dimen name="progress_indicator">200dp</dimen>-->
-<!--    <dimen name="progress_track">10dp</dimen>-->
-<!--    <dimen name="progress_corners">5dp</dimen>-->
-
-
-<!--    &lt;!&ndash; ******** TO BE REFACTORED ******** &ndash;&gt;-->
-
-
-<!--    &lt;!&ndash; Bottom bar &ndash;&gt;-->
-<!--    <dimen name="bottomBar_height">80dp</dimen>-->
-
-<!--    &lt;!&ndash; Lists &ndash;&gt;-->
-<!--    <dimen name="side_list_padding">20dp</dimen>-->
+    <!-- Toolbar -->
+    <dimen name="toolbar_inset_start">32dp</dimen>
+    <dimen name="toolbar_inset_end">16dp</dimen>
 
 
 </resources>

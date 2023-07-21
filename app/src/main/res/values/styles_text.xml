@@ -76,7 +76,7 @@
     <!-- Toolbar -->
 
     <style name="ToolbarMonth" parent="TextNormalEllipse">
-        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textSize">@dimen/toolbar_month</item>
         <item name="android:fontFamily">@font/nunito_sans_semi_bold</item>
     </style>
 

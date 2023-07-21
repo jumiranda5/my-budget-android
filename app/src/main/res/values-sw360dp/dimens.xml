@@ -17,9 +17,17 @@
     <dimen name="item_divisor_margin">12dp</dimen>
     <dimen name="item_divisor_margin_end">28dp</dimen><!-- 12 + inner_space -->
 
+
+    <!-- ==================  MAIN ACTIVITY ================== -->
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_width">100dp</dimen>
+
+
     <!-- ==================  FORMS  ================== -->
 
     <dimen name="form_padding">48dp</dimen>
+
 
     <!-- ==================  HOME FRAGMENT ================== -->
 

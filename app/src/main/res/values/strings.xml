@@ -33,6 +33,8 @@
     <!-- Navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_categories">Categories</string>
+    <string name="nav_add">Add</string>
+    <string name="nav_year">Year</string>
     <string name="nav_credit_cards">Credit Cards</string>
     <string name="nav_accounts">Accounts</string>
     <string name="nav_settings">Settings</string>

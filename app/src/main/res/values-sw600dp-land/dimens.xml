@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- ==================  MAIN ACTIVITY ================== -->
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_inset_start">24dp</dimen>
+    <dimen name="toolbar_inset_end">8dp</dimen>
+
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_height">64dp</dimen>
+    <dimen name="bottomBar_icon_size">24dp</dimen>
+    <dimen name="bottomBar_icon_padding">13dp</dimen>
+    <dimen name="bottomBar_width">520dp</dimen>
+
 <!--    &lt;!&ndash; ==================  MAIN  ================== &ndash;&gt;-->
 
 <!--    &lt;!&ndash; Normal text - Landscape &ndash;&gt;-->

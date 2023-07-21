@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    &lt;!&ndash; ==================  MAIN  ================== &ndash;&gt;-->
+    <!-- Text -->
+    <dimen name="text_normal">18sp</dimen>
+    <dimen name="text_secondary">16sp</dimen>
+    <dimen name="text_title">20sp</dimen>
 
-<!--    &lt;!&ndash; Normal text &ndash;&gt;-->
-<!--    <dimen name="text_normal">18sp</dimen>-->
-<!--    <dimen name="text_secondary">16sp</dimen>-->
+    <!-- ==================  MAIN ACTIVITY ================== -->
 
-<!--    &lt;!&ndash; Numbers &ndash;&gt;-->
-<!--    <dimen name="number_impact">34sp</dimen>-->
-<!--    <dimen name="number_impact_home">38sp</dimen>-->
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_width">140dp</dimen>
+    <dimen name="toolbar_height">64dp</dimen>
+    <dimen name="toolbar_button_size">58dp</dimen>
+    <dimen name="toolbar_month">20sp</dimen>
 
-<!--    &lt;!&ndash; App Margins &ndash;&gt;-->
-<!--    <dimen name="app_inner_space">18dp</dimen>-->
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_height">72dp</dimen>
+    <dimen name="bottomBar_icon_size">26dp</dimen>
+    <dimen name="bottomBar_icon_padding">16dp</dimen>
+    <dimen name="bottomBar_text">12sp</dimen>
 
-<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
-<!--    <dimen name="toolbar_height">64dp</dimen>-->
-<!--    <dimen name="toolbar_month_text">22sp</dimen>-->
-<!--    <dimen name="toolbar_month_text_other">20sp</dimen>-->
-<!--    <dimen name="toolbar_month_width">140dp</dimen>-->
-<!--    <dimen name="toolbar_year_size">18sp</dimen>-->
-
-<!--    &lt;!&ndash; Containers &ndash;&gt;-->
-<!--    <dimen name="card_padding">20dp</dimen>-->
-
-<!--    &lt;!&ndash; Bar chart &ndash;&gt;-->
-<!--    <dimen name="year_chart_margin">24dp</dimen>-->
-<!--    <dimen name="year_chart_margin_top">48dp</dimen>-->
 
 
 <!--    &lt;!&ndash; ==================  FRAGMENTS  ================== &ndash;&gt;-->

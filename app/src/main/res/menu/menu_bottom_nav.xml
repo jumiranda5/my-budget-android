@@ -4,35 +4,35 @@
 
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/nav_home"
+        android:icon="@drawable/ic_app_home_400"
         android:contentDescription="@string/nav_home"
         android:title="@string/nav_home"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_categories"
-        android:icon="@drawable/nav_categories"
+        android:icon="@drawable/ic_app_donut_large"
         android:contentDescription="@string/nav_categories"
         android:title="@string/nav_categories"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_add"
-        android:title="Add"
-        android:contentDescription="Add"
-        android:icon="@drawable/ic_app_add_400"
+        android:title="@string/nav_add"
+        android:contentDescription="@string/nav_add"
+        android:icon="@drawable/ic_app_add_500"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_year"
         android:icon="@drawable/ic_bar_chart"
-        android:contentDescription="Year"
-        android:title="Year"
+        android:contentDescription="@string/nav_year"
+        android:title="@string/nav_year"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_accounts"
-        android:icon="@drawable/nav_accounts"
+        android:icon="@drawable/ic_app_account_balance_400"
         android:contentDescription="@string/nav_accounts"
         android:title="@string/nav_accounts"
         app:showAsAction="ifRoom"/>

@@ -8,6 +8,12 @@
     <dimen name="card_padding">20dp</dimen>
     <dimen name="card_padding_top">16dp</dimen>
 
+    <!-- ==================  MAIN ACTIVITY ================== -->
+
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_height">64dp</dimen>
+    <dimen name="bottomBar_icon_padding">13dp</dimen>
+
     <!-- ==================  FORMS  ================== -->
 
     <dimen name="input_margin">14dp</dimen>
