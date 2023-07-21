@@ -31,7 +31,8 @@
 
     <TextView
         android:id="@+id/item_method_picker_info"
-        style="@style/TextSecondaryEllipse"
+        style="@style/Subtitle"
+        android:fontFamily="@font/titillium_web_regular"
         android:layout_width="0dp"
         android:layout_marginStart="16dp"
         android:text="@string/account_checking"

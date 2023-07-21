@@ -72,17 +72,14 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
         if (account.getType() == 2) {
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
-            holder.mNavIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.savings));
         }
         else if (account.getTotal() < 0) {
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-            holder.mNavIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.expense));
         }
         else {
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-            holder.mNavIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.income));
         }
 
         // Open account details
@@ -120,7 +117,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
 
     public static class GridViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mIcon, mNavIcon;
+        private final ImageView mIcon;
         private final TextView mName, mTotal, mCurrencySymbol;
         private final ConstraintLayout mContainer;
 
@@ -128,7 +125,6 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
             super(itemView);
 
             mIcon = itemView.findViewById(R.id.item_account_icon);
-            mNavIcon = itemView.findViewById(R.id.item_account_nav_icon);
             mName = itemView.findViewById(R.id.item_account_name);
             mContainer = itemView.findViewById(R.id.account_item_container);
             mTotal = itemView.findViewById(R.id.item_account_total);

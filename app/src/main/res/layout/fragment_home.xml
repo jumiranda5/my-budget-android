@@ -72,17 +72,17 @@
 
                     <TextView
                         android:id="@+id/home_month_label"
-                        style="@style/TextSecondary"
+                        style="@style/HomeLabelSmall"
                         android:text="@string/label_month"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/home_month_balance"
-                        style="@style/TextNormal"
+                        style="@style/NumberImpact"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/home_balance_height"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="4dp"
                         android:gravity="center"
                         android:text="@string/initial_value"
                         android:textColor="@color/income"
@@ -112,7 +112,7 @@
 
                     <TextView
                         android:id="@+id/home_income_label"
-                        style="@style/TextSecondary"
+                        style="@style/HomeLabelSmall"
                         android:text="@string/label_income"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -152,7 +152,7 @@
 
                     <TextView
                         android:id="@+id/home_expense_label"
-                        style="@style/TextSecondary"
+                        style="@style/HomeLabelSmall"
                         android:text="@string/label_expenses"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -230,10 +230,10 @@
 
                     <TextView
                         android:id="@+id/home_progress_text"
-                        style="@style/TextSecondary"
+                        style="@style/HomeBody"
                         android:layout_width="0dp"
-                        android:layout_marginStart="@dimen/progress_info_margin_start"
-                        android:layout_marginEnd="@dimen/progress_info_margin_end"
+                        android:layout_marginStart="@dimen/progress_info_margin"
+                        android:layout_marginEnd="@dimen/progress_info_margin"
                         android:text="@string/msg_progress"
                         app:layout_constraintBottom_toBottomOf="@+id/home_month_progress"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -304,7 +304,7 @@
 
                     <TextView
                         android:id="@+id/home_cash_label"
-                        style="@style/TextSecondary"
+                        style="@style/HomeBody"
                         android:layout_marginStart="8dp"
                         android:text="@string/account_cash"
                         app:layout_constraintBottom_toBottomOf="@+id/home_cash_icon"
@@ -326,7 +326,6 @@
                         android:text="@string/currency_symbol"
                         android:textColor="@color/income"
                         android:textSize="@dimen/text_secondary"
-                        android:fontFamily="@font/titillium_web_regular"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_cash"
                         app:layout_constraintStart_toStartOf="@id/home_cash" />
 
@@ -334,7 +333,7 @@
 
                     <TextView
                         android:id="@+id/home_checking_label"
-                        style="@style/TextSecondary"
+                        style="@style/HomeBody"
                         android:layout_marginStart="8dp"
                         android:text="@string/account_checking"
                         app:layout_constraintBottom_toBottomOf="@+id/home_checking_icon"
@@ -356,7 +355,6 @@
                         android:text="@string/currency_symbol"
                         android:textColor="@color/income"
                         android:textSize="@dimen/text_secondary"
-                        android:fontFamily="@font/titillium_web_regular"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_checking"
                         app:layout_constraintStart_toStartOf="@id/home_checking" />
 
@@ -364,7 +362,7 @@
 
                     <TextView
                         android:id="@+id/home_savings_label"
-                        style="@style/TextSecondary"
+                        style="@style/HomeBody"
                         android:layout_marginStart="8dp"
                         android:text="@string/account_savings"
                         app:layout_constraintBottom_toBottomOf="@+id/home_savings_icon"
@@ -386,7 +384,6 @@
                         android:text="@string/currency_symbol"
                         android:textColor="@color/savings"
                         android:textSize="@dimen/text_secondary"
-                        android:fontFamily="@font/titillium_web_regular"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_savings"
                         app:layout_constraintStart_toStartOf="@id/home_savings" />
 

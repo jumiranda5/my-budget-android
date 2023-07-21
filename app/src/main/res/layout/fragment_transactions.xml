@@ -43,7 +43,7 @@
             <TextView
                 android:id="@+id/transactions_total"
                 style="@style/NumberImpact"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="-4dp"
                 android:text="@string/initial_value"
                 android:textAlignment="center"
                 android:textColor="@color/expense"

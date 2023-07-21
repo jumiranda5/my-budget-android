@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_credit_card" />
+        app:srcCompat="@drawable/ic_app_credit_card" />
 
     <TextView
         android:id="@+id/item_card_name"
@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/item_card_billing_day"
-        style="@style/TextSecondary"
+        style="@style/Subtitle"
         android:layout_width="0dp"
         android:text="@string/initial_billing_day"
         android:layout_marginTop="0dp"
@@ -40,10 +40,7 @@
 
     <ImageButton
         android:id="@+id/item_card_edit"
-        style="@style/IconButton"
-        android:layout_height="56dp"
-        android:layout_width="56dp"
-        android:padding="16dp"
+        style="@style/ToolbarButton"
         android:src="@drawable/ic_app_edit"
         android:contentDescription="@string/nav_edit"
         android:layout_marginEnd="@dimen/item_edit_margin"

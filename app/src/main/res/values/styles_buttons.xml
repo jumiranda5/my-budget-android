@@ -10,7 +10,7 @@
     <style name="IconButton" parent="TransparentButton">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="tint">@color/high_emphasis_text</item>
@@ -19,12 +19,13 @@
     <style name="ToolbarButton" parent="IconButton">
         <item name="android:layout_width">@dimen/toolbar_button_size</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">14dp</item>
     </style>
 
     <style name="ToolbarButtonWithBg" parent="IconButton">
         <item name="android:background">@drawable/button_toolbar_accent_inset</item>
         <item name="tint">@color/button_accent_text</item>
+        <item name="android:padding">12dp</item>
     </style>
 
     <style name="ItemButton" parent="IconButton">
@@ -81,21 +82,6 @@
         <item name="tint">@color/high_emphasis_text</item>
     </style>
 
-    <!-- Settings -->
-
-    <style name="SettingsButton" parent="TransparentButton">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/input_height</item>
-        <item name="layout_constraintWidth_max">460dp</item>
-        <item name="android:background">@drawable/bg_list_item</item>
-        <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:textSize">@dimen/text_normal</item>
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:paddingStart">@dimen/settings_icon_width</item>
-        <item name="android:layout_marginTop">4dp</item>
-    </style>
-
     <!-- Switch buttons -->
 
     <style name="MySwitchButton" parent="MainButton">
@@ -118,10 +104,26 @@
         <item name="track">@drawable/switch_track</item>
     </style>
 
+    <!-- Settings -->
+
+    <style name="SettingsButton" parent="TransparentButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="layout_constraintWidth_max">460dp</item>
+        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:paddingStart">@dimen/settings_icon_width</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
     <style name="SettingsSwitch" parent="FormSwitchWithIcon">
         <item name="layout_constraintWidth_max">460dp</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
     </style>
 
     <!-- Toggle -->
@@ -136,53 +138,8 @@
         <item name="android:background">@drawable/button_pill</item>
         <item name="android:paddingStart">@dimen/toggle_pill_padding_start</item>
         <item name="android:paddingEnd">@dimen/toggle_pill_padding_end</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
     </style>
 
-    <!-- ==========================================================
-                                MAIN
-    ============================================================ -->
-
-<!--    <style name="BorderButton" parent="MainButton">-->
-<!--        <item name="android:layout_width">0dp</item>-->
-<!--        <item name="android:background">@drawable/button_border</item>-->
-<!--        <item name="android:textColor">@color/high_emphasis_text</item>-->
-<!--        <item name="android:textSize">@dimen/secondary_text</item>-->
-<!--    </style>-->
-
-
-
-    <!-- ==========================================================
-                            IMAGE BUTTONS
-    ============================================================ -->
-
-<!--    <style name="FormRepeatButton" parent="IconButton">-->
-<!--        <item name="android:padding">0dp</item>-->
-<!--        <item name="android:textColor">@color/main_text</item>-->
-<!--        <item name="android:textSize">24sp</item>-->
-<!--    </style>-->
-
-    <!-- ==========================================================
-                            SWITCH BUTTONS
-    ============================================================ -->
-
-
-
-    <!-- ==========================================================
-                            TOGGLE BUTTONS
-    ============================================================ -->
-
-
-    <!-- ==========================================================
-                            BUTTON PICKER
-    ============================================================ -->
-
-<!--    <style name="ButtonPicker" parent="InputWithIcon">-->
-<!--        <item name="android:stateListAnimator">@null</item>-->
-<!--        <item name="backgroundTint">@null</item>-->
-<!--        <item name="android:background">@drawable/button_picker</item>-->
-<!--        <item name="android:textAlignment">textStart</item>-->
-<!--        <item name="android:textColor">@color/main_text</item>-->
-<!--    </style>-->
 
 </resources>

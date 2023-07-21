@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Normal Text -->
+<!--    &lt;!&ndash; Normal Text &ndash;&gt;-->
 
-    <style name="TextNormal" parent="AppTheme">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:fontFamily">@font/titillium_web_light</item>
-        <item name="android:textSize">@dimen/text_normal</item>
-    </style>
+<!--    <style name="TextNormal" parent="AppTheme">-->
+<!--        <item name="android:layout_width">wrap_content</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:textColor">@color/high_emphasis_text</item>-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_light</item>-->
+<!--        <item name="android:textSize">@dimen/text_normal</item>-->
+<!--    </style>-->
 
-    <style name="TextNormalEllipse" parent="TextNormal">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-    </style>
+<!--    <style name="TextNormalEllipse" parent="TextNormal">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:ellipsize">end</item>-->
+<!--        <item name="android:maxLines">1</item>-->
+<!--    </style>-->
 
-    <style name="TextError" parent="TextNormalEllipse">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:textColor">@color/text_error</item>
-    </style>
+<!--    <style name="TextError" parent="TextNormalEllipse">-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_regular</item>-->
+<!--        <item name="android:textColor">@color/text_error</item>-->
+<!--    </style>-->
 
-    <!-- Labels -->
+<!--    &lt;!&ndash; Labels &ndash;&gt;-->
 
-    <style name="HomeLabel" parent="TextNormal">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-    </style>
+<!--    <style name="HomeLabel" parent="TextNormal">-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_regular</item>-->
+<!--    </style>-->
 
-    <!-- Numbers -->
+<!--    &lt;!&ndash; Numbers &ndash;&gt;-->
 
-    <style name="NumberHomeIncome" parent="Number">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:textColor">@color/income</item>
-    </style>
+<!--    <style name="NumberHomeIncome" parent="Number">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_regular</item>-->
+<!--        <item name="android:layout_marginTop">16dp</item>-->
+<!--        <item name="android:textColor">@color/income</item>-->
+<!--    </style>-->
 
-    <style name="Currency" parent="TextNormal">
-        <item name="android:text">@string/initial_value</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-    </style>
+<!--    <style name="Currency" parent="TextNormal">-->
+<!--        <item name="android:text">@string/initial_value</item>-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_regular</item>-->
+<!--    </style>-->
 
-    <style name="CurrencySpace" parent="Currency">
-        <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">0dp</item>
-        <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>
-        <item name="android:textAlignment">textEnd</item>
-    </style>
+<!--    <style name="CurrencySpace" parent="Currency">-->
+<!--        <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>-->
+<!--        <item name="android:paddingStart">24dp</item>-->
+<!--        <item name="android:paddingEnd">0dp</item>-->
+<!--        <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>-->
+<!--        <item name="android:textAlignment">textEnd</item>-->
+<!--    </style>-->
 
-    <!-- Text on buttons -->
+<!--    &lt;!&ndash; Text on buttons &ndash;&gt;-->
 
-    <style name="SettingsSwitch" parent="FormSwitchWithIcon">
-        <item name="layout_constraintWidth_max">460dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:fontFamily">@font/titillium_web_light</item>
-    </style>
+<!--    <style name="SettingsSwitch" parent="FormSwitchWithIcon">-->
+<!--        <item name="layout_constraintWidth_max">460dp</item>-->
+<!--        <item name="android:layout_marginTop">4dp</item>-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_light</item>-->
+<!--    </style>-->
 
-    <style name="SettingsButton" parent="TransparentButton">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/input_height</item>
-        <item name="layout_constraintWidth_max">460dp</item>
-        <item name="android:background">@drawable/bg_list_item</item>
-        <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:textSize">@dimen/text_normal</item>
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:paddingStart">48dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:fontFamily">@font/titillium_web_light</item>
-    </style>
+<!--    <style name="SettingsButton" parent="TransparentButton">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:layout_height">@dimen/input_height</item>-->
+<!--        <item name="layout_constraintWidth_max">460dp</item>-->
+<!--        <item name="android:background">@drawable/bg_list_item</item>-->
+<!--        <item name="android:textColor">@color/high_emphasis_text</item>-->
+<!--        <item name="android:textSize">@dimen/text_normal</item>-->
+<!--        <item name="android:textAlignment">textStart</item>-->
+<!--        <item name="android:paddingStart">48dp</item>-->
+<!--        <item name="android:layout_marginTop">4dp</item>-->
+<!--        <item name="android:fontFamily">@font/ibm_plex_light</item>-->
+<!--    </style>-->
 
 </resources>

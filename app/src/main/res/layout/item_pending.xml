@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/item_pending_date"
-        style="@style/TextSecondary"
+        style="@style/Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/inner_space"
@@ -43,7 +43,6 @@
     <TextView
         android:id="@+id/item_pending_total"
         style="@style/CurrencyItem"
-        android:layout_marginEnd="12dp"
         android:text="@string/initial_value_no_symbol"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_pending_name"
@@ -61,7 +60,6 @@
     <ToggleButton
         android:id="@+id/item_pending_toggle"
         style="@style/IconButton"
-        android:layout_marginEnd="8dp"
         android:contentDescription="@null"
         android:textOn="@string/label_paid"
         android:textOff="@string/label_not_paid"

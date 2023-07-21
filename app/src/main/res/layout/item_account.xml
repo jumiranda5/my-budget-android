@@ -53,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/income"
+        app:tint="@color/disabled_text"
         app:srcCompat="@drawable/ic_app_navigate_next" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

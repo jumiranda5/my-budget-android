@@ -53,7 +53,6 @@
         android:id="@+id/item_transaction_currency_symbol"
         style="@style/Currency"
         android:text="@string/currency_symbol"
-        android:fontFamily="@font/titillium_web_regular"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_total"
         app:layout_constraintStart_toStartOf="@id/item_transaction_total" />
 

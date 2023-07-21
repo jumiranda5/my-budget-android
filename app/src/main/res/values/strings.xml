@@ -20,7 +20,7 @@
 
     <!-- Values -->
     <string name="initial_1">1</string>
-    <string name="initial_value" translatable="false">$0.00</string>
+    <string name="initial_value" translatable="false">$3,500.89</string>
     <string name="initial_value_no_symbol" translatable="false">0.00</string>
     <string name="initial_percent" translatable="false">0%</string>
     <string name="initial_year">2023</string>

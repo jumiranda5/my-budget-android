@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/item_home_cat_text"
-        style="@style/TextSecondaryEllipse"
+        style="@style/HomeCategoryText"
         android:layout_marginStart="8dp"
         android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"

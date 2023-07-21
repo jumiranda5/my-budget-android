@@ -54,6 +54,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/transactions_group_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method,credit_card_month_picker, add_description, add_icon_desc" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/transactions_group_transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="add_account_picker_out,add_icon_out,add_account_picker_in,add_icon_in" />
+
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_start"
                 android:layout_width="wrap_content"
@@ -262,7 +275,7 @@
 
                 <TextView
                     android:id="@+id/credit_card_month_picker_label"
-                    style="@style/TextSecondary"
+                    style="@style/HomeLabelSmall"
                     android:text="@string/label_billing_month"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -423,18 +436,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/repeat_label" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/transactions_group_main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method,credit_card_month_picker, add_description, add_icon_desc" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/transactions_group_transfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="add_account_picker_out,add_icon_out,add_account_picker_in,add_icon_in" />
 
             <ProgressBar
                 android:id="@+id/add_progressBar"
