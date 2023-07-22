@@ -46,7 +46,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_add_400" />
+                app:srcCompat="@drawable/ic_app_add_500" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,10 +55,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_list"
         style="@style/MainList"
-        app:layout_constraintWidth_max="580dp"
-        android:paddingTop="@dimen/categories_list_padding_top"
-        android:paddingStart="@dimen/categories_list_padding_start"
-        android:paddingEnd="@dimen/categories_list_padding_start"
+        app:layout_constraintWidth_max="@dimen/list_max_width"
+        android:paddingTop="@dimen/list_padding_top"
+        android:paddingStart="@dimen/list_padding_start"
+        android:paddingEnd="@dimen/list_padding_start"
         android:paddingBottom="@dimen/item_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -14,6 +14,7 @@
 
     <!-- List Items -->
     <dimen name="item_height">68dp</dimen>
+    <dimen name="item_double_height">80dp</dimen>
 
     <!-- Buttons -->
     <dimen name="icon_button_size">52dp</dimen>
@@ -53,10 +54,12 @@
     <dimen name="progress_info_margin">40dp</dimen>
     <dimen name="home_pie_width">96dp</dimen>
 
-    <!-- ==================  CATEGORIES LIST  ================== -->
 
-    <dimen name="categories_list_padding_top">24dp</dimen>
-    <dimen name="categories_list_padding_start">32dp</dimen>
+    <!-- =============  FRAGMENTS WITH 1 LIST  ============= -->
+
+    <dimen name="list_padding_top">24dp</dimen>
+    <dimen name="list_padding_start">32dp</dimen>
+
 
     <!-- ==================  SETTINGS  ================== -->
 

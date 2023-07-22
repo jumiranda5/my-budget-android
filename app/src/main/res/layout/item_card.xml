@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/ListItem"
+    style="@style/ClickableListItem"
     android:layout_height="@dimen/item_double_height"
     android:id="@+id/item_card_container"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Todo: implement click on adapter -->
 
     <ImageView
         android:id="@+id/item_card_icon"
@@ -42,18 +44,16 @@
         style="@style/IconButton"
         android:src="@drawable/ic_app_edit"
         android:contentDescription="@string/nav_edit"
-        android:layout_marginEnd="@dimen/item_edit_margin"
+        android:layout_marginEnd="-8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         style="@style/ItemDivisor"
-        android:layout_marginStart="@dimen/inner_space"
-        android:layout_marginEnd="@dimen/inner_space"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/item_card_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

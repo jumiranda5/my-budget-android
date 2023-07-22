@@ -19,7 +19,7 @@
 
     <!-- ==================  CATEGORIES LIST  ================== -->
 
-    <dimen name="categories_list_padding_top">32dp</dimen>
+    <dimen name="list_padding_top">32dp</dimen>
 
     <!-- ==================  SETTINGS  ================== -->
 
