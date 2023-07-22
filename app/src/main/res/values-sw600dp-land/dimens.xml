@@ -38,6 +38,10 @@
     <dimen name="land_home_balance_width">360dp</dimen>
     <dimen name="land_home_progress_width">200dp</dimen>
 
+    <!-- ==================  ACCOUNTS  ================== -->
+
+    <dimen name="account_details_margin_top">40dp</dimen>
+
     <!-- ==================  SETTINGS  ================== -->
 
     <dimen name="settings_padding">32dp</dimen>

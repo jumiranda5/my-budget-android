@@ -71,15 +71,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Max width -->
+    <ImageView
+        android:id="@+id/account_width_anchor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="520dp" />
+
     <ImageButton
         android:id="@+id/account_back_button"
         style="@style/IconButton"
         android:layout_marginEnd="@dimen/account_details_close_margin"
         android:contentDescription="@string/nav_back"
         app:layout_constraintBottom_toBottomOf="@+id/account_icon"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
         app:layout_constraintTop_toTopOf="@+id/account_icon"
-        app:srcCompat="@drawable/ic_app_close" />
+        app:srcCompat="@drawable/ic_app_close_400" />
 
     <ImageView
         android:id="@+id/account_icon"
@@ -90,7 +101,7 @@
         android:layout_marginTop="@dimen/account_details_margin_top"
         android:contentDescription="@null"
         android:src="@drawable/ic_app_cash"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/account_width_anchor"
         app:layout_constraintTop_toBottomOf="@+id/account_toolbar" />
 
     <TextView
@@ -108,7 +119,7 @@
         android:layout_marginTop="6dp"
         android:textColor="@color/income"
         android:textSize="@dimen/text_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
         app:layout_constraintStart_toStartOf="@+id/account_details_title"
         app:layout_constraintTop_toBottomOf="@+id/account_details_title" />
 
@@ -119,8 +130,8 @@
         android:layout_marginStart="@dimen/account_details_divisor_margin"
         android:layout_marginEnd="@dimen/account_details_divisor_margin"
         android:layout_marginTop="@dimen/account_details_margin_top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
+        app:layout_constraintStart_toStartOf="@id/account_width_anchor"
         app:layout_constraintTop_toBottomOf="@+id/account_total" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -131,8 +142,8 @@
         android:paddingEnd="@dimen/account_details_list_padding"
         android:paddingBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
+        app:layout_constraintStart_toStartOf="@id/account_width_anchor"
         app:layout_constraintTop_toBottomOf="@+id/account_divisor"
         tools:listitem="@layout/item_transaction_day" />
 

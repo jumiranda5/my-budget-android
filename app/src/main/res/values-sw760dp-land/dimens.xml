@@ -16,4 +16,8 @@
     <dimen name="progress_indicator">148dp</dimen>
     <dimen name="land_home_progress_width">220dp</dimen>
 
+    <!-- ==================  ACCOUNTS  ================== -->
+
+    <dimen name="account_details_margin_top">48dp</dimen>
+
 </resources>

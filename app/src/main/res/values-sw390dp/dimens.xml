@@ -60,7 +60,7 @@
 
     <dimen name="account_details_margin">32dp</dimen>
     <dimen name="account_details_margin_top">48dp</dimen>
-    <dimen name="account_details_close_margin">12dp</dimen>
+    <dimen name="account_details_close_margin">16dp</dimen>
     <dimen name="account_details_list_padding">12dp</dimen>
     <dimen name="account_details_divisor_margin">24dp</dimen>
 

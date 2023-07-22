@@ -56,6 +56,10 @@
     <dimen name="categories_chart_list_margin">48dp</dimen>
     <dimen name="categories_chart_list_margin_start">16dp</dimen>
 
+    <!-- ==================  ACCOUNTS  ================== -->
+
+    <dimen name="account_details_margin_top">40dp</dimen>
+
     <!-- ==================  SETTINGS  ================== -->
 
     <dimen name="settings_icon_width">56dp</dimen>
