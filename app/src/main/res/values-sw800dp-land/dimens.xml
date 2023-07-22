@@ -6,6 +6,12 @@
     <!-- Toolbar -->
     <dimen name="toolbar_inset_start">32dp</dimen>
     <dimen name="toolbar_inset_end">16dp</dimen>
+    <dimen name="toolbar_height">72dp</dimen>
+
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_height">72dp</dimen>
+    <dimen name="bottomBar_icon_size">26dp</dimen>
+    <dimen name="bottomBar_icon_padding">16dp</dimen>
 
     <!-- ==================  HOME FRAGMENT ================== -->
 

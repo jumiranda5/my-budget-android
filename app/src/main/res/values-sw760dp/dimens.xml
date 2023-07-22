@@ -17,6 +17,10 @@
 
     <dimen name="home_padding">40dp</dimen>
 
+    <!-- ==================  CATEGORIES LIST  ================== -->
+
+    <dimen name="categories_list_padding_top">32dp</dimen>
+
     <!-- ==================  SETTINGS  ================== -->
 
     <dimen name="settings_padding">32dp</dimen>

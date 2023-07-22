@@ -23,7 +23,7 @@
                 android:id="@+id/cat_list_toolbar_close"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_back"
-                android:src="@drawable/ic_app_arrow_back"
+                android:src="@drawable/ic_app_arrow_back_400"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_list"
         style="@style/MainList"
-        android:paddingTop="8dp"
+        app:layout_constraintWidth_max="580dp"
+        android:paddingTop="@dimen/categories_list_padding_top"
+        android:paddingStart="@dimen/categories_list_padding_start"
+        android:paddingEnd="@dimen/categories_list_padding_start"
+        android:paddingBottom="@dimen/item_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

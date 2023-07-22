@@ -8,9 +8,9 @@
     </style>
 
     <style name="IconButton" parent="TransparentButton">
-        <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:layout_width">@dimen/icon_button_size</item>
+        <item name="android:layout_height">@dimen/icon_button_size</item>
+        <item name="android:padding">@dimen/icon_button_padding</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:adjustViewBounds">true</item>
         <item name="tint">@color/high_emphasis_text</item>

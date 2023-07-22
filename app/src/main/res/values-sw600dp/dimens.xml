@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="inner_space">20dp</dimen>
+
     <!-- Text -->
     <dimen name="text_normal">18sp</dimen>
     <dimen name="text_secondary">16sp</dimen>
@@ -9,6 +11,13 @@
     <!-- Cards -->
     <dimen name="card_padding">20dp</dimen>
     <dimen name="card_padding_top">16dp</dimen>
+
+    <!-- List Items -->
+    <dimen name="item_height">68dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="icon_button_size">52dp</dimen>
+    <dimen name="icon_button_padding">14dp</dimen>
 
     <!-- ==================  FORMS  ================== -->
 
@@ -45,6 +54,11 @@
     <dimen name="progress_indicator">132dp</dimen>
     <dimen name="progress_info_margin">40dp</dimen>
     <dimen name="home_pie_width">96dp</dimen>
+
+    <!-- ==================  CATEGORIES LIST  ================== -->
+
+    <dimen name="categories_list_padding_top">24dp</dimen>
+    <dimen name="categories_list_padding_start">32dp</dimen>
 
     <!-- ==================  SETTINGS  ================== -->
 

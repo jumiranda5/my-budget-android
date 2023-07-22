@@ -13,7 +13,7 @@
         android:height="17dp"
         android:gravity="center">
         <shape android:shape="oval">
-            <solid android:color="@color/switch_border_off" />
+            <solid android:color="@color/switch_track_off_stroke" />
             <corners android:radius="10dp"/>
         </shape>
     </item>

@@ -11,6 +11,7 @@
     <!-- Toolbar -->
     <dimen name="toolbar_inset_start">24dp</dimen>
     <dimen name="toolbar_inset_end">8dp</dimen>
+    <dimen name="toolbar_height">64dp</dimen>
 
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">64dp</dimen>

@@ -28,7 +28,7 @@
     <!-- Borders -->
     <color name="border">#E0E0E0</color>
     <color name="border_darker">#E0E0E0</color>
-    <color name="divisor">#EAEAEA</color>
+    <color name="divisor">#EEEEEE</color>
 
     <!-- Button -->
     <color name="disabled_button">#DADADA</color>

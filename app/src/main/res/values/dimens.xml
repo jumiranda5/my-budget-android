@@ -26,6 +26,10 @@
     <dimen name="item_divisor_margin">12dp</dimen>
     <dimen name="item_divisor_margin_end">26dp</dimen><!-- 12 + inner_space -->
 
+    <!-- Buttons -->
+    <dimen name="icon_button_size">48dp</dimen>
+    <dimen name="icon_button_padding">12dp</dimen>
+
     <!-- ==================  FORMS  ================== -->
 
     <dimen name="input_height">56dp</dimen>
@@ -103,6 +107,11 @@
     <dimen name="categories_chart_list_margin">32dp</dimen>
     <dimen name="categories_chart_list_margin_start">4dp</dimen>
 
+    <!-- ==================  CATEGORIES LIST  ================== -->
+
+    <dimen name="categories_list_padding_top">8dp</dimen>
+    <dimen name="categories_list_padding_start">0dp</dimen>
+
     <!-- ==================  ACCOUNTS  ================== -->
 
     <dimen name="account_details_margin">24dp</dimen>
@@ -115,6 +124,7 @@
 
     <dimen name="settings_padding">0dp</dimen>
     <dimen name="settings_icon_width">48dp</dimen>
+
 
 
 </resources>
