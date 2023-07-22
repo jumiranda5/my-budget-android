@@ -33,19 +33,19 @@
     <!-- ==================  FORMS  ================== -->
 
     <dimen name="input_height">56dp</dimen>
-    <dimen name="input_max_width">320dp</dimen>
+    <dimen name="input_max_width">340dp</dimen>
     <dimen name="input_padding">14dp</dimen>
     <dimen name="input_margin">12dp</dimen>
-    <dimen name="input_icon_space">48dp</dimen>
-    <dimen name="input_icon_size">48dp</dimen>
-    <dimen name="input_icon_padding">12dp</dimen>
+    <dimen name="input_icon_space">52dp</dimen>
+    <dimen name="input_icon_size">52dp</dimen>
+    <dimen name="input_icon_padding">14dp</dimen>
     <dimen name="button_save_height">54dp</dimen>
     <dimen name="toggle_pill_min_width">80dp</dimen>
     <dimen name="toggle_pill_max_width">96dp</dimen>
-    <dimen name="toggle_pill_padding_start">2dp</dimen>
+    <dimen name="toggle_pill_padding_start">4dp</dimen>
     <dimen name="toggle_pill_padding_end">10dp</dimen>
     <dimen name="form_divisor_space">24dp</dimen>
-    <dimen name="form_padding">32dp</dimen>
+    <dimen name="form_padding">24dp</dimen>
     <dimen name="transaction_form_padding">24dp</dimen>
 
 

@@ -80,7 +80,7 @@
                 android:contentDescription="@string/nav_close"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_close" />
+                app:srcCompat="@drawable/ic_app_close_400" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end"

@@ -19,12 +19,6 @@
     <dimen name="icon_button_size">52dp</dimen>
     <dimen name="icon_button_padding">14dp</dimen>
 
-    <!-- ==================  FORMS  ================== -->
-
-    <dimen name="input_height">60dp</dimen>
-    <dimen name="input_icon_size">50dp</dimen>
-    <dimen name="input_icon_space">50dp</dimen>
-
     <!-- ==================  MAIN ACTIVITY ================== -->
 
     <!-- Toolbar -->
@@ -39,6 +33,10 @@
     <dimen name="bottomBar_icon_size">26dp</dimen>
     <dimen name="bottomBar_icon_padding">16dp</dimen>
     <dimen name="bottomBar_text">12sp</dimen>
+
+    <!-- ==================  FORMS  ================== -->
+
+    <dimen name="form_padding">64dp</dimen>
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
