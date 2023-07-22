@@ -6,6 +6,10 @@
     <dimen name="text_secondary">14sp</dimen>
     <dimen name="text_title">18sp</dimen>
 
+    <!-- List Items -->
+    <dimen name="item_height">60dp</dimen>
+    <dimen name="item_double_height">72dp</dimen>
+
     <!-- ==================  MAIN ACTIVITY ================== -->
 
     <!-- Toolbar -->

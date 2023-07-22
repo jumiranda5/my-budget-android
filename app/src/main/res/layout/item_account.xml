@@ -18,17 +18,17 @@
         android:id="@+id/item_account_name"
         style="@style/TextNormalEllipse"
         android:layout_marginStart="@dimen/inner_space"
-        android:text="@string/account_checking"
-        android:paddingEnd="8dp"
         android:paddingStart="0dp"
+        android:paddingEnd="8dp"
+        android:text="@string/account_checking"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_account_total"
         app:layout_constraintStart_toEndOf="@+id/item_account_icon"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/item_account_total"
-        style="@style/CurrencySpace"
+        style="@style/CurrencySpaceMedium"
         android:layout_marginEnd="4dp"
         android:text="@string/initial_value_no_symbol"
         android:textColor="@color/income"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/item_account_currency_symbol"
-        style="@style/Currency"
+        style="@style/CurrencyMedium"
         android:text="@string/currency_symbol"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_account_total"
@@ -45,10 +45,11 @@
 
     <ImageView
         style="@style/ItemDivisor"
+        android:layout_marginEnd="4dp"
         android:contentDescription="@null"
-        android:background="#eeeeee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/item_account_icon"
+        app:layout_constraintStart_toStartOf="@+id/item_account_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
