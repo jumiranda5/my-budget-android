@@ -7,6 +7,7 @@
     <dimen name="currency_width_min">100dp</dimen>
     <dimen name="currency_width_max">160dp</dimen>
 
+
     <!-- Cards -->
     <dimen name="card_padding">18dp</dimen>
     <dimen name="card_padding_top">14dp</dimen>
@@ -43,8 +44,9 @@
 
     <!-- ==================  TRANSACTIONS  ================== -->
 
-    <dimen name="transactions_total_space">64dp</dimen>
-    <dimen name="transactions_total_space_bottom">54dp</dimen>
+    <dimen name="transactions_total_space">72dp</dimen>
+    <dimen name="transactions_total_space_bottom">32dp</dimen>
+    <dimen name="transactions_day_margin">32dp</dimen>
 
     <!-- ==================  CATEGORIES  ================== -->
 

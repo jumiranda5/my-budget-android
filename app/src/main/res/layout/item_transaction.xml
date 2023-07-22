@@ -20,8 +20,8 @@
     <TextView
         android:id="@+id/item_transaction_name"
         style="@style/TextNormalEllipse"
-        android:layout_marginEnd="@dimen/inner_space"
         android:layout_marginStart="@dimen/inner_space"
+        android:layout_marginEnd="@dimen/inner_space"
         android:text="@string/hint_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction_total"
@@ -71,10 +71,11 @@
 
     <ImageView
         style="@style/ItemDivisor"
-        android:layout_marginEnd="@dimen/item_divisor_margin_end"
+        android:layout_marginEnd="@dimen/inner_space"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/item_transaction_icon"
+        app:layout_constraintStart_toStartOf="@+id/item_transaction_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

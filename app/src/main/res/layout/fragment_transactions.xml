@@ -28,21 +28,21 @@
                 android:contentDescription="@string/nav_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_arrow_back" />
+                app:srcCompat="@drawable/ic_app_arrow_back_400" />
 
 
             <TextView
                 android:id="@+id/transactions_title"
                 style="@style/TransactionsTitle"
                 android:layout_marginTop="@dimen/transactions_total_space"
-                android:text="@string/label_expenses"
+                android:text="@string/title_expense"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/transactions_total"
-                style="@style/NumberImpact"
+                style="@style/TransactionsCurrencyTitle"
                 android:layout_marginTop="-4dp"
                 android:text="@string/initial_value"
                 android:textAlignment="center"
@@ -54,7 +54,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transactions_list"
                 style="@style/NestedListNoScroll"
+                app:layout_constraintWidth_max="@dimen/list_max_width"
                 android:layout_marginTop="@dimen/transactions_total_space_bottom"
+                android:layout_marginStart="@dimen/list_padding_start"
+                android:layout_marginEnd="@dimen/list_padding_start"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/transactions_total"
