@@ -32,9 +32,13 @@
     <!-- ==================  HOME FRAGMENT ================== -->
 
     <dimen name="home_inner_margin">14dp</dimen>
+    <dimen name="home_label_size">16sp</dimen>
+    <dimen name="home_label_margin_top">2dp</dimen>
+    <dimen name="home_label_margin_bottom">14dp</dimen>
     <dimen name="home_balance_size">30sp</dimen>
     <dimen name="home_balance_height">128dp</dimen>
     <dimen name="home_accounts_icon_margin">14dp</dimen>
+    <dimen name="progress_info_margin">24dp</dimen>
 
     <!-- ==================  TRANSACTIONS  ================== -->
 

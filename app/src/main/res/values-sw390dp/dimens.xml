@@ -4,9 +4,6 @@
     <!-- Text -->
     <dimen name="number_impact">30sp</dimen>
 
-    <!-- Cards -->
-    <dimen name="card_padding">20dp</dimen>
-    <dimen name="card_padding_top">16dp</dimen>
 
     <!-- ==================  MAIN ACTIVITY ================== -->
 
@@ -14,19 +11,26 @@
     <dimen name="bottomBar_height">64dp</dimen>
     <dimen name="bottomBar_icon_padding">13dp</dimen>
 
+
     <!-- ==================  FORMS  ================== -->
 
     <dimen name="input_margin">14dp</dimen>
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
+    <integer name="home_pie_size_int">88</integer>
     <dimen name="home_inner_margin">16dp</dimen>
-    <dimen name="home_income_size">16sp</dimen>
+    <dimen name="home_label_size">16sp</dimen>
+    <dimen name="home_income_size">18sp</dimen>
     <dimen name="progress_text_size">22sp</dimen>
-    <dimen name="progress_indicator">108dp</dimen>
-    <dimen name="home_pie_width">80dp</dimen>
+    <dimen name="progress_indicator">124dp</dimen>
+    <dimen name="home_pie_width">88dp</dimen>
     <dimen name="home_accounts_icon_margin">16dp</dimen>
     <dimen name="home_accounts_margin_bottom">4dp</dimen>
+    <dimen name="home_balance_size">32sp</dimen>
+    <dimen name="home_balance_height">136dp</dimen>
+    <dimen name="progress_info_margin">32dp</dimen>
+
 
     <!-- ==================  TRANSACTIONS  ================== -->
 

@@ -98,6 +98,8 @@
 
     <style name="HomeLabel" parent="TextNormal">
         <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:textSize">@dimen/home_label_size</item>
+        <item name="android:layout_marginTop">@dimen/home_label_margin_top</item>
     </style>
 
     <style name="ProgressText" parent="TextSecondary">
@@ -119,6 +121,7 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textColor">@color/income</item>
         <item name="android:textSize">@dimen/home_income_size</item>
+        <item name="android:layout_marginBottom">-2dp</item>
     </style>
 
     <style name="NumberImpact" parent="Number">
@@ -139,6 +142,14 @@
         <item name="android:paddingEnd">0dp</item>
         <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>
         <item name="android:textAlignment">textEnd</item>
+    </style>
+
+    <style name="CurrencyMedium" parent="Currency">
+        <item name="android:fontFamily">@font/eczar_medium</item>
+    </style>
+
+    <style name="CurrencySpaceMedium" parent="CurrencySpace">
+        <item name="android:fontFamily">@font/eczar_medium</item>
     </style>
 
     <style name="CurrencyItem" parent="CurrencySpace">

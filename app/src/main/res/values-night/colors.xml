@@ -17,6 +17,7 @@
     <color name="button_text">#121212</color>
 
     <!-- Backgrounds -->
+    <color name="bg_home">@color/bg_00dp</color>
     <color name="bg_00dp">#181A1E</color>
     <color name="bg_01dp">#0DFFFFFF</color>
     <color name="bg_04dp">#17FFFFFF</color>
@@ -44,7 +45,7 @@
 
     <!-- Interactions -->
     <color name="click">#2C2C2C</color>
-    <color name="ripple">#0DFD7D5D</color>
+    <color name="ripple">#4DFF6859</color>
 
     <!-- Inputs -->
     <color name="input_stroke">#2C2C2C</color>

@@ -19,6 +19,8 @@
         android:id="@+id/item_home_cat_text"
         style="@style/HomeCategoryText"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

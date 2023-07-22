@@ -65,7 +65,13 @@
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
+    <integer name="home_pie_size_int">80</integer>
+    <integer name="home_pie_indicator_int">7</integer>
+    <dimen name="home_padding">0dp</dimen>
     <dimen name="home_inner_margin">12dp</dimen>
+    <dimen name="home_label_size">14sp</dimen>
+    <dimen name="home_label_margin_top">0dp</dimen>
+    <dimen name="home_label_margin_bottom">12</dimen>
     <dimen name="home_balance_size">30sp</dimen>
     <dimen name="home_balance_height">108dp</dimen>
     <dimen name="home_income_size">16sp</dimen>
@@ -73,10 +79,12 @@
     <dimen name="progress_indicator">100dp</dimen>
     <dimen name="progress_track">6dp</dimen>
     <dimen name="progress_corners">3dp</dimen>
-    <dimen name="progress_info_margin">32dp</dimen>
-    <dimen name="home_pie_width">72dp</dimen>
+    <dimen name="progress_info_margin">20dp</dimen>
+    <dimen name="home_pie_width">80dp</dimen>
     <dimen name="home_accounts_margin_bottom">8dp</dimen>
     <dimen name="home_accounts_icon_margin">12dp</dimen>
+    <dimen name="land_home_balance_width">0dp</dimen>
+    <dimen name="land_home_progress_width">0dp</dimen>
 
     <!-- ==================  TRANSACTIONS  ================== -->
 

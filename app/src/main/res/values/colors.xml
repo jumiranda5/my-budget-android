@@ -17,10 +17,11 @@
     <color name="button_text">#FFFFFF</color>
 
     <!-- Backgrounds -->
+    <color name="bg_home">#EEEEEE</color>
     <color name="bg_00dp">#F9F9F9</color>
     <color name="bg_01dp">#FFFFFF</color>
     <color name="bg_04dp">@color/bg_01dp</color>
-    <color name="bg_progress_track">#EAEAEA</color>
+    <color name="bg_progress_track">#E0E0E0</color>
     <color name="bg_day">#EBEBEB</color>
     <color name="bg_indicator">@color/disabled_text</color>
 
@@ -46,7 +47,7 @@
 
     <!-- Interactions -->
     <color name="click">#EAEAEA</color>
-    <color name="ripple">#1213BA7C</color>
+    <color name="ripple">#4D720EC1</color>
 
     <!-- Inputs -->
     <color name="input_stroke">#E3E3E3</color>

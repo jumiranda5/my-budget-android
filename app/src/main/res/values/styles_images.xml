@@ -25,7 +25,7 @@
     </style>
 
     <style name="HomeAccountIcon" parent="IconSmall">
-        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginTop">14dp</item>
         <item name="android:layout_marginStart">@dimen/card_padding</item>
         <item name="tint">@color/medium_emphasis_text</item>
     </style>
@@ -61,7 +61,7 @@
     <style name="HomeDivisor" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginTop">@dimen/card_padding_top</item>
+        <item name="android:layout_marginTop">@dimen/home_label_margin_bottom</item>
         <item name="android:background">@color/divisor</item>
     </style>
 

@@ -9,5 +9,11 @@
     <dimen name="toolbar_button_size">58dp</dimen>
     <dimen name="toolbar_month">20sp</dimen>
 
+    <!-- ==================  HOME FRAGMENT ================== -->
+
+    <dimen name="home_padding">0dp</dimen>
+    <dimen name="land_home_balance_width">400dp</dimen>
+    <dimen name="progress_indicator">148dp</dimen>
+    <dimen name="land_home_progress_width">220dp</dimen>
 
 </resources>

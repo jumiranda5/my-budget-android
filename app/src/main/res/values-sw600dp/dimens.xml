@@ -6,11 +6,15 @@
     <dimen name="text_secondary">16sp</dimen>
     <dimen name="text_title">20sp</dimen>
 
+    <!-- Cards -->
+    <dimen name="card_padding">20dp</dimen>
+    <dimen name="card_padding_top">16dp</dimen>
+
     <!-- ==================  MAIN ACTIVITY ================== -->
 
     <!-- Toolbar -->
     <dimen name="toolbar_month_width">140dp</dimen>
-    <dimen name="toolbar_height">64dp</dimen>
+    <dimen name="toolbar_height">72dp</dimen>
     <dimen name="toolbar_button_size">58dp</dimen>
     <dimen name="toolbar_month">20sp</dimen>
 
@@ -19,6 +23,21 @@
     <dimen name="bottomBar_icon_size">26dp</dimen>
     <dimen name="bottomBar_icon_padding">16dp</dimen>
     <dimen name="bottomBar_text">12sp</dimen>
+
+    <!-- ==================  HOME FRAGMENT ================== -->
+
+    <integer name="home_pie_size_int">88</integer>
+    <dimen name="home_padding">16dp</dimen>
+    <dimen name="home_inner_margin">16dp</dimen>
+    <dimen name="home_label_size">18sp</dimen>
+    <dimen name="home_balance_size">36sp</dimen>
+    <dimen name="home_balance_height">152dp</dimen>
+    <dimen name="home_income_size">22sp</dimen>
+    <dimen name="progress_track">8dp</dimen>
+    <dimen name="progress_corners">4dp</dimen>
+    <dimen name="progress_indicator">132dp</dimen>
+    <dimen name="progress_info_margin">40dp</dimen>
+    <dimen name="home_pie_width">96dp</dimen>
 
 
 

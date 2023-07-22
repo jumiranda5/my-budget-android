@@ -286,8 +286,10 @@ public class HomeFragment extends Fragment {
         ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
         mIncomeChart.post(() -> {
+            int size = mContext.getResources().getInteger(R.integer.home_pie_size_int);
+            int indicator = mContext.getResources().getInteger(R.integer.home_pie_indicator_int);
             mIncomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mIncomeChart, 100, 8, true);
+            Charts.setCategoriesChart(mContext, percents, mIncomeChart, size, indicator, true);
         });
     }
 
@@ -299,8 +301,10 @@ public class HomeFragment extends Fragment {
         ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
         mExpensesChart.post(() -> {
+            int size = mContext.getResources().getInteger(R.integer.home_pie_size_int);
+            int indicator = mContext.getResources().getInteger(R.integer.home_pie_indicator_int);
             mExpensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mExpensesChart, 100, 8, true);
+            Charts.setCategoriesChart(mContext, percents, mExpensesChart, size, indicator, true);
         });
 
     }
