@@ -10,6 +10,12 @@
     <dimen name="card_padding">20dp</dimen>
     <dimen name="card_padding_top">16dp</dimen>
 
+    <!-- ==================  FORMS  ================== -->
+
+    <dimen name="input_height">60dp</dimen>
+    <dimen name="input_icon_size">50dp</dimen>
+    <dimen name="input_icon_space">50dp</dimen>
+
     <!-- ==================  MAIN ACTIVITY ================== -->
 
     <!-- Toolbar -->
@@ -17,6 +23,7 @@
     <dimen name="toolbar_height">72dp</dimen>
     <dimen name="toolbar_button_size">58dp</dimen>
     <dimen name="toolbar_month">20sp</dimen>
+    <dimen name="toolbar_title">20sp</dimen>
 
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">72dp</dimen>
@@ -38,6 +45,10 @@
     <dimen name="progress_indicator">132dp</dimen>
     <dimen name="progress_info_margin">40dp</dimen>
     <dimen name="home_pie_width">96dp</dimen>
+
+    <!-- ==================  SETTINGS  ================== -->
+
+    <dimen name="settings_padding">24dp</dimen>
 
 
 

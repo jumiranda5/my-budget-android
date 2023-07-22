@@ -44,7 +44,7 @@
                 android:id="@+id/settings_toolbar_close"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_close"
-                android:src="@drawable/ic_app_close"
+                android:src="@drawable/ic_app_close_400"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/settings_padding">
 
             <!-- Biometric lock -->
 

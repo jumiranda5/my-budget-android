@@ -55,15 +55,6 @@
     <dimen name="account_details_divisor_margin">24dp</dimen>
 
 
-<!--    &lt;!&ndash; ==================  FRAGMENTS  ================== &ndash;&gt;-->
-
-<!--    &lt;!&ndash; Home &ndash;&gt;-->
-<!--    <dimen name="home_padding">2dp</dimen>-->
-<!--    <dimen name="progress_text_size">28sp</dimen>-->
-<!--    <dimen name="progress_indicator">136dp</dimen>-->
-<!--    <dimen name="home_pie_margin">20dp</dimen>-->
-<!--    <dimen name="home_categories_list_margin">16dp</dimen>-->
-
 
 <!--    &lt;!&ndash; ******** TO BE REFACTORED ******** &ndash;&gt;-->
 

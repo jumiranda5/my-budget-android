@@ -28,18 +28,18 @@
     <color name="border">#191919</color>
     <color name="border_darker">#202020</color>
     <color name="divisor">#2C2C2C</color>
-    <color name="switch_border_off">#BABABA</color>
 
     <!-- Button -->
     <color name="disabled_button">#383838</color>
     <color name="button_accent">@color/colorAccent</color>
     <color name="button_accent_click">#DF6040</color>
     <color name="button_accent_text">#1E1E1E</color>
-    <color name="switch_thumb_off">@color/switch_border_off</color>
+    <color name="switch_thumb_off">#BABABA</color>
+    <color name="switch_track_off">#40FFFFFF</color>
+    <color name="switch_track_off_stroke">#FAFAFA</color>
     <color name="switch_thumb_on">@color/colorAccent</color>
-    <color name="switch_track_off">#4DBABABA</color>
-    <color name="switch_track_on">#80FFB489</color>
-    <color name="switch_track_on_stroke">@color/colorAccent</color>
+    <color name="switch_track_on">#FF6859</color>
+    <color name="switch_track_on_stroke">#FF2914</color>
     <color name="check_circle_color">#13BA7C</color>
     <color name="active_nav_button">@color/colorAccent</color>
 

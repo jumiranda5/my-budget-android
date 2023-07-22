@@ -113,6 +113,7 @@
 
     <!-- ==================  SETTINGS  ================== -->
 
+    <dimen name="settings_padding">0dp</dimen>
     <dimen name="settings_icon_width">48dp</dimen>
 
 
