@@ -13,13 +13,13 @@
         style="@style/TextNormal"
         android:layout_width="wrap_content"
         android:layout_marginTop="@dimen/transactions_day_margin"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="14dp"
         android:fontFamily="@font/titillium_web_semi_bold"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/inner_space"
         android:paddingEnd="16dp"
         android:text="@string/test_monday_2"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/item_day_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
         android:paddingStart="@dimen/inner_space"
         android:paddingEnd="16dp"
         android:text="@string/test_monday_2"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/item_day_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +51,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:itemCount="3"
-        tools:listitem="@layout/item_transaction2" />
+        tools:listitem="@layout/item_transaction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

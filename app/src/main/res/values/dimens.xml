@@ -92,7 +92,7 @@
 
     <!-- ==================  TRANSACTIONS  ================== -->
 
-    <dimen name="transactions_title_size">18sp</dimen>
+    <dimen name="transactions_title_size">16sp</dimen>
     <dimen name="transactions_title_currency_size">28sp</dimen>
     <dimen name="transactions_total_space">64dp</dimen>
     <dimen name="transactions_total_space_bottom">32dp</dimen>

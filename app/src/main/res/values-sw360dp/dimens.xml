@@ -44,6 +44,7 @@
 
     <!-- ==================  TRANSACTIONS  ================== -->
 
+    <dimen name="transactions_title_currency_size">30sp</dimen>
     <dimen name="transactions_total_space">72dp</dimen>
     <dimen name="transactions_total_space_bottom">32dp</dimen>
     <dimen name="transactions_day_margin">32dp</dimen>
