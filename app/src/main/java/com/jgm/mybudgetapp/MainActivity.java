@@ -5,7 +5,6 @@ import static com.jgm.mybudgetapp.utils.Tags.accountFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountsTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesListTag;
-import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
 import static com.jgm.mybudgetapp.utils.Tags.homeTag;
 import static com.jgm.mybudgetapp.utils.Tags.pendingTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ActivityMainBinding binding;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton settingsButton, mNextMonth, mPrevMonth, mAddIncome, mAddExpense;
+    private ImageButton settingsButton, mNextMonth, mPrevMonth, mAdd;
     private TextView mToolbarMonth, mToolbarYear;
 
     private void setBinding() {
@@ -114,8 +113,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarYear = binding.toolbarYear;
         mNextMonth = binding.toolbarNextMonthButton;
         mPrevMonth = binding.toolbarPrevMonthButton;
-        mAddIncome = binding.buttonAddTransactionIn;
-        mAddExpense = binding.buttonAddTransactionOut;
+        mAdd = binding.buttonAdd;
     }
 
     @Override
@@ -192,10 +190,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         updateBottomNav(currentFragment);
         setToolbarVisibilities(currentFragment);
 
-        // Change toolbar background if viewpager
-        if (currentFragment.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
-        else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
-
         // init fragment data
         updateMonthOnCurrentFragment();
 
@@ -244,8 +238,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         settingsButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
         mNextMonth.setOnClickListener(v -> setToolbarNextMonth());
         mPrevMonth.setOnClickListener(v -> setToolbarPrevMonth());
-        mAddExpense.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
-        mAddIncome.setOnClickListener(v -> openTransactionForm(Tags.TYPE_IN, false, null, null));
+        mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
     }
 
     private void setToolbarNextMonth() {
@@ -292,32 +285,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private void setToolbarVisibilities(String tag) {
 
         if (tag.equals(homeTag)
-                || tag.equals(categoriesTag)
                 || tag.equals(transactionsOutTag)
                 || tag.equals(transactionsInTag)
                 || tag.equals(accountDetailsTag)) {
 
             Log.d(LOG_MAIN, "Toolbar visible");
             toolbar.setVisibility(View.VISIBLE);
-            setAddButtonVisibility(tag);
         }
         else {
             Log.d(LOG_MAIN, "Toolbar gone");
             toolbar.setVisibility(View.GONE);
         }
 
-    }
-
-    private void setAddButtonVisibility(String tag) {
-        Log.d(LOG_MAIN, "Toolbar add button visible");
-
-        settingsButton.setVisibility(View.GONE);
-        mAddIncome.setVisibility(View.GONE);
-        mAddExpense.setVisibility(View.GONE);
-
-        if (tag.equals(transactionsOutTag)) mAddExpense.setVisibility(View.VISIBLE);
-        else if (tag.equals(transactionsInTag)) mAddIncome.setVisibility(View.VISIBLE);
-        else settingsButton.setVisibility(View.VISIBLE);
     }
 
     /* ===============================================================================
@@ -328,33 +307,31 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         Log.d(LOG_MAIN, "=> Init bottom bar");
 
         MenuItem itemHome = bottomNavigationView.getMenu().getItem(0);
-        MenuItem itemCategories = bottomNavigationView.getMenu().getItem(1);
-        MenuItem itemAdd = bottomNavigationView.getMenu().getItem(2);
-        MenuItem itemYear = bottomNavigationView.getMenu().getItem(3);
-        MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(4);
+        MenuItem itemAccounts = bottomNavigationView.getMenu().getItem(1);
+        MenuItem itemIncome = bottomNavigationView.getMenu().getItem(2);
+        MenuItem itemExpense = bottomNavigationView.getMenu().getItem(3);
 
         itemHome.setOnMenuItemClickListener(item -> {
+            setAddButton(homeTag);
             openFragment(homeTag);
             return false;
         });
 
         itemAccounts.setOnMenuItemClickListener(item -> {
+            setAddButton(accountsTag);
             openFragment(accountsTag);
             return false;
         });
 
-        itemAdd.setOnMenuItemClickListener(item -> {
-            openFragment(transactionFormTag);
+        itemIncome.setOnMenuItemClickListener(item -> {
+            setAddButton(transactionsInTag);
+            openFragment(transactionsInTag);
             return false;
         });
 
-        itemYear.setOnMenuItemClickListener(item -> {
-            openFragment(yearTag);
-            return false;
-        });
-
-        itemCategories.setOnMenuItemClickListener(item -> {
-            openFragment(categoriesTag);
+        itemExpense.setOnMenuItemClickListener(item -> {
+            setAddButton(transactionsOutTag);
+            openFragment(transactionsOutTag);
             return false;
         });
 
@@ -367,14 +344,14 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         showBottomNav();
 
         switch (tag) {
-            case categoriesTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_categories);
+            case transactionsOutTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_expense);
+                break;
+            case transactionsInTag:
+                bottomNavigationView.setSelectedItemId(R.id.menu_income);
                 break;
             case accountsTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
-                break;
-            case yearTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_year);
                 break;
             case homeTag:
                 bottomNavigationView.setSelectedItemId(R.id.menu_home);
@@ -392,6 +369,22 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private void showBottomNav() {
         Log.d(LOG_MAIN, "Show bottom nav");
         bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+
+    private void setAddButton(String tag) {
+        switch (tag) {
+            case accountsTag:
+                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_accent_inset));
+                mAdd.setOnClickListener(v -> openAccountForm(false, null, 0));
+                break;
+            case transactionsInTag:
+                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_income_inset));
+                mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_IN, false, null, null));
+                break;
+            default:
+                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_expense_inset));
+                mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
+        }
     }
 
 
@@ -740,10 +733,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.main_content_frame, fragment, tag);
         transaction.commit();
-
-        // Change toolbar background if viewpager
-        if (tag.equals(categoriesTag)) toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar_no_border));
-        else toolbar.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_toolbar));
 
         // Set replaced fragment to null
         deReferenceFragment(currentFragment);

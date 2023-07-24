@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_app_donut_large"
+    <item android:drawable="@drawable/ic_24_shift_in_300"
         android:state_checked="false"/>
-    <item android:drawable="@drawable/ic_app_donut_large_400"
+    <item android:drawable="@drawable/ic_24_shift_in_fill_300"
         android:state_checked="true"/>
 </selector>

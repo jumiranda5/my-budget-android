@@ -4,37 +4,36 @@
 
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/ic_app_home_400"
+        android:icon="@drawable/nav_home"
         android:contentDescription="@string/nav_home"
         android:title="@string/nav_home"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menu_categories"
-        android:icon="@drawable/ic_app_donut_large"
-        android:contentDescription="@string/nav_categories"
-        android:title="@string/nav_categories"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/menu_add"
-        android:title="@string/nav_add"
-        android:contentDescription="@string/nav_add"
-        android:icon="@drawable/ic_app_add_500"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/menu_year"
-        android:icon="@drawable/ic_bar_chart"
-        android:contentDescription="@string/nav_year"
-        android:title="@string/nav_year"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/menu_accounts"
-        android:icon="@drawable/ic_app_account_balance_400"
+        android:icon="@drawable/nav_accounts"
         android:contentDescription="@string/nav_accounts"
         android:title="@string/nav_accounts"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_income"
+        android:icon="@drawable/nav_income"
+        android:contentDescription="@string/nav_income"
+        android:title="@string/nav_income"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_expense"
+        android:title="@string/nav_expense"
+        android:contentDescription="@string/nav_expense"
+        android:icon="@drawable/nav_expense"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_empty"
+        android:contentDescription="@null"
+        android:title=""
         app:showAsAction="ifRoom"/>
 
 </menu>

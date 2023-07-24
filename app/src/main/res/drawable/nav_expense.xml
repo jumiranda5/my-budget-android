@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_app_credit_card"
+    <item android:drawable="@drawable/ic_24_shift_out_300"
         android:state_checked="false"/>
-    <item android:drawable="@drawable/ic_app_credit_card_fill"
+    <item android:drawable="@drawable/ic_24_shift_out_fill_300"
         android:state_checked="true"/>
 </selector>
