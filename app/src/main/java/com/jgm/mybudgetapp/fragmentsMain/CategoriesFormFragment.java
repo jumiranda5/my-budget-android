@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +22,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jgm.mybudgetapp.MainInterface;
+import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesFormBinding;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;

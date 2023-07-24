@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.jgm.mybudgetapp.MainInterface;
+import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.databinding.FragmentAccountFormBinding;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.room.AppDatabase;

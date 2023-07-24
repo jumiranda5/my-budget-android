@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.jgm.mybudgetapp.MainInterface;
+import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionsBinding;
 import com.jgm.mybudgetapp.objects.DayGroup;

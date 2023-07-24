@@ -23,6 +23,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
+import com.jgm.mybudgetapp.fragmentsMain.CategoriesFormFragment;
+import com.jgm.mybudgetapp.fragmentsMain.CategoriesListFragment;
 import com.jgm.mybudgetapp.fragmentsSettings.CreditCardFormFragment;
 import com.jgm.mybudgetapp.fragmentsSettings.CreditCardsFragment;
 import com.jgm.mybudgetapp.fragmentsSettings.SettingsFragment;

@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/toolbar_height"
     android:layout_marginBottom="@dimen/bottomBar_height"
     android:background="@color/bg_home"
-    tools:context=".HomeFragment">
+    tools:context=".fragmentsMain.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"

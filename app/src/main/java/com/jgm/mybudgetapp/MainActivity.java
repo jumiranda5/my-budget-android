@@ -41,6 +41,16 @@ import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.MethodPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
+import com.jgm.mybudgetapp.fragmentsMain.AccountDetailsFragment;
+import com.jgm.mybudgetapp.fragmentsMain.AccountFormFragment;
+import com.jgm.mybudgetapp.fragmentsMain.AccountsFragment;
+import com.jgm.mybudgetapp.fragmentsMain.CategoriesFormFragment;
+import com.jgm.mybudgetapp.fragmentsMain.CategoriesListFragment;
+import com.jgm.mybudgetapp.fragmentsMain.HomeFragment;
+import com.jgm.mybudgetapp.fragmentsMain.PendingFragment;
+import com.jgm.mybudgetapp.fragmentsMain.TransactionFormFragment;
+import com.jgm.mybudgetapp.fragmentsMain.TransactionsInFragment;
+import com.jgm.mybudgetapp.fragmentsMain.TransactionsOutFragment;
 import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
@@ -72,12 +82,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private AccountDetailsFragment mAccountDetails;
     private CategoriesListFragment mCategoriesList;
     private CategoriesFormFragment mCategoriesForm;
-    private CategoriesFragment mCategories;
     private HomeFragment mHome;
     private TransactionFormFragment mTransactionForm;
     private TransactionsOutFragment mTransactionsOut;
     private TransactionsInFragment mTransactionsIn;
-    private YearFragment mYear;
     private PendingFragment mPending;
 
     // Vars
@@ -277,8 +285,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsIn != null)
             mTransactionsIn.getIncomeData(selectedDate.getMonth(), selectedDate.getYear());
-        else if (mCategories != null)
-            mCategories.getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mAccountDetails != null)
             mAccountDetails.updateAccountOnMonthChange(selectedDate);
     }
@@ -398,21 +404,24 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void open(String tag) {
         Log.d(LOG_MAIN, "-- Interface => open");
-        openFragment(tag);
+        if (tag.equals(yearTag)) startActivity(new Intent(MainActivity.this, YearActivity.class));
+        else openFragment(tag);
     }
 
     @Override
     public void openExpensesCategories() {
         Log.d(LOG_MAIN, "-- Interface => open expenses categories");
-        openFragment(categoriesTag);
-        if (mCategories != null) mCategories.setType(Tags.TYPE_OUT);
+        Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
+        intent.putExtra("tab", 1);
+        startActivity(intent);
     }
 
     @Override
     public void openIncomeCategories() {
         Log.d(LOG_MAIN, "-- Interface => open income categories");
-        openFragment(categoriesTag);
-        if (mCategories != null) mCategories.setType(Tags.TYPE_IN);
+        Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
+        intent.putExtra("tab", 0);
+        startActivity(intent);
     }
 
     @Override
@@ -678,10 +687,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mAccountDetails = new AccountDetailsFragment();
                 fragment = mAccountDetails;
                 break;
-            case categoriesTag:
-                mCategories = new CategoriesFragment();
-                fragment = mCategories;
-                break;
             case categoriesListTag:
                 mCategoriesList = new CategoriesListFragment();
                 fragment = mCategoriesList;
@@ -705,10 +710,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case transactionFormTag:
                 mTransactionForm = new TransactionFormFragment();
                 fragment = mTransactionForm;
-                break;
-            case yearTag:
-                mYear = new YearFragment();
-                fragment = mYear;
                 break;
             case pendingTag:
                 mPending = new PendingFragment();
@@ -917,9 +918,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case accountDetailsTag:
                 mAccountDetails = (AccountDetailsFragment) getSupportFragmentManager().findFragmentByTag(accountDetailsTag);
                 break;
-            case categoriesTag:
-                mCategories = (CategoriesFragment) getSupportFragmentManager().findFragmentByTag(categoriesTag);
-                break;
             case categoriesListTag:
                 mCategoriesList = (CategoriesListFragment) getSupportFragmentManager().findFragmentByTag(categoriesListTag);
                 break;
@@ -938,9 +936,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case transactionFormTag:
                 mTransactionForm = (TransactionFormFragment) getSupportFragmentManager().findFragmentByTag(transactionFormTag);
                 break;
-            case yearTag:
-                mYear = (YearFragment) getSupportFragmentManager().findFragmentByTag(yearTag);
-                break;
             case pendingTag:
                 mPending = (PendingFragment) getSupportFragmentManager().findFragmentByTag(pendingTag);
                 break;
@@ -956,14 +951,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case accountsTag: mAccounts = null; break;
                 case accountFormTag: mAccountForm = null; break;
                 case accountDetailsTag: mAccountDetails = null;break;
-                case categoriesTag: mCategories = null; break;
                 case categoriesListTag: mCategoriesList = null; break;
                 case categoriesFormTag: mCategoriesForm = null; break;
                 case homeTag: mHome = null; break;
                 case transactionsOutTag: mTransactionsOut = null; break;
                 case transactionsInTag: mTransactionsIn = null; break;
                 case transactionFormTag: mTransactionForm = null; break;
-                case yearTag: mYear = null; break;
                 case pendingTag: mPending = null; break;
             }
         }

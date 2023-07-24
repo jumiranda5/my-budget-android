@@ -50,27 +50,11 @@
         <item name="colorPrimary">@color/button_accent</item>
     </style>
 
+    <!-- Date Picker -->
     <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
         <item name="colorPrimary">@color/savings</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
-
-<!--    <style name="MyDatePickerDialog" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">-->
-<!--        &lt;!&ndash;header background&ndash;&gt;-->
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
-<!--        &lt;!&ndash;header textcolor&ndash;&gt;-->
-<!--        <item name="android:textColorPrimaryInverse">#FFFFFF</item>-->
-<!--        &lt;!&ndash;body background&ndash;&gt;-->
-<!--        <item name="android:windowBackground">#FFFFFF</item>-->
-<!--        &lt;!&ndash;selected day&ndash;&gt;-->
-<!--        <item name="android:colorControlActivated">@color/colorAccent</item>-->
-<!--        &lt;!&ndash;days of the month&ndash;&gt;-->
-<!--        <item name="android:textColorPrimary">@color/high_emphasis_text</item>-->
-<!--        &lt;!&ndash;days of the week&ndash;&gt;-->
-<!--        <item name="android:textColorSecondary">@color/medium_emphasis_text</item>-->
-<!--        &lt;!&ndash;cancel&ok&ndash;&gt;-->
-<!--        <item name="android:textColor">@color/high_emphasis_text</item>-->
-<!--    </style>-->
 
     <!-- Splash screen -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">

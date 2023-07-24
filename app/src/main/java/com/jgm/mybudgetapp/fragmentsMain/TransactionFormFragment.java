@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.google.android.material.materialswitch.MaterialSwitch;
+import com.jgm.mybudgetapp.MainInterface;
+import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionFormBinding;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;

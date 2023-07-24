@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.jgm.mybudgetapp.MainInterface;
+import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.HomeCategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentHomeBinding;
 import com.jgm.mybudgetapp.objects.Balance;
