@@ -38,6 +38,9 @@ public class CategoriesFormFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private static final String LOG = "debug-cat-form";
+
+    private boolean isSettings = false;
     private boolean isEdit;
     private int position;
     private Icon selectedIcon;
@@ -67,12 +70,18 @@ public class CategoriesFormFragment extends Fragment {
     // Interfaces
     private Context mContext;
     private MainInterface mInterface;
+    private SettingsInterface mSettingsInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
-        mInterface = (MainInterface) context;
+
+        try { mInterface = (MainInterface) context; }
+        catch (Exception e) { Log.e(LOG, "Can't cast to main activity"); }
+
+        try { mSettingsInterface = (SettingsInterface) context; }
+        catch (Exception e) { Log.e(LOG, "Can't cast to settings activity"); }
     }
 
     @Override
@@ -102,24 +111,52 @@ public class CategoriesFormFragment extends Fragment {
         }
 
         // Init buttons
-        mClose.setOnClickListener(v -> mInterface.navigateBack());
-        mArchive.setOnClickListener(v -> {
-            mInterface.showConfirmationDialog(
-                    getString(R.string.msg_archive_category),
-                    getString(R.string.action_archive),
-                    R.drawable.ic_app_archive);
-        });
-        mColorPicker.setOnClickListener(v -> mInterface.showColorPickerDialog());
-        mIconPicker.setOnClickListener(v -> mInterface.showIconPickerDialog());
+        mClose.setOnClickListener(v -> navigateBack());
+        mColorPicker.setOnClickListener(v -> showColorPicker());
+        mIconPicker.setOnClickListener(v -> showIconPicker());
         mSave.setOnClickListener(v -> {
             if (isEdit) editCategory(position, true);
             else createCategory();
+        });
+
+        // form is only editable on settings activity
+        mArchive.setOnClickListener(v -> {
+            mSettingsInterface.showConfirmationDialog(
+                    getString(R.string.msg_archive_category),
+                    getString(R.string.action_archive),
+                    R.drawable.ic_app_dangerous);
         });
     }
 
     /* ===============================================================================
                                        INTERFACE
      =============================================================================== */
+
+    private void handleCategoryInserted(Category category) {
+        if (mSettingsInterface != null) {
+            mSettingsInterface.handleCategoryInserted(category);
+            mSettingsInterface.navigateBack();
+        }
+        else {
+            mInterface.handleCategoryInserted(category);
+            mInterface.navigateBack();
+        }
+    }
+
+    private void showIconPicker() {
+        if (mSettingsInterface != null) mSettingsInterface.showIconPickerDialog();
+        else mInterface.showIconPickerDialog();
+    }
+
+    private void showColorPicker() {
+        if (mSettingsInterface != null) mSettingsInterface.showColorPickerDialog();
+        else mInterface.showColorPickerDialog();
+    }
+
+    private void navigateBack() {
+        if (mSettingsInterface != null) mSettingsInterface.navigateBack();
+        else mInterface.navigateBack();
+    }
 
     public void setFormType(boolean isEdit) {
         this.isEdit = isEdit;
@@ -184,8 +221,7 @@ public class CategoriesFormFragment extends Fragment {
 
             handler.post(() -> {
                 Log.d(Tags.LOG_DB, "Category saved in db... update ui");
-                mInterface.handleCategoryInserted(category);
-                mInterface.navigateBack();
+                handleCategoryInserted(category);
             });
 
         });
@@ -204,8 +240,9 @@ public class CategoriesFormFragment extends Fragment {
             categoryDao.update(category);
 
             handler.post(() -> {
-                mInterface.handleCategoryEdited(pos, category);
-                mInterface.navigateBack();
+                // only editable on settings activity
+                mSettingsInterface.handleCategoryEdited(pos, category);
+                mSettingsInterface.navigateBack();
                 Log.d(Tags.LOG_DB, "category updated on db... update ui");
             });
 

@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsSettings;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.databinding.FragmentSettingsBinding;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
@@ -39,10 +41,10 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
     private Button mOpenCategories, mOpenCreditCards, mClearDatabase;
-    private ImageButton mClose;
+    private ImageButton mBack;
 
     private void setBinding() {
-        mClose = binding.settingsToolbarClose;
+        mBack = binding.settingsButtonBack;
         mNestedScrollView = binding.settingsScrollView;
         mProgressBar = binding.settingsProgressBar;
         switchDarkMode = binding.switchDarkMode;
@@ -53,14 +55,14 @@ public class SettingsFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
-    private MainInterface mInterface;
+    private SettingsInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         Log.d(Tags.LOG_LIFECYCLE, "Settings onAttach");
         mContext = context;
-        mInterface = (MainInterface) context;
+        mInterface = (SettingsInterface) context;
     }
 
     @Override
@@ -93,12 +95,11 @@ public class SettingsFragment extends Fragment {
         mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
         mOpenCreditCards.setOnClickListener(v -> mInterface.open(Tags.cardsTag));
         mClearDatabase.setOnClickListener(v -> {
-            mInterface.showConfirmationDialog(
-                    getString(R.string.msg_clear_database),
+            mInterface.showConfirmationDialog(getString(R.string.msg_clear_database),
                     getString(R.string.action_reset_database),
                     R.drawable.ic_app_dangerous);
         });
-        mClose.setOnClickListener(v -> mInterface.navigateBack());
+        mBack.setOnClickListener(v -> mInterface.navigateBack());
     }
 
     /* -------------------------------------------------------------------

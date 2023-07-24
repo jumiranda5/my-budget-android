@@ -3,14 +3,11 @@ package com.jgm.mybudgetapp;
 import static com.jgm.mybudgetapp.utils.Tags.accountDetailsTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountsTag;
-import static com.jgm.mybudgetapp.utils.Tags.cardFormTag;
-import static com.jgm.mybudgetapp.utils.Tags.cardsTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesListTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
 import static com.jgm.mybudgetapp.utils.Tags.homeTag;
 import static com.jgm.mybudgetapp.utils.Tags.pendingTag;
-import static com.jgm.mybudgetapp.utils.Tags.settingsTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionsInTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionsOutTag;
@@ -25,6 +22,7 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,11 +36,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.dialogs.MethodPickerDialog;
 import com.jgm.mybudgetapp.dialogs.TransactionDialog;
-import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
@@ -51,7 +49,6 @@ import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
-import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.Populate;
@@ -76,10 +73,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private CategoriesListFragment mCategoriesList;
     private CategoriesFormFragment mCategoriesForm;
     private CategoriesFragment mCategories;
-    private CreditCardsFragment mCreditCards;
-    private CreditCardFormFragment mCreditCardForm;
     private HomeFragment mHome;
-    private SettingsFragment mSettings;
     private TransactionFormFragment mTransactionForm;
     private TransactionsOutFragment mTransactionsOut;
     private TransactionsInFragment mTransactionsIn;
@@ -210,6 +204,22 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         outState.putInt(STATE_YEAR, selectedDate.getYear());
     }
 
+    /* ==== SETTINGS ==== */
+
+    private void switchDarkMode(boolean isDark) {
+        Log.d(LOG_MAIN, "-- Interface => switchDarkMode");
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (isDark) {
+            Log.d(LOG_MAIN, "Dark Mode");
+            if (currentNightMode != Configuration.UI_MODE_NIGHT_YES)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            Log.d(LOG_MAIN, "Light Mode");
+            if (currentNightMode != Configuration.UI_MODE_NIGHT_NO)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 
     /* ===============================================================================
                                          TOOLBAR
@@ -223,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         setToolbarMonthStyle();
 
         // init buttons
-        settingsButton.setOnClickListener(v -> openFragment(settingsTag));
+        settingsButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
         mNextMonth.setOnClickListener(v -> setToolbarNextMonth());
         mPrevMonth.setOnClickListener(v -> setToolbarPrevMonth());
         mAddExpense.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
@@ -440,16 +450,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openCardForm(boolean isEdit, CreditCard card, int position) {
-        Log.d(LOG_MAIN, "-- Interface => open card form");
-        openFragment(cardFormTag);
-        if (mCreditCardForm != null) {
-            mCreditCardForm.setFormType(isEdit);
-            if (isEdit) mCreditCardForm.setCreditCard(card, position);
-        }
-    }
-
-    @Override
     public void openTransactionForm(
             int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
 
@@ -493,12 +493,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         Log.d(LOG_MAIN, "-- Interface => handle confirmation");
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null)
             mCategoriesForm.handleArchiveConfirmation();
-        else if (currentFragment.equals(cardFormTag) && mCreditCardForm != null)
-            mCreditCardForm.handleArchiveConfirmation();
         else if (currentFragment.equals(accountFormTag) && mAccountForm != null)
             mAccountForm.handleArchiveConfirmation();
-        else if (currentFragment.equals(settingsTag) && mSettings != null)
-            mSettings.clearDatabase();
     }
 
     @Override
@@ -532,10 +528,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void handleColorSelection(Color color) {
         Log.d(LOG_MAIN, "-- Interface => handleColorSelection");
-        if (currentFragment.equals(cardFormTag) && mCreditCardForm != null) {
-            mCreditCardForm.setSelectedColor(color);
-        }
-        else if (currentFragment.equals(accountFormTag) && mAccountForm != null) {
+        if (currentFragment.equals(accountFormTag) && mAccountForm != null) {
             mAccountForm.setSelectedColor(color);
         }
         else if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) {
@@ -596,24 +589,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mTransactionsOut.updateOnCreditCardPaid(transactionDialogItem, paymentMethod, transactionDialogItemPosition);
     }
 
-    /* ==== SETTINGS ==== */
-
-    @Override
-    public void switchDarkMode(boolean isDark) {
-        Log.d(LOG_MAIN, "-- Interface => switchDarkMode");
-        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        if (isDark) {
-            Log.d(LOG_MAIN, "Dark Mode");
-            if (currentNightMode != Configuration.UI_MODE_NIGHT_YES)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            Log.d(LOG_MAIN, "Light Mode");
-            if (currentNightMode != Configuration.UI_MODE_NIGHT_NO)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
-
 
     /* ==== CATEGORIES ==== */
 
@@ -628,15 +603,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     public void handleCategoryInserted(Category category) {
         Log.d(LOG_MAIN, "-- Interface => handleCategoryInserted: " + category.getName());
         if (mCategoriesList != null) mCategoriesList.updateListAfterDbInsertion(category);
-    }
-
-    @Override
-    public void handleCategoryEdited(int position, Category category) {
-        Log.d(LOG_MAIN, "-- Interface => handleCategoryEdited: " + category.getName() + " pos: " + position);
-        if (mCategoriesList != null) {
-            if (category.isActive()) mCategoriesList.updateListAfterEdit(position, category);
-            else mCategoriesList.updateListAfterDelete(position);
-        }
     }
 
 
@@ -660,28 +626,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 onBackPressed();
                 if (mAccounts != null) mAccounts.updateListAfterDelete(position);
             }
-        }
-    }
-
-
-    /* ====  CREDIT CARDS ==== */
-
-    @Override
-    public void handleCreditCardInserted(CreditCard card) {
-        Log.d(LOG_MAIN, "-- Interface => handleCreditCardInserted: " + card.getName());
-        if (mCreditCards != null) mCreditCards.updateUiAfterInsertion(card);
-    }
-
-    @Override
-    public void handleCreditCardEdited(int position, CreditCard card) {
-        Log.d(LOG_MAIN, "-- Interface => handleCreditCardEdited: " + card.getName() + " pos: " + position);
-        if (card.isActive() && mCreditCards != null) {
-            mCreditCards.updateListAfterEdit(position, card);
-        }
-        else {
-            // close cards details fragment and update main
-            onBackPressed();
-            mCreditCards.updateListAfterDelete(position);
         }
     }
 
@@ -746,21 +690,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mCategoriesForm = new CategoriesFormFragment();
                 fragment = mCategoriesForm;
                 break;
-            case cardsTag:
-                mCreditCards = new CreditCardsFragment();
-                fragment = mCreditCards;
-                break;
-            case cardFormTag:
-                mCreditCardForm = new CreditCardFormFragment();
-                fragment = mCreditCardForm;
-                break;
             case homeTag:
                 mHome = new HomeFragment();
                 fragment = mHome;
-                break;
-            case settingsTag:
-                mSettings = new SettingsFragment();
-                fragment = mSettings;
                 break;
             case transactionsOutTag:
                 mTransactionsOut = new TransactionsOutFragment();
@@ -788,7 +720,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         if (tag.equals(categoriesListTag)
                 || tag.equals(categoriesFormTag)
-                || tag.equals(cardFormTag)
                 || tag.equals(accountFormTag)
                 || tag.equals(accountDetailsTag)) {
             Log.d(Tags.LOG_NAV, "Add fragment: " + tag);
@@ -839,14 +770,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
         switch (tag) {
             case categoriesListTag:
-                if (currentFragment.equals(transactionFormTag)) transaction2.hide(mTransactionForm);
-                if (currentFragment.equals(settingsTag)) transaction2.hide(mSettings);
+                transaction2.hide(mTransactionForm);
                 break;
             case categoriesFormTag:
                 transaction2.hide(mCategoriesList);
-                break;
-            case cardFormTag:
-                transaction2.hide(mCreditCards);
                 break;
             case accountFormTag:
                 if (currentFragment.equals(accountsTag)) transaction2.hide(mAccounts);
@@ -874,13 +801,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         switch (prevTag) {
             case categoriesListTag:
                 if (tag.equals(transactionFormTag)) transaction.show(mTransactionForm);
-                if (tag.equals(settingsTag)) transaction.show(mSettings);
                 break;
             case categoriesFormTag:
                 transaction.show(mCategoriesList);
-                break;
-            case cardFormTag:
-                transaction.show(mCreditCards);
                 break;
             case accountFormTag:
                 if (tag.equals(accountsTag)) transaction.show(mAccounts);
@@ -906,14 +829,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
         switch (tag) {
             case categoriesListTag:
-                if (currentFragment.equals(transactionFormTag)) transaction2.show(mTransactionForm);
-                if (currentFragment.equals(settingsTag)) transaction2.show(mSettings);
+                transaction2.show(mTransactionForm);
                 break;
             case categoriesFormTag:
                 transaction2.show(mCategoriesList);
-                break;
-            case cardFormTag:
-                transaction2.show(mCreditCards);
                 break;
             case accountFormTag:
                 if (currentFragment.equals(accountsTag)) transaction2.show(mAccounts);
@@ -950,9 +869,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case categoriesFormTag:
                     destroyFragment(mCategoriesForm, categoriesFormTag);
                     break;
-                case cardFormTag:
-                    destroyFragment(mCreditCardForm, cardFormTag);
-                    break;
                 case accountFormTag:
                     destroyFragment(mAccountForm, accountFormTag);
                     break;
@@ -967,7 +883,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             // show hidden newTopFragment
             if (topFragmentTag.equals(accountDetailsTag)
                     || topFragmentTag.equals(accountFormTag)
-                    || topFragmentTag.equals(cardFormTag)
                     || topFragmentTag.equals(categoriesFormTag)
                     || topFragmentTag.equals(categoriesListTag)) {
 
@@ -1011,17 +926,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case categoriesFormTag:
                 mCategoriesForm = (CategoriesFormFragment) getSupportFragmentManager().findFragmentByTag(categoriesFormTag);
                 break;
-            case cardsTag:
-                mCreditCards = (CreditCardsFragment) getSupportFragmentManager().findFragmentByTag(cardsTag);
-                break;
-            case cardFormTag:
-                mCreditCardForm = (CreditCardFormFragment) getSupportFragmentManager().findFragmentByTag(cardFormTag);
-                break;
             case homeTag:
                 mHome = (HomeFragment) getSupportFragmentManager().findFragmentByTag(homeTag);
-                break;
-            case settingsTag:
-                mSettings = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(settingsTag);
                 break;
             case transactionsOutTag:
                 mTransactionsOut = (TransactionsOutFragment) getSupportFragmentManager().findFragmentByTag(transactionsOutTag);
@@ -1053,10 +959,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case categoriesTag: mCategories = null; break;
                 case categoriesListTag: mCategoriesList = null; break;
                 case categoriesFormTag: mCategoriesForm = null; break;
-                case cardsTag: mCreditCards = null; break;
-                case cardFormTag: mCreditCardForm = null; break;
                 case homeTag: mHome = null; break;
-                case settingsTag: mSettings = null; break;
                 case transactionsOutTag: mTransactionsOut = null; break;
                 case transactionsInTag: mTransactionsIn = null; break;
                 case transactionFormTag: mTransactionForm = null; break;

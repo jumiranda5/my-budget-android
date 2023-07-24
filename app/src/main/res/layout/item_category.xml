@@ -5,8 +5,6 @@
     style="@style/ClickableListItem"
     android:id="@+id/category_item">
 
-    <!-- Todo: implement click on adapter -->
-
     <ImageView
         android:id="@+id/category_icon"
         style="@style/IconNormal"

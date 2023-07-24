@@ -15,15 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.adapters.CategoryAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesListBinding;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.entity.Category;
-import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
-import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,12 +55,18 @@ public class CategoriesListFragment extends Fragment {
     // Interfaces
     private Context mContext;
     private MainInterface mInterface;
+    private SettingsInterface mSettingsInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
-        mInterface = (MainInterface) context;
+
+        try { mInterface = (MainInterface) context; }
+        catch (Exception e) { Log.e(LOG, "Can't cast to main activity"); }
+
+        try { mSettingsInterface = (SettingsInterface) context; }
+        catch (Exception e) { Log.e(LOG, "Can't cast to settings activity"); }
     }
 
     @Override
@@ -84,13 +87,23 @@ public class CategoriesListFragment extends Fragment {
 
         initCategoriesList();
         getCategoriesData();
-        mOpenForm.setOnClickListener(v -> mInterface.openCategoryForm(false, null, 0));
-        mClose.setOnClickListener(v -> mInterface.navigateBack());
+        mOpenForm.setOnClickListener(v -> openCategoryForm());
+        mClose.setOnClickListener(v -> navigateBack());
     }
 
     /* ===============================================================================
                                        INTERFACE
      =============================================================================== */
+
+    private void openCategoryForm() {
+        if (mInterface != null) mInterface.openCategoryForm(false, null, 0);
+        else if (mSettingsInterface != null) mSettingsInterface.openCategoryForm(false, null, 0);
+    }
+
+    private void navigateBack() {
+        if (mInterface != null) mInterface.navigateBack();
+        else if (mSettingsInterface != null) mSettingsInterface.navigateBack();
+    }
 
     public void setListType(boolean isEdit) {
         this.isEdit = isEdit;

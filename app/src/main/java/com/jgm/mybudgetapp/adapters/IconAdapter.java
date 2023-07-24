@@ -2,6 +2,7 @@ package com.jgm.mybudgetapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.objects.Icon;
 
 import java.util.List;
@@ -23,15 +25,21 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.GridViewHolder
     private final Context mContext;
     private final List<Icon> mDataList;
     private final LayoutInflater layoutInflater;
-    private final MainInterface mInterface;
+    private MainInterface mInterface;
+    private SettingsInterface mSettingsInterface;
     private final BottomSheetDialogFragment dialog;
 
     public IconAdapter(Context context, List<Icon> mDataList, BottomSheetDialogFragment dialog) {
         this.mContext = context;
         this.mDataList = mDataList;
         this.dialog = dialog;
-        this.mInterface = (MainInterface) context;
         layoutInflater = LayoutInflater.from(context);
+
+        try { this.mInterface = (MainInterface) context; }
+        catch (Exception e) { Log.e("debug-category-adapter", "Can't cast to main activity"); }
+
+        try { mSettingsInterface = (SettingsInterface) context; }
+        catch (Exception e) { Log.e("debug-category-adapter", "Can't cast to settings activity"); }
     }
 
     @NonNull
@@ -53,7 +61,8 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.GridViewHolder
         holder.mIcon.setContentDescription(iconName);
 
         holder.mIcon.setOnClickListener(view -> {
-            mInterface.handleIconSelection(icon);
+            if (mInterface != null) mInterface.handleIconSelection(icon);
+            else if (mSettingsInterface != null) mSettingsInterface.handleIconSelection(icon);
             dialog.dismiss();
         });
 

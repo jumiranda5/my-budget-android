@@ -1,6 +1,7 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.room.entity.Category;
@@ -28,15 +30,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
     private final Context mContext;
     private final List<Category> mDataList;
     private final LayoutInflater layoutInflater;
-    private final MainInterface mInterface;
+    private MainInterface mInterface;
+    private SettingsInterface mSettingsInterface;
     private final boolean isEdit;
 
     public CategoryAdapter(Context context, List<Category> mDataList, boolean isEdit) {
         this.mContext = context;
         this.mDataList = mDataList;
-        this.mInterface = (MainInterface) context;
         this.isEdit = isEdit;
         layoutInflater = LayoutInflater.from(context);
+
+        try { this.mInterface = (MainInterface) context; }
+        catch (Exception e) { Log.e("debug-category-adapter", "Can't cast to main activity"); }
+
+        try { mSettingsInterface = (SettingsInterface) context; }
+        catch (Exception e) { Log.e("debug-category-adapter", "Can't cast to settings activity"); }
+
     }
 
     @NonNull
@@ -62,15 +71,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
         holder.mName.setText(category.getName());
 
         // Select category | Set edit button
+        // only editable on settings activity
         if (isEdit) {
             holder.mEdit.setVisibility(View.VISIBLE);
-            holder.mEdit.setOnClickListener(v -> mInterface.openCategoryForm(true, category, position));
-            holder.mContainer.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.transparent));
+            holder.mEdit.setOnClickListener(v -> mSettingsInterface.openCategoryForm(true, category, position));
         }
-        else {
-            holder.mEdit.setVisibility(View.GONE);
-            holder.mContainer.setOnClickListener(v -> mInterface.setSelectedCategory(category));
-        }
+        else holder.mEdit.setVisibility(View.GONE);
+
+        holder.mContainer.setOnClickListener(v -> {
+            if (mInterface != null) mInterface.setSelectedCategory(category);
+            else if (mSettingsInterface != null) mSettingsInterface.openCategoryForm(true, category, position);
+        });
 
     }
 

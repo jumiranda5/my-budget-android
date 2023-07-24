@@ -9,16 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.room.entity.CreditCard;
 import com.jgm.mybudgetapp.utils.ColorUtils;
-import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;
 
@@ -27,12 +25,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.GridViewHolder
     private final Context mContext;
     private final List<CreditCard> mDataList;
     private final LayoutInflater layoutInflater;
-    private final MainInterface mInterface;
+    private final SettingsInterface mInterface;
 
     public CardAdapter(Context context, List<CreditCard> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
-        this.mInterface = (MainInterface) context;
+        this.mInterface = (SettingsInterface) context;
         layoutInflater = LayoutInflater.from(context);
     }
 

@@ -1,4 +1,4 @@
-package com.jgm.mybudgetapp;
+package com.jgm.mybudgetapp.fragmentsSettings;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.adapters.CardAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardsBinding;
 import com.jgm.mybudgetapp.room.AppDatabase;
@@ -52,14 +53,14 @@ public class CreditCardsFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
-    private MainInterface mInterface;
+    private SettingsInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         Log.d(Tags.LOG_LIFECYCLE, "Credit Cards onAttach");
         mContext = context;
-        mInterface = (MainInterface) context;
+        mInterface = (SettingsInterface) context;
     }
 
     @Override
