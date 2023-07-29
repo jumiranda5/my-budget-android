@@ -7,41 +7,6 @@
     android:background="@color/bg_00dp"
     tools:context=".fragmentsMain.TransactionFormFragment">
 
-    <!-- Toolbar -->
-
-    <!--    <androidx.appcompat.widget.Toolbar-->
-    <!--        android:id="@+id/add_toolbar"-->
-    <!--        style="@style/MainToolbar"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-
-    <!--            <TextView-->
-    <!--                android:id="@+id/add_toolbar_title"-->
-    <!--                style="@style/ToolbarTitle"-->
-    <!--                android:text="@string/action_add"-->
-    <!--                android:layout_marginStart="16dp"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintEnd_toStartOf="@+id/add_close_button"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--            <ImageButton-->
-    <!--                android:id="@+id/add_close_button"-->
-    <!--                style="@style/ToolbarButton"-->
-    <!--                android:contentDescription="@string/nav_close"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                app:srcCompat="@drawable/ic_app_close" />-->
-
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--    </androidx.appcompat.widget.Toolbar>-->
-
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
         android:layout_height="0dp"
@@ -58,7 +23,7 @@
                 android:id="@+id/transactions_group_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method,credit_card_month_picker, add_description, add_icon_desc" />
+                app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method, add_description, add_icon_desc" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/transactions_group_transfer"
@@ -93,13 +58,13 @@
 
             <RadioGroup
                 android:id="@+id/add_toggle_group"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/add_amount"
                 app:layout_constraintTop_toBottomOf="@id/add_close_button">
 
                 <ToggleButton
@@ -375,12 +340,12 @@
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/add_switch_edit_all"
                 style="@style/FormSwitch"
-                android:layout_marginTop="@dimen/form_divisor_space"
+                android:layout_marginTop="@dimen/input_margin"
                 android:checked="true"
                 android:text="@string/label_edit_all"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/add_switch_paid" />
 
             <!-- Repeat -->
@@ -388,7 +353,7 @@
             <TextView
                 android:id="@+id/repeat_label"
                 style="@style/WrappingLabel"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/input_margin"
                 android:text="@string/label_repeat"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"

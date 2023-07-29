@@ -120,7 +120,6 @@ public class TransactionFormFragment extends Fragment {
         mProgressBar = binding.addProgressBar;
         mRepeatLabel = binding.repeatLabel;
         mSwitchEditAll = binding.addSwitchEditAll;
-        // Icons
         mCategoryIcon = binding.addIconCategory;
         mDescIcon = binding.addIconDesc;
         mCalendarIcon = binding.addIconDate;
@@ -163,6 +162,9 @@ public class TransactionFormFragment extends Fragment {
         mToggleExpense.setChecked(false);
         mToggleIncome.setChecked(false);
         mToggleTransfer.setChecked(false);
+
+        // hide card month container
+        mCreditCardMonthContainer.setVisibility(View.GONE);
 
         transaction = new Transaction(type, "", 0f, 0, 0, 0,
                 0, 0, 0, false, 1, 1, null);
@@ -335,6 +337,9 @@ public class TransactionFormFragment extends Fragment {
         setAdvancedOptionsVisibility(true);
         setMainGroup(R.drawable.button_save_expense);
         changeColorOnTypeSwitch(R.color.expense);
+
+        if (paymentMethod != null && paymentMethod.getType() == 3)
+            mCreditCardMonthContainer.setVisibility(View.VISIBLE);
     }
 
     private void showIncomeForm() {
@@ -345,6 +350,9 @@ public class TransactionFormFragment extends Fragment {
         setAdvancedOptionsVisibility(true);
         setMainGroup(R.drawable.button_save);
         changeColorOnTypeSwitch(R.color.income);
+
+        if (paymentMethod != null && paymentMethod.getType() == 3)
+            mCreditCardMonthContainer.setVisibility(View.VISIBLE);
     }
 
     private void showTransferForm() {
@@ -354,6 +362,7 @@ public class TransactionFormFragment extends Fragment {
         mTransferGroup.setVisibility(View.VISIBLE);
         mSwitchPaid.setVisibility(View.GONE);
         mMainGroup.setVisibility(View.GONE);
+        mCreditCardMonthContainer.setVisibility(View.GONE);
         setAdvancedOptionsVisibility(false);
         changeColorOnTypeSwitch(R.color.savings);
         mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_transfer));
