@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.MainInterface;
@@ -42,6 +41,7 @@ public class TransactionsOutFragment extends Fragment {
     }
 
     private List<TransactionResponse> expenses;
+    private DayGroupAdapter adapter;
 
     // UI
     private FragmentTransactionsBinding binding;
@@ -92,7 +92,7 @@ public class TransactionsOutFragment extends Fragment {
     private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups, 1);
+        adapter = new DayGroupAdapter(mContext, dayGroups, 1);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -121,8 +121,7 @@ public class TransactionsOutFragment extends Fragment {
                     item.getYear(),
                     paymentMethod.getId());
             handler.post(() -> {
-                expenses.get(position).setPaid(true);
-                setExpensesData(item.getMonth(), item.getYear());
+                adapter.updateCreditCardItemsPaidStatus(item.getCardId(), position);
             });
         });
     }
@@ -210,8 +209,8 @@ public class TransactionsOutFragment extends Fragment {
         mTotal.setText(totalCurrencyPositive);
 
         // handle credit card items and init list view
+        initRecyclerView(dayGroups);
         if (hasCreditCard) setCreditCardItems(dayGroups);
-        else initRecyclerView(dayGroups);
 
     }
 
@@ -291,7 +290,8 @@ public class TransactionsOutFragment extends Fragment {
                 dayGroups.get(dayPos).getTransactions().add(listPos, transaction);
 
                 // init list
-                initRecyclerView(dayGroups);
+                adapter.notifyDataSetChanged();
+                //initRecyclerView(dayGroups);
             });
 
         });

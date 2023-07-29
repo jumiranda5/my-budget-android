@@ -56,13 +56,25 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         holder.mRecyclerView.setLayoutManager(listLayoutManager);
         if (type == 1) {
-            TransactionAdapter adapter = new TransactionAdapter(mContext, transactions);
+            TransactionAdapter adapter = new TransactionAdapter(mContext, transactions, position);
             holder.mRecyclerView.setAdapter(adapter);
         }
         else {
             TransactionAdapter2 adapter = new TransactionAdapter2(mContext, transactions);
             holder.mRecyclerView.setAdapter(adapter);
         }
+    }
+
+    public void updateCreditCardItemsPaidStatus(int cardId, int position) {
+
+        List<TransactionResponse> list = mDataList.get(position).getTransactions();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getCardId() == cardId) list.get(i).setPaid(true);
+        }
+
+        notifyItemChanged(position);
+
     }
 
     @Override

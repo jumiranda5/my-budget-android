@@ -23,7 +23,6 @@ import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconOutlineUtils;
-import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
@@ -35,11 +34,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private final List<TransactionResponse> mDataList;
     private final LayoutInflater layoutInflater;
     private final MainInterface mInterface;
+    private final int dayPosition;
 
-    public TransactionAdapter(Context context, List<TransactionResponse> mDataList) {
+    public TransactionAdapter(Context context, List<TransactionResponse> mDataList, int dayPosition) {
         this.mContext = context;
         this.mDataList = mDataList;
         this.mInterface = (MainInterface) context;
+        this.dayPosition = dayPosition;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -55,8 +56,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         TransactionResponse item = mDataList.get(position);
         Icon icon = IconOutlineUtils.getIcon(item.getIconId());
         Color color = ColorUtils.getColor(item.getColorId());
+        MyDate today = MyDateUtils.getCurrentDate(mContext);
         boolean isCardTotal = item.getId() == -1;
         boolean isAccumulated = item.getId() == 0;
+        boolean isPending = item.getDay() <= today.getDay() && item.getMonth() <= today.getMonth() && item.getYear() <= today.getYear();
 
         Log.d("debug-item", "category: " + item.getCategoryId() + " " + item.getCategoryName() + "/" + item.getDescription());
 
@@ -79,10 +82,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (item.isPaid()) holder.mPaid.setChecked(true);
         else {
             holder.mPaid.setChecked(false);
-            MyDate today = MyDateUtils.getCurrentDate(mContext);
-            if (item.getDay() < today.getDay() &&
-                    item.getMonth() <= today.getMonth() &&
-                    item.getYear() <= today.getYear()) {
+            if (isPending) {
                 holder.mPaid.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_toggle_paid_pending));
             }
         }
@@ -90,8 +90,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Toggle paid
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isPending) {
+                holder.mPaid.setBackground(
+                        ContextCompat.getDrawable(mContext, R.drawable.button_toggle_paid_pending));
+            }
+
             if (isCardTotal) {
-                if (isChecked) mInterface.showMethodPickerDialog(false, item, position);
+                if (isChecked) {
+                    holder.mPaid.setChecked(false); // set to true after method picker
+                    mInterface.showMethodPickerDialog(false, item, dayPosition);
+                }
                 else {
                     AppDatabase.dbExecutor.execute(() -> {
                         db.TransactionDao().updatePaidCard(
@@ -101,6 +109,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                                 item.getYear(),
                                 0);
                         item.setPaid(false);
+                        updateCreditCardItemsNotPaidStatus(item.getCardId());
                     });
                 }
             }
@@ -139,6 +148,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Open transaction details dialog
         if (item.getId() > 0) {
             holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
+        }
+    }
+
+    private void updateCreditCardItemsNotPaidStatus(int cardId) {
+        for (int i = 0; i < mDataList.size(); i++) {
+            if (mDataList.get(i).getCardId() == cardId) mDataList.get(i).setPaid(false);
         }
     }
 
