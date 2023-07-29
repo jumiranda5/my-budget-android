@@ -23,30 +23,31 @@
                 android:id="@+id/cat_list_toolbar_close"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_back"
-                android:src="@drawable/ic_app_arrow_back_400"
+                android:src="@drawable/ic_24_arrow_back_fill0_300"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/cat_list_toolbar_title"
-                style="@style/ToolbarTitle"
+                style="@style/MyHeadline6"
                 android:text="@string/title_categories_list"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cat_list_add"
+                app:layout_constraintEnd_toStartOf="@+id/toolbar_button_add_category"
                 app:layout_constraintStart_toEndOf="@+id/cat_list_toolbar_close"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Add button -->
+            <!-- Add button - tablet -->
             <ImageButton
-                android:id="@+id/cat_list_add"
+                android:id="@+id/toolbar_button_add_category"
                 style="@style/ToolbarButtonWithBg"
                 android:layout_marginEnd="4dp"
+                android:visibility="gone"
                 android:contentDescription="@string/desc_add_category"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_add_500" />
+                app:srcCompat="@drawable/ic_24_add_400" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -59,12 +60,25 @@
         android:paddingTop="@dimen/list_padding_top"
         android:paddingStart="@dimen/list_padding_start"
         android:paddingEnd="@dimen/list_padding_start"
-        android:paddingBottom="@dimen/item_height"
+        android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cat_list_toolbar"
         tools:itemCount="8"
         tools:listitem="@layout/item_category" />
+
+    <!-- Add button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cat_list_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/inner_space"
+        android:backgroundTint="@color/colorAccent"
+        app:tint="@color/white"
+        android:contentDescription="@string/desc_add_category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_24_add_400" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

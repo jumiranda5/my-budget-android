@@ -54,7 +54,7 @@ public class CategoriesFormFragment extends Fragment {
     private FragmentCategoriesFormBinding binding;
     private ImageView icColor, icIcon;
     private Button mColorPicker, mIconPicker, mSave;
-    private ImageButton mClose, mArchive;
+    private ImageButton mBack, mArchive;
     private EditText mCategoryNameInput;
     private TextView mTitle;
 
@@ -66,7 +66,7 @@ public class CategoriesFormFragment extends Fragment {
         icIcon = binding.categoryIcon;
         icColor = binding.categoryColor;
         mSave = binding.buttonSaveCategory;
-        mClose = binding.catFormToolbarClose;
+        //mClose = binding.catFormToolbarClose;
         mArchive = binding.catFormToolbarArchive;
     }
 
@@ -114,7 +114,7 @@ public class CategoriesFormFragment extends Fragment {
         }
 
         // Init buttons
-        mClose.setOnClickListener(v -> navigateBack());
+        //mClose.setOnClickListener(v -> navigateBack());
         mColorPicker.setOnClickListener(v -> showColorPicker());
         mIconPicker.setOnClickListener(v -> showIconPicker());
         mSave.setOnClickListener(v -> {
@@ -127,7 +127,7 @@ public class CategoriesFormFragment extends Fragment {
             mSettingsInterface.showConfirmationDialog(
                     getString(R.string.msg_archive_category),
                     getString(R.string.action_archive),
-                    R.drawable.ic_app_dangerous);
+                    R.drawable.ic_48_dangerous_300);
         });
     }
 

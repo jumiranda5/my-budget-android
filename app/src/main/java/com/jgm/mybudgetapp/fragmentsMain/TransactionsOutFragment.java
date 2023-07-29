@@ -47,12 +47,10 @@ public class TransactionsOutFragment extends Fragment {
     private FragmentTransactionsBinding binding;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
-    private ImageButton mBack;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mRecyclerView = binding.transactionsList;
-        mBack = binding.transactionsClose;
     }
 
     // Interfaces
@@ -85,8 +83,6 @@ public class TransactionsOutFragment extends Fragment {
             MyDate date = mInterface.getDate();
             getExpensesData(date.getMonth(), date.getYear());
         }
-
-        mBack.setOnClickListener(v -> mInterface.navigateBack());
 
     }
 
@@ -210,7 +206,8 @@ public class TransactionsOutFragment extends Fragment {
 
         // Set total in currency format
         String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
-        mTotal.setText(totalCurrency);
+        String totalCurrencyPositive = totalCurrency.replace("-", "");
+        mTotal.setText(totalCurrencyPositive);
 
         // handle credit card items and init list view
         if (hasCreditCard) setCreditCardItems(dayGroups);

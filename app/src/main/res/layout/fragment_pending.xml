@@ -22,7 +22,7 @@
                 android:id="@+id/pending_toolbar_close"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_close"
-                android:src="@drawable/ic_app_close"
+                android:src="@drawable/ic_24_close_300"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,12 +37,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_pending_fill"
-                app:tint="@color/text_error" />
+                app:srcCompat="@drawable/ic_24_pending_fill1_300"
+                app:tint="@color/danger" />
 
             <TextView
                 android:id="@+id/pending_toolbar_title"
-                style="@style/ToolbarTitle"
+                style="@style/MyHeadline6"
                 android:text="@string/title_pending"
                 android:layout_marginStart="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -56,11 +56,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pending_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="32dp"
+        style="@style/MainList"
+        app:layout_constraintWidth_max="@dimen/list_max_width"
+        android:paddingTop="@dimen/list_padding_top"
+        android:paddingBottom="@dimen/item_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

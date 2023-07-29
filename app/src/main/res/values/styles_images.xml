@@ -20,13 +20,12 @@
     </style>
 
     <style name="IconSmall" parent="IconNormal">
-        <item name="android:layout_width">18dp</item>
-        <item name="android:layout_height">18dp</item>
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
     </style>
 
     <style name="HomeAccountIcon" parent="IconSmall">
-        <item name="android:layout_marginTop">14dp</item>
-        <item name="android:layout_marginStart">@dimen/card_padding</item>
+        <item name="android:layout_marginTop">@dimen/home_accounts_icon_margin</item>
         <item name="tint">@color/medium_emphasis_text</item>
     </style>
 
@@ -34,6 +33,11 @@
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="ItemIcon" parent="IconNormal">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
     </style>
 
     <!-- Charts -->
@@ -68,17 +72,29 @@
 
     <style name="FormDivisor" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginTop">@dimen/form_divisor_space</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:background">@color/divisor</item>
     </style>
 
-    <style name="DialogDivisor" parent="FormDivisor">
+    <style name="MyDivider" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divisor</item>
+    </style>
+
+    <style name="DialogDivider" parent="MyDivider">
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:layout_marginStart">0dp</item>
         <item name="android:layout_marginEnd">0dp</item>
+    </style>
+
+    <style name="PageDivider" parent="MyDivider">
+        <item name="android:layout_marginStart">@dimen/page_padding</item>
+        <item name="android:layout_marginEnd">@dimen/page_padding</item>
+        <item name="android:layout_marginTop">@dimen/page_divisor_space</item>
     </style>
 
     <!-- Dialog -->
@@ -87,7 +103,7 @@
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">3dp</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:background">@color/bg_indicator</item>
+        <item name="android:background">@color/disabled_text</item>
     </style>
 
 <!--    &lt;!&ndash; ==========================================================-->

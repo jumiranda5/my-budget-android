@@ -287,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (tag.equals(homeTag)
                 || tag.equals(transactionsOutTag)
                 || tag.equals(transactionsInTag)
+                || tag.equals(accountsTag)
                 || tag.equals(accountDetailsTag)) {
 
             Log.d(LOG_MAIN, "Toolbar visible");
@@ -364,11 +365,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private void hideBottomNav() {
         Log.d(LOG_MAIN, "Hide bottom nav");
         bottomNavigationView.setVisibility(View.GONE);
+        mAdd.setVisibility(View.GONE);
     }
 
     private void showBottomNav() {
         Log.d(LOG_MAIN, "Show bottom nav");
         bottomNavigationView.setVisibility(View.VISIBLE);
+        mAdd.setVisibility(View.VISIBLE);
     }
 
     private void setAddButton(String tag) {
@@ -457,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         Log.d(LOG_MAIN, "-- Interface => open transaction form");
 
-        setFragment(transactionFormTag);
+        openFragment(transactionFormTag);
 
         if (mTransactionForm != null) {
             mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);

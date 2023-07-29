@@ -2,15 +2,33 @@
 <resources>
 
     <!-- Text -->
-    <dimen name="number_impact">30sp</dimen>
+    <dimen name="h3">44sp</dimen>
 
+    <!-- Cards -->
+    <dimen name="card_padding">18dp</dimen>
 
-    <!-- ==================  MAIN ACTIVITY ================== -->
+    <!-- ==================  HOME FRAGMENT ================== -->
 
-    <!-- Bottom bar -->
-    <dimen name="bottomBar_height">64dp</dimen>
-    <dimen name="bottomBar_icon_padding">13dp</dimen>
+    <!-- Margins -->
+    <dimen name="home_inner_space">10dp</dimen>
+    <dimen name="home_label_margin_bottom">32dp</dimen>
+    <dimen name="progress_info_margin">40dp</dimen>
 
+    <!-- Text -->
+    <dimen name="home_income_size">20sp</dimen>
+    <dimen name="progress_text_size">24sp</dimen>
+
+    <!-- Cards -->
+    <dimen name="home_balance_height">188dp</dimen>
+
+    <!-- Charts -->
+    <integer name="home_pie_size_int">88</integer>
+    <dimen name="progress_indicator">124dp</dimen>
+    <dimen name="home_pie_width">88dp</dimen>
+
+    <!-- Page -->
+    <dimen name="page_divisor_space">220dp</dimen>
+    <dimen name="page_padding">24dp</dimen>
 
     <!-- ==================  FORMS  ================== -->
 
@@ -23,46 +41,48 @@
     <dimen name="form_padding">48dp</dimen>
     <dimen name="toggle_pill_min_width">88dp</dimen>
     <dimen name="toggle_pill_max_width">112dp</dimen>
+    <dimen name="form_value_size">30sp</dimen>
 
 
-    <!-- ==================  HOME FRAGMENT ================== -->
+    <!-- ==================  ACCOUNTS  ================== -->
 
-    <integer name="home_pie_size_int">88</integer>
-    <dimen name="home_inner_margin">16dp</dimen>
-    <dimen name="home_label_size">16sp</dimen>
-    <dimen name="home_income_size">18sp</dimen>
-    <dimen name="progress_text_size">22sp</dimen>
-    <dimen name="progress_indicator">124dp</dimen>
-    <dimen name="home_pie_width">88dp</dimen>
-    <dimen name="home_accounts_icon_margin">16dp</dimen>
-    <dimen name="home_accounts_margin_bottom">4dp</dimen>
-    <dimen name="home_balance_size">32sp</dimen>
-    <dimen name="home_balance_height">136dp</dimen>
-    <dimen name="progress_info_margin">32dp</dimen>
+    <dimen name="account_details_list_margin">32dp</dimen>
 
-
-    <!-- ==================  TRANSACTIONS  ================== -->
-
-    <dimen name="transactions_title_currency_size">30sp</dimen>
-    <dimen name="transactions_total_space">80dp</dimen>
-    <dimen name="transactions_total_space_bottom">40dp</dimen>
 
     <!-- ==================  CATEGORIES  ================== -->
 
     <integer name="categories_chart_size_int">260</integer>
     <dimen name="categories_chart_size">260dp</dimen>
     <dimen name="categories_chart_text_size">24sp</dimen>
-    <dimen name="categories_chart_margin">64dp</dimen>
-    <dimen name="categories_chart_list_margin">56dp</dimen>
-    <dimen name="categories_chart_list_margin_start">16dp</dimen>
+    <!--    <dimen name="categories_chart_margin">64dp</dimen>-->
+    <!--    <dimen name="categories_chart_list_margin">56dp</dimen>-->
 
-    <!-- ==================  ACCOUNTS  ================== -->
 
-    <dimen name="account_details_margin">32dp</dimen>
-    <dimen name="account_details_margin_top">48dp</dimen>
-    <dimen name="account_details_close_margin">16dp</dimen>
-    <dimen name="account_details_list_padding">12dp</dimen>
-    <dimen name="account_details_divisor_margin">24dp</dimen>
+
+<!--    &lt;!&ndash; Text &ndash;&gt;-->
+<!--    <dimen name="number_impact">30sp</dimen>-->
+
+
+<!--    &lt;!&ndash; ==================  MAIN ACTIVITY ================== &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Bottom bar &ndash;&gt;-->
+<!--    <dimen name="bottomBar_height">64dp</dimen>-->
+<!--    <dimen name="bottomBar_icon_padding">13dp</dimen>-->
+
+
+<!--    &lt;!&ndash; ==================  TRANSACTIONS  ================== &ndash;&gt;-->
+
+<!--    <dimen name="transactions_title_currency_size">30sp</dimen>-->
+<!--    <dimen name="transactions_total_space">80dp</dimen>-->
+<!--    <dimen name="transactions_total_space_bottom">40dp</dimen>-->
+
+<!--    &lt;!&ndash; ==================  ACCOUNTS  ================== &ndash;&gt;-->
+
+<!--    <dimen name="account_details_margin">32dp</dimen>-->
+<!--    <dimen name="account_details_margin_top">48dp</dimen>-->
+<!--    <dimen name="account_details_close_margin">16dp</dimen>-->
+<!--    <dimen name="account_details_list_padding">12dp</dimen>-->
+<!--    <dimen name="account_details_divisor_margin">24dp</dimen>-->
 
 
 </resources>

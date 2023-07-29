@@ -12,11 +12,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_category" />
+        app:srcCompat="@drawable/ic_40_category_fill0_300" />
 
     <TextView
         android:id="@+id/category_name"
-        style="@style/TextNormalEllipse"
+        style="@style/BodyItemEllipse"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/inner_space"
         android:text="@string/category_default"
@@ -29,18 +29,10 @@
         android:id="@+id/category_item_edit"
         style="@style/IconButton"
         android:layout_marginEnd="-8dp"
-        android:src="@drawable/ic_app_edit"
+        android:src="@drawable/ic_40_edit_fill0_300"
         android:contentDescription="@string/nav_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        style="@style/ItemDivisor"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/category_icon"
-        app:layout_constraintStart_toStartOf="@+id/category_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

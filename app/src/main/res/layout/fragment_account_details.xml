@@ -1,150 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_00dp"
+    android:layout_marginTop="@dimen/toolbar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentsMain.AccountDetailsFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/account_toolbar"
-        style="@style/MainToolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.core.widget.NestedScrollView
+        style="@style/MyNestedScrollView"
+        android:paddingBottom="@dimen/item_height">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/account_toolbar_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/account_toolbar_month"
-                style="@style/ToolbarMonth"
-                android:layout_width="@dimen/toolbar_month_width"
-                android:text="@string/initial_month"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <!-- Max width -->
+            <View
+                android:id="@+id/account_width_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor" />
+
+            <ImageButton
+                android:id="@+id/account_back_button"
+                style="@style/IconButton"
+                android:layout_marginEnd="@dimen/account_details_close_margin"
+                android:contentDescription="@string/nav_back"
+                app:layout_constraintBottom_toBottomOf="@+id/account_icon"
+                app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
+                app:layout_constraintTop_toTopOf="@+id/account_icon"
+                app:srcCompat="@drawable/ic_24_close_300" />
+
+            <ImageView
+                android:id="@+id/account_icon"
+                style="@style/IconNormal"
+                android:layout_marginStart="@dimen/page_padding"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_40_cash_fill0_300"
+                app:layout_constraintBottom_toTopOf="@+id/account_total"
+                app:layout_constraintStart_toStartOf="@id/account_width_anchor" />
 
             <TextView
-                android:id="@+id/account_toolbar_year"
-                style="@style/TextNormal"
-                android:layout_marginStart="16dp"
-                android:text="@string/initial_year"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/account_details_title"
+                style="@style/MyBody1"
+                android:layout_width="0dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/barlow_medium"
+                android:text="@string/account_checking"
+                app:layout_constraintBottom_toBottomOf="@+id/account_icon"
+                app:layout_constraintEnd_toStartOf="@+id/account_back_button"
+                app:layout_constraintStart_toEndOf="@+id/account_icon"
+                app:layout_constraintTop_toTopOf="@+id/account_icon" />
+
+            <TextView
+                android:id="@+id/account_total"
+                style="@style/MyHeadline3"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/page_padding"
+                android:layout_marginTop="32dp"
+                android:text="@string/initial_value"
+                android:textColor="@color/income"
+                android:textSize="@dimen/transactions_title_size"
+                app:layout_constraintBottom_toTopOf="@+id/account_divider"
+                app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
+                app:layout_constraintStart_toStartOf="@id/account_width_anchor"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/account_prev_month_button"
-                style="@style/IconButton"
-                android:padding="10dp"
-                android:contentDescription="@string/action_prev_month"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/account_toolbar_month"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_navigate_before"/>
+            <View
+                android:id="@+id/account_divider"
+                style="@style/PageDivider"
+                app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
+                app:layout_constraintStart_toStartOf="@id/account_width_anchor"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/account_next_month_button"
-                style="@style/IconButton"
-                android:contentDescription="@string/action_next_month"
-                android:padding="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/account_toolbar_month"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_navigate_next"/>
-
-            <ImageButton
-                android:id="@+id/account_edit_button"
-                style="@style/ToolbarButton"
-                android:contentDescription="@string/nav_settings"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_edit" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/account_details_list"
+                style="@style/NestedListNoScroll"
+                android:layout_marginTop="@dimen/account_details_list_margin"
+                app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
+                app:layout_constraintStart_toStartOf="@id/account_width_anchor"
+                app:layout_constraintTop_toBottomOf="@+id/account_divider"
+                tools:listitem="@layout/item_transaction_day" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <!-- Max width -->
-    <ImageView
-        android:id="@+id/account_width_anchor"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="520dp" />
-
-    <ImageButton
-        android:id="@+id/account_back_button"
-        style="@style/IconButton"
-        android:layout_marginEnd="@dimen/account_details_close_margin"
-        android:contentDescription="@string/nav_back"
-        app:layout_constraintBottom_toBottomOf="@+id/account_icon"
-        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
-        app:layout_constraintTop_toTopOf="@+id/account_icon"
-        app:srcCompat="@drawable/ic_app_close_400" />
-
-    <ImageView
-        android:id="@+id/account_icon"
-        style="@style/IconNormal"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="@dimen/account_details_margin"
-        android:layout_marginTop="@dimen/account_details_margin_top"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_app_cash"
-        app:layout_constraintStart_toStartOf="@id/account_width_anchor"
-        app:layout_constraintTop_toBottomOf="@+id/account_toolbar" />
-
-    <TextView
-        android:id="@+id/account_details_title"
-        style="@style/Title"
-        android:text="@string/account_cash"
-        android:layout_marginTop="6dp"
-        app:layout_constraintStart_toStartOf="@+id/account_icon"
-        app:layout_constraintTop_toBottomOf="@+id/account_icon" />
-
-    <TextView
-        android:id="@+id/account_total"
-        style="@style/NumberImpact"
-        android:layout_width="0dp"
-        android:layout_marginTop="6dp"
-        android:textColor="@color/income"
-        android:textSize="@dimen/text_title"
-        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
-        app:layout_constraintStart_toStartOf="@+id/account_details_title"
-        app:layout_constraintTop_toBottomOf="@+id/account_details_title" />
-
-    <ImageView
-        android:id="@+id/account_divisor"
-        style="@style/FormDivisor"
-        android:contentDescription="@null"
-        android:layout_marginStart="@dimen/account_details_divisor_margin"
-        android:layout_marginEnd="@dimen/account_details_divisor_margin"
-        android:layout_marginTop="@dimen/account_details_margin_top"
-        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
-        app:layout_constraintStart_toStartOf="@id/account_width_anchor"
-        app:layout_constraintTop_toBottomOf="@+id/account_total" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/account_details_list"
-        style="@style/MainList"
-        android:paddingTop="12dp"
-        android:paddingStart="@dimen/account_details_list_padding"
-        android:paddingEnd="@dimen/account_details_list_padding"
-        android:paddingBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
-        app:layout_constraintStart_toStartOf="@id/account_width_anchor"
-        app:layout_constraintTop_toBottomOf="@+id/account_divisor"
-        tools:listitem="@layout/item_transaction_day" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

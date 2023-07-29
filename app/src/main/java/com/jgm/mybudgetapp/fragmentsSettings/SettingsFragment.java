@@ -97,7 +97,7 @@ public class SettingsFragment extends Fragment {
         mClearDatabase.setOnClickListener(v -> {
             mInterface.showConfirmationDialog(getString(R.string.msg_clear_database),
                     getString(R.string.action_reset_database),
-                    R.drawable.ic_app_dangerous);
+                    R.drawable.ic_48_dangerous_300);
         });
         mBack.setOnClickListener(v -> mInterface.navigateBack());
     }

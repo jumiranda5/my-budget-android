@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="home_padding">24dp</dimen>
+
+    <!-- ==================  HOME FRAGMENT ================== -->
+
+    <dimen name="land_home_balance_width">380dp</dimen>
+    <dimen name="land_home_progress_width">200dp</dimen>
+
+
+
     <!-- ==================  MAIN ACTIVITY ================== -->
 
     <!-- Toolbar -->
-    <dimen name="toolbar_height">72dp</dimen>
-    <dimen name="toolbar_button_size">60dp</dimen>
-    <dimen name="toolbar_month">22sp</dimen>
     <dimen name="toolbar_inset_start">24dp</dimen>
     <dimen name="toolbar_inset_end">8dp</dimen>
 
     <!-- Bottom bar -->
-    <dimen name="bottomBar_width">560dp</dimen>
+    <dimen name="bottomBar_width">540dp</dimen>
 
-    <!-- ==================  HOME FRAGMENT ================== -->
+<!--    &lt;!&ndash; ==================  CATEGORIES LIST  ================== &ndash;&gt;-->
 
-    <dimen name="home_padding">40dp</dimen>
+<!--    <dimen name="list_padding_top">32dp</dimen>-->
 
-    <!-- ==================  CATEGORIES LIST  ================== -->
+<!--    &lt;!&ndash; ==================  SETTINGS  ================== &ndash;&gt;-->
 
-    <dimen name="list_padding_top">32dp</dimen>
-
-    <!-- ==================  SETTINGS  ================== -->
-
-    <dimen name="settings_padding">32dp</dimen>
+<!--    <dimen name="settings_padding">32dp</dimen>-->
 
 
 </resources>

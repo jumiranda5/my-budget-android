@@ -12,25 +12,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_account_balance" />
+        app:srcCompat="@drawable/ic_40_account_balance_fill0_300" />
 
     <TextView
         android:id="@+id/item_account_name"
-        style="@style/TextNormalEllipse"
+        style="@style/BodyItemEllipse"
+        android:textSize="@dimen/body1"
         android:layout_marginStart="@dimen/inner_space"
         android:paddingStart="0dp"
-        android:paddingEnd="8dp"
+        android:paddingEnd="16dp"
         android:text="@string/account_checking"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_account_total"
+        app:layout_constraintEnd_toStartOf="@+id/item_account_currency_symbol"
         app:layout_constraintStart_toEndOf="@+id/item_account_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/item_account_total"
         style="@style/CurrencySpaceMedium"
-        android:layout_marginEnd="4dp"
         android:text="@string/initial_value_no_symbol"
+        android:layout_marginEnd="4dp"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_account_name"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -39,17 +40,29 @@
         android:id="@+id/item_account_currency_symbol"
         style="@style/CurrencyMedium"
         android:text="@string/currency_symbol"
-        android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_account_total"
-        app:layout_constraintStart_toStartOf="@id/item_account_total" />
+        app:layout_constraintEnd_toStartOf="@id/item_account_total" />
 
-    <ImageView
-        style="@style/ItemDivisor"
-        android:layout_marginEnd="4dp"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_account_icon"
-        app:layout_constraintStart_toStartOf="@+id/item_account_name" />
+<!--    <ImageView-->
+<!--        android:id="@+id/item_account_nav_icon"-->
+<!--        style="@style/IconNormal"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:layout_marginEnd="-8dp"-->
+<!--        android:contentDescription="@null"-->
+<!--        app:tint="@color/disabled_text"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_app_navigate_next" />-->
+
+<!--    <ImageView-->
+<!--        style="@style/ItemDivisor"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:contentDescription="@null"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/item_account_icon"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/item_account_name" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

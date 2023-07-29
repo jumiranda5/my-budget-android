@@ -46,13 +46,11 @@ public class TransactionsInFragment extends Fragment {
     private FragmentTransactionsBinding binding;
     private TextView mTotal;
     private RecyclerView mRecyclerView;
-    private ImageButton mBack;
     private DayGroupAdapter adapter;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mRecyclerView = binding.transactionsList;
-        mBack = binding.transactionsClose;
     }
 
     // Interfaces
@@ -87,7 +85,6 @@ public class TransactionsInFragment extends Fragment {
         }
 
         mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-        mBack.setOnClickListener(v -> mInterface.navigateBack());
 
     }
 

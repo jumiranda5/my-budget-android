@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
     android:clickable="false">
 
     <ImageView
@@ -17,10 +18,13 @@
 
     <TextView
         android:id="@+id/item_home_cat_text"
-        style="@style/HomeCategoryText"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        style="@style/MyBody2"
+        android:layout_width="0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/medium_emphasis_text"
+        android:layout_marginStart="10dp"
+        android:paddingBottom="1dp"
         android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

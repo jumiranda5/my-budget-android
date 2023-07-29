@@ -17,7 +17,7 @@
     <color name="button_text">#FFFFFF</color>
 
     <!-- Backgrounds -->
-    <color name="bg_home">#EEEEEE</color>
+    <color name="bg_home">#EFEFEF</color>
     <color name="bg_00dp">#F9F9F9</color>
     <color name="bg_01dp">#FFFFFF</color>
     <color name="bg_04dp">@color/bg_01dp</color>
@@ -26,9 +26,10 @@
     <color name="bg_indicator">@color/disabled_text</color>
 
     <!-- Borders -->
-    <color name="border">#E0E0E0</color>
+    <color name="border">#EAEAEA</color>
     <color name="border_darker">#E0E0E0</color>
-    <color name="divisor">#EAEAEA</color>
+    <color name="divisor">#E0E0E0</color>
+    <color name="divider_expense">#1AD21E1E</color>
 
     <!-- Button -->
     <color name="disabled_button">#DADADA</color>
@@ -47,7 +48,7 @@
 
     <!-- Interactions -->
     <color name="click">#EAEAEA</color>
-    <color name="ripple">#4D720EC1</color>
+    <color name="ripple">#33720EC1</color>
 
     <!-- Inputs -->
     <color name="input_stroke">#E3E3E3</color>
@@ -78,7 +79,7 @@
 
     <color name="savings">#720EC1</color>
     <color name="savings_pressed">#5A0C97</color>
-    <color name="accumulated">#C67700</color>
+    <color name="accumulated">@color/medium_emphasis_text</color>
 
     <!-- Color Picker -->
     <color name="red">#EC2B2B</color>

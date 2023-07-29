@@ -6,71 +6,22 @@
     tools:context=".fragmentsMain.AccountsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/toolbar_height"
     android:layout_marginBottom="@dimen/bottomBar_height"
     android:background="@color/bg_00dp">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/accounts_toolbar"
-        style="@style/MainToolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- Icon -->
-            <ImageView
-                android:id="@+id/accounts_toolbar_icon"
-                style="@style/IconNormal"
-                android:contentDescription="@null"
-                android:layout_marginStart="@dimen/inner_space"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_account_balance_400" />
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/accounts_toolbar_title"
-                style="@style/ToolbarTitle"
-                android:layout_marginStart="@dimen/inner_space"
-                android:layout_marginEnd="@dimen/inner_space"
-                android:text="@string/title_accounts"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_add_account"
-                app:layout_constraintStart_toEndOf="@+id/accounts_toolbar_icon"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Add button -->
-            <ImageButton
-                android:id="@+id/button_add_account"
-                style="@style/ToolbarButtonWithBg"
-                android:layout_marginEnd="4dp"
-                android:contentDescription="@string/desc_add_account"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_add_500" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/accounts_list"
         style="@style/MainList"
         app:layout_constraintWidth_max="@dimen/list_max_width"
         android:paddingTop="@dimen/list_padding_top"
-        android:paddingStart="@dimen/list_padding_start"
-        android:paddingEnd="@dimen/list_padding_start"
         android:paddingBottom="@dimen/item_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accounts_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
         tools:listitem="@layout/item_account" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

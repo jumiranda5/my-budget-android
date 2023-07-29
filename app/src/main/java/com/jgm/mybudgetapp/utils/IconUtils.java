@@ -9,27 +9,26 @@ public class IconUtils {
 
     public IconUtils() {}
 
-    private static final Icon ic_default = new Icon(0, R.drawable.ic_category_fill, "Category");
+    private static final Icon ic_default = new Icon(0, R.drawable.ic_category_fill1_300_48, "Category");
+    private static final Icon ic_cash = new Icon(1, R.drawable.ic_cash_fill1_300_40, "Cash");
+    private static final Icon ic_wallet = new Icon(2, R.drawable.ic_account_balance_wallet_fill1_300_40, "Wallet");
+    private static final Icon ic_credit_card = new Icon(3, R.drawable.ic_credit_card_fill1_300_48, "Credit Card");
+    private static final Icon ic_savings = new Icon(4, R.drawable.ic_savings_fill1_300_48, "Savings");
+    private static final Icon ic_trending_up = new Icon(5, R.drawable.ic_trending_up_fill0_300_48, "Trending up");
 
-    private static final Icon ic_cash = new Icon(1, R.drawable.ic_cash_payments_fill, "Cash");
-    private static final Icon ic_wallet = new Icon(2, R.drawable.ic_wallet_fill, "Wallet");
-    private static final Icon ic_credit_card = new Icon(3, R.drawable.ic_credit_card, "Credit Card");
-    private static final Icon ic_savings = new Icon(4, R.drawable.ic_savings_fill, "Savings");
-    private static final Icon ic_trending_up = new Icon(5, R.drawable.ic_trending_up_fill, "Trending up");
-
-    private static final Icon ic_home = new Icon(6, R.drawable.ic_home_fill, "Home");
-    private static final Icon ic_construction = new Icon(7, R.drawable.ic_construction_fill, "Construction");
-    private static final Icon ic_cleaning = new Icon(8, R.drawable.ic_cleaning_services_fill, "Cleaning services");
-    private static final Icon ic_shopping_cart = new Icon(9, R.drawable.ic_shopping_cart_fill, "Shopping Cart");
+    private static final Icon ic_home = new Icon(6, R.drawable.ic_house_fill1_300_48, "Home");
+    private static final Icon ic_construction = new Icon(7, R.drawable.ic_construction_fill0_300_48, "Construction");
+    private static final Icon ic_cleaning = new Icon(8, R.drawable.ic_cleaning_services_fill0_300_48, "Cleaning services");
+    private static final Icon ic_shopping_cart = new Icon(9, R.drawable.ic_shopping_cart_fill1_300_48, "Shopping Cart");
     private static final Icon ic_pharmacy = new Icon(10, R.drawable.ic_local_pharmacy_fill, "Pharmacy");
 
     private static final Icon ic_work = new Icon(11, R.drawable.ic_business_center_fill, "Work");
-    private static final Icon ic_gavel = new Icon(12, R.drawable.ic_gavel_fill, "Gavel");
-    private static final Icon ic_bank = new Icon(13, R.drawable.ic_app_account_balance_400, "Bank");
+    private static final Icon ic_gavel = new Icon(12, R.drawable.ic_gavel_fill0_300_48, "Gavel");
+    private static final Icon ic_bank = new Icon(13, R.drawable.ic_40_account_balance_fill0_300, "Bank");
     private static final Icon ic_library = new Icon(14, R.drawable.ic_local_library_fill, "Library");
     private static final Icon ic_school = new Icon(15, R.drawable.ic_school_fill, "School");
 
-    private static final Icon ic_devices = new Icon(16, R.drawable.ic_devices_fill, "Devices");
+    private static final Icon ic_devices = new Icon(16, R.drawable.ic_devices_fill0_300_48, "Devices");
     private static final Icon ic_checkroom = new Icon(17, R.drawable.ic_checkroom_fill, "Checkroom");
     private static final Icon ic_shopping_bag = new Icon(18, R.drawable.ic_shopping_bag_fill, "Shopping bag");
     private static final Icon ic_heart = new Icon(19, R.drawable.ic_favorite_fill, "Heart");
@@ -39,7 +38,7 @@ public class IconUtils {
     private static final Icon ic_child = new Icon(22, R.drawable.ic_child_care_fill, "Child");
     private static final Icon ic_toy = new Icon(23, R.drawable.ic_toys_fill, "Toy");
     private static final Icon ic_videogame = new Icon(24, R.drawable.ic_stadia_controller_fill, "Videogame");
-    private static final Icon ic_attractions = new Icon(25, R.drawable.ic_attractions_fill, "Attractions");
+    private static final Icon ic_attractions = new Icon(25, R.drawable.ic_attractions_fill0_300_48, "Attractions");
 
     private static final Icon ic_car = new Icon(26, R.drawable.ic_directions_car_fill, "Car");
     private static final Icon ic_motor_sports = new Icon(27, R.drawable.ic_sports_motorsports_fill, "Motor bike");
@@ -47,13 +46,13 @@ public class IconUtils {
     private static final Icon ic_commute = new Icon(29, R.drawable.ic_commute_fill, "Commute");
     private static final Icon ic_gas_station = new Icon(30, R.drawable.ic_local_gas_station_fill, "Gas station");
 
-    private static final Icon ic_gym = new Icon(31, R.drawable.ic_fitness_center_fill, "Gym");
-    private static final Icon ic_stethoscope = new Icon(32, R.drawable.ic_stethoscope_fill, "Stethoscope");
+    private static final Icon ic_gym = new Icon(31, R.drawable.ic_fitness_center_fill0_300_48, "Gym");
+    private static final Icon ic_stethoscope = new Icon(32, R.drawable.ic_stethoscope_fill0_300_48, "Stethoscope");
     private static final Icon ic_dentistry = new Icon(33, R.drawable.ic_dentistry_fill, "Dentistry");
     private static final Icon ic_ecg_heart = new Icon(34, R.drawable.ic_ecg_heart_fill, "Ecg heart");
-    private static final Icon ic_eyeglasses = new Icon(35, R.drawable.ic_eyeglasses_fill, "Eyeglasses");
+    private static final Icon ic_eyeglasses = new Icon(35, R.drawable.ic_eyeglasses_fill0_300_48, "Eyeglasses");
 
-    private static final Icon ic_restaurant = new Icon(36, R.drawable.ic_restaurant_fill, "Restaurant");
+    private static final Icon ic_restaurant = new Icon(36, R.drawable.ic_restaurant_fill0_300_48, "Restaurant");
     private static final Icon ic_bakery = new Icon(37, R.drawable.ic_bakery_dining_fill, "Bakery");
     private static final Icon ic_takeout = new Icon(38, R.drawable.ic_takeout_dining_fill, "Takeout");
     private static final Icon ic_fruit = new Icon(39, R.drawable.ic_nutrition_fill, "Fruit");
@@ -65,11 +64,11 @@ public class IconUtils {
     private static final Icon ic_local_activity = new Icon(44, R.drawable.ic_local_activity_fill, "Local activity");
     private static final Icon ic_wine = new Icon(45, R.drawable.ic_wine_bar_fill, "Wine");
 
-    private static final Icon ic_nightlife = new Icon(46, R.drawable.ic_nightlife_fill, "Nightlife");
+    private static final Icon ic_nightlife = new Icon(46, R.drawable.ic_nightlife_fill0_300_48, "Nightlife");
     private static final Icon ic_theaters = new Icon(47, R.drawable.ic_theaters_fill, "Theaters");
-    private static final Icon ic_music = new Icon(48, R.drawable.ic_music_note_fill, "Music");
+    private static final Icon ic_music = new Icon(48, R.drawable.ic_music_note_fill0_300_48, "Music");
     private static final Icon ic_casino = new Icon(49, R.drawable.ic_casino_fill, "Casino");
-    private static final Icon ic_smoking = new Icon(50, R.drawable.ic_smoking_rooms_fill, "Smoking");
+    private static final Icon ic_smoking = new Icon(50, R.drawable.ic_smoking_rooms_fill0_300_48, "Smoking");
 
     private static final Icon ic_airplane = new Icon(51, R.drawable.ic_flight_fill, "Airplane");
     private static final Icon ic_luggage = new Icon(52, R.drawable.ic_luggage_fill, "Luggage");
@@ -87,16 +86,15 @@ public class IconUtils {
     private static final Icon ic_park= new Icon(62, R.drawable.ic_park_fill, "Park");
     private static final Icon ic_cabin = new Icon(63, R.drawable.ic_cabin_fill, "Cabin");
     private static final Icon ic_camping = new Icon(64, R.drawable.ic_camping_fill, "Camping");
-    private static final Icon ic_phishing = new Icon(65, R.drawable.ic_phishing_fill, "Phishing");
+    private static final Icon ic_phishing = new Icon(65, R.drawable.ic_phishing_fill0_300_48, "Phishing");
     private static final Icon ic_emergency = new Icon(66, R.drawable.ic_emergency, "Emergency");
 
     // Accounts
-    private static final Icon ic_app_cash = new Icon(67, R.drawable.ic_app_cash, "Cash");
-    private static final Icon ic_app_checking = new Icon(68, R.drawable.ic_app_account_balance, "Checking");
-    private static final Icon ic_app_savings = new Icon(69, R.drawable.ic_app_savings, "Savings");
-    private static final Icon ic_app_credit_card = new Icon(70, R.drawable.ic_app_credit_card, "Credit Card");
-
-    private static final Icon ic_app_accumulated = new Icon(71, R.drawable.ic_app_autorenew, "Accumulated");
+    private static final Icon ic_app_cash = new Icon(67, R.drawable.ic_40_cash_fill0_300, "Cash");
+    private static final Icon ic_app_checking = new Icon(68, R.drawable.ic_40_account_balance_fill0_300, "Checking");
+    private static final Icon ic_app_savings = new Icon(69, R.drawable.ic_40_savings_fill0_300, "Savings");
+    private static final Icon ic_app_credit_card = new Icon(70, R.drawable.ic_40_credit_card_fill0_300, "Credit Card");
+    private static final Icon ic_app_accumulated = new Icon(71, R.drawable.ic_40_autorenew_fill0_300, "Accumulated");
 
     public static ArrayList<Icon> getIconList() {
         ArrayList<Icon> icons = new ArrayList<>();

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/toolbar_height"
+    android:layout_marginBottom="@dimen/bottomBar_height"
     android:background="@color/bg_00dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentsMain.TransactionsOutFragment">
@@ -21,46 +22,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/transactions_close"
-                style="@style/IconButton"
-                android:layout_margin="4dp"
-                android:contentDescription="@string/nav_back"
+            <!-- Max width -->
+            <View
+                android:id="@+id/transactions_width_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_arrow_back_400" />
-
+                app:layout_constraintWidth_max="@dimen/page_width_anchor" />
 
             <TextView
                 android:id="@+id/transactions_title"
-                style="@style/TransactionsTitle"
-                android:layout_marginTop="@dimen/transactions_total_space"
+                style="@style/TransactionsOverline"
                 android:text="@string/title_expense"
+                app:layout_constraintBottom_toTopOf="@+id/transactions_total"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/transactions_divider"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
                 android:id="@+id/transactions_total"
-                style="@style/TransactionsCurrencyTitle"
-                android:layout_marginTop="0dp"
-                android:text="@string/initial_value"
-                android:textAlignment="center"
-                android:textColor="@color/expense"
+                style="@style/TransactionsTotal"
+                app:layout_constraintBottom_toTopOf="@+id/transactions_divider"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/transactions_divider"
                 app:layout_constraintTop_toBottomOf="@+id/transactions_title" />
+
+            <TextView
+                android:id="@+id/transactions_due"
+                style="@style/MySubtitle2"
+                android:layout_marginBottom="16dp"
+                android:text="Due: $200.00"
+                android:textColor="@color/high_emphasis_text"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/transactions_divider"
+                app:layout_constraintEnd_toEndOf="@+id/transactions_divider" />
+
+            <View
+                android:id="@+id/transactions_divider"
+                style="@style/PageDivider"
+                app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
+                app:layout_constraintStart_toStartOf="@id/transactions_width_anchor"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transactions_list"
                 style="@style/NestedListNoScroll"
-                app:layout_constraintWidth_max="@dimen/list_max_width"
-                android:layout_marginTop="@dimen/transactions_total_space_bottom"
-                android:layout_marginStart="@dimen/list_padding_start"
-                android:layout_marginEnd="@dimen/list_padding_start"
+                android:layout_marginTop="@dimen/transactions_list_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/transactions_total"
+                app:layout_constraintTop_toBottomOf="@+id/transactions_divider"
+                app:layout_constraintWidth_max="@dimen/list_max_width"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_transaction_day" />
 

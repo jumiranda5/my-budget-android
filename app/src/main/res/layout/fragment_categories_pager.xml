@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_00dp"
-    android:paddingBottom="@dimen/bottomBar_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentsCategories.CategoriesExpensesFragment">
 
@@ -32,7 +31,7 @@
 
             <TextView
                 android:id="@+id/categories_total"
-                style="@style/NumberImpact"
+                style="@style/MyHeadline3"
                 android:text="@string/initial_value"
                 android:textAlignment="center"
                 android:padding="@dimen/categories_chart_text_padding"
@@ -45,8 +44,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories_percent_list"
                 style="@style/NestedListNoScroll"
-                android:paddingStart="@dimen/categories_chart_list_margin_start"
-                android:paddingEnd="@dimen/categories_chart_list_margin_start"
+                app:layout_constraintWidth_max="@dimen/list_max_width"
+                android:paddingStart="@dimen/categories_chart_list_padding"
+                android:paddingEnd="@dimen/categories_chart_list_padding"
                 android:paddingBottom="32dp"
                 android:layout_marginTop="@dimen/categories_chart_list_margin"
                 app:layout_constraintEnd_toEndOf="parent"

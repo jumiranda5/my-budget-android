@@ -11,8 +11,8 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your light theme here. -->
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:spotShadowAlpha">0.09</item>
-        <item name="android:ambientShadowAlpha">0.09</item>
+        <item name="android:spotShadowAlpha">0.08</item>
+        <item name="android:ambientShadowAlpha">0.08</item>
         <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/bg_01dp</item>

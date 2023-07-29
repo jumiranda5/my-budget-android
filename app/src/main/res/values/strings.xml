@@ -75,16 +75,17 @@
     <string name="msg_pending_part1">You have</string>
     <string name="msg_pending_part2">outstanding payment.</string>
     <string name="msg_pending_part2_plural">outstanding payments.</string>
-    <string name="msg_progress">You have used 0% of your budget.</string>
-    <string name="msg_progress_part1">You have used</string>
+    <string name="msg_progress">You used 0% of your budget.</string>
+    <string name="msg_progress_part1">You used</string>
     <string name="msg_progress_part2">of your budget.</string>
-    <string name="label_month">Balance:</string>
-    <string name="label_income">Income:</string>
-    <string name="label_expenses">Expense:</string>
-    <string name="label_expenses_progress">Expense Progress:</string>
-    <string name="label_accounts_overview">Accounts overview:</string>
-    <string name="label_categories_income">Income Categories:</string>
-    <string name="label_categories_expense">Expense Categories:</string>
+    <string name="label_month">Balance</string>
+    <string name="label_income">Income</string>
+    <string name="label_expenses">Expense</string>
+    <string name="label_accounts_overview">Accounts overview</string>
+    <string name="label_categories_income">Income Categories</string>
+    <string name="label_categories_expense">Expense Categories</string>
+    <string name="label_year">Balance - 2023</string>
+    <string name="desc_year_bar_chart">A bar chart with the income and expense of each month.</string>
 
     <!-- Transactions -->
     <string name="label_accumulated">Accumulated</string>
@@ -140,6 +141,7 @@
     <string name="msg_archive_category">Do you want to permanently archive this category? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
+    <string name="msg_item_click">Click on the items to see details.</string>
 
 
     <!--    &lt;!&ndash; Actions (buttons) &ndash;&gt;-->

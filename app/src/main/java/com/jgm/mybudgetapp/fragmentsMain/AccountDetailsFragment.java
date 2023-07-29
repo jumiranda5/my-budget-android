@@ -57,14 +57,14 @@ public class AccountDetailsFragment extends Fragment {
 
     // UI
     private FragmentAccountDetailsBinding binding;
-    private ImageButton buttonBack, buttonEdit;
+    private ImageButton buttonBack;
     private TextView mAccountName, mTotal;
     private ImageView mAccountIcon;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         buttonBack = binding.accountBackButton;
-        buttonEdit = binding.accountEditButton;
+        //buttonEdit = binding.accountEditButton;
         mAccountName = binding.accountDetailsTitle;
         mAccountIcon = binding.accountIcon;
         mTotal = binding.accountTotal;
@@ -102,7 +102,7 @@ public class AccountDetailsFragment extends Fragment {
         initAccountInfo();
         getAccountTransactions(date);
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
-        buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
+        //buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
 
     }
 

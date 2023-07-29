@@ -43,11 +43,10 @@ public class AccountsFragment extends Fragment {
     // UI
     private FragmentAccountsBinding binding;
     private RecyclerView mRecyclerView;
-    private ImageButton mAddAccount;
+    //private ImageButton mAddAccount;
 
     private void setBinding() {
         mRecyclerView = binding.accountsList;
-        mAddAccount = binding.buttonAddAccount;
     }
 
     // Interfaces
@@ -76,7 +75,7 @@ public class AccountsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getAccountsData();
-        mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
+        //mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
 
     }
 

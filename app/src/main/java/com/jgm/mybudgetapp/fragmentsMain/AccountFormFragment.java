@@ -104,7 +104,7 @@ public class AccountFormFragment extends Fragment {
             mInterface.showConfirmationDialog(
                     getString(R.string.msg_archive_account),
                     getString(R.string.action_archive),
-                    R.drawable.ic_app_archive);
+                    R.drawable.ic_24_archive_fill0_300);
         });
         mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
 

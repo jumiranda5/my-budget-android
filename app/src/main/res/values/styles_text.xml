@@ -2,150 +2,199 @@
 <resources>
 
     <!-- ==========================================================
-                             TEXT STYLES
+                               TYPOGRAPHY
     ============================================================ -->
 
-    <!-- Normal Text -->
+    <!-- Text Normal / Ellipse -->
 
     <style name="TextNormal" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
-    <style name="TextNormalEllipse" parent="TextNormal">
+    <style name="TextEllipse" parent="TextNormal">
         <item name="android:layout_width">0dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="TextError" parent="TextNormalEllipse">
-        <item name="android:textColor">@color/text_error</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <!-- H3 -->
+    <style name="MyHeadline3" parent="TextNormal">
+        <item name="android:fontFamily">@font/eczar_medium</item>
+        <item name="android:textSize">@dimen/h3</item>
+        <item name="android:letterSpacing">0.01</item>
     </style>
 
-    <style name="SubtitleLarge" parent="TextNormalEllipse">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <!-- H6 -->
+    <style name="MyHeadline6" parent="TextEllipse">
+        <item name="android:fontFamily">@font/barlow_semi_condensed_medium</item>
+        <item name="android:textSize">@dimen/h6</item>
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
-    <!-- Secondary Text -->
-
-    <style name="TextSecondary" parent="TextNormal">
+    <!-- Subtitle 1 -->
+    <style name="MySubtitle1" parent="TextNormal">
+        <item name="android:fontFamily">@font/barlow_semi_condensed_regular</item>
+        <item name="android:textSize">@dimen/subtitle1</item>
+        <item name="android:letterSpacing">0.1</item>
         <item name="android:textColor">@color/medium_emphasis_text</item>
-        <item name="android:textSize">@dimen/text_secondary</item>
     </style>
 
-    <style name="TextSecondaryEllipse" parent="TextSecondary">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
+    <!-- Subtitle 2 -->
+    <style name="MySubtitle2" parent="TextEllipse">
+        <item name="android:fontFamily">@font/barlow_semi_condensed_medium</item>
+        <item name="android:textSize">@dimen/subtitle2</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
     </style>
 
-    <style name="HomeBody" parent="TextSecondary">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <!-- Body 1 -->
+    <style name="MyBody1" parent="TextNormal">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/body1</item>
+        <item name="android:letterSpacing">0.01</item>
     </style>
 
-    <style name="HomeCategoryText" parent="TextSecondaryEllipse">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <!-- Body 1 Number -->
+    <style name="MyBody1Number" parent="TextNormal">
+        <item name="android:fontFamily">@font/eczar_regular</item>
+        <item name="android:textSize">@dimen/body1</item>
+        <item name="android:letterSpacing">0.01</item>
     </style>
 
-    <style name="Subtitle" parent="TextSecondaryEllipse">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <!-- Body 2 -->
+    <style name="MyBody2" parent="TextNormal">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/body2</item>
+        <item name="android:letterSpacing">0</item>
     </style>
+
+    <!-- Button -->
+    <style name="MyButtonText" parent="TextEllipse">
+        <item name="android:fontFamily">@font/barlow_semi_condensed_semi_bold</item>
+        <item name="android:textSize">@dimen/button_text</item>
+        <item name="android:letterSpacing">0.12</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Caption -->
+    <style name="MyCaption" parent="TextEllipse">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/caption</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <!-- Overline -->
+    <style name="MyOverline" parent="TextEllipse">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/overline</item>
+        <item name="android:letterSpacing">0.2</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- ==========================================================
+                             TEXT STYLES
+    ============================================================ -->
 
     <!-- Titles -->
 
-    <style name="Title" parent="TextNormalEllipse">
-        <item name="android:textSize">@dimen/text_title</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
-    </style>
-
-    <style name="DialogTitle" parent="Title">
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginTop">24dp</item>
-    </style>
-
-    <style name="TransactionsTitle" parent="Title">
-        <item name="android:textSize">@dimen/transactions_title_size</item>
+    <style name="ToolbarMonth" parent="MyHeadline6">
+        <item name="android:layout_width">@dimen/toolbar_month_width</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/medium_emphasis_text</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
-    </style>
-
-    <style name="TransactionsCurrencyTitle" parent="NumberImpact">
-        <item name="android:textSize">@dimen/transactions_title_currency_size</item>
-    </style>
-
-    <!-- Toolbar -->
-
-    <style name="ToolbarMonth" parent="TextNormalEllipse">
-        <item name="android:textSize">@dimen/toolbar_month</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:text">@string/initial_month</item>
     </style>
 
     <style name="ToolbarNotCurrentMonth" parent="ToolbarMonth">
-        <item name="android:fontFamily">@font/titillium_web_light</item>
+        <item name="android:fontFamily">@font/barlow_semi_condensed_regular</item>
         <item name="android:textColor">@color/medium_emphasis_text</item>
     </style>
 
-    <style name="ToolbarTitle" parent="TextNormalEllipse">
-        <item name="android:textSize">@dimen/toolbar_title</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+    <style name="DayTitle" parent="MyOverline">
+        <item name="android:fontFamily">@font/barlow_bold</item>
+        <item name="android:textSize">@dimen/caption</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:letterSpacing">0.1</item>
     </style>
 
-    <!-- Labels -->
-
-    <style name="HomeLabelSmall" parent="TextSecondary">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <style name="TransactionsOverline" parent="MyOverline">
+        <item name="android:fontFamily">@font/barlow_medium</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
     </style>
 
-    <style name="HomeLabel" parent="TextNormal">
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
-        <item name="android:textSize">@dimen/home_label_size</item>
-        <item name="android:layout_marginTop">@dimen/home_label_margin_top</item>
+    <style name="TransactionsTotal" parent="MyHeadline3">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:text">@string/initial_value</item>
+        <item name="android:textColor">@color/expense</item>
+        <item name="android:textSize">@dimen/transactions_title_size</item>
     </style>
 
-    <style name="ProgressText" parent="TextSecondary">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <style name="DialogTitle" parent="MyHeadline6">
+        <item name="android:layout_marginTop">24dp</item>
+    </style>
+
+    <!-- Body -->
+
+    <style name="BottomNavText" parent="AppTheme">
+        <item name="android:fontFamily">@font/barlow_semi_condensed_regular</item>
+        <item name="android:textSize">@dimen/bottom_nav_text</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="TextError" parent="TextEllipse">
+        <item name="android:fontFamily">@font/barlow_medium</item>
+        <item name="android:textSize">@dimen/body1</item>
+        <item name="android:textColor">@color/text_error</item>
+    </style>
+
+    <style name="BodyItemEllipse" parent="MyBody1">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- using this only on the accounts overview card... -->
+    <style name="HomeBody" parent="MyBody1">
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:textSize">@dimen/home_accounts_text_size</item>
+        <item name="android:paddingBottom">3dp</item>
+    </style>
+
+    <style name="ProgressText" parent="MyBody1Number">
         <item name="android:textSize">@dimen/progress_text_size</item>
+        <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingTop">4dp</item>
     </style>
 
     <!-- Numbers -->
 
-    <style name="Number" parent="TextNormal">
-        <item name="android:text">@string/initial_value</item>
-        <item name="android:fontFamily">@font/eczar_regular</item>
-        <item name="android:paddingBottom">0dp</item>
-    </style>
-
-    <style name="NumberHomeIncome" parent="Number">
+    <style name="NumberHomeIncome" parent="MyBody1Number">
         <item name="android:layout_width">0dp</item>
         <item name="android:fontFamily">@font/eczar_medium</item>
-        <item name="android:layout_marginTop">16dp</item>
         <item name="android:textColor">@color/income</item>
         <item name="android:textSize">@dimen/home_income_size</item>
-        <item name="android:layout_marginBottom">-2dp</item>
-    </style>
-
-    <style name="NumberImpact" parent="Number">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:fontFamily">@font/eczar_medium</item>
-        <item name="android:textSize">@dimen/number_impact</item>
-    </style>
-
-    <style name="Currency" parent="TextNormal">
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">-6dp</item>
         <item name="android:text">@string/initial_value</item>
-        <item name="android:fontFamily">@font/eczar_regular</item>
+    </style>
+
+    <style name="HomeAccountCurrency" parent="CurrencySpaceMedium">
+        <item name="android:textSize">@dimen/home_accounts_text_size</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
+
+    <style name="Currency" parent="MyBody1Number">
+        <item name="android:text">@string/initial_value</item>
     </style>
 
     <style name="CurrencySpace" parent="Currency">
         <item name="android:text">@string/initial_value_no_symbol</item>
         <item name="layout_constraintWidth_min">@dimen/currency_width_min</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">0dp</item>
         <item name="layout_constraintWidth_max">@dimen/currency_width_max</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">0dp</item>
         <item name="android:textAlignment">textEnd</item>
     </style>
 
@@ -157,16 +206,97 @@
         <item name="android:fontFamily">@font/eczar_medium</item>
     </style>
 
-    <style name="CurrencyItem" parent="CurrencySpace">
-        <item name="android:fontFamily">@font/eczar_regular</item>
+    <style name="CurrencySymbol" parent="Currency">
+<!--        <item name="android:fontFamily">@font/eczar_semi_bold</item>-->
+        <item name="android:textSize">@dimen/body2</item>
+        <item name="android:text">@string/currency_symbol</item>
     </style>
 
     <!-- Tabs -->
 
     <style name="MyTabText" parent="AppTheme">
         <item name="android:textSize">@dimen/text_normal</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:fontFamily">@font/barlow_medium</item>
     </style>
+
+
+
+    <!-- Todo => DELETE -->
+
+<!--    &lt;!&ndash; Normal Text &ndash;&gt;-->
+
+<!--    <style name="TextNormalEllipse" parent="TextNormal">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:ellipsize">end</item>-->
+<!--        <item name="android:maxLines">1</item>-->
+<!--    </style>-->
+
+<!--    <style name="SubtitleLarge" parent="TextNormalEllipse">-->
+<!--        <item name="android:fontFamily">@font/titillium_web_regular</item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash; Secondary Text &ndash;&gt;-->
+
+<!--    <style name="TextSecondary" parent="TextNormal">-->
+<!--        <item name="android:textColor">@color/medium_emphasis_text</item>-->
+<!--        <item name="android:textSize">@dimen/text_secondary</item>-->
+<!--    </style>-->
+
+<!--    <style name="TextSecondaryEllipse" parent="TextSecondary">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:ellipsize">end</item>-->
+<!--        <item name="android:maxLines">1</item>-->
+<!--    </style>-->
+
+<!--    <style name="Subtitle" parent="TextSecondaryEllipse">-->
+<!--        <item name="android:fontFamily">@font/titillium_web_regular</item>-->
+<!--    </style>-->
+
+    <!-- Titles -->
+
+<!--    <style name="Title" parent="TextNormalEllipse">-->
+<!--        <item name="android:textSize">@dimen/text_title</item>-->
+<!--        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>-->
+<!--    </style>-->
+
+<!--    <style name="TransactionsTitle" parent="Title">-->
+<!--        <item name="android:textSize">@dimen/transactions_title_size</item>-->
+<!--        <item name="android:textAlignment">center</item>-->
+<!--        <item name="android:textColor">@color/medium_emphasis_text</item>-->
+<!--        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>-->
+<!--    </style>-->
+
+<!--    <style name="TransactionsCurrencyTitle" parent="NumberImpact">-->
+<!--        <item name="android:textSize">@dimen/transactions_title_currency_size</item>-->
+<!--    </style>-->
+
+    <!-- Toolbar -->
+
+<!--    <style name="ToolbarTitle" parent="TextNormalEllipse">-->
+<!--        <item name="android:textSize">@dimen/toolbar_title</item>-->
+<!--        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>-->
+<!--    </style>-->
+
+    <!-- Labels -->
+
+<!--    <style name="HomeLabel" parent="TextNormal">-->
+<!--        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>-->
+<!--        <item name="android:textSize">@dimen/home_label_size</item>-->
+<!--        <item name="android:layout_marginTop">@dimen/home_label_margin_top</item>-->
+<!--    </style>-->
+
+    <!-- Numbers -->
+
+<!--    <style name="Number" parent="TextNormal">-->
+<!--        <item name="android:text">@string/initial_value</item>-->
+<!--        <item name="android:fontFamily">@font/eczar_regular</item>-->
+<!--        <item name="android:paddingBottom">0dp</item>-->
+<!--    </style>-->
+
+
+<!--    <style name="CurrencyItem" parent="CurrencySpace">-->
+<!--        <item name="android:fontFamily">@font/eczar_regular</item>-->
+<!--    </style>-->
 
 
 </resources>

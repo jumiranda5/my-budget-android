@@ -19,7 +19,7 @@
         style="@style/DialogTitle"
         android:text="@string/hint_payment_method"
         app:layout_constraintEnd_toStartOf="@id/method_picker_close"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
 
     <ImageButton
@@ -30,11 +30,11 @@
         app:layout_constraintBottom_toBottomOf="@+id/method_picker_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/method_picker_title"
-        app:srcCompat="@drawable/ic_app_close" />
+        app:srcCompat="@drawable/ic_24_close_300" />
 
     <ImageView
         android:id="@+id/divisor"
-        style="@style/DialogDivisor"
+        style="@style/DialogDivider"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +48,22 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="400dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divisor"
         tools:listitem="@layout/item_method_picker" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/inner_space" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/inner_space" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

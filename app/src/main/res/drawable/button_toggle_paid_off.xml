@@ -10,6 +10,6 @@
         android:height="24dp"
         android:width="24dp"
         android:gravity="center"
-        android:drawable="@drawable/ic_app_radio_button_unchecked_300">
+        android:drawable="@drawable/ic_24_radio_button_unchecked_300">
     </item>
 </layer-list>

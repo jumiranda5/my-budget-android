@@ -10,7 +10,7 @@
         android:id="@+id/icon_item"
         style="@style/ItemButton"
         android:contentDescription="@string/hint_icon"
-        app:srcCompat="@drawable/ic_category_fill"
+        app:srcCompat="@drawable/ic_category_fill1_300_48"
         app:tint="@color/high_emphasis_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

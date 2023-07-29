@@ -51,9 +51,9 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
         Color color = ColorUtils.getColor(colorId);
         int iconId;
         switch (account.getType()) {
-            case 0: iconId = R.drawable.ic_app_cash; break;
-            case 2: iconId = R.drawable.ic_app_savings; break;
-            default: iconId = R.drawable.ic_app_account_balance;
+            case 0: iconId = R.drawable.ic_40_cash_fill0_300; break;
+            case 2: iconId = R.drawable.ic_40_savings_fill0_300; break;
+            default: iconId = R.drawable.ic_40_account_balance_fill0_300;
         }
 
         // Set Icon and color

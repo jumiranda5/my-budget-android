@@ -19,33 +19,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/cat_form_title"
-                style="@style/ToolbarTitle"
-                android:layout_marginStart="20dp"
-                android:text="@string/title_add_category"
+            <ImageButton
+                android:id="@+id/cat_form_back_button"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/nav_back"
+                android:src="@drawable/ic_24_arrow_back_fill0_300"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_archive"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/cat_form_toolbar_close"
-                style="@style/ToolbarButton"
-                android:contentDescription="@string/nav_close"
+            <TextView
+                android:id="@+id/cat_form_title"
+                style="@style/MyHeadline6"
+                android:text="@string/title_add_category"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_close_400" />
+                app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_archive"
+                app:layout_constraintStart_toEndOf="@+id/cat_form_back_button"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/cat_form_toolbar_archive"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/action_archive"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_close"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_archive_400"
+                app:srcCompat="@drawable/ic_24_archive_fill0_300"
                 app:tint="@color/danger" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,7 +83,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/category_name_input"
                 app:layout_constraintStart_toStartOf="@+id/category_name_input"
                 app:layout_constraintTop_toTopOf="@+id/category_name_input"
-                app:srcCompat="@drawable/ic_app_description" />
+                app:srcCompat="@drawable/ic_40_description_fill0_300" />
 
             <Button
                 android:id="@+id/category_icon_button"
@@ -99,7 +98,7 @@
                 android:id="@+id/category_icon"
                 style="@style/InputIcon"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_category_fill"
+                android:src="@drawable/ic_category_fill1_300_48"
                 app:layout_constraintBottom_toBottomOf="@+id/category_icon_button"
                 app:layout_constraintStart_toStartOf="@+id/category_icon_button"
                 app:layout_constraintTop_toTopOf="@+id/category_icon_button" />

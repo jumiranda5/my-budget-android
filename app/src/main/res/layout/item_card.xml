@@ -5,8 +5,6 @@
     android:id="@+id/item_card_container"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Todo: implement click on adapter -->
-
     <ImageView
         android:id="@+id/item_card_icon"
         style="@style/IconNormal"
@@ -14,11 +12,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_app_credit_card" />
+        app:srcCompat="@drawable/ic_40_credit_card_fill0_300" />
 
     <TextView
         android:id="@+id/item_card_name"
-        style="@style/TextNormalEllipse"
+        style="@style/BodyItemEllipse"
         android:layout_width="0dp"
         android:layout_marginStart="@dimen/inner_space"
         android:text="@string/credit_card"
@@ -30,10 +28,11 @@
 
     <TextView
         android:id="@+id/item_card_billing_day"
-        style="@style/Subtitle"
+        style="@style/MyBody2"
         android:layout_width="0dp"
         android:text="@string/initial_billing_day"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/medium_emphasis_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_card_edit"
         app:layout_constraintStart_toStartOf="@+id/item_card_name"
@@ -42,18 +41,11 @@
     <ImageButton
         android:id="@+id/item_card_edit"
         style="@style/IconButton"
-        android:src="@drawable/ic_app_edit"
+        android:src="@drawable/ic_40_edit_fill0_300"
         android:contentDescription="@string/nav_edit"
         android:layout_marginEnd="-8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        style="@style/ItemDivisor"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/item_card_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

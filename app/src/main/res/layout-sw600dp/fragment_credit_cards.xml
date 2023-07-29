@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_00dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragmentsSettings.CreditCardsFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cards_toolbar"
+        style="@style/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/cards_toolbar_close"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/nav_back"
+                android:src="@drawable/ic_24_arrow_back_fill0_300"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cards_toolbar_title"
+                style="@style/MyHeadline6"
+                android:text="@string/credit_cards"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_add_card"
+                app:layout_constraintStart_toEndOf="@+id/cards_toolbar_close"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Add button - tablets -->
+            <ImageButton
+                android:id="@+id/button_add_card"
+                style="@style/ToolbarButtonWithBg"
+                android:layout_marginEnd="4dp"
+                android:visibility="visible"
+                android:contentDescription="@string/desc_add_category"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_add_500" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cards_list"
+        style="@style/MainList"
+        app:layout_constraintWidth_max="@dimen/list_max_width"
+        android:paddingTop="@dimen/list_padding_top"
+        android:paddingStart="@dimen/list_padding_start"
+        android:paddingEnd="@dimen/list_padding_start"
+        android:paddingBottom="@dimen/item_double_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cards_toolbar"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_card" />
+
+    <!-- Add button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/inner_space"
+        android:backgroundTint="@color/colorAccent"
+        app:tint="@color/white"
+        android:visibility="gone"
+        android:contentDescription="@string/desc_add_category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_app_add_500" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,6 @@
         android:height="24dp"
         android:width="24dp"
         android:gravity="center"
-        android:drawable="@drawable/ic_app_check_circle_300">
+        android:drawable="@drawable/ic_24_check_circle_fill0_300">
     </item>
 </layer-list>

@@ -111,11 +111,11 @@ public class TransactionDialog extends BottomSheetDialogFragment {
                 paymentMethod.setIconId(account.getIconId());
 
                 if (paymentMethod.getType() == 0)
-                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_app_cash));
+                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cash_fill0_300));
                 else if (paymentMethod.getType() == 1)
-                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_app_account_balance));
+                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_account_balance_fill0_300));
                 else
-                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_app_savings));
+                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_savings_fill0_300));
 
                 Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
                 methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
@@ -132,7 +132,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
                 paymentMethod.setColorId(creditCard.getColorId());
                 paymentMethod.setIconId(Tags.CARD_ICON_ID);
                 paymentMethod.setBillingDay(creditCard.getBillingDay());
-                methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_app_credit_card));
+                methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_48_credit_card_300));
                 Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
                 methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
             });

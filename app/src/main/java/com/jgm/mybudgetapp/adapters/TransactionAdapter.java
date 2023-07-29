@@ -22,6 +22,7 @@ import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.IconOutlineUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -52,7 +53,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         TransactionResponse item = mDataList.get(position);
-        Icon icon = IconUtils.getIcon(item.getIconId());
+        Icon icon = IconOutlineUtils.getIcon(item.getIconId());
         Color color = ColorUtils.getColor(item.getColorId());
         boolean isCardTotal = item.getId() == -1;
         boolean isAccumulated = item.getId() == 0;
@@ -62,7 +63,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
         holder.mIcon.setContentDescription(icon.getIconName());
-        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         // Set description
         String description = item.getDescription();
@@ -115,9 +115,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Set accumulated
         if (isAccumulated) {
             holder.mPaid.setVisibility(View.GONE);
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
             holder.mName.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
+            holder.mCardIcon.setVisibility(View.VISIBLE);
+            holder.mCardIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_24_circle_notifications_fill0_300));
+            holder.mCardIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
         }
 
         // Set credit card item
@@ -128,6 +132,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
         if (isCardTotal) {
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
             holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
 

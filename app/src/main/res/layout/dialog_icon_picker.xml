@@ -19,12 +19,12 @@
         style="@style/DialogTitle"
         android:text="@string/hint_icon"
         app:layout_constraintEnd_toStartOf="@+id/dialog_icon_dismiss"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
 
     <ImageView
         android:id="@+id/divisor"
-        style="@style/DialogDivisor"
+        style="@style/DialogDivider"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/dialog_icon_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dialog_icon_title"
-        app:srcCompat="@drawable/ic_app_close" />
+        app:srcCompat="@drawable/ic_24_close_300" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_icon_list"
@@ -53,5 +53,19 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="5"
         tools:listitem="@layout/item_icon" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/inner_space" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/inner_space" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

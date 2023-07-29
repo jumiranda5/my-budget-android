@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ==================  MAIN ACTIVITY ================== -->
+<!--    &lt;!&ndash; ==================  MAIN ACTIVITY ================== &ndash;&gt;-->
 
-    <!-- Toolbar -->
-    <dimen name="toolbar_month_width">140dp</dimen>
-    <dimen name="toolbar_height">64dp</dimen>
-    <dimen name="toolbar_button_size">58dp</dimen>
-    <dimen name="toolbar_month">20sp</dimen>
+<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
+<!--    <dimen name="toolbar_month_width">140dp</dimen>-->
+<!--    <dimen name="toolbar_height">64dp</dimen>-->
+<!--    <dimen name="toolbar_button_size">58dp</dimen>-->
+<!--    <dimen name="toolbar_month">20sp</dimen>-->
 
-    <!-- ==================  HOME FRAGMENT ================== -->
+<!--    &lt;!&ndash; ==================  HOME FRAGMENT ================== &ndash;&gt;-->
 
-    <dimen name="home_padding">0dp</dimen>
-    <dimen name="land_home_balance_width">400dp</dimen>
-    <dimen name="progress_indicator">148dp</dimen>
-    <dimen name="land_home_progress_width">220dp</dimen>
+<!--    <dimen name="home_padding">0dp</dimen>-->
+<!--    <dimen name="land_home_balance_width">400dp</dimen>-->
+<!--    <dimen name="progress_indicator">148dp</dimen>-->
+<!--    <dimen name="land_home_progress_width">220dp</dimen>-->
 
-    <!-- ==================  ACCOUNTS  ================== -->
+<!--    &lt;!&ndash; ==================  ACCOUNTS  ================== &ndash;&gt;-->
 
-    <dimen name="account_details_margin_top">48dp</dimen>
+<!--    <dimen name="account_details_margin_top">48dp</dimen>-->
 
 </resources>

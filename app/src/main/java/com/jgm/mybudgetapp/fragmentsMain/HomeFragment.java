@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
     private TextView mBalanceText, mIncomeText, mExpensesText,
             mCash, mChecking, mSavings, mCashSymbol, mCheckingSymbol, mSavingsSymbol,
-            mYearBalance, mPendingMsg, mProgress, mProgressText;
+            mPendingMsg, mProgress, mProgressText;
     private CircularProgressIndicator mBalanceProgress;
 
     private void bindViews() {
@@ -80,7 +80,6 @@ public class HomeFragment extends Fragment {
         mCash = binding.homeCash;
         mChecking = binding.homeChecking;
         mSavings = binding.homeSavings;
-        mYearBalance = binding.homeYearBalance;
         mPendingMsg = binding.homePendingText;
         mCardPending = binding.homePending;
         mCardProgress = binding.homeCardExpensesProgress;
@@ -340,9 +339,9 @@ public class HomeFragment extends Fragment {
             }
 
             // Get year balance
-            float yearBalance = NumberUtils.roundFloat(incomeTotal) - NumberUtils.roundFloat(expensesTotal);
-            String yearBalanceCurrency = NumberUtils.getCurrencyFormat(mContext, yearBalance)[2];
-            mYearBalance.setText(yearBalanceCurrency);
+            //float yearBalance = NumberUtils.roundFloat(incomeTotal) - NumberUtils.roundFloat(expensesTotal);
+            //String yearBalanceCurrency = NumberUtils.getCurrencyFormat(mContext, yearBalance)[2];
+            //mYearBalance.setText(yearBalanceCurrency);
 
             // Build list to draw chart
             int month = 1;

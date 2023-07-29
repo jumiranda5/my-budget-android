@@ -16,6 +16,7 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.IconOutlineUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
@@ -43,8 +44,8 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
     @Override
     public void onBindViewHolder(@NonNull TransactionAdapter2.ListViewHolder holder, int position) {
         TransactionResponse item = mDataList.get(position);
-        Icon icon = IconUtils.getIcon(item.getIconId());
-        Color color = ColorUtils.getColor(item.getColorId());
+        Icon icon = IconOutlineUtils.getIcon(item.getIconId());
+        //Color color = ColorUtils.getColor(item.getColorId());
 
         // Set icon
         if (item.getType() == 2) {
@@ -55,7 +56,7 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
         else {
             holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
             holder.mIcon.setContentDescription(icon.getIconName());
-            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+            //holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
         }
 
         // Set description

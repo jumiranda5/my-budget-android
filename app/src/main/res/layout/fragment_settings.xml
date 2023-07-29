@@ -24,17 +24,16 @@
             <ImageButton
                 android:id="@+id/settings_button_back"
                 style="@style/ToolbarButton"
-                android:contentDescription="@null"
+                android:contentDescription="@string/nav_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_arrow_back_400" />
+                app:srcCompat="@drawable/ic_24_arrow_back_fill0_300" />
 
             <TextView
                 android:id="@+id/settings_toolbar_title"
-                style="@style/ToolbarTitle"
+                style="@style/MyHeadline6"
                 android:text="@string/nav_settings"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/settings_button_back"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,7 +76,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_switch_lock"
                 app:layout_constraintStart_toStartOf="@+id/settings_switch_lock"
                 app:layout_constraintTop_toTopOf="@+id/settings_switch_lock"
-                app:srcCompat="@drawable/ic_app_fingerprint" />
+                app:srcCompat="@drawable/ic_48_fingerprint_300" />
 
             <!-- Dark mode -->
 
@@ -97,7 +96,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/switch_dark_mode"
                 app:layout_constraintStart_toStartOf="@+id/switch_dark_mode"
                 app:layout_constraintTop_toTopOf="@+id/switch_dark_mode"
-                app:srcCompat="@drawable/ic_app_dark_mode" />
+                app:srcCompat="@drawable/ic_48_dark_mode_300" />
 
             <!-- Categories -->
 
@@ -117,7 +116,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_edit_categories"
                 app:layout_constraintStart_toStartOf="@+id/settings_edit_categories"
                 app:layout_constraintTop_toTopOf="@+id/settings_edit_categories"
-                app:srcCompat="@drawable/ic_app_category" />
+                app:srcCompat="@drawable/ic_48_category_300" />
 
             <!-- Credit Cards -->
 
@@ -137,7 +136,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_edit_cards"
                 app:layout_constraintStart_toStartOf="@+id/settings_edit_cards"
                 app:layout_constraintTop_toTopOf="@+id/settings_edit_cards"
-                app:srcCompat="@drawable/ic_app_credit_card" />
+                app:srcCompat="@drawable/ic_48_credit_card_300" />
 
             <!-- Premium member -->
 
@@ -157,7 +156,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_premium_member"
                 app:layout_constraintStart_toStartOf="@+id/settings_premium_member"
                 app:layout_constraintTop_toTopOf="@+id/settings_premium_member"
-                app:srcCompat="@drawable/ic_app_premium" />
+                app:srcCompat="@drawable/ic_48_premium_300" />
 
             <!-- Support -->
 
@@ -177,7 +176,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_support"
                 app:layout_constraintStart_toStartOf="@+id/settings_support"
                 app:layout_constraintTop_toTopOf="@+id/settings_support"
-                app:srcCompat="@drawable/ic_app_contact_support" />
+                app:srcCompat="@drawable/ic_48_contact_support_300" />
 
             <!-- Privacy Policy -->
 
@@ -197,7 +196,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_privacy_policy"
                 app:layout_constraintStart_toStartOf="@+id/settings_privacy_policy"
                 app:layout_constraintTop_toTopOf="@+id/settings_privacy_policy"
-                app:srcCompat="@drawable/ic_app_policy" />
+                app:srcCompat="@drawable/ic_48_policy_300" />
 
             <Button
                 android:id="@+id/settings_clear_data"
@@ -216,7 +215,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/settings_clear_data"
                 app:layout_constraintStart_toStartOf="@+id/settings_clear_data"
                 app:layout_constraintTop_toTopOf="@+id/settings_clear_data"
-                app:srcCompat="@drawable/ic_app_dangerous"
+                app:srcCompat="@drawable/ic_48_dangerous_300"
                 app:tint="@color/danger" />
 
 

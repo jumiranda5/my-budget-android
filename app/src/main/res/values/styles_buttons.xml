@@ -23,6 +23,8 @@
     </style>
 
     <style name="ToolbarButtonWithBg" parent="IconButton">
+        <item name="android:layout_width">@dimen/bottomBar_button_size</item>
+        <item name="android:layout_height">@dimen/bottomBar_button_size</item>
         <item name="android:background">@drawable/button_toolbar_accent_inset</item>
         <item name="tint">@color/button_accent_text</item>
         <item name="android:padding">12dp</item>
@@ -43,7 +45,7 @@
     <style name="MainButton" parent="TransparentButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:fontFamily">@font/barlow_medium</item>
         <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
@@ -112,8 +114,8 @@
         <item name="layout_constraintWidth_max">460dp</item>
         <item name="android:background">@drawable/bg_list_item</item>
         <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/body1</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
         <item name="android:layout_marginTop">4dp</item>
@@ -123,12 +125,12 @@
         <item name="layout_constraintWidth_max">460dp</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+        <item name="android:fontFamily">@font/barlow_regular</item>
     </style>
 
     <!-- Toggle -->
 
-    <style name="toggleButtonPill" parent="TextSecondaryEllipse">
+    <style name="toggleButtonPill" parent="MySubtitle2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:textAlignment">textStart</item>
@@ -138,7 +140,7 @@
         <item name="android:background">@drawable/button_pill</item>
         <item name="android:paddingStart">@dimen/toggle_pill_padding_start</item>
         <item name="android:paddingEnd">@dimen/toggle_pill_padding_end</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:fontFamily">@font/barlow_semi_bold</item>
     </style>
 
 

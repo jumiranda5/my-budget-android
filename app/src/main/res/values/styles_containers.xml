@@ -23,24 +23,19 @@
     <!-- Bottom nav -->
 
     <style name="BottomNav" parent="AppTheme">
-        <item name="android:layout_width">@dimen/bottomBar_width</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/bottomBar_height</item>
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@drawable/bg_bottom_bar</item>
         <item name="android:elevation">0dp</item>
         <item name="itemBackground">@drawable/bg_bottom_bar</item>
         <item name="itemIconSize">@dimen/bottomBar_icon_size</item>
-        <item name="itemIconTint">@color/bottom_nav_color</item>
-        <item name="itemTextColor">@color/bottom_nav_color</item>
+        <item name="itemIconTint">@color/high_emphasis_text</item>
+        <item name="itemTextColor">@color/high_emphasis_text</item>
         <item name="itemPaddingTop">@dimen/bottomBar_icon_padding</item>
         <item name="itemPaddingBottom">@dimen/bottomBar_icon_padding</item>
         <item name="itemActiveIndicatorStyle">@null</item>
-        <item name="itemTextAppearanceActive">@style/BottomNavTextStyle</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavText</item>
         <item name="labelVisibilityMode">selected</item>
-    </style>
-
-    <style name="BottomNavTextStyle" parent="AppTheme">
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
-        <item name="android:textSize">@dimen/bottomBar_text</item>
     </style>
 
     <!-- Home Cards -->
@@ -53,32 +48,22 @@
         <item name="rippleColor">@color/ripple</item>
         <item name="cardCornerRadius">@dimen/corners</item>
         <item name="cardBackgroundColor">@color/bg_01dp</item>
-        <item name="cardElevation">0dp</item>
-    </style>
-
-    <style name="HomeCard" parent="Card">
         <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="contentPadding">@dimen/card_padding</item>
     </style>
 
     <style name="HomeCardContainer" parent="AppTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">@dimen/card_padding</item>
-        <item name="android:paddingEnd">@dimen/card_padding</item>
-        <item name="android:paddingTop">@dimen/card_padding_top</item>
-        <item name="android:paddingBottom">@dimen/card_padding_top</item>
-    </style>
-
-    <style name="HomeCardContainer2" parent="HomeCardContainer">
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">0dp</item>
     </style>
 
     <style name="ErrorCard" parent="Card">
-        <item name="contentPadding">@dimen/card_padding</item>
         <item name="cardBackgroundColor">@color/bg_error</item>
-        <item name="strokeColor">@color/border_error</item>
+        <item name="strokeColor">@color/bg_error</item>
         <item name="rippleColor">@color/ripple_error</item>
+        <item name="contentPadding">16dp</item>
     </style>
 
     <!-- ==========================================================
@@ -114,8 +99,8 @@
     <style name="ListItem" parent="AppTheme">
         <item name="android:layout_height">@dimen/item_height</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingStart">@dimen/inner_space</item>
-        <item name="android:paddingEnd">@dimen/inner_space</item>
+        <item name="android:paddingStart">@dimen/page_padding</item>
+        <item name="android:paddingEnd">@dimen/page_padding</item>
     </style>
 
     <style name="ClickableListItem" parent="ListItem">
