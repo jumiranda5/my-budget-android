@@ -34,8 +34,11 @@ public class NumberUtils {
         format.setMaximumFractionDigits(currency.getDefaultFractionDigits());
 
         String valueString = format.format(value);
-        String number = valueString.replaceAll("([^0-9|.,-])", "");
+        String number = valueString.replaceAll("([^0-9|.,])", "");
+        String stringAbsolute = valueString.replace("-", "");
 
-        return new String[]{currencySymbol, number, valueString};
+        if (value < 0) currencySymbol = "-" + currencySymbol;
+
+        return new String[]{currencySymbol, number, valueString, stringAbsolute};
     }
 }

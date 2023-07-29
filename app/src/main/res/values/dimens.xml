@@ -9,6 +9,7 @@
     <dimen name="text_title">18sp</dimen> <!-- -->
 
     <dimen name="h3">40sp</dimen>
+    <dimen name="h3_shrink">34sp</dimen>
     <dimen name="h6">20sp</dimen>
     <dimen name="subtitle1">16sp</dimen>
     <dimen name="subtitle2">14sp</dimen>
@@ -95,6 +96,7 @@
 
     <!-- Text -->
     <dimen name="home_income_size">16sp</dimen>
+    <dimen name="home_income_shrink">14sp</dimen>
     <dimen name="progress_text_size">22sp</dimen>
     <dimen name="home_accounts_text_size">14sp</dimen>
 

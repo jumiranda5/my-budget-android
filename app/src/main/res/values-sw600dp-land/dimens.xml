@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Text -->
+    <dimen name="h3_shrink">40sp</dimen>
+
     <!-- ==================  HOME FRAGMENT ================== -->
 
     <dimen name="land_home_balance_width">376dp</dimen>
     <dimen name="land_home_progress_width">200dp</dimen>
+
+    <dimen name="home_income_shrink">18sp</dimen>
 
     <!-- Margins -->
     <dimen name="home_label_margin_bottom">24dp</dimen>

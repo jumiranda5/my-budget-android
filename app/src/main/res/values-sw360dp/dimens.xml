@@ -3,6 +3,7 @@
 
     <!-- Text -->
     <dimen name="h3">42sp</dimen>
+    <dimen name="h3_shrink">36sp</dimen>
     <dimen name="currency_width_min">88dp</dimen>
     <dimen name="currency_width_max">160dp</dimen>
 
@@ -33,6 +34,7 @@
 
     <!-- Text -->
     <dimen name="home_income_size">18sp</dimen>
+    <dimen name="home_income_shrink">16sp</dimen>
     <dimen name="home_accounts_text_size">14sp</dimen>
 
     <!-- Cards -->

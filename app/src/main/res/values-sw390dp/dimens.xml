@@ -3,6 +3,7 @@
 
     <!-- Text -->
     <dimen name="h3">44sp</dimen>
+    <dimen name="h3_shrink">38sp</dimen>
 
     <!-- Cards -->
     <dimen name="card_padding">18dp</dimen>
@@ -16,6 +17,7 @@
 
     <!-- Text -->
     <dimen name="home_income_size">20sp</dimen>
+    <dimen name="home_income_shrink">16sp</dimen>
     <dimen name="progress_text_size">24sp</dimen>
 
     <!-- Cards -->

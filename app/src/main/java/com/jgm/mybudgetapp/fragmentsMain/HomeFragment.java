@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
     private TextView mBalanceText, mIncomeText, mExpensesText,
             mCash, mChecking, mSavings, mCashSymbol, mCheckingSymbol, mSavingsSymbol,
-            mPendingMsg, mProgress, mProgressText;
+            mPendingMsg, mProgress, mProgressText, mYearLabel;
     private CircularProgressIndicator mBalanceProgress;
 
     private void bindViews() {
@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
         mCashSymbol = binding.homeCashCurrencySymbol;
         mCheckingSymbol = binding.homeCheckingCurrencySymbol;
         mSavingsSymbol = binding.homeSavingsCurrencySymbol;
+        mYearLabel = binding.homeYearLabel;
     }
 
     // Interfaces
@@ -172,7 +173,7 @@ public class HomeFragment extends Fragment {
 
             handler.post(() -> {
                 Log.d(LOG_HOME, "Data successfully retrieved");
-                setBacklogMessage(pendingCount);
+                setPendingMessage(pendingCount);
                 setBalanceData(balance, accumulated);
                 setAccountsData(homeAccounts);
                 setIncomeCategories(incomeCategories);
@@ -183,7 +184,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setBacklogMessage(int count) {
+    private void setPendingMessage(int count) {
         Log.d(Tags.LOG_DB, "== Pending => " + count);
 
         if (count == 0) mCardPending.setVisibility(View.GONE);
@@ -212,13 +213,14 @@ public class HomeFragment extends Fragment {
         float monthBalance = balance.getBalance() + accumulated;
         float monthExpenses = balance.getExpenses();
         float monthIncome = balance.getIncome();
+        setNumbersDisplaySizeAndColor(monthBalance, monthIncome, monthExpenses);
 
         if (accumulated < 0.0f) monthExpenses = monthExpenses + accumulated;
         else monthIncome = monthIncome + accumulated;
 
         String formattedBalance = NumberUtils.getCurrencyFormat(mContext, monthBalance)[2];
         String formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome)[2];
-        String formattedExpenses = NumberUtils.getCurrencyFormat(mContext, monthExpenses)[2];
+        String formattedExpenses = NumberUtils.getCurrencyFormat(mContext, monthExpenses)[3];
         mBalanceText.setText(formattedBalance);
         mExpensesText.setText(formattedExpenses);
         mIncomeText.setText(formattedIncome);
@@ -240,6 +242,19 @@ public class HomeFragment extends Fragment {
         Log.d(LOG_HOME, "percentage: " + percentage);
         Log.d(LOG_HOME, "progress: " + progress);
 
+    }
+
+    private void setNumbersDisplaySizeAndColor(float balance, float income, float expense) {
+        // size
+        if (balance > 999999.99) mBalanceText.setTextAppearance(R.style.ShrinkHomeBalance);
+        if (income > 999999.99 || expense > 999999.99) {
+            mIncomeText.setTextAppearance(R.style.ShrinkHomeIncome);
+            mExpensesText.setTextAppearance(R.style.ShrinkHomeIncome);
+        }
+
+        // color
+        if (balance < 0) mBalanceText.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        else mBalanceText.setTextColor(ContextCompat.getColor(mContext, R.color.income));
     }
 
     private void setAccountsData(HomeAccounts homeAccounts) {
@@ -314,6 +329,9 @@ public class HomeFragment extends Fragment {
 
         Log.d(LOG_HOME, "== setYearChart: " + response.size());
 
+        String yearLabelText = getString(R.string.label_year) + " - " + year;
+        mYearLabel.setText(yearLabelText);
+
         mYearChart.post(() -> {
             ArrayList<MonthTotal> yearList = new ArrayList<>();
             float[] expenses = {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
@@ -337,11 +355,6 @@ public class HomeFragment extends Fragment {
                 expenses[index] = monthExpenses;
                 income[index] = monthIncome;
             }
-
-            // Get year balance
-            //float yearBalance = NumberUtils.roundFloat(incomeTotal) - NumberUtils.roundFloat(expensesTotal);
-            //String yearBalanceCurrency = NumberUtils.getCurrencyFormat(mContext, yearBalance)[2];
-            //mYearBalance.setText(yearBalanceCurrency);
 
             // Build list to draw chart
             int month = 1;

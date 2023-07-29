@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Text -->
+    <dimen name="h3_shrink">44sp</dimen>
     <dimen name="currency_width_min">104dp</dimen>
     <dimen name="currency_width_max">180dp</dimen>
 
@@ -22,6 +23,7 @@
     <dimen name="home_inner_space">12dp</dimen>
 
     <!-- Text -->
+    <dimen name="home_income_shrink">20sp</dimen>
     <dimen name="progress_text_size">24sp</dimen>
     <dimen name="home_accounts_text_size">16sp</dimen>
 

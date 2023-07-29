@@ -74,7 +74,7 @@
     <style name="MyButtonText" parent="TextEllipse">
         <item name="android:fontFamily">@font/barlow_semi_condensed_semi_bold</item>
         <item name="android:textSize">@dimen/button_text</item>
-        <item name="android:letterSpacing">0.12</item>
+        <item name="android:letterSpacing">0.2</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -207,9 +207,16 @@
     </style>
 
     <style name="CurrencySymbol" parent="Currency">
-<!--        <item name="android:fontFamily">@font/eczar_semi_bold</item>-->
         <item name="android:textSize">@dimen/body2</item>
         <item name="android:text">@string/currency_symbol</item>
+    </style>
+    
+    <style name="ShrinkHomeBalance" parent="MyHeadline3">
+        <item name="android:textSize">@dimen/h3_shrink</item>
+    </style>
+
+    <style name="ShrinkHomeIncome" parent="NumberHomeIncome">
+        <item name="android:textSize">@dimen/home_income_shrink</item>
     </style>
 
     <!-- Tabs -->

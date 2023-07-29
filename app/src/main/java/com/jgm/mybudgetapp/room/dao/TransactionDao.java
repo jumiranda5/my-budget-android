@@ -115,14 +115,14 @@ public interface TransactionDao {
             "AND NOT (day > :day AND month >= :month AND year >= :year)")
     int getPendingCount(int day, int month, int year);
 
-    @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year and month < :month")
+    @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
     float getAccumulated(int month, int year);
 
     @Query("SELECT SUM (amount) AS balance, " +
             "SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +
             "SUM(CASE WHEN type = '-1' THEN amount ELSE 0 END) AS expenses " +
             "FROM transactions " +
-            "WHERE year = :year AND month = :month")
+            "WHERE year = :year AND month = :month AND paid = 1")
     Balance getHomeBalance(int month, int year);
 
     @Query("SELECT SUM(CASE WHEN accounts.type = 0 THEN transactions.amount ELSE 0 END) AS cash, " +
