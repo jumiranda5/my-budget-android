@@ -93,6 +93,7 @@
     <string name="action_edit">Edit</string>
     <string name="label_transfer_from">Transfer from</string>
     <string name="label_transfer_to">Transfer to</string>
+    <string name="label_due">Due:</string>
 
     <!-- Accounts -->
     <string name="title_accounts">Accounts</string>

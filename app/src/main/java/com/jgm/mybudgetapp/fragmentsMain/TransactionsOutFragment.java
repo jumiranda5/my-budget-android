@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp.fragmentsMain;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -42,14 +43,17 @@ public class TransactionsOutFragment extends Fragment {
 
     private List<TransactionResponse> expenses;
     private DayGroupAdapter adapter;
+    private float total = 0f;
+    private float due = 0f;
 
     // UI
     private FragmentTransactionsBinding binding;
-    private TextView mTotal;
+    private TextView mTotal, mDue;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
+        mDue = binding.transactionsDue;
         mRecyclerView = binding.transactionsList;
     }
 
@@ -122,6 +126,7 @@ public class TransactionsOutFragment extends Fragment {
                     paymentMethod.getId());
             handler.post(() -> {
                 adapter.updateCreditCardItemsPaidStatus(item.getCardId(), position);
+                updateTotal(item.getAmount(), true);
             });
         });
     }
@@ -148,6 +153,37 @@ public class TransactionsOutFragment extends Fragment {
 
     }
 
+    public void updateTotal(float value, boolean isPaid) {
+        if (isPaid) {
+            // add amount to total
+            total = total + value;
+            // remove amount from due
+            due = due - value;
+        }
+        else {
+            // remove amount to total
+            total = total - value;
+            // add amount from due
+            due = due + value;
+        }
+
+        // set textViews
+        setTotalsTextViews();
+    }
+
+    private void setTotalsTextViews() {
+        // Set total in currency format
+        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
+        String totalCurrencyPositive = totalCurrency.replace("-", "");
+        mTotal.setText(totalCurrencyPositive);
+
+        // Set due in currency format
+        String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
+        String dueCurrencyPositive = dueCurrency.replace("-", "");
+        String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
+        mDue.setText(dueText);
+    }
+
     /* ------------------------------------------------------------------------------
                                          SET DATA
     ------------------------------------------------------------------------------- */
@@ -158,7 +194,7 @@ public class TransactionsOutFragment extends Fragment {
                 getString(R.string.label_accumulated),
                 value,
                 year, month, 1,
-                0, 0, 0, false,
+                0, 0, 0, true,
                 1, 1, null,
                 "",
                 23,
@@ -167,7 +203,6 @@ public class TransactionsOutFragment extends Fragment {
 
     private void setExpensesData(int month, int year) {
 
-        float total = 0f;
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
         boolean hasCreditCard = false;
 
@@ -179,7 +214,9 @@ public class TransactionsOutFragment extends Fragment {
             if (transaction.getCardId() > 0) hasCreditCard = true;
 
             // set total
-            total = total + expenses.get(i).getAmount();
+            if (transaction.isPaid()) total = total + transaction.getAmount();
+            else due = due + transaction.getAmount();
+
             Log.d(Tags.LOG_DB, transaction.getDescription() + " = " + transaction.getId() + "/" +
                     transaction.getAmount() + "/day: " + day);
 
@@ -203,10 +240,7 @@ public class TransactionsOutFragment extends Fragment {
             }
         }
 
-        // Set total in currency format
-        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
-        String totalCurrencyPositive = totalCurrency.replace("-", "");
-        mTotal.setText(totalCurrencyPositive);
+        setTotalsTextViews();
 
         // handle credit card items and init list view
         initRecyclerView(dayGroups);
@@ -265,6 +299,7 @@ public class TransactionsOutFragment extends Fragment {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void addSingleCard(ArrayList<DayGroup> dayGroups, int dayPos, int listPos,
                                int id, int day, int month, int year, boolean isPaid) {
         Handler handler = new Handler(Looper.getMainLooper());
@@ -291,11 +326,9 @@ public class TransactionsOutFragment extends Fragment {
 
                 // init list
                 adapter.notifyDataSetChanged();
-                //initRecyclerView(dayGroups);
             });
 
         });
     }
-
 
 }

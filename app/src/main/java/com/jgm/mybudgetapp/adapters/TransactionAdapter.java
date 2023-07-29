@@ -1,6 +1,8 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,22 +103,25 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                     mInterface.showMethodPickerDialog(false, item, dayPosition);
                 }
                 else {
+                    Handler handler = new Handler(Looper.getMainLooper());
                     AppDatabase.dbExecutor.execute(() -> {
-                        db.TransactionDao().updatePaidCard(
-                                item.getCardId(),
-                                false,
-                                item.getMonth(),
-                                item.getYear(),
-                                0);
-                        item.setPaid(false);
-                        updateCreditCardItemsNotPaidStatus(item.getCardId());
+                        db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
+                        handler.post(() -> {
+                            item.setPaid(false);
+                            updateCreditCardItemsNotPaidStatus(item.getCardId());
+                            mInterface.updateTotal(item.getAmount(), false);
+                        });
                     });
                 }
             }
             else {
+                Handler handler = new Handler(Looper.getMainLooper());
                 AppDatabase.dbExecutor.execute(() -> {
                     db.TransactionDao().updatePaid(item.getId(), isChecked);
-                    item.setPaid(isChecked);
+                    handler.post(() -> {
+                        item.setPaid(isChecked);
+                        mInterface.updateTotal(item.getAmount(), isChecked);
+                    });
                 });
             }
         });

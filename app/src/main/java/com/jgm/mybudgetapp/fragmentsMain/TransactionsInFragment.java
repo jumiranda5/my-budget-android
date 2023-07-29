@@ -41,15 +41,17 @@ public class TransactionsInFragment extends Fragment {
     }
 
     private List<TransactionResponse> income;
+    private float total = 0f;
+    private float due = 0f;
 
     // UI
     private FragmentTransactionsBinding binding;
-    private TextView mTotal;
+    private TextView mTotal, mDue;
     private RecyclerView mRecyclerView;
-    private DayGroupAdapter adapter;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
+        mDue = binding.transactionsDue;
         mRecyclerView = binding.transactionsList;
     }
 
@@ -95,7 +97,7 @@ public class TransactionsInFragment extends Fragment {
     private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        adapter = new DayGroupAdapter(mContext, dayGroups, 1);
+        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups, 1);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -133,6 +135,37 @@ public class TransactionsInFragment extends Fragment {
         });
     }
 
+    public void updateTotal(float value, boolean isPaid) {
+        if (isPaid) {
+            // add amount to total
+            total = total + value;
+            // remove amount from due
+            due = due - value;
+        }
+        else {
+            // remove amount to total
+            total = total - value;
+            // add amount from due
+            due = due + value;
+        }
+
+        // set textViews
+        setTotalsTextViews();
+    }
+
+    private void setTotalsTextViews() {
+        // Set total in currency format
+        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
+        String totalCurrencyPositive = totalCurrency.replace("-", "");
+        mTotal.setText(totalCurrencyPositive);
+
+        // Set due in currency format
+        String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
+        String dueCurrencyPositive = dueCurrency.replace("-", "");
+        String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
+        mDue.setText(dueText);
+    }
+
     /* ------------------------------------------------------------------------------
                                          SET DATA
     ------------------------------------------------------------------------------- */
@@ -143,7 +176,7 @@ public class TransactionsInFragment extends Fragment {
                 getString(R.string.label_accumulated),
                 value,
                 year, month, 1,
-                0, 0, 0, false,
+                0, 0, 0, true,
                 1, 1, null,
                 "",
                 23,
@@ -152,7 +185,6 @@ public class TransactionsInFragment extends Fragment {
 
     private void setIncomeData(int month, int year) {
 
-        float total = 0f;
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
 
         for (int i = 0; i < income.size(); i++) {
@@ -160,7 +192,9 @@ public class TransactionsInFragment extends Fragment {
             int day = transaction.getDay();
 
             // set total
-            total = total + income.get(i).getAmount();
+            if (transaction.isPaid()) total = total + transaction.getAmount();
+            else due = due + transaction.getAmount();
+
             Log.d(Tags.LOG_DB, transaction.getDescription() + " = " + transaction.getId() + "/" +
                     transaction.getAmount() + "/day: " + day);
 
@@ -185,8 +219,7 @@ public class TransactionsInFragment extends Fragment {
         }
 
         // Set total in currency format
-        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
-        mTotal.setText(totalCurrency);
+        setTotalsTextViews();
 
         // init list view
         initRecyclerView(dayGroups);

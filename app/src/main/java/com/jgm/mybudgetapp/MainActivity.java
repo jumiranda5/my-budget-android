@@ -595,6 +595,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
 
+    /* ==== TRANSACTIONS ==== */
+
+    @Override
+    public void updateTotal(float value, boolean isPaid) {
+        if (mTransactionsOut != null) mTransactionsOut.updateTotal(value, isPaid);
+        else if (mTransactionsIn != null) mTransactionsIn.updateTotal(value, isPaid);
+    }
+
+
     /* ==== CATEGORIES ==== */
 
     @Override

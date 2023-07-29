@@ -37,6 +37,9 @@ public interface MainInterface {
     boolean getMethodDialogType();
     void setSelectedPaymentMethod(PaymentMethod paymentMethod);
 
+    // Transactions
+    void updateTotal(float value, boolean isPaid);
+
     // Categories
     void setSelectedCategory(Category category);
     void handleCategoryInserted(Category category);
