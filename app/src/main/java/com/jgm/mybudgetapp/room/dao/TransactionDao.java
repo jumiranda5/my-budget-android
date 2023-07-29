@@ -138,7 +138,7 @@ public interface TransactionDao {
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE transactions.year = :year AND transactions.month = :month AND transactions.type = :type " +
             "GROUP BY categories.id " +
-            "ORDER BY total")
+            "ORDER BY total, category")
     List<CategoryResponse> getCategoriesWithTotals(int month, int year, int type);
 
     @Query("SELECT month, " +

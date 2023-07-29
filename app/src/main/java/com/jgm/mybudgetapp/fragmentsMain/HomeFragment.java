@@ -36,6 +36,7 @@ import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.CategoryUtils;
 import com.jgm.mybudgetapp.utils.Charts;
+import com.jgm.mybudgetapp.utils.ListSort;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
@@ -173,6 +174,18 @@ public class HomeFragment extends Fragment {
 
             handler.post(() -> {
                 Log.d(LOG_HOME, "Data successfully retrieved");
+
+                // set accumulated category
+                CategoryResponse accumulatedCategory = new CategoryResponse(accumulated, getString(R.string.label_accumulated), 16, 71);
+                if (accumulated > 0) {
+                    incomeCategories.add(0, accumulatedCategory);
+                    incomeCategories.sort(ListSort.categoryResponseComparator);
+                }
+                else {
+                    expensesCategories.add(0, accumulatedCategory);
+                    expensesCategories.sort(ListSort.categoryResponseComparator);
+                }
+
                 setPendingMessage(pendingCount);
                 setBalanceData(balance, accumulated);
                 setAccountsData(homeAccounts);

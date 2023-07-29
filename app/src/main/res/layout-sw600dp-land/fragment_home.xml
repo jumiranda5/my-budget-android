@@ -529,6 +529,7 @@
                         android:id="@+id/home_year_label"
                         style="@style/MyButtonText"
                         android:text="@string/label_year"
+                        app:layout_constraintEnd_toStartOf="@+id/home_year_arrow"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
