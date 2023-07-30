@@ -101,7 +101,7 @@ public interface TransactionDao {
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE paid = 0 " +
-            "AND NOT (day > :day AND month >= :month AND year >= :year) " +
+            "AND day <= :day AND month <= :month AND year <= :year " +
             "ORDER BY year, month, day")
     List<TransactionResponse> getPendingList(int day, int month, int year);
 
@@ -112,7 +112,7 @@ public interface TransactionDao {
 
     @Query("SELECT COUNT(paid) FROM transactions " +
             "WHERE paid = 0 " +
-            "AND NOT (day > :day AND month >= :month AND year >= :year)")
+            "AND day <= :day AND month <= :month AND year <= :year")
     int getPendingCount(int day, int month, int year);
 
     @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
