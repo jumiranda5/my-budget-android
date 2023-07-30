@@ -50,6 +50,8 @@ import com.jgm.mybudgetapp.utils.Tags;
 
 public class TransactionFormFragment extends Fragment {
 
+    // Todo: edit credit card item (paid/not paid => account id)
+
     public TransactionFormFragment() {
         // Required empty public constructor
     }
@@ -209,7 +211,14 @@ public class TransactionFormFragment extends Fragment {
 
         mToggleTransfer.setVisibility(View.GONE);
 
-        selectedDate = new MyDate(edit.getDay(), edit.getMonth(), edit.getYear());
+        // Set first parcel date, if parcel
+        int parcel = edit.getRepeatCount();
+        int month;
+        if (parcel > 1) month = (edit.getMonth() - parcel) + 1;
+        else month = edit.getMonth();
+
+        // Set date
+        selectedDate = new MyDate(edit.getDay(), month, edit.getYear());
         selectedCategory = new Category(edit.getCategoryName(), edit.getColorId(), edit.getIconId(), true);
         selectedCategory.setId(edit.getCategoryId());
 
@@ -221,11 +230,14 @@ public class TransactionFormFragment extends Fragment {
         transaction.setRepeat(edit.getRepeat());
 
         mAmountInput.setText(String.valueOf(Math.abs(edit.getAmount())));
+        String formattedPrice = NumberUtils.getCurrencyFormat(mContext, Math.abs(edit.getAmount()))[2];
+        mFormattedPrice.setText(formattedPrice);
 
         initSwitchPayed();
 
         if (transaction.getRepeat() == 1) initRepeat(transaction.getRepeat());
         else {
+            isEditAll = true;
             mSwitchPaid.setVisibility(View.GONE);
             mSwitchEditAll.setVisibility(View.VISIBLE);
             mSwitchEditAll.setChecked(true);
@@ -234,10 +246,14 @@ public class TransactionFormFragment extends Fragment {
                 if (isChecked) {
                     mDatePicker.setText(setDateTextForAllParcels());
                     showRepeatInput();
+                    mRepeatLabel.setVisibility(View.VISIBLE);
+                    mIncreaseRepeat.setVisibility(View.VISIBLE);
                 }
                 else {
                     // don't allow repeat count changes
                     hideRepeatInput();
+                    mRepeatLabel.setVisibility(View.GONE);
+                    mIncreaseRepeat.setVisibility(View.GONE);
                     transaction.setRepeat(edit.getRepeat());
                     setDateTextForSingleParcel();
                 }
@@ -793,6 +809,18 @@ public class TransactionFormFragment extends Fragment {
         });
     }
 
+    private void initSaveButtonProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mSave.setText("");
+    }
+
+    private void endSaveButtonProgress() {
+        Log.d(Tags.LOG_DB, "Transaction saved on db");
+        mProgressBar.setVisibility(View.GONE);
+        mSave.setText(getText(R.string.action_save));
+        mInterface.navigateBack();
+    }
+
     private void setTransaction() {
 
         // If method is credit card => day is billing day;
@@ -816,107 +844,124 @@ public class TransactionFormFragment extends Fragment {
         if (transactionType == Tags.TYPE_OUT) amount = amount * -1;
         transaction.setAmount(amount);
 
-        // set repeat id
-        if (transaction.getRepeat() > 1) {
-           long repeatId = System.currentTimeMillis();
-           transaction.setRepeatId(repeatId);
+        if (!isEdit) {
+            // Add single transaction | add multiple
+            if (transaction.getRepeat() == 1) saveSingleTransaction(); // ok
+            else {
+                long repeatId = System.currentTimeMillis();
+                transaction.setRepeatId(repeatId);
+                saveMultipleTransactions(); // ok
+            }
         }
+        else {
+            // keep repeatId if editing parcels
+            if (edit.getRepeat() > 1) transaction.setRepeatId(edit.getRepeatId());
 
-        // call database
-        if (isEdit) setEditTransaction();
-        else insertTransactionOnDb(false);
+            boolean isSingleTransaction = (edit.getRepeat() == 1 && transaction.getRepeat() == 1);
+            boolean isSingleParcel = (edit.getRepeat() > 1 && !isEditAll);
+            boolean isMultipleParcels = (edit.getRepeat() > 1 && isEditAll);
+            boolean isAddParcelsToSingle = (edit.getRepeat() == 1 && transaction.getRepeat() > 1);
+
+            if (isSingleTransaction) editSingleTransaction();
+            else if (isSingleParcel) editSingleParcel();
+            else if (isMultipleParcels) editAllParcels();
+            else if (isAddParcelsToSingle) editSingleAddParcels();
+        }
 
     }
 
-    private void setEditTransaction() {
-        Log.d(LOG, "=> setEditTransaction");
+    private void saveSingleTransaction() {
+        Log.d(LOG, "=> Save single transaction");
+        logTransaction(transaction);
 
-        // keep repeatId if editing parcels
-        if (edit.getRepeat() > 1) transaction.setRepeatId(edit.getRepeatId());
+        initSaveButtonProgress();
+
+        TransactionDao transactionDao = db.TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+            transactionDao.insert(transaction);
+            handler.post(this::endSaveButtonProgress);
+        });
+    }
+
+    private void saveMultipleTransactions() {
+        Log.d(LOG, "=> Save multiple transaction (parcels)");
+        logTransaction(transaction);
+
+        initSaveButtonProgress();
+
+        TransactionDao transactionDao = db.TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            // First parcel
+            transactionDao.insert(transaction);
+
+            // from second parcel on...
+            int i = 1;
+            int repeat = transaction.getRepeat();
+            while (i < repeat) {
+                // update next transaction month and year
+                int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
+                transaction.setMonth(nextDate[0]);
+                transaction.setYear(nextDate[1]);
+                transaction.setRepeatCount(i+1);
+
+                // if not first parcel => isPaid = false
+                transaction.setPaid(false);
+
+                logTransaction(transaction);
+                transactionDao.insert(transaction);
+
+                i++;
+            }
+
+            handler.post(this::endSaveButtonProgress);
+        });
+    }
+
+    private void editSingleTransaction() {
+        Log.d(LOG, "=> edit single transaction");
+        logTransaction(transaction);
+
+        TransactionDao transactionDao = db.TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+            transactionDao.update(transaction);
+            handler.post(this::endSaveButtonProgress);
+        });
+
+    }
+
+    private void editSingleParcel() {
+        Log.d(LOG, "edit single parcel");
+        logTransaction(transaction);
+        // get parcel date
+        transaction.setMonth(edit.getMonth());
+        transaction.setYear(edit.getYear());
+        editSingleTransaction();
+    }
+
+    private void editAllParcels() {
+        Log.d(LOG, "=> edit all parcels");
 
         // check if repeat count changed (for edit)
         boolean changedRepeat = transaction.getRepeat() != edit.getRepeat();
 
-        // check if first parcel date changed
-        boolean changedFirstParcelDate = false;
-        String editDate = edit.getDay() + "/" + edit.getMonth() + "/" + edit.getYear();
-        String newDate = selectedDate.getDay() + "/" + selectedDate.getMonth() + "/" + selectedDate.getYear();
-        if (!editDate.equals(newDate)) changedFirstParcelDate = true;
+        // check if first parcel month changed
+        boolean changedFirstParcelMonth = false;
+        String editDate = edit.getMonth() + "/" + edit.getYear();
+        String newDate = selectedDate.getMonth() + "/" + selectedDate.getYear();
+        if (!editDate.equals(newDate)) changedFirstParcelMonth = true;
 
-        if (changedRepeat || changedFirstParcelDate) insertTransactionOnDb(true);
-        else editTransactionOnDb();
-
-    }
-
-    private void insertTransactionOnDb(boolean isResetParcels) {
+        boolean isSimpleEdit = (!changedRepeat && !changedFirstParcelMonth);
 
         TransactionDao transactionDao = db.TransactionDao();
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
-            if (isResetParcels) {
-                if (edit.getRepeat() == 1) {
-                    Log.d(Tags.LOG_DB, "Transactions id to reset: " + transaction.getRepeatId());
-                    db.TransactionDao().deleteById(transaction.getId());
-                }
-                else {
-                    Log.d(Tags.LOG_DB, "Transactions repeatId to reset: " + transaction.getRepeatId());
-                    db.TransactionDao().deleteByRepeatId(transaction.getRepeatId());
-                }
-
-                // remove id from transaction obj (to avoid unique id error)
-                Transaction newTransaction = new Transaction(
-                        transaction.getType(), transaction.getDescription(), transaction.getAmount(),
-                        transaction.getYear(), transaction.getMonth(), transaction.getDay(),
-                        transaction.getCategoryId(), transaction.getAccountId(), transaction.getCardId(),
-                        transaction.isPaid(), transaction.getRepeat(), 1, transaction.getRepeatId()
-                );
-                transaction = newTransaction;
-            }
-
-            logTransaction(transaction);
-            transactionDao.insert(transaction);
-
-            // If repeat => save from second parcel on...
-            int repeat = transaction.getRepeat();
-            if (repeat > 1) {
-                int i = 1;
-                while (i < repeat) {
-                    // update next transaction month and year
-                    int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
-                    transaction.setMonth(nextDate[0]);
-                    transaction.setYear(nextDate[1]);
-                    transaction.setRepeatCount(i+1);
-
-                    // if repeat => update isPaid
-                    if (transaction.getYear() >= today.getYear()
-                            && transaction.getMonth() >= today.getMonth()
-                            && transaction.getDay() >= today.getDay()) transaction.setPaid(false);
-
-                    logTransaction(transaction);
-                    transactionDao.insert(transaction);
-
-                    i++;
-                }
-            }
-
-            handler.post(() -> {
-                Log.d(Tags.LOG_DB, "Transaction saved on db");
-                mProgressBar.setVisibility(View.GONE);
-                mSave.setText(getText(R.string.action_save));
-                mInterface.navigateBack();
-            });
-        });
-    }
-
-    private void editTransactionOnDb() {
-        TransactionDao transactionDao = db.TransactionDao();
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbExecutor.execute(() -> {
-
-            int repeat = transaction.getRepeat();
-            if (repeat == 1) transactionDao.update(transaction);
-            else if (isEditAll) {
+            if (isSimpleEdit) {
+                Log.d(LOG, "simple edit"); // ok
                 transactionDao.updateAllParcels(transaction.getRepeatId(),
                         transaction.getAmount(),
                         transaction.getDescription(),
@@ -924,24 +969,65 @@ public class TransactionFormFragment extends Fragment {
                         transaction.getAccountId(),
                         transaction.getCategoryId(),
                         selectedDate.getDay());
+
+                handler.post(this::endSaveButtonProgress);
             }
             else {
-                transactionDao.updateParcel(transaction.getId(),
-                        transaction.getAmount(),
-                        transaction.getDescription(),
-                        transaction.getCardId(),
-                        transaction.getAccountId(),
-                        transaction.getCategoryId(),
-                        selectedDate.getDay());
-            }
+                Log.d(LOG, "delete all and add again");
+                db.TransactionDao().deleteByRepeatId(transaction.getRepeatId());
 
-            handler.post(() -> {
-                Log.d(LOG, "transaction updated");
-                Log.d(Tags.LOG_DB, "Transaction updated on db");
-                mProgressBar.setVisibility(View.GONE);
-                mSave.setText(getText(R.string.action_edit));
-                mInterface.navigateBack();
-            });
+                // remove id from transaction obj (to avoid unique id error)
+                transaction = new Transaction(
+                        transaction.getType(), transaction.getDescription(), transaction.getAmount(),
+                        transaction.getYear(), transaction.getMonth(), transaction.getDay(),
+                        transaction.getCategoryId(), transaction.getAccountId(), transaction.getCardId(),
+                        transaction.isPaid(), transaction.getRepeat(), 1, transaction.getRepeatId());
+
+                saveMultipleTransactions();
+            }
+        });
+    }
+
+    private void editSingleAddParcels() {
+        Log.d(LOG, "=> edit single add parcels");
+
+        // add repeat id
+        long repeatId = System.currentTimeMillis();
+        transaction.setRepeatId(repeatId);
+        logTransaction(transaction);
+
+        TransactionDao transactionDao = db.TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+            // edit first parcel
+            transactionDao.update(transaction);
+
+            // remove id from transaction obj (to avoid unique id error)
+            transaction = new Transaction(
+                    transaction.getType(), transaction.getDescription(), transaction.getAmount(),
+                    transaction.getYear(), transaction.getMonth(), transaction.getDay(),
+                    transaction.getCategoryId(), transaction.getAccountId(), transaction.getCardId(),
+                    transaction.isPaid(), transaction.getRepeat(), 1, transaction.getRepeatId());
+
+            // add new parcels
+            int i = 1;
+            int repeat = transaction.getRepeat();
+            while (i < repeat) {
+                // update next transaction month and year
+                int[] nextDate = MyDateUtils.getNextTransactionDate(transaction.getMonth(), transaction.getYear());
+                transaction.setMonth(nextDate[0]);
+                transaction.setYear(nextDate[1]);
+                transaction.setRepeatCount(i+1);
+
+                // if not first parcel => isPaid = false
+                transaction.setPaid(false);
+
+                logTransaction(transaction);
+                transactionDao.insert(transaction);
+
+                i++;
+            }
+            handler.post(this::endSaveButtonProgress);
         });
     }
 
