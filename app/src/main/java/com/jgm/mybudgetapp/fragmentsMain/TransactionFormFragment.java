@@ -48,6 +48,8 @@ import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
+import java.util.Objects;
+
 public class TransactionFormFragment extends Fragment {
 
     // Todo: edit credit card item (paid/not paid => account id)
@@ -791,6 +793,8 @@ public class TransactionFormFragment extends Fragment {
                                            SAVE
      =============================================================================== */
 
+    // todo: refactor...
+
     private void initSaveButton() {
 
         if (isEdit) mSave.setText(getString(R.string.action_edit));
@@ -850,10 +854,14 @@ public class TransactionFormFragment extends Fragment {
             else {
                 long repeatId = System.currentTimeMillis();
                 transaction.setRepeatId(repeatId);
-                saveMultipleTransactions(); // ok
+                saveMultipleTransactions(false); // ok
             }
         }
         else {
+            // get account id if new method id a different card or old method is not card
+            boolean isNewCard = (paymentMethod.getType() == 3 &&
+                    !Objects.equals(edit.getCardId(), transaction.getCardId()));
+
             // keep repeatId if editing parcels
             if (edit.getRepeat() > 1) transaction.setRepeatId(edit.getRepeatId());
 
@@ -862,10 +870,11 @@ public class TransactionFormFragment extends Fragment {
             boolean isMultipleParcels = (edit.getRepeat() > 1 && isEditAll);
             boolean isAddParcelsToSingle = (edit.getRepeat() == 1 && transaction.getRepeat() > 1);
 
-            if (isSingleTransaction) editSingleTransaction();
-            else if (isSingleParcel) editSingleParcel();
-            else if (isMultipleParcels) editAllParcels();
-            else if (isAddParcelsToSingle) editSingleAddParcels();
+            if (isSingleTransaction) editSingleTransaction(isNewCard);
+            else if (isSingleParcel) editSingleParcel(isNewCard);
+            else if (isMultipleParcels) editAllParcels(isNewCard);
+            else if (isAddParcelsToSingle) editSingleAddParcels(isNewCard);
+
         }
 
     }
@@ -884,7 +893,7 @@ public class TransactionFormFragment extends Fragment {
         });
     }
 
-    private void saveMultipleTransactions() {
+    private void saveMultipleTransactions(boolean isNewCard) {
         Log.d(LOG, "=> Save multiple transaction (parcels)");
         logTransaction(transaction);
 
@@ -910,6 +919,17 @@ public class TransactionFormFragment extends Fragment {
                 // if not first parcel => isPaid = false
                 transaction.setPaid(false);
 
+                if (isNewCard) {
+                    Log.d(LOG, "isNewCard... get transaction with same card and month...");
+                    Transaction cardTransaction = transactionDao.getCardTransaction(
+                            transaction.getCardId(), transaction.getMonth(), transaction.getYear());
+                    if (cardTransaction != null) {
+                        Log.d(LOG, "isNewCard... found transaction => update account id");
+                        transaction.setAccountId(cardTransaction.getAccountId());
+                        transaction.setPaid(cardTransaction.isPaid());
+                    }
+                }
+
                 logTransaction(transaction);
                 transactionDao.insert(transaction);
 
@@ -920,29 +940,41 @@ public class TransactionFormFragment extends Fragment {
         });
     }
 
-    private void editSingleTransaction() {
+    private void editSingleTransaction(boolean isNewCard) {
         Log.d(LOG, "=> edit single transaction");
         logTransaction(transaction);
 
         TransactionDao transactionDao = db.TransactionDao();
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
+
+            if (isNewCard) {
+                Log.d(LOG, "isNewCard... get transaction with same card and month...");
+                Transaction cardTransaction = transactionDao.getCardTransaction(
+                        transaction.getCardId(), transaction.getMonth(), transaction.getYear());
+                if (cardTransaction != null) {
+                    Log.d(LOG, "isNewCard... found transaction => update account id");
+                    transaction.setAccountId(cardTransaction.getAccountId());
+                    transaction.setPaid(cardTransaction.isPaid());
+                }
+            }
+
             transactionDao.update(transaction);
             handler.post(this::endSaveButtonProgress);
         });
 
     }
 
-    private void editSingleParcel() {
+    private void editSingleParcel(boolean isNewCard) {
         Log.d(LOG, "edit single parcel");
         logTransaction(transaction);
         // get parcel date
         transaction.setMonth(edit.getMonth());
         transaction.setYear(edit.getYear());
-        editSingleTransaction();
+        editSingleTransaction(isNewCard);
     }
 
-    private void editAllParcels() {
+    private void editAllParcels(boolean isNewCard) {
         Log.d(LOG, "=> edit all parcels");
 
         // check if repeat count changed (for edit)
@@ -954,7 +986,7 @@ public class TransactionFormFragment extends Fragment {
         String newDate = selectedDate.getMonth() + "/" + selectedDate.getYear();
         if (!editDate.equals(newDate)) changedFirstParcelMonth = true;
 
-        boolean isSimpleEdit = (!changedRepeat && !changedFirstParcelMonth);
+        boolean isSimpleEdit = (!changedRepeat && !changedFirstParcelMonth && !isNewCard);
 
         TransactionDao transactionDao = db.TransactionDao();
         Handler handler = new Handler(Looper.getMainLooper());
@@ -976,6 +1008,17 @@ public class TransactionFormFragment extends Fragment {
                 Log.d(LOG, "delete all and add again");
                 db.TransactionDao().deleteByRepeatId(transaction.getRepeatId());
 
+                if (isNewCard) {
+                    Log.d(LOG, "isNewCard... get transaction with same card and month...");
+                    Transaction cardTransaction = transactionDao.getCardTransaction(
+                            transaction.getCardId(), transaction.getMonth(), transaction.getYear());
+                    if (cardTransaction != null) {
+                        Log.d(LOG, "isNewCard... found transaction => update account id");
+                        transaction.setAccountId(cardTransaction.getAccountId());
+                        transaction.setPaid(cardTransaction.isPaid());
+                    }
+                }
+
                 // remove id from transaction obj (to avoid unique id error)
                 transaction = new Transaction(
                         transaction.getType(), transaction.getDescription(), transaction.getAmount(),
@@ -983,12 +1026,12 @@ public class TransactionFormFragment extends Fragment {
                         transaction.getCategoryId(), transaction.getAccountId(), transaction.getCardId(),
                         transaction.isPaid(), transaction.getRepeat(), 1, transaction.getRepeatId());
 
-                saveMultipleTransactions();
+                saveMultipleTransactions(isNewCard);
             }
         });
     }
 
-    private void editSingleAddParcels() {
+    private void editSingleAddParcels(boolean isNewCard) {
         Log.d(LOG, "=> edit single add parcels");
 
         // add repeat id
@@ -999,6 +1042,18 @@ public class TransactionFormFragment extends Fragment {
         TransactionDao transactionDao = db.TransactionDao();
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
+
+            if (isNewCard) {
+                Log.d(LOG, "isNewCard... get transaction with same card and month...");
+                Transaction cardTransaction = transactionDao.getCardTransaction(
+                        transaction.getCardId(), transaction.getMonth(), transaction.getYear());
+                if (cardTransaction != null) {
+                    Log.d(LOG, "isNewCard... found transaction => update account id");
+                    transaction.setAccountId(cardTransaction.getAccountId());
+                    transaction.setPaid(cardTransaction.isPaid());
+                }
+            }
+
             // edit first parcel
             transactionDao.update(transaction);
 
@@ -1021,6 +1076,17 @@ public class TransactionFormFragment extends Fragment {
 
                 // if not first parcel => isPaid = false
                 transaction.setPaid(false);
+
+                if (isNewCard) {
+                    Log.d(LOG, "isNewCard... get transaction with same card and month...");
+                    Transaction cardTransaction = transactionDao.getCardTransaction(
+                            transaction.getCardId(), transaction.getMonth(), transaction.getYear());
+                    if (cardTransaction != null) {
+                        Log.d(LOG, "isNewCard... found transaction => update account id");
+                        transaction.setAccountId(cardTransaction.getAccountId());
+                        transaction.setPaid(cardTransaction.isPaid());
+                    }
+                }
 
                 logTransaction(transaction);
                 transactionDao.insert(transaction);

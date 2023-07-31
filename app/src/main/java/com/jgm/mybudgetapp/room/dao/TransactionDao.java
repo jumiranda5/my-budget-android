@@ -81,6 +81,9 @@ public interface TransactionDao {
             "AND transactions.year = :year ")
     Card getCreditCardWithTotal(int cardId, int billingDay, int month, int year);
 
+    @Query("SELECT * FROM transactions WHERE cardId = :cardId and month = :month AND year = :year LIMIT 1")
+    Transaction getCardTransaction(int cardId, int month, int year);
+
     /* ------------------------------------------------------------------------------
                                      ACCOUNT FRAGMENT
     ------------------------------------------------------------------------------- */
