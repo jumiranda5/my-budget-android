@@ -24,11 +24,13 @@
     <color name="bg_progress_track">#E0E0E0</color>
     <color name="bg_day">#EBEBEB</color>
     <color name="bg_indicator">@color/disabled_text</color>
+    <color name="bg_expense_container">#0DD91414</color>
+    <color name="bg_income_container">#0D0E7C54</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>
     <color name="border_darker">#E0E0E0</color>
-    <color name="divisor">#E0E0E0</color>
+    <color name="divider">#E0E0E0</color>
     <color name="divider_expense">#1AD21E1E</color>
 
     <!-- Button -->

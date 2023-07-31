@@ -45,6 +45,10 @@
     <dimen name="toggle_pill_max_width">112dp</dimen>
     <dimen name="form_value_size">30sp</dimen>
 
+    <!-- ==================  TRANSACTIONS  ================== -->
+
+    <dimen name="transactions_total_container_height">220dp</dimen>
+
 
     <!-- ==================  ACCOUNTS  ================== -->
 

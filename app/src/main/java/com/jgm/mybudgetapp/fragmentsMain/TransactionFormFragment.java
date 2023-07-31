@@ -52,8 +52,6 @@ import java.util.Objects;
 
 public class TransactionFormFragment extends Fragment {
 
-    // Todo: edit credit card item (paid/not paid => account id)
-
     public TransactionFormFragment() {
         // Required empty public constructor
     }

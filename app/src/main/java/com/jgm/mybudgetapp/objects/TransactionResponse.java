@@ -131,4 +131,12 @@ public class TransactionResponse {
     public void setPaid(boolean paid) {
         this.paid = paid;
     }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public void setCardId(Integer cardId) {
+        this.cardId = cardId;
+    }
 }

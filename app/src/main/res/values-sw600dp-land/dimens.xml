@@ -23,14 +23,14 @@
     <dimen name="home_pie_width">80dp</dimen>
     <dimen name="progress_indicator">132dp</dimen>
 
-        <!-- ==================  MAIN ACTIVITY ================== -->
+    <!-- ==================  MAIN ACTIVITY ================== -->
 
-        <!-- Toolbar -->
-        <dimen name="toolbar_inset_start">24dp</dimen>
-        <dimen name="toolbar_inset_end">8dp</dimen>
+    <!-- Toolbar -->
+    <dimen name="toolbar_inset_start">24dp</dimen>
+    <dimen name="toolbar_inset_end">8dp</dimen>
 
-        <!-- Bottom bar -->
-        <dimen name="bottomBar_width">520dp</dimen>
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_width">520dp</dimen>
 
     <!-- ==================  CATEGORIES  ================== -->
 

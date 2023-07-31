@@ -125,7 +125,11 @@ public class MyDateUtils {
         String dayShort = dayOfWeek.getDisplayName(TextStyle.SHORT, locale);
         String dayFull = dayOfWeek.getDisplayName(TextStyle.FULL, locale);
 
-        return new String[] {dayShort, dayFull};
+        dayFull = dayFull.replace("-feira", "");
+
+        String day_full_upper = dayFull.substring(0, 1).toUpperCase() + dayFull.substring(1);
+
+        return new String[] {dayShort, day_full_upper};
     }
 
     public static int[] getNextTransactionDate(int currentMonth, int currentYear) {

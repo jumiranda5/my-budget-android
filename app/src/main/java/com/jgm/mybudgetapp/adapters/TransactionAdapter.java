@@ -63,7 +63,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         boolean isAccumulated = item.getId() == 0;
         boolean isPending = item.getDay() <= today.getDay() && item.getMonth() <= today.getMonth() && item.getYear() <= today.getYear();
 
-        Log.d("debug-item", "category: " + item.getCategoryId() + " " + item.getCategoryName() + "/" + item.getDescription());
+        Log.d("debug-item", "category: " + item.getCategoryId()
+                + " " + item.getCategoryName()
+                + "/ " + item.getDescription()
+                + "/ account " + item.getAccountId()
+                + "/ card " + item.getCardId());
 
         // Set icon
         holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
@@ -128,6 +132,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         // Set accumulated
         if (isAccumulated) {
+            holder.mContainer.setClickable(false);
             holder.mPaid.setVisibility(View.GONE);
             holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
             holder.mName.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
@@ -144,10 +149,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.mCardIcon.setVisibility(View.VISIBLE);
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.medium_emphasis_text));
+            holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
         if (isCardTotal) {
             holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
-            holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
+            item.setCategoryName(mContext.getString(R.string.credit_card));
+            item.setCardId(-1); // to use on transactions dialog
+            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
         }
 
         // Open transaction details dialog

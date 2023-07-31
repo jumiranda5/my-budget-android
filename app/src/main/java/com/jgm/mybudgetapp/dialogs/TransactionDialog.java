@@ -57,8 +57,6 @@ public class TransactionDialog extends BottomSheetDialogFragment {
 
         // Title and icons
         TextView title = view.findViewById(R.id.dialog_transaction_title);
-        ImageView descIcon = view.findViewById(R.id.dialog_transaction_desc_icon);
-        ImageView amountIcon = view.findViewById(R.id.dialog_transaction_amount_icon);
         ImageView categoryIcon = view.findViewById(R.id.dialog_transaction_category_icon);
         ImageView methodIcon = view.findViewById(R.id.dialog_transaction_method_icon);
         ImageView paidIcon = view.findViewById(R.id.dialog_transaction_paid_icon);
@@ -67,17 +65,9 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         categoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
         String type;
-        if (transaction.getType() == -1) {
-            type = "Expense";
-            descIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.expense));
-            amountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.expense));
-        }
-        else {
-            type = "Income";
-            descIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.income));
-            amountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.income));
-        }
-        title.setText(type); // todo: add to strings file
+        if (transaction.getType() == -1) type = mContext.getString(R.string.title_expense);
+        else type = mContext.getString(R.string.title_income);
+        title.setText(type);
 
         // Description
         TextView description = view.findViewById(R.id.dialog_transaction_desc);
@@ -89,7 +79,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         // Amount
         TextView amount = view.findViewById(R.id.dialog_transaction_amount);
         String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
-        amount.setText(currency[2]);
+        amount.setText(currency[3]);
 
         // Category
         TextView categoryName = view.findViewById(R.id.dialog_transaction_category);
@@ -99,57 +89,67 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         PaymentMethod paymentMethod = new PaymentMethod(0,0,"", 0, 0, 0);
         TextView method = view.findViewById(R.id.dialog_transaction_method);
 
-        if (transaction.getAccountId() != null && transaction.getAccountId() > 0 && transaction.getCardId() == 0) {
+        if (transaction.getCardId() != null && transaction.getCardId() > 0) {
+            Handler handler = new Handler();
             AppDatabase.dbExecutor.execute(() -> {
-                Account account = AppDatabase.getDatabase(mContext).AccountDao()
-                        .getAccountById(transaction.getAccountId());
-                method.setText(account.getName());
-                paymentMethod.setId(account.getId());
-                paymentMethod.setName(account.getName());
-                paymentMethod.setType(account.getType());
-                paymentMethod.setColorId(account.getColorId());
-                paymentMethod.setIconId(account.getIconId());
 
-                if (paymentMethod.getType() == 0)
-                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cash_fill0_300));
-                else if (paymentMethod.getType() == 1)
-                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_account_balance_fill0_300));
-                else
-                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_savings_fill0_300));
-
-                Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
-                methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
-            });
-        }
-        else if (transaction.getCardId() != null && transaction.getCardId() > 0) {
-            AppDatabase.dbExecutor.execute(() -> {
                 CreditCard creditCard = AppDatabase.getDatabase(mContext).CardDao()
                         .getCreditCardById(transaction.getCardId());
-                method.setText(creditCard.getName());
-                paymentMethod.setId(creditCard.getId());
-                paymentMethod.setType(Tags.METHOD_CARD);
-                paymentMethod.setName(creditCard.getName());
-                paymentMethod.setColorId(creditCard.getColorId());
-                paymentMethod.setIconId(Tags.CARD_ICON_ID);
-                paymentMethod.setBillingDay(creditCard.getBillingDay());
-                methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_48_credit_card_300));
-                Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
-                methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+
+                handler.post(() -> {
+                    paymentMethod.setId(creditCard.getId());
+                    paymentMethod.setType(Tags.METHOD_CARD);
+                    paymentMethod.setName(creditCard.getName());
+                    paymentMethod.setColorId(creditCard.getColorId());
+                    paymentMethod.setIconId(Tags.CARD_ICON_ID);
+                    paymentMethod.setBillingDay(creditCard.getBillingDay());
+
+                    method.setText(creditCard.getName());
+                    methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_48_credit_card_300));
+                    Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
+                    methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+                });
+
+            });
+        }
+        else if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
+            Handler handler = new Handler();
+            AppDatabase.dbExecutor.execute(() -> {
+
+                Account account = AppDatabase.getDatabase(mContext).AccountDao()
+                        .getAccountById(transaction.getAccountId());
+
+                handler.post(() -> {
+                    paymentMethod.setId(account.getId());
+                    paymentMethod.setName(account.getName());
+                    paymentMethod.setType(account.getType());
+                    paymentMethod.setColorId(account.getColorId());
+                    paymentMethod.setIconId(account.getIconId());
+
+                    method.setText(account.getName());
+
+                    if (paymentMethod.getType() == 0)
+                        methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cash_fill0_300));
+                    else if (paymentMethod.getType() == 1)
+                        methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_account_balance_fill0_300));
+                    else
+                        methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_savings_fill0_300));
+
+                    Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
+                    methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+                });
             });
         }
 
         // is paid
         TextView paid = view.findViewById(R.id.dialog_transaction_paid);
         if (transaction.isPaid()) {
-            paid.setText("Paid");
+            paid.setText(mContext.getString(R.string.label_paid));
             paidIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.check_circle_color));
         }
-        else paid.setText("Not paid");
-
-        // if credit card => hide paid/not paid
-        if (transaction.getCardId() > 0) {
-            paid.setVisibility(View.GONE);
-            paidIcon.setVisibility(View.GONE);
+        else {
+            paid.setText(mContext.getString(R.string.label_not_paid));
+            paidIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cancel_fill0_300));
         }
 
         // Dismiss
@@ -172,7 +172,7 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         Log.d("debug-repeat", "Transaction repeat id: " + transaction.getRepeatId());
 
         if (transaction.getRepeatId() != null) {
-            deleteMessage.setText("Deleting all parcels...");
+            deleteMessage.setText(mContext.getString(R.string.msg_deleting_all_parcels));
         }
 
         deleteBtn.setOnClickListener(v -> {
@@ -201,6 +201,12 @@ public class TransactionDialog extends BottomSheetDialogFragment {
                 }, 600);
             });
         });
+
+        // hide edit and delete buttons if card = -1
+        if (transaction.getCardId() == -1) {
+            deleteBtn.setVisibility(View.GONE);
+            editBtn.setVisibility(View.GONE);
+        }
 
         return view;
     }

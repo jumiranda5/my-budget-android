@@ -270,6 +270,7 @@ public class TransactionsOutFragment extends Fragment {
 
             // Get card id(s)
             ArrayList<Integer> cardIds = new ArrayList<>();
+            ArrayList<Integer> accountIds = new ArrayList<>();
             ArrayList<Boolean> isPaid = new ArrayList<>();
             int listPosition = 0;
             boolean hasFirstItemPos = false;
@@ -278,6 +279,7 @@ public class TransactionsOutFragment extends Fragment {
                 if (cardId != 0 && !cardIds.contains(cardId)) {
                     cardIds.add(cardId);
                     isPaid.add(list.get(y).isPaid());
+                    accountIds.add(list.get(y).getAccountId());
                     if (!hasFirstItemPos) {
                         listPosition = y;
                         hasFirstItemPos = true;
@@ -287,11 +289,12 @@ public class TransactionsOutFragment extends Fragment {
 
             // Get card data and update day list
             if (cardIds.size() == 1) addSingleCard(dayGroups, i, listPosition,
-                    cardIds.get(0), day, month, year, isPaid.get(0));
+                    cardIds.get(0), day, month, year, isPaid.get(0), accountIds.get(0));
             else {
                 // probably rare usage... but terrible implementation... find a better solution...
                 for (int x = 0; x < cardIds.size(); x++) {
-                    addSingleCard(dayGroups, i, listPosition, cardIds.get(x), day, month, year, isPaid.get(x));
+                    addSingleCard(dayGroups, i, listPosition, cardIds.get(x),
+                            day, month, year, isPaid.get(x), accountIds.get(x));
                 }
             }
 
@@ -301,7 +304,7 @@ public class TransactionsOutFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void addSingleCard(ArrayList<DayGroup> dayGroups, int dayPos, int listPos,
-                               int id, int day, int month, int year, boolean isPaid) {
+                               int id, int day, int month, int year, boolean isPaid, int accountId) {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
@@ -314,7 +317,7 @@ public class TransactionsOutFragment extends Fragment {
                         card.getName(),
                         card.getTotal(),
                         year, month, day,
-                        0, 0,
+                        0, accountId,
                         card.getId(),
                         isPaid,
                         1, null, null,

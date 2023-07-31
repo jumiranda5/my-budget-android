@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ClickableListItem"
+    android:paddingStart="@dimen/transactions_item_padding"
     android:paddingEnd="@dimen/transactions_item_padding_end"
     android:id="@+id/item_transaction"
     tools:ignore="RtlSymmetry">
@@ -60,12 +61,13 @@
         android:id="@+id/item_transaction_card_icon"
         style="@style/IconNormal"
         android:layout_width="@dimen/item_end_button_width"
+        android:layout_height="22dp"
         android:contentDescription="@null"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_48_credit_card_300"
+        app:srcCompat="@drawable/ic_24_subdirectory_arrow_left_300"
         app:tint="@color/medium_emphasis_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

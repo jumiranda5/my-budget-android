@@ -62,12 +62,12 @@
 
     <!-- Divisors -->
 
-    <style name="ItemDivisor" parent="AppTheme">
+    <style name="ItemDivider" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginStart">0dp</item>
         <item name="android:layout_marginEnd">0dp</item>
-        <item name="android:background">@color/divisor</item>
+        <item name="android:background">@color/divider</item>
     </style>
 
     <style name="FormDivisor" parent="AppTheme">
@@ -76,13 +76,13 @@
         <item name="android:layout_marginTop">@dimen/form_divisor_space</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:background">@color/divisor</item>
+        <item name="android:background">@color/divider</item>
     </style>
 
     <style name="MyDivider" parent="AppTheme">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/divisor</item>
+        <item name="android:background">@color/divider</item>
     </style>
 
     <style name="DialogDivider" parent="MyDivider">

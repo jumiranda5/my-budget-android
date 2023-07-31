@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,11 +49,13 @@ public class TransactionsInFragment extends Fragment {
     private FragmentTransactionsBinding binding;
     private TextView mTotal, mDue;
     private RecyclerView mRecyclerView;
+    private ConstraintLayout mTotalContainer;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mDue = binding.transactionsDue;
         mRecyclerView = binding.transactionsList;
+        mTotalContainer = binding.transactionsTotalContainer;
     }
 
     // Interfaces
@@ -87,6 +90,7 @@ public class TransactionsInFragment extends Fragment {
         }
 
         mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        mTotalContainer.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.bg_income_container));
 
     }
 
