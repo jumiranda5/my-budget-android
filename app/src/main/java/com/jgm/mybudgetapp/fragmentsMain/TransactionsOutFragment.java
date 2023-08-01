@@ -178,10 +178,14 @@ public class TransactionsOutFragment extends Fragment {
         mTotal.setText(totalCurrencyPositive);
 
         // Set due in currency format
-        String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
-        String dueCurrencyPositive = dueCurrency.replace("-", "");
-        String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
-        mDue.setText(dueText);
+        if (due == 0f) mDue.setVisibility(View.GONE);
+        else {
+            mDue.setVisibility(View.VISIBLE);
+            String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
+            String dueCurrencyPositive = dueCurrency.replace("-", "");
+            String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
+            mDue.setText(dueText);
+        }
     }
 
     /* ------------------------------------------------------------------------------
@@ -205,6 +209,8 @@ public class TransactionsOutFragment extends Fragment {
 
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
         boolean hasCreditCard = false;
+        due = 0f;
+        total = 0f;
 
         for (int i = 0; i < expenses.size(); i++) {
             TransactionResponse transaction = expenses.get(i);

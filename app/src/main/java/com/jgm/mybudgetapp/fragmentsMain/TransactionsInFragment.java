@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.MainInterface;
@@ -47,13 +46,14 @@ public class TransactionsInFragment extends Fragment {
 
     // UI
     private FragmentTransactionsBinding binding;
-    private TextView mTotal, mDue;
+    private TextView mTotal, mDue, mTotalOverline;
     private RecyclerView mRecyclerView;
     private ConstraintLayout mTotalContainer;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mDue = binding.transactionsDue;
+        mTotalOverline = binding.transactionsTitle;
         mRecyclerView = binding.transactionsList;
         mTotalContainer = binding.transactionsTotalContainer;
     }
@@ -89,6 +89,7 @@ public class TransactionsInFragment extends Fragment {
             getIncomeData(date.getMonth(), date.getYear());
         }
 
+        mTotalOverline.setText(mContext.getString(R.string.label_income));
         mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
         mTotalContainer.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.bg_income_container));
 
@@ -164,10 +165,14 @@ public class TransactionsInFragment extends Fragment {
         mTotal.setText(totalCurrencyPositive);
 
         // Set due in currency format
-        String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
-        String dueCurrencyPositive = dueCurrency.replace("-", "");
-        String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
-        mDue.setText(dueText);
+        if (due == 0f) mDue.setVisibility(View.GONE);
+        else {
+            mDue.setVisibility(View.VISIBLE);
+            String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
+            String dueCurrencyPositive = dueCurrency.replace("-", "");
+            String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
+            mDue.setText(dueText);
+        }
     }
 
     /* ------------------------------------------------------------------------------
@@ -190,6 +195,8 @@ public class TransactionsInFragment extends Fragment {
     private void setIncomeData(int month, int year) {
 
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
+        due = 0f;
+        total = 0f;
 
         for (int i = 0; i < income.size(); i++) {
             TransactionResponse transaction = income.get(i);
