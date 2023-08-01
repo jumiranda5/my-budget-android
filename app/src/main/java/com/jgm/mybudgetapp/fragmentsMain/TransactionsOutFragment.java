@@ -31,6 +31,7 @@ import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
+import com.jgm.mybudgetapp.utils.TransactionsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,27 +167,9 @@ public class TransactionsOutFragment extends Fragment {
         }
 
         // set textViews
-        setTotalsTextViews();
+        TransactionsUtils.setTotalsTextViews(mContext, mTotal, mDue, mPaid, total, due, paid);
     }
 
-    private void setTotalsTextViews() {
-        // Set total in currency format
-        String totalCurrency = NumberUtils.getCurrencyFormat(mContext, total)[2];
-        String totalCurrencyPositive = totalCurrency.replace("-", "");
-        mTotal.setText(totalCurrencyPositive);
-
-        // Set due in currency format
-        String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
-        String dueCurrencyPositive = dueCurrency.replace("-", "");
-        String dueText = mContext.getString(R.string.label_due) + " " + dueCurrencyPositive;
-        mDue.setText(dueText);
-
-        // Set paid in currency format
-        String paidCurrency = NumberUtils.getCurrencyFormat(mContext, paid)[2];
-        String paidCurrencyPositive = paidCurrency.replace("-", "");
-        String paidText = mContext.getString(R.string.label_paid2) + " " + paidCurrencyPositive;
-        mPaid.setText(paidText);
-    }
 
     /* ------------------------------------------------------------------------------
                                          SET DATA
@@ -248,7 +231,7 @@ public class TransactionsOutFragment extends Fragment {
             }
         }
 
-        setTotalsTextViews();
+        TransactionsUtils.setTotalsTextViews(mContext, mTotal, mDue, mPaid, total, due, paid);
 
         // handle credit card items and init list view
         initRecyclerView(dayGroups);
