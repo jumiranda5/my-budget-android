@@ -43,15 +43,17 @@ public class TransactionsInFragment extends Fragment {
     private List<TransactionResponse> income;
     private float total = 0f;
     private float due = 0f;
+    private float paid = 0f;
 
     // UI
     private FragmentTransactionsBinding binding;
-    private TextView mTotal, mDue, mTotalOverline;
+    private TextView mTotal, mDue, mTotalOverline, mPaid;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mDue = binding.transactionsDue;
+        mPaid = binding.transactionsPaid;
         mTotalOverline = binding.transactionsTitle;
         mRecyclerView = binding.transactionsList;
     }
@@ -120,7 +122,6 @@ public class TransactionsInFragment extends Fragment {
     public void getIncomeData(int month, int year) {
 
         TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
-
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
@@ -139,15 +140,11 @@ public class TransactionsInFragment extends Fragment {
 
     public void updateTotal(float value, boolean isPaid) {
         if (isPaid) {
-            // add amount to total
-            total = total + value;
-            // remove amount from due
+            paid = paid + value;
             due = due - value;
         }
         else {
-            // remove amount to total
-            total = total - value;
-            // add amount from due
+            paid = paid - value;
             due = due + value;
         }
 
@@ -162,14 +159,17 @@ public class TransactionsInFragment extends Fragment {
         mTotal.setText(totalCurrencyPositive);
 
         // Set due in currency format
-        if (due == 0f) mDue.setVisibility(View.GONE);
-        else {
-            mDue.setVisibility(View.VISIBLE);
-            String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
-            String dueCurrencyPositive = dueCurrency.replace("-", "");
-            String dueText = getString(R.string.label_due) + " " + dueCurrencyPositive;
-            mDue.setText(dueText);
-        }
+        String dueCurrency = NumberUtils.getCurrencyFormat(mContext, due)[2];
+        String dueCurrencyPositive = dueCurrency.replace("-", "");
+        String dueText = mContext.getString(R.string.label_due) + " " + dueCurrencyPositive;
+        mDue.setText(dueText);
+
+        // Set paid in currency format
+        String paidCurrency = NumberUtils.getCurrencyFormat(mContext, paid)[2];
+        String paidCurrencyPositive = paidCurrency.replace("-", "");
+        String paidText = mContext.getString(R.string.label_paid2) + " " + paidCurrencyPositive;
+        mPaid.setText(paidText);
+
     }
 
     /* ------------------------------------------------------------------------------
@@ -194,13 +194,15 @@ public class TransactionsInFragment extends Fragment {
         ArrayList<DayGroup> dayGroups = new ArrayList<>();
         due = 0f;
         total = 0f;
+        paid = 0f;
 
         for (int i = 0; i < income.size(); i++) {
             TransactionResponse transaction = income.get(i);
             int day = transaction.getDay();
 
             // set total
-            if (transaction.isPaid()) total = total + transaction.getAmount();
+            total = total + transaction.getAmount();
+            if (transaction.isPaid()) paid = paid + transaction.getAmount();
             else due = due + transaction.getAmount();
 
             Log.d(Tags.LOG_DB, transaction.getDescription() + " = " + transaction.getId() + "/" +
