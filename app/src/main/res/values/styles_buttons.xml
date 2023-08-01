@@ -45,7 +45,7 @@
     <style name="MainButton" parent="TransparentButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:fontFamily">@font/barlow_medium</item>
+        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
         <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
@@ -125,7 +125,7 @@
         <item name="layout_constraintWidth_max">460dp</item>
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
-        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
     </style>
 
     <!-- Toggle -->
@@ -140,7 +140,7 @@
         <item name="android:background">@drawable/button_pill</item>
         <item name="android:paddingStart">@dimen/toggle_pill_padding_start</item>
         <item name="android:paddingEnd">@dimen/toggle_pill_padding_end</item>
-        <item name="android:fontFamily">@font/barlow_semi_bold</item>
+        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
     </style>
 
 

@@ -48,14 +48,12 @@ public class TransactionsInFragment extends Fragment {
     private FragmentTransactionsBinding binding;
     private TextView mTotal, mDue, mTotalOverline;
     private RecyclerView mRecyclerView;
-    private ConstraintLayout mTotalContainer;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mDue = binding.transactionsDue;
         mTotalOverline = binding.transactionsTitle;
         mRecyclerView = binding.transactionsList;
-        mTotalContainer = binding.transactionsTotalContainer;
     }
 
     // Interfaces
@@ -91,7 +89,6 @@ public class TransactionsInFragment extends Fragment {
 
         mTotalOverline.setText(mContext.getString(R.string.label_income));
         mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-        mTotalContainer.setBackgroundTintList(ContextCompat.getColorStateList(mContext, R.color.bg_income_container));
 
     }
 

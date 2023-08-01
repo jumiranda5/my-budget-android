@@ -43,6 +43,8 @@ import java.util.List;
 
 public class AccountDetailsFragment extends Fragment {
 
+    // todo: set credit card as one item | set accumulated | set total from each month
+
     public AccountDetailsFragment() {
         // Required empty public constructor
     }
@@ -192,6 +194,7 @@ public class AccountDetailsFragment extends Fragment {
 
             List<TransactionResponse> transactions = transactionDao.getAccountTransactions(
                     account.getId(), date.getMonth(), date.getYear());
+
             Log.d(LOG, "list size: " + transactions.size());
 
             handler.post(() -> {
@@ -228,6 +231,9 @@ public class AccountDetailsFragment extends Fragment {
                 }
             }
         }
+
+        // set account total
+        initAccountInfo();
 
         // init list view
         initRecyclerView(dayGroups);

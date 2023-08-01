@@ -10,6 +10,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!-- Max width -->
+    <View
+        android:id="@+id/transactions_day_width_anchor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="@dimen/page_width_anchor" />
+
     <ImageView
         android:id="@+id/item_day_calendar"
         style="@style/ItemIcon"
@@ -17,10 +27,9 @@
         android:contentDescription="@null"
         android:layout_marginStart="@dimen/inner_space"
         app:layout_constraintBottom_toBottomOf="@+id/item_day_title"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/transactions_day_width_anchor"
         app:layout_constraintTop_toTopOf="@+id/item_day_title"
         app:srcCompat="@drawable/ic_24_calendar_month_fill1_300" />
-
 
     <TextView
         android:id="@+id/item_day_title"
@@ -43,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/item_day_title"
         app:layout_constraintStart_toEndOf="@+id/item_day_title"
         app:layout_constraintTop_toTopOf="@+id/item_day_title"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@id/transactions_day_width_anchor"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_day_list"
@@ -51,9 +60,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/transactions_day_width_anchor"
+        app:layout_constraintStart_toStartOf="@id/transactions_day_width_anchor"
         tools:itemCount="3"
-        tools:listitem="@layout/item_transaction2" />
+        tools:listitem="@layout/item_transaction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@
     <color name="bg_progress_track">#E0E0E0</color>
     <color name="bg_day">#EBEBEB</color>
     <color name="bg_indicator">@color/disabled_text</color>
-    <color name="bg_expense_container">#0DD91414</color>
+    <color name="bg_expense_container">#0AD91414</color>
     <color name="bg_income_container">#0D0E7C54</color>
 
     <!-- Borders -->

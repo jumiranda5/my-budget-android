@@ -32,6 +32,7 @@
     <!-- Bottom bar -->
     <dimen name="bottomBar_width">520dp</dimen>
 
+
     <!-- ==================  CATEGORIES  ================== -->
 
     <integer name="categories_chart_size_int">320</integer>

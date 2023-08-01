@@ -52,12 +52,9 @@
 
     <!-- ==================  TRANSACTIONS  ================== -->
 
-    <dimen name="transactions_total_margin">16dp</dimen>
-    <dimen name="transactions_page_padding_top">16dp</dimen>
-    <dimen name="transactions_total_container_padding">32dp</dimen>
     <dimen name="transactions_title_size">44sp</dimen>
-    <dimen name="transactions_item_padding_end">0dp</dimen>
-    <dimen name="transactions_total_container_corner">4dp</dimen>
+    <dimen name="transactions_total_margin">56dp</dimen>
+    <dimen name="transactions_total_container_padding">16dp</dimen>
 
     <!-- ==================  ACCOUNTS  ================== -->
 

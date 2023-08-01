@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,88 +10,215 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentsMain.TransactionsOutFragment">
 
-    <androidx.core.widget.NestedScrollView
-        style="@style/MyNestedScrollView"
-        android:paddingBottom="56dp"
-        android:paddingTop="@dimen/transactions_page_padding_top"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/transactions_app_bar"
+        android:layout_width="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/transactions_toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- Max width -->
-            <View
-                android:id="@+id/transactions_width_anchor"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="@dimen/page_width_anchor" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@android:color/transparent"
+            app:layout_scrollFlags="scroll">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/transactions_total_container"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/transactions_total_container_height"
-                android:padding="@dimen/transactions_total_container_padding"
-                android:layout_margin="@dimen/transactions_total_margin"
-                android:backgroundTint="@color/bg_expense_container"
-                android:background="@drawable/bg_transactions_total"
-                app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
-                app:layout_constraintStart_toStartOf="@id/transactions_width_anchor"
-                app:layout_constraintTop_toTopOf="@+id/transactions_width_anchor">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/transactions_list_margin"
+                app:layout_collapseMode="none">
+
+                <!-- Max width -->
+                <View
+                    android:id="@+id/transactions_width_anchor"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_max="@dimen/page_width_anchor" />
 
                 <TextView
                     android:id="@+id/transactions_title"
-                    style="@style/TransactionsOverline"
-                    android:layout_marginBottom="2dp"
+                    style="@style/MyButtonText"
+                    android:fontFamily="@font/assistant_semi_bold"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="@dimen/transactions_total_margin"
+                    android:layout_marginStart="@dimen/transactions_total_container_padding"
                     android:text="@string/title_expense"
-                    app:layout_constraintBottom_toTopOf="@+id/transactions_total"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintVertical_chainStyle="packed" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
+                    app:layout_constraintStart_toStartOf="@id/transactions_width_anchor" />
 
                 <TextView
                     android:id="@+id/transactions_total"
                     style="@style/TransactionsTotal"
+                    android:layout_marginStart="@dimen/transactions_total_container_padding"
                     android:includeFontPadding="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
+                    app:layout_constraintStart_toStartOf="@id/transactions_width_anchor"
+                    app:layout_constraintTop_toBottomOf="@+id/transactions_title" />
+
+                <ImageView
+                    android:id="@+id/transactions_paid_icon"
+                    style="@style/ItemIcon"
+                    android:layout_marginTop="32dp"
+                    android:contentDescription="@null"
+                    app:tint="@color/check_circle_color"
+                    app:layout_constraintStart_toStartOf="@+id/transactions_total"
+                    app:layout_constraintTop_toBottomOf="@+id/transactions_total"
+                    app:srcCompat="@drawable/ic_40_check_circle_fill0_300" />
+
+                <TextView
+                    android:id="@+id/transactions_paid"
+                    style="@style/MyBody2"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="12dp"
+                    android:text="Paid:"
+                    android:textColor="@color/medium_emphasis_text"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/transactions_paid_icon"
+                    app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
+                    app:layout_constraintStart_toEndOf="@+id/transactions_paid_icon"
+                    app:layout_constraintTop_toTopOf="@+id/transactions_paid_icon" />
+
+
+                <ImageView
+                    android:id="@+id/transactions_due_icon"
+                    style="@style/ItemIcon"
+                    android:layout_marginTop="16dp"
+                    android:contentDescription="@null"
+                    app:tint="@color/medium_emphasis_text"
+                    app:layout_constraintStart_toStartOf="@+id/transactions_total"
+                    app:layout_constraintTop_toBottomOf="@+id/transactions_paid_icon"
+                    app:srcCompat="@drawable/ic_40_cancel_fill0_300" />
 
                 <TextView
                     android:id="@+id/transactions_due"
                     style="@style/MyBody2"
                     android:layout_width="0dp"
-                    android:layout_marginTop="-6dp"
-                    android:fontFamily="@font/barlow_medium"
-                    android:paddingStart="2dp"
-                    android:text="Due: $200.00"
-                    android:textColor="@color/high_emphasis_text"
+                    android:layout_marginStart="12dp"
+                    android:text="Due:"
+                    android:textColor="@color/medium_emphasis_text"
                     android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/transactions_total" />
+                    app:layout_constraintBottom_toBottomOf="@+id/transactions_due_icon"
+                    app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
+                    app:layout_constraintStart_toEndOf="@+id/transactions_due_icon"
+                    app:layout_constraintTop_toTopOf="@+id/transactions_due_icon" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/transactions_list"
-                style="@style/NestedListNoScroll"
-                android:layout_marginTop="@dimen/transactions_list_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/transactions_total_container"
-                app:layout_constraintWidth_max="@dimen/list_max_width"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_transaction_day" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transactions_list"
+        style="@style/MainList"
+        android:paddingBottom="@dimen/item_height"
+        android:overScrollMode="never"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_transaction_day" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_marginTop="@dimen/toolbar_height"-->
+<!--    android:layout_marginBottom="@dimen/bottomBar_height"-->
+<!--    android:background="@color/bg_00dp"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    tools:context=".fragmentsMain.TransactionsOutFragment">-->
+
+<!--    <androidx.core.widget.NestedScrollView-->
+<!--        style="@style/MyNestedScrollView"-->
+<!--        android:paddingBottom="56dp"-->
+<!--        android:paddingTop="@dimen/transactions_page_padding_top"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            &lt;!&ndash; Max width &ndash;&gt;-->
+<!--            <View-->
+<!--                android:id="@+id/transactions_width_anchor"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintWidth_max="@dimen/page_width_anchor" />-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/transactions_total_container"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="@dimen/transactions_total_container_height"-->
+<!--                android:padding="@dimen/transactions_total_container_padding"-->
+<!--                android:layout_margin="@dimen/transactions_total_margin"-->
+<!--                android:backgroundTint="@color/bg_expense_container"-->
+<!--                android:background="@drawable/bg_transactions_total"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"-->
+<!--                app:layout_constraintStart_toStartOf="@id/transactions_width_anchor"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/transactions_width_anchor">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/transactions_title"-->
+<!--                    style="@style/TransactionsOverline"-->
+<!--                    android:layout_marginBottom="2dp"-->
+<!--                    android:text="@string/title_expense"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/transactions_total"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintVertical_chainStyle="packed" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/transactions_total"-->
+<!--                    style="@style/TransactionsTotal"-->
+<!--                    android:includeFontPadding="false"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/transactions_due"-->
+<!--                    style="@style/MyBody2"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_marginTop="-6dp"-->
+<!--                    android:fontFamily="@font/barlow_medium"-->
+<!--                    android:paddingStart="2dp"-->
+<!--                    android:text="Due: $200.00"-->
+<!--                    android:textColor="@color/high_emphasis_text"-->
+<!--                    android:visibility="visible"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/transactions_total" />-->
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/transactions_list"-->
+<!--                style="@style/NestedListNoScroll"-->
+<!--                android:layout_marginTop="@dimen/transactions_list_margin"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/transactions_total_container"-->
+<!--                app:layout_constraintWidth_max="@dimen/list_max_width"-->
+<!--                tools:itemCount="2"-->
+<!--                tools:listitem="@layout/item_transaction_day" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </androidx.core.widget.NestedScrollView>-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
