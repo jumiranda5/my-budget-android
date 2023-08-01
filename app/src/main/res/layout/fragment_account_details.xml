@@ -75,6 +75,8 @@
             <View
                 android:id="@+id/account_divider"
                 style="@style/PageDivider"
+                android:layout_marginTop="@dimen/account_page_divisor_space"
+                android:backgroundTint="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
                 app:layout_constraintStart_toStartOf="@id/account_width_anchor"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +84,9 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/account_details_list"
                 style="@style/NestedListNoScroll"
-                android:layout_marginTop="@dimen/account_details_list_margin"
+                android:layout_marginTop="-40dp"
+                android:paddingStart="@dimen/account_details_list_padding"
+                android:paddingEnd="@dimen/account_details_list_padding"
                 app:layout_constraintEnd_toEndOf="@id/account_width_anchor"
                 app:layout_constraintStart_toStartOf="@id/account_width_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/account_divider"

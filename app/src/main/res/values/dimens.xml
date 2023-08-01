@@ -42,7 +42,7 @@
 
     <!-- Page -->
     <dimen name="inner_space">16dp</dimen>
-    <dimen name="page_divisor_space">192dp</dimen>
+    <dimen name="page_divisor_space">200dp</dimen>
     <dimen name="page_padding">16dp</dimen>
     <dimen name="page_width_anchor">580dp</dimen>
 
@@ -118,14 +118,17 @@
 
     <dimen name="transactions_title_currency_size">16sp</dimen> <!-- -->
 
-    <dimen name="transactions_page_padding_top">0dp</dimen>
     <dimen name="transactions_title_size">40sp</dimen>
-    <dimen name="transactions_list_margin">8dp</dimen>
+    <dimen name="transactions_list_margin">16dp</dimen>
     <dimen name="transactions_day_margin">32dp</dimen>
+    <dimen name="transactions_day_padding">0dp</dimen>
     <dimen name="transactions_item_padding">16dp</dimen>
     <dimen name="transactions_item_padding_end">0dp</dimen>
-    <dimen name="transactions_total_container_height">192dp</dimen>
-
+    <dimen name="transactions_total_container_height">200dp</dimen>
+    <dimen name="transactions_total_container_padding">16dp</dimen>
+    <dimen name="transactions_total_container_corner">0dp</dimen>
+    <dimen name="transactions_page_padding_top">0dp</dimen>
+    <dimen name="transactions_total_margin">0dp</dimen>
 
     <!-- ==================  CATEGORIES  ================== -->
 
@@ -151,6 +154,7 @@
     <dimen name="account_details_close_margin">12dp</dimen>
     <dimen name="account_details_list_padding">0dp</dimen>
     <dimen name="account_details_list_margin">24dp</dimen>
+    <dimen name="account_page_divisor_space">200dp</dimen>
 
     <!-- ==================  SETTINGS  ================== -->
 

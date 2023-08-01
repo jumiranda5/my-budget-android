@@ -12,7 +12,7 @@
 
     <!-- Page -->
     <dimen name="inner_space">16dp</dimen>
-    <dimen name="page_divisor_space">216dp</dimen>
+    <dimen name="page_divisor_space">224dp</dimen>
     <dimen name="page_padding">24dp</dimen>
 
 
@@ -51,11 +51,14 @@
 
     <dimen name="account_details_close_margin">16dp</dimen>
     <dimen name="account_details_list_padding">0dp</dimen>
+    <dimen name="account_page_divisor_space">224dp</dimen>
 
 
     <!-- ==================  TRANSACTIONS  ================== -->
 
-    <dimen name="transactions_total_container_height">212dp</dimen>
+    <dimen name="transactions_total_container_height">220dp</dimen>
+    <dimen name="transactions_day_padding">8dp</dimen>
+    <dimen name="transactions_total_container_padding">24dp</dimen>
 
 
     <!-- ==================  CATEGORIES  ================== -->

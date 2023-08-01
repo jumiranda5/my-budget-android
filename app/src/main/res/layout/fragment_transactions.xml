@@ -37,9 +37,9 @@
                 android:id="@+id/transactions_total_container"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/transactions_total_container_height"
-                android:layout_margin="@dimen/home_inner_space"
+                android:padding="@dimen/transactions_total_container_padding"
+                android:layout_margin="@dimen/transactions_total_margin"
                 android:backgroundTint="@color/bg_expense_container"
-                android:padding="@dimen/inner_space"
                 android:background="@drawable/bg_transactions_total"
                 app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
                 app:layout_constraintStart_toStartOf="@id/transactions_width_anchor"
@@ -48,7 +48,7 @@
                 <TextView
                     android:id="@+id/transactions_title"
                     style="@style/TransactionsOverline"
-                    android:textColor="@color/medium_emphasis_text"
+                    android:layout_marginBottom="2dp"
                     android:text="@string/title_expense"
                     app:layout_constraintBottom_toTopOf="@+id/transactions_total"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +58,7 @@
                 <TextView
                     android:id="@+id/transactions_total"
                     style="@style/TransactionsTotal"
+                    android:includeFontPadding="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +66,17 @@
 
                 <TextView
                     android:id="@+id/transactions_due"
-                    style="@style/MySubtitle2"
-                    android:layout_width="wrap_content"
+                    style="@style/MyBody2"
+                    android:layout_width="0dp"
+                    android:layout_marginTop="-6dp"
+                    android:fontFamily="@font/barlow_medium"
+                    android:paddingStart="2dp"
                     android:text="Due: $200.00"
                     android:textColor="@color/high_emphasis_text"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/transactions_total" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,7 +87,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/transactions_total_container"
-                app:layout_constraintWidth_max="572dp"
+                app:layout_constraintWidth_max="@dimen/list_max_width"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_transaction_day" />
 

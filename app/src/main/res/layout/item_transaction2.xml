@@ -3,6 +3,8 @@
     style="@style/ClickableListItem"
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_height"
+    android:paddingStart="@dimen/transactions_item_padding"
+    android:paddingEnd="@dimen/transactions_item_padding"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -28,6 +30,7 @@
         android:id="@+id/item_transaction2_total"
         style="@style/CurrencySpace"
         android:text="@string/initial_value_no_symbol"
+        android:paddingEnd="4dp"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_name"
         app:layout_constraintEnd_toEndOf="parent" />

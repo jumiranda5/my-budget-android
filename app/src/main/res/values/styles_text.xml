@@ -122,7 +122,6 @@
 
     <style name="TransactionsTotal" parent="MyHeadline3">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">64dp</item>
         <item name="android:text">@string/initial_value</item>
         <item name="android:textColor">@color/expense</item>
         <item name="android:textSize">@dimen/transactions_title_size</item>

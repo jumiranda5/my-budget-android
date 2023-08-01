@@ -47,12 +47,13 @@
 
     <!-- ==================  TRANSACTIONS  ================== -->
 
-    <dimen name="transactions_total_container_height">220dp</dimen>
+    <dimen name="transactions_total_container_height">232dp</dimen>
 
 
     <!-- ==================  ACCOUNTS  ================== -->
 
     <dimen name="account_details_list_margin">32dp</dimen>
+    <dimen name="account_page_divisor_space">232dp</dimen>
 
 
     <!-- ==================  CATEGORIES  ================== -->
