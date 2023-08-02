@@ -19,12 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Color;
-import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.ColorUtils;
-import com.jgm.mybudgetapp.utils.IconOutlineUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
@@ -60,18 +58,20 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Color color = ColorUtils.getColor(item.getColorId());
         MyDate today = MyDateUtils.getCurrentDate(mContext);
 
+        int cardId = item.getCardId(); // set to -1 later to be used on transactions dialog
+
         boolean isCardTotal = item.getId() == -1;
         boolean isAccumulated = item.getId() == 0;
         boolean isPendingMonth = item.getYear() <= today.getYear() && item.getMonth() <= today.getMonth();
         boolean isPendingDay = (item.getMonth() == today.getMonth() && item.getDay() <= today.getDay())
                 || item.getMonth() < today.getMonth() && item.getDay() <= 31;
-        boolean isPending = isPendingMonth && isPendingDay;
+        boolean isPending = isPendingMonth && isPendingDay && !item.isPaid();
 
         Log.d("debug-item", "category: " + item.getCategoryId()
                 + " " + item.getCategoryName()
                 + "/ " + item.getDescription()
-                + "/ account " + item.getAccountId()
-                + "/ card " + item.getCardId()
+                + "/ account id: " + item.getAccountId()
+                + "/ card id: " + item.getCardId()
                 + "/ pending: " + isPending);
 
         // Set description
@@ -103,14 +103,17 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             }
 
             if (isCardTotal) {
+                Log.d("debug-item", "card item on toggle");
                 if (isChecked) {
+                    Log.d("debug-item", "card item on toggle On");
                     holder.mPaid.setChecked(false); // set to true after method picker
                     mInterface.showMethodPickerDialog(false, item, dayPosition);
                 }
                 else {
+                    Log.d("debug-item", "card item on toggle Off => cardId = " + cardId);
                     Handler handler = new Handler(Looper.getMainLooper());
                     AppDatabase.dbExecutor.execute(() -> {
-                        db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
+                        db.TransactionDao().updatePaidCard(cardId, false, item.getMonth(), item.getYear(), 0);
                         handler.post(() -> {
                             item.setPaid(false);
                             updateCreditCardItemsNotPaidStatus(item.getCardId());

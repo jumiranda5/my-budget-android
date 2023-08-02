@@ -254,6 +254,7 @@ public class TransactionsOutFragment extends Fragment {
 
         // loop through days lists to add credit card item
         for (int i = 0; i < dayGroups.size(); i++) {
+
             List<TransactionResponse> list = dayGroups.get(i).getTransactions();
             int day = dayGroups.get(i).getDay();
             int month = dayGroups.get(i).getMonth();
@@ -265,6 +266,7 @@ public class TransactionsOutFragment extends Fragment {
             ArrayList<Boolean> isPaid = new ArrayList<>();
             int listPosition = 0;
             boolean hasFirstItemPos = false;
+
             for (int y = 0; y < list.size(); y++) {
                 int cardId = list.get(y).getCardId();
                 if (cardId != 0 && !cardIds.contains(cardId)) {
@@ -301,6 +303,7 @@ public class TransactionsOutFragment extends Fragment {
 
             TransactionDao transactionDao = AppDatabase.getDatabase(mContext).TransactionDao();
             Card card = transactionDao.getCreditCardWithTotal(id, day, month, year);
+
             handler.post(() -> {
                 TransactionResponse transaction = new TransactionResponse(
                         -1,
@@ -309,7 +312,7 @@ public class TransactionsOutFragment extends Fragment {
                         card.getTotal(),
                         year, month, day,
                         0, accountId,
-                        card.getId(),
+                        id,
                         isPaid,
                         1, null, null,
                         null,
