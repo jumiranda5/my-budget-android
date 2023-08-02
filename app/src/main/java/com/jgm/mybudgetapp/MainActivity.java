@@ -654,6 +654,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         return selectedDate;
     }
 
+    @Override
+    public void setSelectedToolbarDate(int day, int month, int year) {
+        MyDate newDate = new MyDate(day, month, year);
+        String monthName = MyDateUtils.getMonthName(this, month, year)[0];
+        newDate.setMonthName(monthName);
+        selectedDate = newDate;
+
+        // set toolbar date
+        mToolbarMonth.setText(selectedDate.getMonthName());
+        mToolbarYear.setText(String.valueOf(selectedDate.getYear()));
+        setToolbarMonthStyle();
+    }
+
 
     /* ===============================================================================
                                      FRAGMENT NAVIGATION

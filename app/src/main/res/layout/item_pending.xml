@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_pending_container"
     style="@style/ClickableListItem"
-    android:paddingEnd="0dp"
-    android:paddingStart="0dp"
     android:layout_width="match_parent"
     android:layout_height="76dp"
+    android:paddingStart="0dp"
+    android:paddingEnd="0dp"
     tools:ignore="RtlSymmetry">
 
     <TextView
         android:id="@+id/item_pending_date"
         style="@style/MyBody2"
-        android:textColor="@color/medium_emphasis_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20/06/2023"
         android:layout_marginTop="2dp"
+        android:text="20/06/2023"
+        android:textColor="@color/medium_emphasis_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/item_pending_name"
         app:layout_constraintTop_toBottomOf="@+id/item_pending_name" />
 
@@ -25,7 +26,6 @@
         android:id="@+id/item_pending_icon"
         style="@style/ItemIcon"
         android:layout_marginStart="@dimen/inner_space"
-        android:layout_marginBottom="16dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,18 +38,21 @@
         android:layout_marginStart="@dimen/inner_space"
         android:layout_marginEnd="@dimen/inner_space"
         android:text="@string/hint_description"
-        app:layout_constraintBottom_toBottomOf="@+id/item_pending_icon"
+        app:layout_constraintBottom_toTopOf="@+id/item_pending_date"
         app:layout_constraintEnd_toStartOf="@+id/item_pending_currency_symbol"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/item_pending_icon"
-        app:layout_constraintTop_toTopOf="@+id/item_pending_icon" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/item_pending_total"
         style="@style/CurrencySpace"
         android:text="@string/initial_value_no_symbol"
         android:textColor="@color/income"
-        app:layout_constraintBaseline_toBaselineOf="@+id/item_pending_name"
-        app:layout_constraintEnd_toStartOf="@+id/item_pending_toggle" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_pending_toggle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/item_pending_currency_symbol"
@@ -57,20 +60,20 @@
         android:text="@string/currency_symbol"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_pending_total"
-        app:layout_constraintEnd_toStartOf="@+id/item_pending_total"/>
+        app:layout_constraintEnd_toStartOf="@+id/item_pending_total" />
 
     <ToggleButton
         android:id="@+id/item_pending_toggle"
         style="@style/IconButton"
         android:layout_width="@dimen/item_end_button_width"
-        android:contentDescription="@null"
-        android:textOn="@string/label_paid"
-        android:textOff="@string/label_not_paid"
-        android:textSize="0sp"
-        android:checked="false"
         android:background="@drawable/button_toggle_paid_pending"
-        app:layout_constraintBottom_toBottomOf="@+id/item_pending_icon"
+        android:checked="false"
+        android:contentDescription="@null"
+        android:textOff="@string/label_not_paid"
+        android:textOn="@string/label_paid"
+        android:textSize="0sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_pending_icon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

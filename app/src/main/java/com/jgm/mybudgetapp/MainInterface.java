@@ -50,4 +50,6 @@ public interface MainInterface {
     // Date
     MyDate getDate();
 
+    void setSelectedToolbarDate(int day, int month, int year);
+
 }

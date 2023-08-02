@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -104,6 +105,12 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
             }
         });
 
+        // Container click listener
+        holder.mContainer.setOnClickListener(v -> {
+            mInterface.setSelectedToolbarDate(day, month, year);
+            if (item.getType() == Tags.TYPE_IN) mInterface.open(Tags.transactionsInTag);
+            else mInterface.open(Tags.transactionsOutTag);
+        });
     }
 
     public void updateOnCardPaid(int position, PaymentMethod method) {
@@ -136,10 +143,12 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
         private final ImageView mIcon;
         private final TextView mName, mTotal, mCurrencySymbol, mDate;
         private final ToggleButton mPaid;
+        private final ConstraintLayout mContainer;
 
         private ListViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            mContainer = itemView.findViewById(R.id.item_pending_container);
             mIcon = itemView.findViewById(R.id.item_pending_icon);
             mName = itemView.findViewById(R.id.item_pending_name);
             mTotal = itemView.findViewById(R.id.item_pending_total);
