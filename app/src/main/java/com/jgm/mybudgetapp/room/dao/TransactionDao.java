@@ -10,6 +10,7 @@ import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.HomeAccounts;
 import com.jgm.mybudgetapp.objects.MonthResponse;
+import com.jgm.mybudgetapp.objects.PendingListResponse;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Transaction;
 
@@ -104,10 +105,32 @@ public interface TransactionDao {
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE paid = 0 " +
-            "AND day <= :day AND month <= :month AND year <= :year " +
+            "AND month <= :month AND year <= :year " +
+            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31))" +
             "ORDER BY year, month, day")
     List<TransactionResponse> getPendingList(int day, int month, int year);
 
+
+    /*
+        todo: icon id and icon color for categories and credit cards
+     */
+    @Query("SELECT transactions.id, transactions.type, cards.name AS description, SUM(amount) AS total, cardId, year, month, day, paid " +
+            "FROM transactions " +
+            "JOIN cards ON transactions.cardId = cards.id " +
+            "WHERE paid = 0 " +
+            "AND cardId > 0 " +
+            "AND month <= :month AND year <= :year " +
+            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
+            "GROUP BY cardId, year, month " +
+            "UNION " +
+            "SELECT id, type, description, amount AS total, cardId, year, month, day, paid " +
+            "FROM transactions " +
+            "WHERE paid = 0 " +
+            "AND cardId = 0 " +
+            "AND month <= :month AND year <= :year " +
+            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
+            "ORDER BY year, month, day")
+    List<PendingListResponse> getPendingList2(int day, int month, int year);
 
     /* ------------------------------------------------------------------------------
                                      HOME FRAGMENT
@@ -115,7 +138,8 @@ public interface TransactionDao {
 
     @Query("SELECT COUNT(paid) FROM transactions " +
             "WHERE paid = 0 " +
-            "AND day <= :day AND month <= :month AND year <= :year")
+            "AND month <= :month AND year <= :year " +
+            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31))")
     int getPendingCount(int day, int month, int year);
 
     @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")

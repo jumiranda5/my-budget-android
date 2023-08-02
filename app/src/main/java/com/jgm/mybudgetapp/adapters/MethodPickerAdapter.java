@@ -49,6 +49,8 @@ public class MethodPickerAdapter extends RecyclerView.Adapter<MethodPickerAdapte
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
+        // todo: strings
+
         PaymentMethod method = mDataList.get(position);
         Color color = ColorUtils.getColor(method.getColorId());
         Icon icon;

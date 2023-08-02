@@ -593,6 +593,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (mTransactionForm != null) mTransactionForm.setSelectedPaymentMethod(paymentMethod);
         else if (mTransactionsOut != null && transactionDialogItem != null)
             mTransactionsOut.updateOnCreditCardPaid(transactionDialogItem, paymentMethod, transactionDialogItemPosition);
+        else if (mPending != null) mPending.updatePaidCreditCard(paymentMethod, transactionDialogItemPosition);
     }
 
 

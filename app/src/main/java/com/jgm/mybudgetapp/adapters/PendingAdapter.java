@@ -3,7 +3,6 @@ package com.jgm.mybudgetapp.adapters;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +11,14 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Color;
-import com.jgm.mybudgetapp.objects.Icon;
-import com.jgm.mybudgetapp.objects.MyDate;
-import com.jgm.mybudgetapp.objects.TransactionResponse;
+import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.objects.PendingListResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
-import com.jgm.mybudgetapp.utils.ColorUtils;
-import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
@@ -34,11 +28,11 @@ import java.util.List;
 public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListViewHolder> {
 
     private final Context mContext;
-    private final List<TransactionResponse> mDataList;
+    private final List<PendingListResponse> mDataList;
     private final LayoutInflater layoutInflater;
     private final MainInterface mInterface;
 
-    public PendingAdapter(Context context, List<TransactionResponse> mDataList) {
+    public PendingAdapter(Context context, List<PendingListResponse> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         this.mInterface = (MainInterface) context;
@@ -54,55 +48,82 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        TransactionResponse transaction = mDataList.get(position);
-        Icon icon = IconUtils.getIcon(transaction.getIconId());
-        Color color = ColorUtils.getColor(transaction.getColorId());
+
+        PendingListResponse item = mDataList.get(position);
 
         // Set date
-        int day = transaction.getDay();
-        int month = transaction.getMonth();
-        int year = transaction.getYear();
+        int day = item.getDay();
+        int month = item.getMonth();
+        int year = item.getYear();
         String date = MyDateUtils.getFormattedFieldDate(mContext, year,month,day);
         holder.mDate.setText(date);
 
-        // Set icon
-        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-        holder.mIcon.setContentDescription(icon.getIconName());
-        holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
-
         // Set description
-        holder.mName.setText(transaction.getDescription());
+        holder.mName.setText(item.getDescription());
 
         // Set amount
-        String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
+        String[] currency = NumberUtils.getCurrencyFormat(mContext, item.getTotal());
         holder.mCurrencySymbol.setText(currency[0]);
         holder.mTotal.setText(currency[1]);
 
-        if (transaction.getType() == Tags.TYPE_IN) {
+        // Set icon and color
+        if (item.getType() == Tags.TYPE_IN) {
+            holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.arrow_south_west_600));
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.income));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
         }
         else {
+            holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.arrow_north_east_600));
+            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.expense));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
         }
 
         // Toggle paid
-        holder.mPaid.setChecked(false);
+        holder.mPaid.setChecked(item.isPaid());
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                AppDatabase.dbExecutor.execute(() -> {
-                    db.TransactionDao().updatePaid(transaction.getId(), true);
-                });
+            if (item.getCardId() > 0) {
+                if (isChecked) {
+                    holder.mPaid.setChecked(false); // set to true after method picker
+                    mInterface.showMethodPickerDialog(false, null, position);
+                }
+                else {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    AppDatabase.dbExecutor.execute(() -> {
+                        db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
+                        handler.post(() -> item.setPaid(false));
+                    });
+                }
             }
             else {
                 AppDatabase.dbExecutor.execute(() -> {
-                    db.TransactionDao().updatePaid(transaction.getId(), false);
+                    db.TransactionDao().updatePaid(item.getId(), isChecked);
                 });
             }
         });
 
+    }
+
+    public void updateOnCardPaid(int position, PaymentMethod method) {
+        AppDatabase db = AppDatabase.getDatabase(mContext);
+        Handler handler = new Handler();
+        AppDatabase.dbExecutor.execute(() -> {
+
+            PendingListResponse item = mDataList.get(position);
+            db.TransactionDao().updatePaidCard(
+                    item.getCardId(),
+                    true,
+                    item.getMonth(),
+                    item.getYear(),
+                    method.getId());
+
+            handler.post(() -> {
+                item.setPaid(true);
+                notifyItemChanged(position);
+            });
+        });
     }
 
     @Override

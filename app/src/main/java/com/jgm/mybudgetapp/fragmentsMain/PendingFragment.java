@@ -21,6 +21,8 @@ import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.adapters.PendingAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentPendingBinding;
 import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.objects.PaymentMethod;
+import com.jgm.mybudgetapp.objects.PendingListResponse;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
@@ -32,6 +34,8 @@ public class PendingFragment extends Fragment {
     public PendingFragment() {
         // Required empty public constructor
     }
+
+    private PendingAdapter adapter;
 
     // UI
     private FragmentPendingBinding binding;
@@ -73,6 +77,17 @@ public class PendingFragment extends Fragment {
 
     }
 
+    public void updatePaidCreditCard(PaymentMethod method, int position) {
+        adapter.updateOnCardPaid(position, method);
+    }
+
+    private void initRecyclerView(List<PendingListResponse> response) {
+        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
+        mRecyclerView.setLayoutManager(listLayoutManager);
+        adapter = new PendingAdapter(mContext, response);
+        mRecyclerView.setAdapter(adapter);
+    }
+
     private void getPendingData() {
         AppDatabase db = AppDatabase.getDatabase(mContext);
         Handler handler = new Handler(Looper.getMainLooper());
@@ -82,12 +97,24 @@ public class PendingFragment extends Fragment {
             List<TransactionResponse> response =
                     db.TransactionDao().getPendingList(today.getDay(), today.getMonth(), today.getYear());
 
+            List<PendingListResponse> response2 = db.TransactionDao().getPendingList2(today.getDay(), today.getMonth(), today.getYear());
+
             handler.post(() -> {
-                initRecyclerView(response);
-                for (int i = 0; i < response.size(); i++) {
-                    TransactionResponse t = response.get(i);
-                    Log.d("debug-pending", t.getCategoryName() + " | " + t.getAmount() +
-                            " | " + t.getDay() + "/" + t.getMonth() + "/" + t.getYear());
+                initRecyclerView(response2);
+//                for (int i = 0; i < response.size(); i++) {
+//                    TransactionResponse t = response.get(i);
+//                    Log.d("debug-pending", t.getCategoryName() + " | " + t.getAmount() +
+//                            " | " + t.getDay() + "/" + t.getMonth() + "/" + t.getYear());
+//                }
+
+                for (int i = 0; i < response2.size(); i++) {
+                    PendingListResponse t = response2.get(i);
+                    Log.d("debug-pending", "cardId = " + t.getCardId() + " | year: " + t.getYear() + " | " + t.getMonth());
+                    Log.d("debug-pending", t.getId()
+                            + " | " + t.getDescription()
+                            + " | cardId: " + t.getCardId()
+                            + " | " + t.getTotal()
+                            + " | " + t.getDay() + "/" + t.getMonth() + "/" + t.getYear());
                 }
             });
 
@@ -95,10 +122,4 @@ public class PendingFragment extends Fragment {
 
     }
 
-    private void initRecyclerView(List<TransactionResponse> response) {
-        LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(listLayoutManager);
-        PendingAdapter adapter = new PendingAdapter(mContext, response);
-        mRecyclerView.setAdapter(adapter);
-    }
 }
