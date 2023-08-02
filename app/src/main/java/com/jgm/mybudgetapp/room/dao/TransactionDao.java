@@ -101,19 +101,7 @@ public interface TransactionDao {
     /* ------------------------------------------------------------------------------
                                      PENDING FRAGMENT
     ------------------------------------------------------------------------------- */
-    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
-            "FROM transactions " +
-            "JOIN categories ON transactions.categoryId = categories.id " +
-            "WHERE paid = 0 " +
-            "AND month <= :month AND year <= :year " +
-            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31))" +
-            "ORDER BY year, month, day")
-    List<TransactionResponse> getPendingList(int day, int month, int year);
 
-
-    /*
-        todo: icon id and icon color for categories and credit cards
-     */
     @Query("SELECT transactions.id, transactions.type, cards.name AS description, SUM(amount) AS total, cardId, year, month, day, paid " +
             "FROM transactions " +
             "JOIN cards ON transactions.cardId = cards.id " +
@@ -130,17 +118,34 @@ public interface TransactionDao {
             "AND month <= :month AND year <= :year " +
             "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
             "ORDER BY year, month, day")
-    List<PendingListResponse> getPendingList2(int day, int month, int year);
+    List<PendingListResponse> getPendingList(int day, int month, int year);
 
     /* ------------------------------------------------------------------------------
                                      HOME FRAGMENT
     ------------------------------------------------------------------------------- */
 
+    @Query("SELECT COUNT(*) FROM " +
+                "(" +
+                    "SELECT id FROM transactions " +
+                        "WHERE paid = 0 " +
+                        "AND cardId > 0 " +
+                        "AND month <= :month AND year <= :year " +
+                        "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
+                        "GROUP BY cardId, year, month " +
+                    "UNION " +
+                        "SELECT id FROM transactions " +
+                        "WHERE paid = 0 " +
+                        "AND cardId = 0 " +
+                        "AND month <= :month AND year <= :year " +
+                        "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
+                    ") x")
+    int getPendingCount(int day, int month, int year);
+
     @Query("SELECT COUNT(paid) FROM transactions " +
             "WHERE paid = 0 " +
             "AND month <= :month AND year <= :year " +
             "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31))")
-    int getPendingCount(int day, int month, int year);
+    int getPendingCount2(int day, int month, int year);
 
     @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
     float getAccumulated(int month, int year);

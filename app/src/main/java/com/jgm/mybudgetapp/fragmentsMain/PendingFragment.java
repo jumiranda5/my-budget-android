@@ -23,7 +23,6 @@ import com.jgm.mybudgetapp.databinding.FragmentPendingBinding;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.PendingListResponse;
-import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 
@@ -94,22 +93,14 @@ public class PendingFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             MyDate today = MyDateUtils.getCurrentDate(mContext);
-            List<TransactionResponse> response =
+            List<PendingListResponse> response =
                     db.TransactionDao().getPendingList(today.getDay(), today.getMonth(), today.getYear());
 
-            List<PendingListResponse> response2 = db.TransactionDao().getPendingList2(today.getDay(), today.getMonth(), today.getYear());
-
             handler.post(() -> {
-                initRecyclerView(response2);
-//                for (int i = 0; i < response.size(); i++) {
-//                    TransactionResponse t = response.get(i);
-//                    Log.d("debug-pending", t.getCategoryName() + " | " + t.getAmount() +
-//                            " | " + t.getDay() + "/" + t.getMonth() + "/" + t.getYear());
-//                }
+                initRecyclerView(response);
 
-                for (int i = 0; i < response2.size(); i++) {
-                    PendingListResponse t = response2.get(i);
-                    Log.d("debug-pending", "cardId = " + t.getCardId() + " | year: " + t.getYear() + " | " + t.getMonth());
+                for (int i = 0; i < response.size(); i++) {
+                    PendingListResponse t = response.get(i);
                     Log.d("debug-pending", t.getId()
                             + " | " + t.getDescription()
                             + " | cardId: " + t.getCardId()
