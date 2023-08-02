@@ -55,25 +55,24 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        TransactionResponse item = mDataList.get(position);
 
-        // Icon icon = IconOutlineUtils.getIcon(item.getIconId());
+        TransactionResponse item = mDataList.get(position);
         Color color = ColorUtils.getColor(item.getColorId());
         MyDate today = MyDateUtils.getCurrentDate(mContext);
 
         boolean isCardTotal = item.getId() == -1;
         boolean isAccumulated = item.getId() == 0;
-        boolean isPending = item.getDay() <= today.getDay() && item.getMonth() <= today.getMonth() && item.getYear() <= today.getYear();
+        boolean isPendingMonth = item.getYear() <= today.getYear() && item.getMonth() <= today.getMonth();
+        boolean isPendingDay = (item.getMonth() == today.getMonth() && item.getDay() <= today.getDay())
+                || item.getMonth() < today.getMonth() && item.getDay() <= 31;
+        boolean isPending = isPendingMonth && isPendingDay;
 
         Log.d("debug-item", "category: " + item.getCategoryId()
                 + " " + item.getCategoryName()
                 + "/ " + item.getDescription()
                 + "/ account " + item.getAccountId()
-                + "/ card " + item.getCardId());
-
-        // Set icon
-//        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-//        holder.mIcon.setContentDescription(icon.getIconName());
+                + "/ card " + item.getCardId()
+                + "/ pending: " + isPending);
 
         // Set description
         String description = item.getDescription();
@@ -136,7 +135,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (isAccumulated) {
             holder.mContainer.setClickable(false);
             holder.mPaid.setVisibility(View.GONE);
-//            holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
             holder.mName.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
@@ -155,7 +153,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
         if (isCardTotal) {
-            // holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
             item.setCategoryName(mContext.getString(R.string.credit_card));
             item.setCardId(-1); // to use on transactions dialog
             holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));

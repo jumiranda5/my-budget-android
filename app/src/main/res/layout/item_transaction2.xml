@@ -10,6 +10,7 @@
     <ImageView
         android:id="@+id/item_transaction2_icon"
         style="@style/ItemIcon"
+        android:visibility="gone"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
         android:id="@+id/item_transaction2_total"
         style="@style/CurrencySpace"
         android:text="@string/initial_value_no_symbol"
-        android:paddingEnd="4dp"
+        android:layout_marginEnd="@dimen/inner_space"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_name"
         app:layout_constraintEnd_toEndOf="parent" />
