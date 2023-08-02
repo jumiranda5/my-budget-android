@@ -278,6 +278,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsIn != null)
             mTransactionsIn.getIncomeData(selectedDate.getMonth(), selectedDate.getYear());
+        else if (mAccounts != null)
+            mAccounts.updateListOnDateChange(selectedDate);
         else if (mAccountDetails != null)
             mAccountDetails.updateAccountOnMonthChange(selectedDate);
     }

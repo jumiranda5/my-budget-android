@@ -141,12 +141,6 @@ public interface TransactionDao {
                     ") x")
     int getPendingCount(int day, int month, int year);
 
-    @Query("SELECT COUNT(paid) FROM transactions " +
-            "WHERE paid = 0 " +
-            "AND month <= :month AND year <= :year " +
-            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31))")
-    int getPendingCount2(int day, int month, int year);
-
     @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
     float getAccumulated(int month, int year);
 

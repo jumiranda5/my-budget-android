@@ -15,12 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.adapters.AccountAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentAccountsBinding;
 import com.jgm.mybudgetapp.objects.AccountTotal;
+import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.entity.Account;
@@ -74,7 +74,9 @@ public class AccountsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getAccountsData();
+        initRecyclerView();
+        MyDate date = mInterface.getDate();
+        getAccountsData(date);
         //mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
 
     }
@@ -107,21 +109,29 @@ public class AccountsFragment extends Fragment {
         adapter.updateItem(pos, editedAccount);
     }
 
+    public void updateListOnDateChange(MyDate selectedDate) {
+        getAccountsData(selectedDate);
+    }
+
 
     /* ===============================================================================
                                         DATABASE
      =============================================================================== */
 
-    private void getAccountsData() {
+    private void getAccountsData(MyDate date) {
         AppDatabase db = AppDatabase.getDatabase(mContext);
         AccountDao mAccountDao = db.AccountDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
-            Map<Account, String> accountsTotals = mAccountDao.getAccountsWithTotals();
+            Map<Account, String> accountsTotals = mAccountDao.getAccountsWithTotals2(date.getMonth(), date.getYear());
+
+            Log.d(LOG, "size: " + accountsTotals.size());
 
             handler.post(() -> {
+
+                accountsList.clear();
 
                 for (Account account : accountsTotals.keySet()) {
 
@@ -142,7 +152,7 @@ public class AccountsFragment extends Fragment {
                     accountsList.add(accountTotal);
                 }
 
-                initRecyclerView();
+                adapter.notifyDataSetChanged();
 
                 Log.d(LOG, "Done reading all accounts from db: " + accountsTotals.size());
             });
