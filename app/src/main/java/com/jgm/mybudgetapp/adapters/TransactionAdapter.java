@@ -58,8 +58,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Color color = ColorUtils.getColor(item.getColorId());
         MyDate today = MyDateUtils.getCurrentDate(mContext);
 
-        int cardId = item.getCardId(); // set to -1 later to be used on transactions dialog
-
         boolean isCardTotal = item.getId() == -1;
         boolean isAccumulated = item.getId() == 0;
         boolean isPendingMonth = item.getYear() <= today.getYear() && item.getMonth() <= today.getMonth();
@@ -110,10 +108,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                     mInterface.showMethodPickerDialog(false, item, dayPosition);
                 }
                 else {
-                    Log.d("debug-item", "card item on toggle Off => cardId = " + cardId);
+                    Log.d("debug-item", "card item on toggle Off => cardId = " + item.getCardId());
                     Handler handler = new Handler(Looper.getMainLooper());
                     AppDatabase.dbExecutor.execute(() -> {
-                        db.TransactionDao().updatePaidCard(cardId, false, item.getMonth(), item.getYear(), 0);
+                        db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
                         handler.post(() -> {
                             item.setPaid(false);
                             updateCreditCardItemsNotPaidStatus(item.getCardId());
@@ -157,8 +155,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
         if (isCardTotal) {
             item.setCategoryName(mContext.getString(R.string.credit_card));
-            item.setCardId(-1); // to use on transactions dialog
-            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
+            holder.mContainer.setOnClickListener(v -> {
+                item.setCardId(-1); // to use on transactions dialog
+                mInterface.showTransactionDialog(item);
+            });
         }
 
         // Open transaction details dialog
