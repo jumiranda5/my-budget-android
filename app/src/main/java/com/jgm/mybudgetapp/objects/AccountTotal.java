@@ -71,4 +71,8 @@ public class AccountTotal {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
 }

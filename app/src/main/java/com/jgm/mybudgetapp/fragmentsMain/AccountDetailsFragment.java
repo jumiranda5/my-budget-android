@@ -32,6 +32,7 @@ import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.AccountDao;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
@@ -50,8 +51,10 @@ public class AccountDetailsFragment extends Fragment {
     }
 
     private static final String LOG = "debug-account";
+    private static final String STATE_ID = "id";
 
     // Vars
+    private int id;
     private AccountTotal accountTotal;
     private MyDate date;
     private TransactionDao transactionDao;
@@ -68,7 +71,6 @@ public class AccountDetailsFragment extends Fragment {
 
     private void setBinding() {
         buttonBack = binding.accountBackButton;
-        //buttonEdit = binding.accountEditButton;
         mAccountName = binding.accountDetailsTitle;
         mAccountIcon = binding.accountIcon;
         mTotal = binding.accountTotal;
@@ -111,10 +113,18 @@ public class AccountDetailsFragment extends Fragment {
         AppDatabase db = AppDatabase.getDatabase(mContext);
         transactionDao = db.TransactionDao();
 
-        initAccountInfo();
-        getAccountTransactions();
+        if (savedInstanceState != null) {
+            id = savedInstanceState.getInt(STATE_ID);
+            Log.d(LOG, "savedInstanceState id = " + id);
+            date = mInterface.getDate();
+            getAccountById();
+        }
+        else {
+            initAccountInfo();
+            getAccountTransactions();
+        }
+
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
-        //buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
 
         mFab.setOnClickListener(v -> {
             // Set account db object to send to edit from
@@ -133,9 +143,16 @@ public class AccountDetailsFragment extends Fragment {
 
     }
 
-    /* ------------------------------------------------------------------------------
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(Tags.LOG_LIFECYCLE, "Account Details fragment onSaveInstanceState");
+        outState.putInt(STATE_ID, id);
+    }
+
+    /* ===============================================================================
                                          LIST
-    ------------------------------------------------------------------------------- */
+    =============================================================================== */
 
     private void initRecyclerView() {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
@@ -149,19 +166,19 @@ public class AccountDetailsFragment extends Fragment {
      =============================================================================== */
 
     public void setAccount(AccountTotal accountTotal, MyDate date) {
-
         Log.d(LOG, "=> setAccount");
-
         this.accountTotal = accountTotal;
         this.date = date;
-
     }
 
     public void updateAccountOnMonthChange(MyDate date) {
         Log.d(LOG, "=> updateAccountOnMonthChange");
-        this.date = date;
-        getAccountTotal();
-        getAccountTransactions();
+        // don't update (here) on screen rotation
+        if (accountTotal != null) {
+            this.date = date;
+            getAccountTotal();
+            getAccountTransactions();
+        }
     }
 
     public void updateAccountAfterEdit(Account editedAccount) {
@@ -183,10 +200,8 @@ public class AccountDetailsFragment extends Fragment {
     private void initAccountInfo() {
         Log.d(LOG, "=> initAccountInfo");
 
-        if (date == null) {
-            date = mInterface.getDate();
-            getAccountTotal();
-        }
+        // set id
+        id = accountTotal.getId();
 
         // Account name
         mAccountName.setText(accountTotal.getName());
@@ -202,6 +217,31 @@ public class AccountDetailsFragment extends Fragment {
         setTotalColor(accountTotal.getTotal());
     }
 
+    private void getAccountById() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+            AppDatabase db = AppDatabase.getDatabase(mContext);
+            AccountDao accountDao = db.AccountDao();
+            Account account = accountDao.getAccountById(id);
+
+            handler.post(() -> {
+                accountTotal = new AccountTotal(
+                        id,
+                        account.getName(),
+                        account.getColorId(),
+                        account.getIconId(),
+                        account.getType(),
+                        account.isActive(),
+                        0f);
+
+                initAccountInfo();
+                getAccountTotal();
+                getAccountTransactions();
+            });
+
+        });
+    }
+
     private void getAccountTotal() {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
@@ -210,6 +250,7 @@ public class AccountDetailsFragment extends Fragment {
             Log.d(LOG, "total = " + total);
 
             handler.post(() -> {
+                accountTotal.setTotal(total);
                 String totalFormatted = NumberUtils.getCurrencyFormat(mContext, total)[2];
                 Log.d(LOG, "total formatted = " + totalFormatted);
                 mTotal.setText(totalFormatted);
@@ -227,24 +268,19 @@ public class AccountDetailsFragment extends Fragment {
 
             Log.d(LOG, "account id: " + accountTotal.getId());
 
-            List<TransactionResponse> transactions = transactionDao.getAccountTransactions(
-                    accountTotal.getId(), date.getMonth(), date.getYear());
-
-            List<TransactionResponse> transactions2 = transactionDao.getAccountTransactions2(
+            List<TransactionResponse> transactions = transactionDao.getAccountTransactions2(
                     accountTotal.getId(), date.getMonth(), date.getYear());
 
             float prevTotal = transactionDao.getAccountAccumulated(
                     accountTotal.getId(), date.getMonth(), date.getYear());
 
-            Log.d(LOG, "list size: " + transactions.size());
-
             handler.post(() -> {
                 // set accumulated value
                 TransactionResponse accumulated = TransactionsUtils.setAccumulated(
                         mContext, prevTotal, date.getMonth(), date.getYear());
-                transactions2.add(0, accumulated);
+                transactions.add(0, accumulated);
                 // set list data with day groups
-                setListData(transactions2, date.getMonth(), date.getYear());
+                setListData(transactions, date.getMonth(), date.getYear());
             });
 
         });
