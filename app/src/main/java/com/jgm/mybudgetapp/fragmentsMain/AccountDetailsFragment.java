@@ -279,9 +279,11 @@ public class AccountDetailsFragment extends Fragment {
 
             handler.post(() -> {
                 // set accumulated value
-                TransactionResponse accumulated = TransactionsUtils.setAccumulated(
-                        mContext, prevTotal, date.getMonth(), date.getYear());
-                transactions.add(0, accumulated);
+                if (prevTotal != 0f) {
+                    TransactionResponse accumulated = TransactionsUtils.setAccumulated(
+                            mContext, prevTotal, date.getMonth(), date.getYear());
+                    transactions.add(0, accumulated);
+                }
                 // set list data with day groups
                 setListData(transactions, date.getMonth(), date.getYear());
             });
