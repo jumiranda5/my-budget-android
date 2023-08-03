@@ -85,6 +85,9 @@ public interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE cardId = :cardId and month = :month AND year = :year LIMIT 1")
     Transaction getCardTransaction(int cardId, int month, int year);
 
+    @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
+    float getAccumulated(int month, int year);
+
     /* ------------------------------------------------------------------------------
                                      ACCOUNT FRAGMENT
     ------------------------------------------------------------------------------- */
@@ -97,6 +100,13 @@ public interface TransactionDao {
             "AND transactions.month = :month " +
             "ORDER BY transactions.day ")
     List<TransactionResponse> getAccountTransactions(int accountId, int month, int year);
+
+    @Query("SELECT SUM(amount) " +
+            "FROM transactions " +
+            "WHERE accountId = :accountId " +
+            "AND paid = 1 " +
+            "AND year <= :year AND month < :month ")
+    float getAccountAccumulated(int accountId, int month, int year);
 
     /* ------------------------------------------------------------------------------
                                      PENDING FRAGMENT
@@ -140,9 +150,6 @@ public interface TransactionDao {
                         "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
                     ") x")
     int getPendingCount(int day, int month, int year);
-
-    @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
-    float getAccumulated(int month, int year);
 
     @Query("SELECT SUM (amount) AS balance, " +
             "SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +

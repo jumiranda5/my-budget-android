@@ -131,7 +131,7 @@ public class TransactionsInFragment extends Fragment {
 
             handler.post(() -> {
                 if (prevTotal > 0) {
-                    TransactionResponse accumulated = setAccumulated(prevTotal, month, year);
+                    TransactionResponse accumulated = TransactionsUtils.setAccumulated(mContext, prevTotal, month, year);
                     income.add(0, accumulated);
                 }
                 setIncomeData(month, year);
@@ -156,19 +156,6 @@ public class TransactionsInFragment extends Fragment {
     /* ------------------------------------------------------------------------------
                                          SET DATA
     ------------------------------------------------------------------------------- */
-
-    private TransactionResponse setAccumulated(float value, int month, int year) {
-        return new TransactionResponse(0,
-                Tags.TYPE_OUT,
-                getString(R.string.label_accumulated),
-                value,
-                year, month, 1,
-                0, 0, 0, true,
-                1, 1, null,
-                "",
-                23,
-                71);
-    }
 
     private void setIncomeData(int month, int year) {
 

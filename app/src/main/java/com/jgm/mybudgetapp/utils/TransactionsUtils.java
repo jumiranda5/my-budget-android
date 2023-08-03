@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.DayGroup;
+import com.jgm.mybudgetapp.objects.TransactionResponse;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,19 @@ public class TransactionsUtils {
         String paidCurrencyPositive = paidCurrency.replace("-", "");
         String paidText = context.getString(R.string.label_paid2) + " " + paidCurrencyPositive;
         mPaid.setText(paidText);
+    }
+
+    public static TransactionResponse setAccumulated(Context context, float value, int month, int year) {
+        return new TransactionResponse(0,
+                Tags.TYPE_OUT,
+                context.getString(R.string.label_accumulated),
+                value,
+                year, month, 1,
+                0, 0, 0, true,
+                1, 1, null,
+                "",
+                23,
+                71);
     }
 
 }

@@ -278,9 +278,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsIn != null)
             mTransactionsIn.getIncomeData(selectedDate.getMonth(), selectedDate.getYear());
-        else if (mAccounts != null)
+        else if (mAccounts != null && currentFragment.equals(accountsTag))
             mAccounts.updateListOnDateChange(selectedDate);
-        else if (mAccountDetails != null)
+        else if (mAccountDetails != null && currentFragment.equals(accountDetailsTag))
             mAccountDetails.updateAccountOnMonthChange(selectedDate);
     }
 
@@ -440,10 +440,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openAccountDetails(AccountTotal accountTotal, int position) {
+    public void openAccountDetails(AccountTotal accountTotal) {
         Log.d(LOG_MAIN, "-- Interface => open account details");
         openFragment(accountDetailsTag);
-        if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, position, selectedDate);
+        if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, selectedDate);
     }
 
     @Override
@@ -743,8 +743,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         if (tag.equals(categoriesListTag)
                 || tag.equals(categoriesFormTag)
-                || tag.equals(accountFormTag)
-                || tag.equals(accountDetailsTag)) {
+                || tag.equals(accountFormTag)) {
             Log.d(Tags.LOG_NAV, "Add fragment: " + tag);
             addFragment(fragment, tag);
         }
@@ -798,9 +797,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 if (currentFragment.equals(accountsTag)) transaction2.hide(mAccounts);
                 if (currentFragment.equals(accountDetailsTag)) transaction2.hide(mAccountDetails);
                 break;
-            case accountDetailsTag:
-                transaction2.hide(mAccounts);
-                break;
         }
         transaction2.commit();
 
@@ -828,9 +824,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 if (tag.equals(accountsTag)) transaction.show(mAccounts);
                 if (tag.equals(accountDetailsTag)) transaction.show(mAccountDetails);
                 break;
-            case accountDetailsTag:
-                transaction.show(mAccounts);
-                break;
         }
 
         transaction.commit();
@@ -856,9 +849,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             case accountFormTag:
                 if (currentFragment.equals(accountsTag)) transaction2.show(mAccounts);
                 if (currentFragment.equals(accountDetailsTag)) transaction2.show(mAccountDetails);
-                break;
-            case accountDetailsTag:
-                transaction2.show(mAccounts);
                 break;
         }
         transaction2.commit();
@@ -891,17 +881,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 case accountFormTag:
                     destroyFragment(mAccountForm, accountFormTag);
                     break;
-                case accountDetailsTag:
-                    destroyFragment(mAccountDetails, accountDetailsTag);
-                    break;
                 default:
                     setFragment(newTopFragmentTag);
                     break;
             }
 
             // show hidden newTopFragment
-            if (topFragmentTag.equals(accountDetailsTag)
-                    || topFragmentTag.equals(accountFormTag)
+            if (topFragmentTag.equals(accountFormTag)
                     || topFragmentTag.equals(categoriesFormTag)
                     || topFragmentTag.equals(categoriesListTag)) {
 

@@ -37,13 +37,15 @@ import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
+import com.jgm.mybudgetapp.utils.TransactionsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDetailsFragment extends Fragment {
 
-    // todo: set credit card as one item | set accumulated | set total from each month
+    // todo:
+    //      | set credit card items
 
     public AccountDetailsFragment() {
         // Required empty public constructor
@@ -52,7 +54,6 @@ public class AccountDetailsFragment extends Fragment {
     private static final String LOG = "debug-account";
 
     // Vars
-    private int position;
     private AccountTotal accountTotal;
     private Account account;
     private MyDate date;
@@ -123,11 +124,10 @@ public class AccountDetailsFragment extends Fragment {
                                        INTERFACE
      =============================================================================== */
 
-    public void setAccount(AccountTotal accountTotal, int position, MyDate date) {
+    public void setAccount(AccountTotal accountTotal, MyDate date) {
 
         Log.d(LOG, "=> setAccount");
 
-        this.position = position;
         this.accountTotal = accountTotal;
         this.date = date;
 
@@ -195,9 +195,17 @@ public class AccountDetailsFragment extends Fragment {
             List<TransactionResponse> transactions = transactionDao.getAccountTransactions(
                     account.getId(), date.getMonth(), date.getYear());
 
+            float prevTotal = transactionDao.getAccountAccumulated(
+                    account.getId(), date.getMonth(), date.getYear());
+
             Log.d(LOG, "list size: " + transactions.size());
 
             handler.post(() -> {
+                // set accumulated value
+                TransactionResponse accumulated = TransactionsUtils.setAccumulated(
+                        mContext, prevTotal, date.getMonth(), date.getYear());
+                transactions.add(0, accumulated);
+                // set list data with day groups
                 setListData(transactions, date.getMonth(), date.getYear());
             });
 

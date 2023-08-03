@@ -83,7 +83,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.GridView
         }
 
         // Open account details
-        holder.mContainer.setOnClickListener(v -> mInterface.openAccountDetails(account, position));
+        holder.mContainer.setOnClickListener(v -> mInterface.openAccountDetails(account));
 
     }
 
