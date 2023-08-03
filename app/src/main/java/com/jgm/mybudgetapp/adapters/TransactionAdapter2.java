@@ -12,10 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
-import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;
@@ -25,10 +24,12 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
     private final Context mContext;
     private final List<TransactionResponse> mDataList;
     private final LayoutInflater layoutInflater;
+    private final MainInterface mInterface;
 
     public TransactionAdapter2(Context context, List<TransactionResponse> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
+        this.mInterface = (MainInterface) context;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -92,6 +93,20 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
             holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
+        }
+
+        // Set click listener
+        if (isCardItem) {
+            item.setCategoryName(mContext.getString(R.string.credit_card));
+            holder.mContainer.setOnClickListener(v -> {
+                item.setCardId(-1); // to use on transactions dialog
+                mInterface.showTransactionDialog(item);
+            });
+        }
+
+        // Open transaction details dialog
+        if (item.getId() > 0) {
+            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
         }
 
     }

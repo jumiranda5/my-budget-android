@@ -53,7 +53,7 @@ public class AccountDetailsFragment extends Fragment {
 
     // Vars
     private AccountTotal accountTotal;
-    private Account account;
+    private Account accountToEdit;
     private MyDate date;
     private TransactionDao transactionDao;
     private DayGroupAdapter adapter;
@@ -140,7 +140,7 @@ public class AccountDetailsFragment extends Fragment {
         this.date = date;
 
         // Set account db object to send to edit from
-        account = new Account(
+        accountToEdit = new Account(
                 accountTotal.getName(),
                 accountTotal.getColorId(),
                 accountTotal.getIconId(),
@@ -148,7 +148,7 @@ public class AccountDetailsFragment extends Fragment {
                 accountTotal.isActive()
         );
 
-        account.setId(accountTotal.getId());
+        accountToEdit.setId(accountTotal.getId());
     }
 
     public void updateAccountOnMonthChange(MyDate date) {
@@ -160,7 +160,8 @@ public class AccountDetailsFragment extends Fragment {
 
     public void updateAccountAfterEdit(Account editedAccount) {
         Log.d(LOG, "=> updateAccountAfterEdit");
-        account = editedAccount;
+        // todo
+        accountToEdit = editedAccount;
         initAccountInfo();
     }
 
@@ -176,6 +177,12 @@ public class AccountDetailsFragment extends Fragment {
 
     private void initAccountInfo() {
         Log.d(LOG, "=> initAccountInfo");
+
+        // if returning from transactions form
+        if (date == null) {
+            date = mInterface.getDate();
+            getAccountTotal();
+        }
 
         // Account name
         mAccountName.setText(accountTotal.getName());
@@ -195,7 +202,7 @@ public class AccountDetailsFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
-            float total = transactionDao.getAccountTotal(account.getId(), date.getMonth(), date.getYear());
+            float total = transactionDao.getAccountTotal(accountTotal.getId(), date.getMonth(), date.getYear());
             Log.d(LOG, "total = " + total);
 
             handler.post(() -> {
@@ -214,16 +221,16 @@ public class AccountDetailsFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
-            Log.d(LOG, "account id: " + account.getId());
+            Log.d(LOG, "account id: " + accountTotal.getId());
 
             List<TransactionResponse> transactions = transactionDao.getAccountTransactions(
-                    account.getId(), date.getMonth(), date.getYear());
+                    accountTotal.getId(), date.getMonth(), date.getYear());
 
             List<TransactionResponse> transactions2 = transactionDao.getAccountTransactions2(
-                    account.getId(), date.getMonth(), date.getYear());
+                    accountTotal.getId(), date.getMonth(), date.getYear());
 
             float prevTotal = transactionDao.getAccountAccumulated(
-                    account.getId(), date.getMonth(), date.getYear());
+                    accountTotal.getId(), date.getMonth(), date.getYear());
 
             Log.d(LOG, "list size: " + transactions.size());
 

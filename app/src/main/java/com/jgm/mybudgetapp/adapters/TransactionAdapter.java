@@ -153,6 +153,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
             holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
         }
+
         if (isCardTotal) {
             item.setCategoryName(mContext.getString(R.string.credit_card));
             holder.mContainer.setOnClickListener(v -> {
