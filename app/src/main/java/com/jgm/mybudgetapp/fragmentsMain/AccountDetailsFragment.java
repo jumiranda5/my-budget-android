@@ -29,6 +29,7 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.objects.PendingListResponse;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
@@ -43,9 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDetailsFragment extends Fragment {
-
-    // todo:
-    //      | set credit card items
 
     public AccountDetailsFragment() {
         // Required empty public constructor
@@ -221,6 +219,9 @@ public class AccountDetailsFragment extends Fragment {
             List<TransactionResponse> transactions = transactionDao.getAccountTransactions(
                     account.getId(), date.getMonth(), date.getYear());
 
+            List<TransactionResponse> transactions2 = transactionDao.getAccountTransactions2(
+                    account.getId(), date.getMonth(), date.getYear());
+
             float prevTotal = transactionDao.getAccountAccumulated(
                     account.getId(), date.getMonth(), date.getYear());
 
@@ -230,9 +231,9 @@ public class AccountDetailsFragment extends Fragment {
                 // set accumulated value
                 TransactionResponse accumulated = TransactionsUtils.setAccumulated(
                         mContext, prevTotal, date.getMonth(), date.getYear());
-                transactions.add(0, accumulated);
+                transactions2.add(0, accumulated);
                 // set list data with day groups
-                setListData(transactions, date.getMonth(), date.getYear());
+                setListData(transactions2, date.getMonth(), date.getYear());
             });
 
         });
@@ -245,6 +246,7 @@ public class AccountDetailsFragment extends Fragment {
         for (int i = 0; i < transactions.size(); i++) {
             TransactionResponse transaction = transactions.get(i);
             int day = transaction.getDay();
+            Log.d(LOG, "transaction day: " + day + " | " + transaction.getDescription());
 
             // set transactions grouped by day
             // if first item => create new dayGroup obj and add to dayGroups list

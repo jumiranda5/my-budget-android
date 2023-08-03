@@ -101,6 +101,46 @@ public interface TransactionDao {
             "ORDER BY transactions.day ")
     List<TransactionResponse> getAccountTransactions(int accountId, int month, int year);
 
+    /*
+    int id,
+            int type,
+            String description,
+            float amount,
+            int year, int month, int day,
+            int categoryId,
+            Integer accountId,
+            Integer cardId,
+            boolean paid,
+            int repeat,
+            Integer repeatCount,
+            Long repeatId,
+            String categoryName,
+            int colorId,
+            int iconId
+     */
+
+    @Query("SELECT transactions.id, type, " +
+            "   cards.name AS description, SUM(amount) AS amount," +
+            "   year, month, day, categoryId, accountId, cardId, paid, 1 AS repeat, repeatCount, repeatId," +
+            "   cards.name AS categoryName, cards.colorId, 70 AS iconId " +
+            "   FROM transactions " +
+            "   LEFT JOIN cards ON transactions.cardId = cards.id " +
+            "   WHERE transactions.accountId = :accountId " +
+            "   AND cardId > 0 " +
+            "   AND transactions.year = :year " +
+            "   AND transactions.month = :month " +
+            "   GROUP BY cardId, year, month " +
+            "UNION " +
+            "   SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
+            "   FROM transactions " +
+            "   LEFT JOIN categories ON transactions.categoryId = categories.id " +
+            "   WHERE transactions.accountId = :accountId " +
+            "   AND cardId = 0 " +
+            "   AND transactions.year = :year " +
+            "   AND transactions.month = :month " +
+            "ORDER BY year, month, day")
+    List<TransactionResponse> getAccountTransactions2(int accountId, int month, int year);
+
     @Query("SELECT SUM(amount) " +
             "FROM transactions " +
             "WHERE accountId = :accountId " +

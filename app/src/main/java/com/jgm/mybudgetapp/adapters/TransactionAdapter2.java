@@ -44,7 +44,6 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
 
         // Data
         TransactionResponse item = mDataList.get(position);
-        Color color = ColorUtils.getColor(item.getColorId());
         boolean isAccumulated = item.getId() == 0;
         boolean isCardItem = item.getCardId() > 0;
         boolean isNotPaid = !item.isPaid();
@@ -74,8 +73,8 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
         }
 
-        // Show icon if credit card, not paid or accumulated
-        if (isAccumulated || isCardItem || isNotPaid) {
+        // Show icon if not paid or accumulated
+        if (isAccumulated || isNotPaid) {
             holder.mIcon.setVisibility(View.VISIBLE);
             holder.mIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.high_emphasis_text));
         }
@@ -84,11 +83,6 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
         if (isAccumulated) {
             holder.mContainer.setClickable(false);
             holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_autorenew_fill0_300));
-        }
-
-        // Set card icon
-        if (isCardItem) {
-            holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_credit_card_fill0_300));
         }
 
         // set not paid

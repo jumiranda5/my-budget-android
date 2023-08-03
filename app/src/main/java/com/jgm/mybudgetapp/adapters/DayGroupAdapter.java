@@ -1,6 +1,7 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +48,14 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
         int day = dayGroup.getDay();
         int month = dayGroup.getMonth();
         int year = dayGroup.getYear();
-        String weekDay = MyDateUtils.getDayOfWeek(mContext, day, month, year)[1];
-        String weekDayWithNumber = weekDay + ", " + day;
-        holder.mDay.setText(weekDayWithNumber);
+        try {
+            String weekDay = MyDateUtils.getDayOfWeek(mContext, day, month, year)[1];
+            String weekDayWithNumber = weekDay + ", " + day;
+            holder.mDay.setText(weekDayWithNumber);
+        }
+        catch (Exception e) {
+            Log.e("debug-day-item", "wrong date: day = " + day + " month = " + month + " year = " + year);
+        }
 
         // Set list
         List<TransactionResponse> transactions = dayGroup.getTransactions();
