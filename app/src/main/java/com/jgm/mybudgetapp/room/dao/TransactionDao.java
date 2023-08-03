@@ -108,6 +108,13 @@ public interface TransactionDao {
             "AND year <= :year AND month < :month ")
     float getAccountAccumulated(int accountId, int month, int year);
 
+    @Query("SELECT SUM(amount) " +
+            "FROM transactions " +
+            "WHERE accountId = :accountId " +
+            "AND paid = 1 " +
+            "AND year <= :year AND month <= :month ")
+    float getAccountTotal(int accountId, int month, int year);
+
     /* ------------------------------------------------------------------------------
                                      PENDING FRAGMENT
     ------------------------------------------------------------------------------- */

@@ -31,6 +31,7 @@ import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.CardDao;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.utils.ColorUtils;
@@ -57,6 +58,9 @@ public class AccountDetailsFragment extends Fragment {
     private AccountTotal accountTotal;
     private Account account;
     private MyDate date;
+    private TransactionDao transactionDao;
+    private DayGroupAdapter adapter;
+    private final ArrayList<DayGroup> dayGroups = new ArrayList<>();
 
     // UI
     private FragmentAccountDetailsBinding binding;
@@ -102,8 +106,15 @@ public class AccountDetailsFragment extends Fragment {
 
         Log.d(Tags.LOG_LIFECYCLE, "Accounts details onViewCreated");
 
+        // init listview
+        initRecyclerView();
+
+        // init db
+        AppDatabase db = AppDatabase.getDatabase(mContext);
+        transactionDao = db.TransactionDao();
+
         initAccountInfo();
-        getAccountTransactions(date);
+        getAccountTransactions();
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         //buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
 
@@ -113,10 +124,10 @@ public class AccountDetailsFragment extends Fragment {
                                          LIST
     ------------------------------------------------------------------------------- */
 
-    private void initRecyclerView(ArrayList<DayGroup> dayGroups) {
+    private void initRecyclerView() {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
-        DayGroupAdapter adapter = new DayGroupAdapter(mContext, dayGroups, 2);
+        adapter = new DayGroupAdapter(mContext, dayGroups, 2);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -144,8 +155,10 @@ public class AccountDetailsFragment extends Fragment {
     }
 
     public void updateAccountOnMonthChange(MyDate date) {
+        Log.d(LOG, "=> updateAccountOnMonthChange");
         this.date = date;
-        getAccountTransactions(date);
+        getAccountTotal();
+        getAccountTransactions();
     }
 
     public void updateAccountAfterEdit(Account editedAccount) {
@@ -157,6 +170,12 @@ public class AccountDetailsFragment extends Fragment {
     /* ===============================================================================
                                           DATA
      =============================================================================== */
+
+    private void setTotalColor(float value) {
+        if (accountTotal.getType() == 2) mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+        else if (value < 0) mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        else mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+    }
 
     private void initAccountInfo() {
         Log.d(LOG, "=> initAccountInfo");
@@ -172,20 +191,28 @@ public class AccountDetailsFragment extends Fragment {
 
         // Account total
         mTotal.setText(NumberUtils.getCurrencyFormat(mContext, accountTotal.getTotal())[2]);
-        if (accountTotal.getType() == 2)
-            mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
-        else if (accountTotal.getTotal() < 0)
-            mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-        else
-            mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        setTotalColor(accountTotal.getTotal());
     }
 
-    private void getAccountTransactions(MyDate date) {
+    private void getAccountTotal() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            float total = transactionDao.getAccountTotal(account.getId(), date.getMonth(), date.getYear());
+            Log.d(LOG, "total = " + total);
+
+            handler.post(() -> {
+                String totalFormatted = NumberUtils.getCurrencyFormat(mContext, total)[2];
+                Log.d(LOG, "total formatted = " + totalFormatted);
+                mTotal.setText(totalFormatted);
+                setTotalColor(total);
+            });
+        });
+    }
+
+    private void getAccountTransactions() {
 
         Log.d(LOG, "=> getAccountTransactions");
-
-        AppDatabase db = AppDatabase.getDatabase(mContext);
-        TransactionDao transactionDao = db.TransactionDao();
 
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
@@ -214,7 +241,7 @@ public class AccountDetailsFragment extends Fragment {
 
     private void setListData(List<TransactionResponse> transactions, int month, int year) {
 
-        ArrayList<DayGroup> dayGroups = new ArrayList<>();
+        dayGroups.clear();
 
         for (int i = 0; i < transactions.size(); i++) {
             TransactionResponse transaction = transactions.get(i);
@@ -240,11 +267,8 @@ public class AccountDetailsFragment extends Fragment {
             }
         }
 
-        // set account total
-        initAccountInfo();
-
-        // init list view
-        initRecyclerView(dayGroups);
+        // set listview data
+        adapter.notifyDataSetChanged();
 
     }
 
