@@ -183,7 +183,10 @@ public class AccountDetailsFragment extends Fragment {
 
     public void updateAccountAfterEdit(Account editedAccount) {
         Log.d(LOG, "=> updateAccountAfterEdit");
-        // todo
+        float total = accountTotal.getTotal();
+        accountTotal = new AccountTotal(editedAccount.getId(), editedAccount.getName(),
+                editedAccount.getColorId(), editedAccount.getIconId(), editedAccount.getType(),
+                editedAccount.isActive(), total);
         initAccountInfo();
     }
 

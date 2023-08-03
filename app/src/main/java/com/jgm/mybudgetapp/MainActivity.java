@@ -634,16 +634,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         }
         else {
             // Changed account, but didn't archive
-            if (account.isActive()) {
-                if (mAccounts != null) mAccounts.updateListAfterEdit(position, account);
-                if (mAccountDetails != null) mAccountDetails.updateAccountAfterEdit(account);
+            if (account.isActive() && mAccountDetails != null) {
+                Log.d(LOG_MAIN, "-- Interface => updateAccountEdited");
+                mAccountDetails.updateAccountAfterEdit(account);
             }
-            // Archived
-            else {
-                // close details page and update main
-                onBackPressed();
-                if (mAccounts != null) mAccounts.updateListAfterDelete(position);
-            }
+            // Archived => close details page
+            else onBackPressed();
         }
     }
 

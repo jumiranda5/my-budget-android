@@ -273,7 +273,7 @@ public class AccountFormFragment extends Fragment {
 
             handler.post(() -> {
                 Log.d(LOG, "account updated on db... update ui");
-                //todo mInterface.updateAccountInserted(editedAccount, true);
+                mInterface.updateAccountInserted(editedAccount, true, 0);
                 mInterface.navigateBack();
             });
 
