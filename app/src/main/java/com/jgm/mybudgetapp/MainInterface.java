@@ -18,7 +18,7 @@ public interface MainInterface {
     void openIncomeCategories();
     void openCategoryForm(boolean isEdit, Category category, int position);
     void openAccountDetails(AccountTotal accountTotal);
-    void openAccountForm(boolean isEdit, Account account, int position);
+    void openAccountForm(boolean isEdit, Account account);
     void openTransactionForm(int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
     void navigateBack();
 

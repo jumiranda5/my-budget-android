@@ -150,11 +150,13 @@
 
     <!-- ==================  ACCOUNTS  ================== -->
 
+    <dimen name="account_details_title_space_top">56dp</dimen>
+    <dimen name="account_details_title_space_bottom">32dp</dimen>
     <dimen name="account_details_margin">16dp</dimen>
     <dimen name="account_details_close_margin">12dp</dimen>
     <dimen name="account_details_list_padding">0dp</dimen>
     <dimen name="account_details_list_margin">24dp</dimen>
-    <dimen name="account_page_divisor_space">200dp</dimen>
+    <dimen name="account_page_divisor_space">200dp</dimen><!-- -->
 
     <!-- ==================  SETTINGS  ================== -->
 

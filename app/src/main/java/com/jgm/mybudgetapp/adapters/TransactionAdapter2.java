@@ -95,20 +95,6 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
         }
 
-        // Set click listener
-        if (isCardItem) {
-            item.setCategoryName(mContext.getString(R.string.credit_card));
-            holder.mContainer.setOnClickListener(v -> {
-                item.setCardId(-1); // to use on transactions dialog
-                mInterface.showTransactionDialog(item);
-            });
-        }
-
-        // Open transaction details dialog
-        if (item.getId() > 0) {
-            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
-        }
-
     }
 
     @Override

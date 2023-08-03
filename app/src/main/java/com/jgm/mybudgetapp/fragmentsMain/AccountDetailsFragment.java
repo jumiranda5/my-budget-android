@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
@@ -29,7 +30,6 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
-import com.jgm.mybudgetapp.objects.PendingListResponse;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
@@ -53,7 +53,6 @@ public class AccountDetailsFragment extends Fragment {
 
     // Vars
     private AccountTotal accountTotal;
-    private Account accountToEdit;
     private MyDate date;
     private TransactionDao transactionDao;
     private DayGroupAdapter adapter;
@@ -65,6 +64,7 @@ public class AccountDetailsFragment extends Fragment {
     private TextView mAccountName, mTotal;
     private ImageView mAccountIcon;
     private RecyclerView mRecyclerView;
+    private FloatingActionButton mFab;
 
     private void setBinding() {
         buttonBack = binding.accountBackButton;
@@ -73,6 +73,7 @@ public class AccountDetailsFragment extends Fragment {
         mAccountIcon = binding.accountIcon;
         mTotal = binding.accountTotal;
         mRecyclerView = binding.accountDetailsList;
+        mFab = binding.acountEditButton;
     }
 
     // Interfaces
@@ -115,6 +116,21 @@ public class AccountDetailsFragment extends Fragment {
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
         //buttonEdit.setOnClickListener(v-> mInterface.openAccountForm(true, account, position));
 
+        mFab.setOnClickListener(v -> {
+            // Set account db object to send to edit from
+            Account accountToEdit = new Account(
+                    accountTotal.getName(),
+                    accountTotal.getColorId(),
+                    accountTotal.getIconId(),
+                    accountTotal.getType(),
+                    accountTotal.isActive()
+            );
+
+            accountToEdit.setId(accountTotal.getId());
+
+            mInterface.openAccountForm(true, accountToEdit);
+        });
+
     }
 
     /* ------------------------------------------------------------------------------
@@ -139,16 +155,6 @@ public class AccountDetailsFragment extends Fragment {
         this.accountTotal = accountTotal;
         this.date = date;
 
-        // Set account db object to send to edit from
-        accountToEdit = new Account(
-                accountTotal.getName(),
-                accountTotal.getColorId(),
-                accountTotal.getIconId(),
-                accountTotal.getType(),
-                accountTotal.isActive()
-        );
-
-        accountToEdit.setId(accountTotal.getId());
     }
 
     public void updateAccountOnMonthChange(MyDate date) {
@@ -161,7 +167,6 @@ public class AccountDetailsFragment extends Fragment {
     public void updateAccountAfterEdit(Account editedAccount) {
         Log.d(LOG, "=> updateAccountAfterEdit");
         // todo
-        accountToEdit = editedAccount;
         initAccountInfo();
     }
 
@@ -178,7 +183,6 @@ public class AccountDetailsFragment extends Fragment {
     private void initAccountInfo() {
         Log.d(LOG, "=> initAccountInfo");
 
-        // if returning from transactions form
         if (date == null) {
             date = mInterface.getDate();
             getAccountTotal();

@@ -380,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         switch (tag) {
             case accountsTag:
                 mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_accent_inset));
-                mAdd.setOnClickListener(v -> openAccountForm(false, null, 0));
+                mAdd.setOnClickListener(v -> openAccountForm(false, null));
                 break;
             case transactionsInTag:
                 mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_income_inset));
@@ -447,12 +447,12 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     @Override
-    public void openAccountForm(boolean isEdit, Account account, int position) {
+    public void openAccountForm(boolean isEdit, Account account) {
         Log.d(LOG_MAIN, "-- Interface => open account form");
         openFragment(accountFormTag);
         if (mAccountForm != null) {
             mAccountForm.setFormType(isEdit);
-            if (isEdit) mAccountForm.setAccount(account, position);
+            if (isEdit) mAccountForm.setAccount(account);
         }
     }
 

@@ -59,6 +59,7 @@
         style="@style/NestedListNoScroll"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/transactions_day_width_anchor"
         app:layout_constraintStart_toStartOf="@id/transactions_day_width_anchor"

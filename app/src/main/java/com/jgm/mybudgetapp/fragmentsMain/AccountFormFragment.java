@@ -45,7 +45,6 @@ public class AccountFormFragment extends Fragment {
     private int selectedType;
     private Color selectedColor;
     private int selectedIconId;
-    private int position;
     private Account account;
 
     // UI
@@ -134,8 +133,7 @@ public class AccountFormFragment extends Fragment {
         this.isEdit = isEdit;
     }
 
-    public void setAccount(Account account, int position) {
-        this.position = position;
+    public void setAccount(Account account) {
         this.account = account;
         Log.d(LOG, "account id: " + account.getId());
     }
@@ -275,7 +273,7 @@ public class AccountFormFragment extends Fragment {
 
             handler.post(() -> {
                 Log.d(LOG, "account updated on db... update ui");
-                mInterface.updateAccountInserted(editedAccount, true, position);
+                //todo mInterface.updateAccountInserted(editedAccount, true);
                 mInterface.navigateBack();
             });
 
