@@ -181,7 +181,7 @@ public class HomeFragment extends Fragment {
                     incomeCategories.add(0, accumulatedCategory);
                     incomeCategories.sort(ListSort.categoryResponseComparator);
                 }
-                else {
+                else if (accumulated < 0) {
                     expensesCategories.add(0, accumulatedCategory);
                     expensesCategories.sort(ListSort.categoryResponseComparator);
                 }
@@ -310,6 +310,8 @@ public class HomeFragment extends Fragment {
     private void setIncomeCategories(List<CategoryResponse> categories) {
 
         Log.d(LOG_HOME, "== setIncomeCategories: " + categories.size());
+
+
 
         initCategoriesIncomeList(categories);
         ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);

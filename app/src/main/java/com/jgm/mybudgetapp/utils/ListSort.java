@@ -1,5 +1,7 @@
 package com.jgm.mybudgetapp.utils;
 
+import android.util.Log;
+
 import com.jgm.mybudgetapp.objects.CategoryResponse;
 
 import java.util.Comparator;
@@ -9,11 +11,12 @@ public class ListSort {
     public static Comparator<CategoryResponse> categoryResponseComparator = new Comparator<CategoryResponse>() {
         @Override
         public int compare(CategoryResponse c1, CategoryResponse c2) {
-            String total1 = String.valueOf(c1.getTotal());
-            String total2 = String.valueOf(c2.getTotal());
+
+            float total1 = c1.getTotal();
+            float total2 = c2.getTotal();
 
             // descending order
-            return total2.compareTo(total1);
+            return Float.compare(total1, total2);
         }
     };
 

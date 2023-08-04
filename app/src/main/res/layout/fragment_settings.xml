@@ -8,6 +8,8 @@
     android:background="@color/bg_00dp"
     tools:context=".fragmentsSettings.SettingsFragment">
 
+    <!-- Todo: fix icons width -->
+
     <!-- Toolbar -->
 
     <androidx.appcompat.widget.Toolbar

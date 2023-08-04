@@ -92,6 +92,8 @@ public interface TransactionDao {
                                      ACCOUNT FRAGMENT
     ------------------------------------------------------------------------------- */
 
+    // todo: delete
+
     @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
@@ -100,24 +102,6 @@ public interface TransactionDao {
             "AND transactions.month = :month " +
             "ORDER BY transactions.day ")
     List<TransactionResponse> getAccountTransactions(int accountId, int month, int year);
-
-    /*
-    int id,
-            int type,
-            String description,
-            float amount,
-            int year, int month, int day,
-            int categoryId,
-            Integer accountId,
-            Integer cardId,
-            boolean paid,
-            int repeat,
-            Integer repeatCount,
-            Long repeatId,
-            String categoryName,
-            int colorId,
-            int iconId
-     */
 
     @Query("SELECT transactions.id, type, " +
             "   cards.name AS description, SUM(amount) AS amount," +
@@ -202,7 +186,7 @@ public interface TransactionDao {
             "SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +
             "SUM(CASE WHEN type = '-1' THEN amount ELSE 0 END) AS expenses " +
             "FROM transactions " +
-            "WHERE year = :year AND month = :month AND paid = 1")
+            "WHERE year = :year AND month = :month")
     Balance getHomeBalance(int month, int year);
 
     @Query("SELECT SUM(CASE WHEN accounts.type = 0 THEN transactions.amount ELSE 0 END) AS cash, " +
@@ -212,6 +196,11 @@ public interface TransactionDao {
             "INNER JOIN transactions ON accounts.id = transactions.accountId " +
             "WHERE transactions.paid = 1")
     HomeAccounts getAccountsTotals();
+
+    /*
+        @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
+    float getAccumulated(int month, int year);
+     */
 
     @Query("SELECT SUM(transactions.amount) AS total, categories.name AS category, categories.colorId, categories.iconId " +
             "FROM transactions " +

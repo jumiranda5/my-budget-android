@@ -254,6 +254,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
         if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null) mCategoriesForm.setSelectedIcon(icon);
     }
 
+
     /* ===============================================================================
                                      FRAGMENT NAVIGATION
      =============================================================================== */

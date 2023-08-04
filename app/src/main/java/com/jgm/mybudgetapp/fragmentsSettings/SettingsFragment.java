@@ -83,7 +83,6 @@ public class SettingsFragment extends Fragment {
 
         boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(mContext, "isDark");
         switchDarkMode.setChecked(isDark);
-
         switchDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             Handler handler = new Handler();
             handler.postDelayed(() -> {
@@ -91,7 +90,6 @@ public class SettingsFragment extends Fragment {
                 mInterface.switchDarkMode(isChecked);
             }, 200);
         });
-
         mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
         mOpenCreditCards.setOnClickListener(v -> mInterface.open(Tags.cardsTag));
         mClearDatabase.setOnClickListener(v -> {
