@@ -411,6 +411,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         Log.d(LOG_MAIN, "-- Interface => open expenses categories");
         Intent intent = new Intent(MainActivity.this, CategoriesActivity.class);
         intent.putExtra("tab", 1);
+        intent.putExtra("day", selectedDate.getDay());
+        intent.putExtra("month", selectedDate.getMonth());
+        intent.putExtra("year", selectedDate.getYear());
         startActivity(intent);
     }
 

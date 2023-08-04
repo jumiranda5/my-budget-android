@@ -197,11 +197,6 @@ public interface TransactionDao {
             "WHERE transactions.paid = 1")
     HomeAccounts getAccountsTotals();
 
-    /*
-        @Query("SELECT SUM(amount) FROM transactions WHERE year <= :year AND month < :month")
-    float getAccumulated(int month, int year);
-     */
-
     @Query("SELECT SUM(transactions.amount) AS total, categories.name AS category, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +

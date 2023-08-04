@@ -83,13 +83,20 @@ public class CategoriesActivity extends AppCompatActivity {
         // get info from intent extra or savedInstanceState
         int tab = 0;
         if (savedInstanceState == null) {
-            tab = getIntent().getIntExtra("tab", 0);
+            if (getIntent().getExtras() != null) {
+                tab = getIntent().getIntExtra("tab", 0);
+                int day = getIntent().getIntExtra("day", selectedDate.getDay());
+                int month = getIntent().getIntExtra("month", selectedDate.getMonth());
+                int year = getIntent().getIntExtra("year", selectedDate.getYear());
+                selectedDate = new MyDate(day, month, year);
+                selectedDate.setMonthName(MyDateUtils.getMonthName(this, month, year)[0]);
+            }
         }
         else {
             Log.d(LOG, "savedInstance NOT null => get saved info and set toolbar date");
-            int day = savedInstanceState.getInt(STATE_DAY);
-            int month = savedInstanceState.getInt(STATE_MONTH);
-            int year = savedInstanceState.getInt(STATE_YEAR);
+            int day = savedInstanceState.getInt(STATE_DAY, selectedDate.getDay());
+            int month = savedInstanceState.getInt(STATE_MONTH, selectedDate.getMonth());
+            int year = savedInstanceState.getInt(STATE_YEAR, selectedDate.getYear());
             int savedTab = savedInstanceState.getInt(STATE_TAB, 0);
             selectedDate = new MyDate(day,month,year);
             selectedDate.setMonthName(MyDateUtils.getMonthName(this, month, year)[0]);
