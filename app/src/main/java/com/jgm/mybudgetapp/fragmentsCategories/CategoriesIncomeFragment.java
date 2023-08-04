@@ -97,7 +97,7 @@ public class CategoriesIncomeFragment extends Fragment {
                 }
                 else {
                     ArrayList<CategoryPercent> empty = new ArrayList<>();
-                    CategoryPercent categoryPercent = new CategoryPercent(0, "empty", 22, 0);
+                    CategoryPercent categoryPercent = new CategoryPercent(0, "empty", 22, 0, 0f);
                     categoryPercent.setTotal(1.0f);
                     categoryPercent.setPercent(100);
                     empty.add(categoryPercent);

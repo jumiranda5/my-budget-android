@@ -18,6 +18,8 @@ import com.jgm.mybudgetapp.adapters.CategoriesPagerAdapter;
 import com.jgm.mybudgetapp.databinding.ActivityCategoriesBinding;
 import com.jgm.mybudgetapp.fragmentsCategories.CategoriesExpensesFragment;
 import com.jgm.mybudgetapp.fragmentsCategories.CategoriesIncomeFragment;
+import com.jgm.mybudgetapp.objects.CategoryItemResponse;
+import com.jgm.mybudgetapp.objects.CategoryPercent;
 import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
@@ -29,7 +31,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesActivity extends AppCompatActivity {
+public class CategoriesActivity extends AppCompatActivity implements CategoryInterface {
 
     private static final String STATE_DAY = "day";
     private static final String STATE_MONTH = "month";
@@ -236,7 +238,7 @@ public class CategoriesActivity extends AppCompatActivity {
             handler.post(() -> {
 
                 // Set accumulated
-                CategoryResponse accumulatedCategory = new CategoryResponse(accumulated, getString(R.string.label_accumulated), 16, 71);
+                CategoryResponse accumulatedCategory = new CategoryResponse(0, accumulated, getString(R.string.label_accumulated), 16, 71);
                 if (accumulated > 0) {
                     incomeCategories.add(0, accumulatedCategory);
                     incomeCategories.sort(ListSort.categoryResponseComparator);
@@ -252,4 +254,37 @@ public class CategoriesActivity extends AppCompatActivity {
 
         });
     }
+
+    @Override
+    public void showCategoryDetails(CategoryPercent category) {
+
+        Log.d("debug-category", category.getName() + " = " + category.getTotal());
+
+        TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            int type;
+            if (viewPager.getCurrentItem() == 0) type = 1;
+            else type = -1;
+
+            Log.d("debug-category", "category id: " + category.getId());
+
+            List<CategoryItemResponse> items = transactionDao.getCategoryDetails(
+                    category.getId(), selectedDate.getMonth(), selectedDate.getYear(), type);
+
+            handler.post(() -> {
+
+                for (int i = 0; i < items.size(); i++) {
+                    CategoryItemResponse item = items.get(i);
+                    Log.d("debug-category", item.getName() + "(" + item.getCount() + ") " + " => " + item.getTotal());
+                }
+
+            });
+
+        });
+
+        Log.d("debug-category", "-----------------------");
+    }
+
 }

@@ -11,11 +11,12 @@ public class CategoryPercent {
     private float total;
     private float percent;
 
-    public CategoryPercent(int id, String name, int colorId, int iconId) {
+    public CategoryPercent(int id, String name, int colorId, int iconId, float total) {
         this.id = id;
         this.name = name;
         this.colorId = colorId;
         this.iconId = iconId;
+        this.total = total;
     }
 
     public int getId() {

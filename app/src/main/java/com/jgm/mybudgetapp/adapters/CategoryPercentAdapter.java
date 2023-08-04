@@ -1,6 +1,9 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,15 +11,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.objects.CategoryItemResponse;
 import com.jgm.mybudgetapp.objects.CategoryPercent;
+import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
+import com.jgm.mybudgetapp.room.AppDatabase;
+import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
+import com.jgm.mybudgetapp.utils.ListSort;
 
 import java.util.List;
 
@@ -25,11 +35,13 @@ public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercent
     private final Context mContext;
     private final List<CategoryPercent> mDataList;
     private final LayoutInflater layoutInflater;
+    private final CategoryInterface mInterface;
 
     public CategoryPercentAdapter(Context context, List<CategoryPercent> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
         layoutInflater = LayoutInflater.from(context);
+        mInterface = (CategoryInterface) context;
     }
 
     @NonNull
@@ -56,6 +68,11 @@ public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercent
         holder.mName.setText(category.getName());
         holder.mPercent.setText(percent);
 
+        // Open dialog with details
+        holder.mContainer.setOnClickListener(v -> {
+            mInterface.showCategoryDetails(category);
+        });
+
     }
 
     @Override
@@ -67,10 +84,12 @@ public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercent
 
         private final ImageView mIcon;
         private final TextView mName, mPercent;
+        private final ConstraintLayout mContainer;
 
         private GridViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            mContainer = itemView.findViewById(R.id.category_item_percent);
             mIcon = itemView.findViewById(R.id.category_icon);
             mName = itemView.findViewById(R.id.category_name);
             mPercent = itemView.findViewById(R.id.category_percent);

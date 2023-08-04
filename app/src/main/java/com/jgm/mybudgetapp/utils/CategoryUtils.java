@@ -24,8 +24,12 @@ public class CategoryUtils {
             float percent =
                     NumberUtils.roundFloat((categories.get(i).getTotal() * 100) / total);
             CategoryResponse category = categories.get(i);
-            CategoryPercent categoryPercent =
-                    new CategoryPercent(0,category.getCategory(), category.getColorId(), category.getIconId());
+            CategoryPercent categoryPercent = new CategoryPercent(
+                    category.getId(),
+                    category.getCategory(),
+                    category.getColorId(),
+                    category.getIconId(),
+                    category.getTotal());
             categoryPercent.setPercent(percent);
             percents.add(categoryPercent);
         }

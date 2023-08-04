@@ -7,6 +7,7 @@ import androidx.room.Update;
 
 import com.jgm.mybudgetapp.objects.Balance;
 import com.jgm.mybudgetapp.objects.Card;
+import com.jgm.mybudgetapp.objects.CategoryItemResponse;
 import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.HomeAccounts;
 import com.jgm.mybudgetapp.objects.MonthResponse;
@@ -197,7 +198,7 @@ public interface TransactionDao {
             "WHERE transactions.paid = 1")
     HomeAccounts getAccountsTotals();
 
-    @Query("SELECT SUM(transactions.amount) AS total, categories.name AS category, categories.colorId, categories.iconId " +
+    @Query("SELECT categories.id AS id, SUM(transactions.amount) AS total, categories.name AS category, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE transactions.year = :year AND transactions.month = :month AND transactions.type = :type " +
@@ -212,5 +213,20 @@ public interface TransactionDao {
             "    WHERE year = :year" +
             "    GROUP BY month;")
     List<MonthResponse> getYearBalance(int year);
+
+
+    /* ------------------------------------------------------------------------------
+                                     CATEGORY ACTIVITY
+    ------------------------------------------------------------------------------- */
+
+    @Query("SELECT SUM(amount) AS total, description AS name, COUNT(description) AS count " +
+            "FROM transactions " +
+            "WHERE categoryId = :categoryId " +
+            "AND year = :year " +
+            "AND month = :month " +
+            "AND type = :type " +
+            "GROUP BY name " +
+            "ORDER BY total, name")
+    List<CategoryItemResponse> getCategoryDetails(int categoryId, int month, int year, int type);
 
 }

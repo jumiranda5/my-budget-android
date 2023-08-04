@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment {
                 Log.d(LOG_HOME, "Data successfully retrieved");
 
                 // set accumulated category
-                CategoryResponse accumulatedCategory = new CategoryResponse(accumulated, getString(R.string.label_accumulated), 16, 71);
+                CategoryResponse accumulatedCategory = new CategoryResponse(0, accumulated, getString(R.string.label_accumulated), 16, 71);
                 if (accumulated > 0) {
                     incomeCategories.add(0, accumulatedCategory);
                     incomeCategories.sort(ListSort.categoryResponseComparator);
