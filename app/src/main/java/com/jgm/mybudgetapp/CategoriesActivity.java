@@ -22,6 +22,7 @@ import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.utils.ListSort;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
@@ -228,10 +229,23 @@ public class CategoriesActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
+            float accumulated = transactionDao.getAccumulated(month, year);
             List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
             List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
 
             handler.post(() -> {
+
+                // Set accumulated
+                CategoryResponse accumulatedCategory = new CategoryResponse(accumulated, getString(R.string.label_accumulated), 16, 71);
+                if (accumulated > 0) {
+                    incomeCategories.add(0, accumulatedCategory);
+                    incomeCategories.sort(ListSort.categoryResponseComparator);
+                }
+                else if (accumulated < 0) {
+                    expensesCategories.add(0, accumulatedCategory);
+                    expensesCategories.sort(ListSort.categoryResponseComparator);
+                }
+
                 expensesFragment.setExpensesCategoriesData(expensesCategories);
                 incomeFragment.setIncomeCategoriesData(incomeCategories);
             });
