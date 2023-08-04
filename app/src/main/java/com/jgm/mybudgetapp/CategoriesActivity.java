@@ -12,10 +12,12 @@ import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.jgm.mybudgetapp.adapters.CategoriesPagerAdapter;
 import com.jgm.mybudgetapp.databinding.ActivityCategoriesBinding;
+import com.jgm.mybudgetapp.dialogs.CategoryDialog;
 import com.jgm.mybudgetapp.fragmentsCategories.CategoriesExpensesFragment;
 import com.jgm.mybudgetapp.fragmentsCategories.CategoriesIncomeFragment;
 import com.jgm.mybudgetapp.objects.CategoryItemResponse;
@@ -48,6 +50,8 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     // Vars
     private MyDate selectedDate;
     private MyDate today;
+    private CategoryPercent selectedCategory;
+    private List<CategoryItemResponse> categoryItems;
 
     // UI
     private ActivityCategoriesBinding binding;
@@ -258,6 +262,8 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     @Override
     public void showCategoryDetails(CategoryPercent category) {
 
+        selectedCategory = category;
+
         Log.d("debug-category", category.getName() + " = " + category.getTotal());
 
         TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
@@ -268,23 +274,32 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
             if (viewPager.getCurrentItem() == 0) type = 1;
             else type = -1;
 
-            Log.d("debug-category", "category id: " + category.getId());
-
-            List<CategoryItemResponse> items = transactionDao.getCategoryDetails(
+            categoryItems = transactionDao.getCategoryDetails(
                     category.getId(), selectedDate.getMonth(), selectedDate.getYear(), type);
 
             handler.post(() -> {
 
-                for (int i = 0; i < items.size(); i++) {
-                    CategoryItemResponse item = items.get(i);
-                    Log.d("debug-category", item.getName() + "(" + item.getCount() + ") " + " => " + item.getTotal());
-                }
+                BottomSheetDialogFragment categoryDialog = new CategoryDialog();
+                categoryDialog.show(getSupportFragmentManager(), "CATEGORY DIALOG");
+
+//                for (int i = 0; i < items.size(); i++) {
+//                    CategoryItemResponse item = items.get(i);
+//                    Log.d("debug-category", item.getName() + "(" + item.getCount() + ") " + " => " + item.getTotal());
+//                }
 
             });
 
         });
+    }
 
-        Log.d("debug-category", "-----------------------");
+    @Override
+    public CategoryPercent getCategoryData() {
+        return selectedCategory;
+    }
+
+    @Override
+    public List<CategoryItemResponse> getCategoryItems() {
+        return categoryItems;
     }
 
 }

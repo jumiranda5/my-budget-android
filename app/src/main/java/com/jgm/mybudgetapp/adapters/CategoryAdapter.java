@@ -41,10 +41,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.GridVi
         layoutInflater = LayoutInflater.from(context);
 
         try { this.mInterface = (MainInterface) context; }
-        catch (Exception e) { Log.e("debug-category-adapter", "Can't cast to main activity"); }
+        catch (Exception e) { Log.w("debug-category-adapter", "Can't cast to main activity"); }
 
         try { mSettingsInterface = (SettingsInterface) context; }
-        catch (Exception e) { Log.e("debug-category-adapter", "Can't cast to settings activity"); }
+        catch (Exception e) { Log.w("debug-category-adapter", "Can't cast to settings activity"); }
 
     }
 
