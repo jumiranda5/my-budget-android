@@ -17,14 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +58,6 @@ import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
-import com.jgm.mybudgetapp.utils.Populate;
 import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private MyDate selectedDate;
     private MyDate today;
     private TransactionResponse selectedTransaction;
-    private boolean keep = true;
 
     // UI
     private ActivityMainBinding binding;
@@ -128,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             switchDarkMode(isDark);
         }
 
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -138,10 +133,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (savedInstanceState == null) {
             Log.d(LOG_MAIN, "savedInstance is null => init splash screen delay, get date " +
                     "and populate accounts and categories tables if empty");
-            handleSplashScreenDelay(splashScreen);
             selectedDate = MyDateUtils.getCurrentDate(this);
-            Populate.initDefaultAccounts(this);
-            Populate.initDefaultCategories(this);
+            setFragment(homeTag);
         }
         else {
             // Set toolbar date
@@ -158,22 +151,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         initBottomBar();
         initToolbar();
 
-    }
-
-    private void handleSplashScreenDelay(SplashScreen splashScreen) {
-
-        Log.d(LOG_MAIN, "Init splash screen timer");
-
-        splashScreen.setKeepOnScreenCondition(() -> keep);
-
-        int DELAY = 2000;
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-
-            setFragment(homeTag);
-            keep = false;
-
-        }, DELAY);
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
