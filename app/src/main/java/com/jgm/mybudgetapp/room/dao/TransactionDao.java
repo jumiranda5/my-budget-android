@@ -13,6 +13,7 @@ import com.jgm.mybudgetapp.objects.HomeAccounts;
 import com.jgm.mybudgetapp.objects.MonthResponse;
 import com.jgm.mybudgetapp.objects.PendingListResponse;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
+import com.jgm.mybudgetapp.objects.YearResponse;
 import com.jgm.mybudgetapp.room.entity.Transaction;
 
 import java.util.List;
@@ -228,5 +229,17 @@ public interface TransactionDao {
             "GROUP BY name " +
             "ORDER BY total, name")
     List<CategoryItemResponse> getCategoryDetails(int categoryId, int month, int year, int type);
+
+
+    /* ------------------------------------------------------------------------------
+                                     YEAR ACTIVITY
+    ------------------------------------------------------------------------------- */
+
+    @Query("SELECT SUM(CASE WHEN type = '2' THEN 0 ELSE amount END) AS balance, " +
+            "    SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS income, " +
+            "    SUM(CASE WHEN type = '-1' THEN amount ELSE 0 END) AS expenses " +
+            "    FROM transactions " +
+            "    WHERE year = :year ")
+    YearResponse getYearTotals(int year);
 
 }

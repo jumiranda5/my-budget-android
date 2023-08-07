@@ -848,11 +848,11 @@ public class TransactionFormFragment extends Fragment {
 
         if (!isEdit) {
             // Add single transaction | add multiple
-            if (transaction.getRepeat() == 1) saveSingleTransaction(); // ok
+            if (transaction.getRepeat() == 1) saveSingleTransaction();
             else {
                 long repeatId = System.currentTimeMillis();
                 transaction.setRepeatId(repeatId);
-                saveMultipleTransactions(false); // ok
+                saveMultipleTransactions(false);
             }
         }
         else {

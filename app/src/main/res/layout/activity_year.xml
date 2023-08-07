@@ -6,4 +6,218 @@
     android:layout_height="match_parent"
     tools:context=".YearActivity">
 
+    <!-- Toolbar -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/year_toolbar"
+        style="@style/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/year_toolbar_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/year_back_button"
+                style="@style/ToolbarButton"
+                android:contentDescription="@string/nav_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_24_arrow_back_fill0_300" />
+
+            <TextView
+                android:id="@+id/toolbar_year"
+                style="@style/ToolbarMonth"
+                android:layout_width="@dimen/toolbar_month_width"
+                android:text="@string/initial_year"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/prev_year_button"
+                style="@style/IconButton"
+                android:contentDescription="@string/action_prev_month"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/toolbar_year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_navigate_before" />
+
+            <ImageButton
+                android:id="@+id/next_year_button"
+                style="@style/IconButton"
+                android:contentDescription="@string/action_next_month"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/toolbar_year"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_navigate_next" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/MyNestedScrollView"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/year_toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Balance -->
+
+            <TextView
+                android:id="@+id/year_balance_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balance"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="24dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/year_balance_total"
+                style="@style/CurrencyMedium"
+                android:layout_margin="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_balance_label"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Bar Chart -->
+
+            <ImageView
+                android:id="@+id/year_chart"
+                style="@style/BarChart"
+                android:layout_height="0dp"
+                android:layout_margin="24dp"
+                android:contentDescription="@string/desc_year_bar_chart"
+                app:layout_constraintDimensionRatio="h,3:1.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/year_balance_label" />
+
+            <!-- Income total -->
+
+            <TextView
+                android:id="@+id/year_income_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Income"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/year_chart" />
+
+            <TextView
+                android:id="@+id/year_income_total"
+                style="@style/CurrencyMedium"
+                android:layout_margin="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_income_label"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Expense total -->
+
+            <TextView
+                android:id="@+id/year_expense_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expense"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/year_income_label" />
+
+            <TextView
+                android:id="@+id/year_expense_total"
+                style="@style/CurrencyMedium"
+                android:layout_margin="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_expense_label"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <!-- Balance list -->
+
+            <TextView
+                android:id="@+id/year_balance_list_label"
+                style="@style/MySubtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balance: "
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year_expense_label" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/year_balance_list"
+                style="@style/NestedListNoScroll"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year_balance_list_label"
+                tools:listitem="@layout/item_year_month"
+                tools:itemCount="2"/>
+
+            <!-- Income list -->
+
+            <TextView
+                android:id="@+id/year_income_list_label"
+                style="@style/MySubtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Income: "
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year_balance_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/year_income_list"
+                style="@style/NestedListNoScroll"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year_income_list_label"
+                tools:listitem="@layout/item_year_month"
+                tools:itemCount="2"/>
+
+            <!-- Expense list -->
+
+            <TextView
+                android:id="@+id/year_expense_list_label"
+                style="@style/MySubtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expense: "
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year_income_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/year_expense_list"
+                style="@style/NestedListNoScroll"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year_expense_list_label"
+                tools:listitem="@layout/item_year_month"
+                tools:itemCount="2"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

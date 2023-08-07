@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/item_year_month_name"
+        style="@style/BodyItemEllipse"
+        android:text="@string/initial_month"
+        android:layout_marginStart="@dimen/inner_space"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_year_month_currency_symbol"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_year_month_total"
+        style="@style/CurrencySpace"
+        android:text="@string/initial_value_no_symbol"
+        android:layout_marginEnd="@dimen/inner_space"
+        android:textColor="@color/income"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_year_month_name"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/item_year_month_currency_symbol"
+        style="@style/Currency"
+        android:text="@string/currency_symbol"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_year_month_total"
+        app:layout_constraintEnd_toStartOf="@id/item_year_month_total" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
