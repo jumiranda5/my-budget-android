@@ -19,22 +19,22 @@
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
-    <!-- Margins -->
-    <dimen name="home_inner_space">12dp</dimen>
+<!--    &lt;!&ndash; Margins &ndash;&gt;-->
+<!--    <dimen name="home_inner_space">12dp</dimen>-->
 
-    <!-- Text -->
-    <dimen name="home_income_shrink">20sp</dimen>
-    <dimen name="progress_text_size">24sp</dimen>
-    <dimen name="home_accounts_text_size">16sp</dimen>
+<!--    &lt;!&ndash; Text &ndash;&gt;-->
+<!--    <dimen name="home_income_shrink">20sp</dimen>-->
+<!--    <dimen name="progress_text_size">24sp</dimen>-->
+<!--    <dimen name="home_accounts_text_size">16sp</dimen>-->
 
-    <!-- Charts -->
-    <integer name="home_pie_size_int">96</integer>
-    <integer name="home_pie_indicator_int">7</integer>
-    <dimen name="home_pie_width">96dp</dimen>
+<!--    &lt;!&ndash; Charts &ndash;&gt;-->
+<!--    <integer name="home_pie_size_int">96</integer>-->
+<!--    <integer name="home_pie_indicator_int">7</integer>-->
+<!--    <dimen name="home_pie_width">96dp</dimen>-->
 
-    <!-- Page -->
-    <dimen name="page_padding">40dp</dimen>
-    <dimen name="page_divisor_space">232dp</dimen>
+<!--    &lt;!&ndash; Page &ndash;&gt;-->
+<!--    <dimen name="page_padding">40dp</dimen>-->
+<!--    <dimen name="page_divisor_space">232dp</dimen>-->
 
     <!-- ==================  MAIN ACTIVITY ================== -->
 

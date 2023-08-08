@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_24_account_balance_wallet_300"
+    <item android:drawable="@drawable/ic_40_account_balance_wallet_fill0_300"
         android:state_checked="false"/>
     <item android:drawable="@drawable/ic_24_account_balance_wallet_fill_300"
         android:state_checked="true"/>

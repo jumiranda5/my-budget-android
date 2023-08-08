@@ -54,43 +54,61 @@ public class HomeFragment extends Fragment {
 
     // UI
     private FragmentHomeBinding binding;
-    private MaterialCardView mCardIncome, mCardExpenses, mCardAccounts, mCardProgress,
+    private MaterialCardView mCardIncome, mCardExpenses, mCardAccounts,
             mCardIncomeCategories, mCardExpensesCategories, mCardYear, mCardPending;
     private ImageView mIncomeChart, mExpensesChart, mYearChart;
     private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
-    private TextView mBalanceText, mIncomeText, mExpensesText,
+    private TextView mBalance, mIncome, mExpenses, mAccumulated,
+            mIncomeSymbol, mExpensesSymbol, mAccumulatedSymbol,
             mCash, mChecking, mSavings, mCashSymbol, mCheckingSymbol, mSavingsSymbol,
             mPendingMsg, mProgress, mProgressText, mYearLabel;
     private CircularProgressIndicator mBalanceProgress;
 
     private void bindViews() {
+        // Balance
+        mBalance = binding.homeMonthBalance;
+        mIncome = binding.homeIncome;
+        mExpenses = binding.homeExpenses;
+        mAccumulated = binding.homeAccumulated;
+        mIncomeSymbol = binding.homeIncomeCurrencySymbol;
+        mExpensesSymbol = binding.homeExpenseCurrencySymbol;
+        mAccumulatedSymbol = binding.homeAccumulatedCurrencySymbol;
+
+        // Cards
         mCardIncome = binding.homeCardIncome;
         mCardExpenses = binding.homeCardExpenses;
         mCardAccounts = binding.homeCardAccounts;
         mCardIncomeCategories = binding.homeCardIncomeCategories;
         mCardExpensesCategories = binding.homeCardExpensesCategories;
         mCardYear = binding.homeCardYear;
-        mIncomeChart = binding.homeCategoriesIn;
-        mExpensesChart = binding.homeCategoriesOut;
-        mYearChart = binding.homeYearChart;
-        mIncomeCategoryListView = binding.homeIncomeCategoriesList;
-        mExpensesCategoryListView = binding.homeExpensesCategoriesList;
-        mBalanceText = binding.homeMonthBalance;
-        mIncomeText = binding.homeIncome;
-        mExpensesText = binding.homeExpenses;
+
+        // Progress
+        mBalanceProgress = binding.homeMonthProgress;
+        mProgress = binding.homeMonthProgressText;
+
+        // Accounts
         mCash = binding.homeCash;
         mChecking = binding.homeChecking;
         mSavings = binding.homeSavings;
-        mPendingMsg = binding.homePendingText;
-        mCardPending = binding.homePending;
-        mCardProgress = binding.homeCardExpensesProgress;
-        mBalanceProgress = binding.homeMonthProgress;
-        mProgress = binding.homeMonthProgressText;
-        mProgressText = binding.homeProgressText;
         mCashSymbol = binding.homeCashCurrencySymbol;
         mCheckingSymbol = binding.homeCheckingCurrencySymbol;
         mSavingsSymbol = binding.homeSavingsCurrencySymbol;
+        mProgressText = binding.homeProgressText;
+
+        // Categories
+        mIncomeChart = binding.homeCategoriesIn;
+        mExpensesChart = binding.homeCategoriesOut;
+        mIncomeCategoryListView = binding.homeIncomeCategoriesList;
+        mExpensesCategoryListView = binding.homeExpensesCategoriesList;
+
+        // Year
+        mYearChart = binding.homeYearChart;
         mYearLabel = binding.homeYearLabel;
+
+        // Pending
+        mPendingMsg = binding.homePendingText;
+        mCardPending = binding.homePending;
+
     }
 
     // Interfaces
@@ -141,7 +159,6 @@ public class HomeFragment extends Fragment {
         mCardPending.setOnClickListener(v -> mInterface.open(Tags.pendingTag));
         mCardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
         mCardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
-        mCardProgress.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
         mCardAccounts.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
         mCardExpensesCategories.setOnClickListener(v -> mInterface.openExpensesCategories());
         mCardIncomeCategories.setOnClickListener(v -> mInterface.openIncomeCategories());
@@ -226,20 +243,41 @@ public class HomeFragment extends Fragment {
         float monthBalance = balance.getBalance() + accumulated;
         float monthExpenses = balance.getExpenses();
         float monthIncome = balance.getIncome();
-        setNumbersDisplaySizeAndColor(monthBalance, monthIncome, monthExpenses);
 
-        if (accumulated < 0.0f) monthExpenses = monthExpenses + accumulated;
-        else monthIncome = monthIncome + accumulated;
+        // size and color
+        if (monthBalance > 999999.99) mBalance.setTextAppearance(R.style.ShrinkHomeBalance);
+        if (monthBalance < 0) mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        else mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+
+        if (accumulated < 0) {
+            mAccumulated.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+            mAccumulatedSymbol.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        }
+        else if (accumulated > 0) {
+            mAccumulated.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+            mAccumulatedSymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        }
 
         String formattedBalance = NumberUtils.getCurrencyFormat(mContext, monthBalance)[2];
-        String formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome)[2];
-        String formattedExpenses = NumberUtils.getCurrencyFormat(mContext, monthExpenses)[3];
-        mBalanceText.setText(formattedBalance);
-        mExpensesText.setText(formattedExpenses);
-        mIncomeText.setText(formattedIncome);
+        String[] formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome);
+        String[] formattedExpenses = NumberUtils.getCurrencyFormat(mContext, monthExpenses);
+        String[] formattedAccumulated = NumberUtils.getCurrencyFormat(mContext, accumulated);
 
+        mBalance.setText(formattedBalance);
+        mExpenses.setText(formattedExpenses[1]);
+        mIncome.setText(formattedIncome[1]);
+        mAccumulated.setText(formattedAccumulated[1]);
+        mExpensesSymbol.setText(formattedExpenses[0]);
+        mIncomeSymbol.setText(formattedIncome[0]);
+        mAccumulatedSymbol.setText(formattedAccumulated[0]);
+
+        setIncomeProgress(monthIncome, monthExpenses);
+
+    }
+
+    private void setIncomeProgress(float income, float expense) {
         // Progress
-        float percentage = (Math.abs(monthExpenses)/Math.abs(monthIncome)) * 100;
+        float percentage = (Math.abs(expense)/Math.abs(income)) * 100;
         if (percentage < 0) percentage = 0;
         if (percentage > 999) percentage = 100;
         int progress = (int) percentage;
@@ -255,19 +293,6 @@ public class HomeFragment extends Fragment {
         Log.d(LOG_HOME, "percentage: " + percentage);
         Log.d(LOG_HOME, "progress: " + progress);
 
-    }
-
-    private void setNumbersDisplaySizeAndColor(float balance, float income, float expense) {
-        // size
-        if (balance > 999999.99) mBalanceText.setTextAppearance(R.style.ShrinkHomeBalance);
-        if (income > 999999.99 || expense > 999999.99) {
-            mIncomeText.setTextAppearance(R.style.ShrinkHomeIncome);
-            mExpensesText.setTextAppearance(R.style.ShrinkHomeIncome);
-        }
-
-        // color
-        if (balance < 0) mBalanceText.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-        else mBalanceText.setTextColor(ContextCompat.getColor(mContext, R.color.income));
     }
 
     private void setAccountsData(HomeAccounts homeAccounts) {
@@ -311,8 +336,6 @@ public class HomeFragment extends Fragment {
 
         Log.d(LOG_HOME, "== setIncomeCategories: " + categories.size());
 
-
-
         initCategoriesIncomeList(categories);
         ArrayList<CategoryPercent> percents = CategoryUtils.getCategoriesPercents(categories);
 
@@ -320,7 +343,7 @@ public class HomeFragment extends Fragment {
             int size = mContext.getResources().getInteger(R.integer.home_pie_size_int);
             int indicator = mContext.getResources().getInteger(R.integer.home_pie_indicator_int);
             mIncomeChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mIncomeChart, size, indicator, true);
+            Charts.setCategoriesChart(mContext, percents, mIncomeChart, size, indicator, false);
         });
     }
 
@@ -335,7 +358,7 @@ public class HomeFragment extends Fragment {
             int size = mContext.getResources().getInteger(R.integer.home_pie_size_int);
             int indicator = mContext.getResources().getInteger(R.integer.home_pie_indicator_int);
             mExpensesChart.setImageTintList(null);
-            Charts.setCategoriesChart(mContext, percents, mExpensesChart, size, indicator, true);
+            Charts.setCategoriesChart(mContext, percents, mExpensesChart, size, indicator, false);
         });
 
     }
@@ -396,7 +419,7 @@ public class HomeFragment extends Fragment {
             }
 
             mYearChart.setImageTintList(null);
-            Charts.setYearTotalChart(mContext, mYearChart, yearList, highestBar, 300, 100);
+            Charts.setYearTotalChart(mContext, mYearChart, yearList, highestBar, 300, 120);
         });
 
     }

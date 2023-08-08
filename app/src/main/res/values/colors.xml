@@ -11,21 +11,21 @@
     <color name="transparent">#00FFFFFF</color>
 
     <!-- Text -->
-    <color name="high_emphasis_text">#1E1E1E</color>
-    <color name="medium_emphasis_text">#737373</color>
+    <color name="high_emphasis_text">#181A1E</color>
+    <color name="medium_emphasis_text">#67686B</color>
     <color name="disabled_text">#9A9A9A</color>
     <color name="button_text">#FFFFFF</color>
 
     <!-- Backgrounds -->
     <color name="bg_home">#EFEFEF</color>
-    <color name="bg_00dp">#F9F9F9</color>
+    <color name="bg_00dp">#FAFAFA</color>
     <color name="bg_01dp">#FFFFFF</color>
     <color name="bg_04dp">@color/bg_01dp</color>
     <color name="bg_progress_track">#E0E0E0</color>
     <color name="bg_day">#EBEBEB</color>
     <color name="bg_indicator">@color/disabled_text</color>
-    <color name="bg_expense_container">#0AD91414</color>
-    <color name="bg_income_container">#0D0E7C54</color>
+    <color name="bg_expense_container">#0DD00B46</color>
+    <color name="bg_income_container">#120BD072</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>
@@ -63,6 +63,7 @@
     <color name="border_error">#EF9A9A</color>
     <color name="ripple_error">#FF7B7B</color>
     <color name="text_error">#B71C1C</color>
+<!--    <color name="border_error">#FF7B7B</color>-->
 
     <!-- Items -->
     <color name="item_pressed">#F3FFF9</color>

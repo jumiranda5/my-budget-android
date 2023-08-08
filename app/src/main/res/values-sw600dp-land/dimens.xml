@@ -6,22 +6,22 @@
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
-    <dimen name="land_home_balance_width">376dp</dimen>
-    <dimen name="land_home_progress_width">200dp</dimen>
+<!--    <dimen name="land_home_balance_width">376dp</dimen>-->
+<!--    <dimen name="land_home_progress_width">200dp</dimen>-->
 
-    <dimen name="home_income_shrink">18sp</dimen>
+<!--    <dimen name="home_income_shrink">18sp</dimen>-->
 
-    <!-- Margins -->
-    <dimen name="home_label_margin_bottom">24dp</dimen>
+<!--    &lt;!&ndash; Margins &ndash;&gt;-->
+<!--    <dimen name="home_label_margin_bottom">24dp</dimen>-->
 
-    <!-- Cards -->
-    <dimen name="home_balance_height">164dp</dimen>
+<!--    &lt;!&ndash; Cards &ndash;&gt;-->
+<!--    <dimen name="home_balance_height">164dp</dimen>-->
 
-    <!-- Charts -->
-    <integer name="home_pie_size_int">80</integer>
-    <integer name="home_pie_indicator_int">7</integer>
-    <dimen name="home_pie_width">80dp</dimen>
-    <dimen name="progress_indicator">132dp</dimen>
+<!--    &lt;!&ndash; Charts &ndash;&gt;-->
+<!--    <integer name="home_pie_size_int">80</integer>-->
+<!--    <integer name="home_pie_indicator_int">7</integer>-->
+<!--    <dimen name="home_pie_width">80dp</dimen>-->
+<!--    <dimen name="progress_indicator">132dp</dimen>-->
 
     <!-- ==================  MAIN ACTIVITY ================== -->
 

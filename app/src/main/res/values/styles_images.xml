@@ -40,6 +40,10 @@
         <item name="android:layout_height">22dp</item>
     </style>
 
+    <style name="HomeArrow" parent="IconNormal">
+        <item name="srcCompat">@drawable/ic_24_arrow_forward_300</item>
+    </style>
+
     <!-- Charts -->
 
     <style name="ChartImage" parent="MyImage">
@@ -56,11 +60,11 @@
 
     <style name="BarChart" parent="ChartImage">
         <item name="android:src">@drawable/ic_bar_chart</item>
-        <item name="layout_constraintDimensionRatio">w,3:1</item>
+        <item name="layout_constraintDimensionRatio">h,3:1.5</item>
         <item name="android:scaleType">fitXY</item>
     </style>
 
-    <!-- Divisors -->
+    <!-- Dividers -->
 
     <style name="ItemDivider" parent="AppTheme">
         <item name="android:layout_width">0dp</item>

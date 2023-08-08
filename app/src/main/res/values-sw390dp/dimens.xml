@@ -8,29 +8,19 @@
     <!-- Cards -->
     <dimen name="card_padding">18dp</dimen>
 
+
     <!-- ==================  HOME FRAGMENT ================== -->
 
+    <!-- Containers -->
+    <dimen name="home_balance_height">224dp</dimen>
+
     <!-- Margins -->
-    <dimen name="home_inner_space">10dp</dimen>
-    <dimen name="home_label_margin_bottom">32dp</dimen>
-    <dimen name="progress_info_margin">40dp</dimen>
+    <dimen name="progress_info_margin">48dp</dimen>
+    <dimen name="home_category_list_margin">56dp</dimen>
 
     <!-- Text -->
-    <dimen name="home_income_size">20sp</dimen>
-    <dimen name="home_income_shrink">16sp</dimen>
     <dimen name="progress_text_size">24sp</dimen>
 
-    <!-- Cards -->
-    <dimen name="home_balance_height">188dp</dimen>
-
-    <!-- Charts -->
-    <integer name="home_pie_size_int">88</integer>
-    <dimen name="progress_indicator">124dp</dimen>
-    <dimen name="home_pie_width">88dp</dimen>
-
-    <!-- Page -->
-    <dimen name="page_divisor_space">220dp</dimen>
-    <dimen name="page_padding">24dp</dimen>
 
     <!-- ==================  FORMS  ================== -->
 

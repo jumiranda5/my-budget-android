@@ -145,6 +145,7 @@
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
     <string name="msg_item_click">Click on the items to see details.</string>
+    <string name="desc_see_more">See more</string>
 
 
     <!--    &lt;!&ndash; Actions (buttons) &ndash;&gt;-->

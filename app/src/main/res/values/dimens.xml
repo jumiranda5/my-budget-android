@@ -19,7 +19,7 @@
     <dimen name="caption">12sp</dimen>
     <dimen name="overline">10sp</dimen>
     <dimen name="bottom_nav_text">12sp</dimen>
-    <dimen name="currency_width_min">80dp</dimen>
+    <dimen name="currency_width_min">88dp</dimen>
     <dimen name="currency_width_max">140dp</dimen>
 
     <!-- Corners -->
@@ -27,6 +27,7 @@
 
     <!-- Cards -->
     <dimen name="card_padding">16dp</dimen>
+    <dimen name="error_card_height">48dp</dimen>
 
     <!-- List Items -->
     <dimen name="item_height">60dp</dimen>
@@ -35,6 +36,7 @@
     <dimen name="item_edit_margin">0dp</dimen>
     <dimen name="item_divisor_margin">12dp</dimen>
     <dimen name="item_divisor_margin_end">26dp</dimen><!-- 12 + inner_space -->
+    <dimen name="item_currency_padding_end">4dp</dimen>
 
     <!-- Buttons -->
     <dimen name="icon_button_size">48dp</dimen>
@@ -86,22 +88,33 @@
 
     <!-- ==================  HOME FRAGMENT ================== -->
 
+    <!-- Containers -->
+    <dimen name="home_balance_height">192dp</dimen>
+
     <!-- Margins -->
-    <dimen name="home_inner_space">8dp</dimen>
+<!--    <dimen name="home_card_margin_top">40dp</dimen> &lt;!&ndash; &ndash;&gt;-->
+    <dimen name="home_section_margin">40dp</dimen>
+    <dimen name="home_progress_section_margin">24dp</dimen>
+    <dimen name="home_section_margin_extra">48dp</dimen>
+    <dimen name="home_element_space">14dp</dimen>
+<!--    <dimen name="home_inner_space">8dp</dimen> &lt;!&ndash; &ndash;&gt;-->
     <dimen name="home_padding">0dp</dimen>
-    <dimen name="home_label_margin_bottom">28dp</dimen>
-    <dimen name="progress_info_margin">24dp</dimen>
+    <dimen name="home_label_margin_bottom">20dp</dimen>
+    <dimen name="progress_info_margin">40dp</dimen>
     <dimen name="home_accounts_icon_margin">16dp</dimen>
     <dimen name="home_accounts_text_margin">14dp</dimen>
+    <dimen name="home_category_list_margin">40dp</dimen>
 
     <!-- Text -->
-    <dimen name="home_income_size">16sp</dimen>
-    <dimen name="home_income_shrink">14sp</dimen>
+    <dimen name="home_label_size">14sp</dimen>
+<!--    <dimen name="home_income_size">16sp</dimen> &lt;!&ndash; &ndash;&gt;-->
+<!--    <dimen name="home_income_shrink">14sp</dimen> &lt;!&ndash; &ndash;&gt;-->
     <dimen name="progress_text_size">22sp</dimen>
-    <dimen name="home_accounts_text_size">14sp</dimen>
+<!--    <dimen name="home_accounts_text_size">14sp</dimen> &lt;!&ndash; &ndash;&gt;-->
+    <dimen name="home_currency_width_min">72dp</dimen>
 
-    <!-- Cards -->
-    <dimen name="home_balance_height">156dp</dimen>
+    <!-- Images -->
+    <dimen name="home_icon_size">22dp</dimen>
 
     <!-- Charts -->
     <integer name="home_pie_size_int">80</integer>
