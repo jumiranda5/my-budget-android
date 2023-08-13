@@ -2,13 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:paddingStart="@dimen/page_padding"
+    android:paddingEnd="@dimen/page_padding"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/item_year_month_name"
-        style="@style/BodyItemEllipse"
-        android:text="@string/initial_month"
-        android:layout_marginStart="@dimen/inner_space"
+        style="@style/MyBody1"
+        android:layout_width="0dp"
+        android:text="JAN"
+        android:fontFamily="@font/titillium_web_bold"
+        android:textSize="@dimen/body2"
+        android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_year_month_currency_symbol"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,16 +21,15 @@
 
     <TextView
         android:id="@+id/item_year_month_total"
-        style="@style/CurrencySpace"
+        style="@style/CurrencySpaceMedium"
         android:text="@string/initial_value_no_symbol"
-        android:layout_marginEnd="@dimen/inner_space"
         android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_year_month_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/item_year_month_currency_symbol"
-        style="@style/Currency"
+        style="@style/CurrencyMedium"
         android:text="@string/currency_symbol"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_year_month_total"
         app:layout_constraintEnd_toStartOf="@id/item_year_month_total" />

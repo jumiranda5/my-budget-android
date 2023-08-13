@@ -1,6 +1,7 @@
 package com.jgm.mybudgetapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +40,10 @@ public class YearActivity extends AppCompatActivity {
 
     // UI
     private ActivityYearBinding binding;
-    private TextView mBalance, mIncome, mExpense, mYear;
+    private TextView mBalance, mBalanceCurrency,
+            mIncome, mIncomeCurrency,
+            mExpense, mExpenseCurrency,
+            mYear;
     private ImageView mChart;
     private ImageButton mBack, mNextYear, mPrevYear;
     private RecyclerView mBalanceList, mIncomeList, mExpenseList;
@@ -49,6 +53,9 @@ public class YearActivity extends AppCompatActivity {
         mBalance = binding.yearBalanceTotal;
         mIncome = binding.yearIncomeTotal;
         mExpense = binding.yearExpenseTotal;
+        mBalanceCurrency = binding.yearBalanceCurrencySymbol;
+        mIncomeCurrency = binding.yearIncomeCurrencySymbol;
+        mExpenseCurrency = binding.yearExpenseCurrencySymbol;
         mChart = binding.yearChart;
         mBack = binding.yearBackButton;
         mNextYear = binding.nextYearButton;
@@ -123,24 +130,37 @@ public class YearActivity extends AppCompatActivity {
     // Set balance total
     private void setBalanceTotal(YearResponse totals, List<MonthResponse> yearMonths) {
         float balance = totals.getBalance();
-        String balanceString = NumberUtils.getCurrencyFormat(this, balance)[2];
-        mBalance.setText(balanceString);
+        String[] balanceInfo = NumberUtils.getCurrencyFormat(this, balance);
+        String currency = balanceInfo[0];
+        String total = balanceInfo[1];
+        mBalanceCurrency.setText(currency);
+        mBalance.setText(total);
+        if (balance < 0) {
+            mBalanceCurrency.setTextColor(ContextCompat.getColor(this, R.color.expense));
+            mBalance.setTextColor(ContextCompat.getColor(this, R.color.expense));
+        }
         initRecyclerView(mBalanceList, yearMonths, 0);
     }
 
     // Set income total
     private void setIncomeTotals(YearResponse totals, List<MonthResponse> yearMonths) {
         float income = totals.getIncome();
-        String incomeString = NumberUtils.getCurrencyFormat(this, income)[2];
-        mIncome.setText(incomeString);
+        String[] incomeInfo = NumberUtils.getCurrencyFormat(this, income);
+        String currency = incomeInfo[0];
+        String total = incomeInfo[1];
+        mIncomeCurrency.setText(currency);
+        mIncome.setText(total);
         initRecyclerView(mIncomeList, yearMonths, 1);
     }
 
     // Set expense total
     private void setExpenseTotals(YearResponse totals, List<MonthResponse> yearMonths) {
         float expense = totals.getExpenses();
-        String expenseString = NumberUtils.getCurrencyFormat(this, expense)[2];
-        mExpense.setText(expenseString);
+        String[] expenseInfo = NumberUtils.getCurrencyFormat(this, expense);
+        String currency = expenseInfo[0];
+        String total = expenseInfo[1];
+        mExpenseCurrency.setText(currency);
+        mExpense.setText(total);
         initRecyclerView(mExpenseList, yearMonths, -1);
     }
 

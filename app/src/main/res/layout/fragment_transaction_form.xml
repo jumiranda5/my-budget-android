@@ -89,8 +89,8 @@
                             android:buttonTint="@color/toggle_type_expense_text_color"
                             android:checked="true"
                             android:textColor="@color/toggle_type_expense_text_color"
-                            android:textOff="@string/label_expenses"
-                            android:textOn="@string/label_expenses"
+                            android:textOff="@string/label_expense"
+                            android:textOn="@string/label_expense"
                             app:backgroundTint="@color/toggle_type_expense_bg_color" />
                     </RadioGroup>
 

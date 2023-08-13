@@ -25,9 +25,9 @@
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_back"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_arrow_back_fill0_300" />
+                app:srcCompat="@drawable/ic_40_close_300" />
 
             <TextView
                 android:id="@+id/toolbar_year"
@@ -66,6 +66,7 @@
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
         android:layout_height="0dp"
+        android:paddingBottom="@dimen/year_chart_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,25 +76,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Balance -->
-
-            <TextView
-                android:id="@+id/year_balance_label"
+            <!-- Guidelines -->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Balance"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="24dp"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/page_padding" />
 
-            <TextView
-                android:id="@+id/year_balance_total"
-                style="@style/CurrencyMedium"
-                android:layout_margin="24dp"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBaseline_toBaselineOf="@+id/year_balance_label"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/page_padding" />
 
             <!-- Bar Chart -->
 
@@ -101,66 +97,121 @@
                 android:id="@+id/year_chart"
                 style="@style/BarChart"
                 android:layout_height="0dp"
-                android:layout_margin="24dp"
+                android:layout_marginTop="@dimen/year_chart_margin"
                 android:contentDescription="@string/desc_year_bar_chart"
                 app:layout_constraintDimensionRatio="h,3:1.5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/year_balance_label" />
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Divider -->
+            <ImageView
+                android:id="@+id/year_balance_section_divider"
+                style="@style/MyDivider"
+                android:layout_marginTop="@dimen/year_chart_margin"
+                android:contentDescription="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/year_chart" />
+
+            <!-- Balance -->
+
+            <TextView
+                android:id="@+id/year_balance_label"
+                style="@style/HomeBalanceItemLabel"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="@dimen/year_divider_margin"
+                android:text="@string/label_balance"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/year_balance_section_divider" />
+
+            <TextView
+                android:id="@+id/year_balance_currency_symbol"
+                style="@style/CurrencySymbolMedium"
+                android:textColor="@color/income"
+                android:textSize="@dimen/body1"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_balance_total"
+                app:layout_constraintEnd_toStartOf="@+id/year_balance_total" />
+
+            <TextView
+                android:id="@+id/year_balance_total"
+                style="@style/CurrencySpaceMedium"
+                android:textColor="@color/income"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_balance_label"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
 
             <!-- Income total -->
 
             <TextView
                 android:id="@+id/year_income_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Income"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/year_chart" />
+                style="@style/HomeBalanceItemLabel"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/label_income"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/year_balance_label" />
+
+            <TextView
+                android:id="@+id/year_income_currency_symbol"
+                style="@style/CurrencySymbolMedium"
+                android:textColor="@color/income"
+                android:textSize="@dimen/body1"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_income_total"
+                app:layout_constraintEnd_toStartOf="@+id/year_income_total" />
 
             <TextView
                 android:id="@+id/year_income_total"
-                style="@style/CurrencyMedium"
-                android:layout_margin="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/CurrencySpaceMedium"
+                android:textColor="@color/income"
                 app:layout_constraintBaseline_toBaselineOf="@+id/year_income_label"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
 
             <!-- Expense total -->
 
             <TextView
                 android:id="@+id/year_expense_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Expense"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="24dp"
+                style="@style/HomeBalanceItemLabel"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/label_expense"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_label" />
 
             <TextView
-                android:id="@+id/year_expense_total"
-                style="@style/CurrencyMedium"
-                android:layout_margin="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBaseline_toBaselineOf="@+id/year_expense_label"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:id="@+id/year_expense_currency_symbol"
+                style="@style/CurrencySymbolMedium"
+                android:textColor="@color/expense"
+                android:textSize="@dimen/body1"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_expense_total"
+                app:layout_constraintEnd_toStartOf="@+id/year_expense_total" />
 
+            <TextView
+                android:id="@+id/year_expense_total"
+                style="@style/CurrencySpaceMedium"
+                android:textColor="@color/expense"
+                app:layout_constraintBaseline_toBaselineOf="@+id/year_expense_label"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
+
+
+            <!-- Divider -->
+            <ImageView
+                android:id="@+id/year_balance_section_divider2"
+                style="@style/MyDivider"
+                android:layout_marginTop="@dimen/year_divider_margin"
+                android:contentDescription="@null"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/year_expense_label" />
 
             <!-- Balance list -->
 
             <TextView
                 android:id="@+id/year_balance_list_label"
-                style="@style/MySubtitle2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Balance: "
-                android:layout_marginTop="40dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/year_expense_label" />
+                style="@style/MySubtitle1"
+                android:layout_marginTop="@dimen/year_chart_margin"
+                android:text="@string/label_balance_dots"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/year_balance_section_divider2" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/year_balance_list"
@@ -176,13 +227,10 @@
 
             <TextView
                 android:id="@+id/year_income_list_label"
-                style="@style/MySubtitle2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Income: "
-                android:layout_marginTop="32dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="parent"
+                style="@style/MySubtitle1"
+                android:text="@string/label_income_dots"
+                android:layout_marginTop="@dimen/year_chart_margin"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_list" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -199,13 +247,10 @@
 
             <TextView
                 android:id="@+id/year_expense_list_label"
-                style="@style/MySubtitle2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Expense: "
-                android:layout_marginTop="32dp"
-                android:layout_marginStart="24dp"
-                app:layout_constraintStart_toStartOf="parent"
+                style="@style/MySubtitle1"
+                android:text="@string/label_expense_dots"
+                android:layout_marginTop="@dimen/year_chart_margin"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_list" />
 
             <androidx.recyclerview.widget.RecyclerView

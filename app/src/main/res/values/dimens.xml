@@ -177,6 +177,14 @@
     <dimen name="categories_chart_list_padding">4dp</dimen>
     <dimen name="categories_list_percent_padding_land">0dp</dimen>
 
+    <!-- ===========================================================================================
+                                                 YEAR
+     =========================================================================================== -->
+
+    <dimen name="year_chart_margin">56dp</dimen>
+    <dimen name="year_divider_margin">24dp</dimen>
+
+
 
     <!-- =============  FRAGMENTS WITH 1 LIST  ============= -->
 

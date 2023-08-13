@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.R;
@@ -48,25 +49,45 @@ public class YearMonthAdapter extends RecyclerView.Adapter<YearMonthAdapter.List
         float income = data.getIncome();
         float expense = data.getExpenses();
         float balance = NumberUtils.roundFloat(income - expense);
+        expense = expense  * -1;
 
         // Set month
-        String monthName = MyDateUtils.getMonthName(mContext, month, year)[0];
+        String monthName = MyDateUtils.getMonthName(mContext, month, year)[1];
         holder.mMonth.setText(monthName);
 
         // Set amount
-        String[] currency;
+        String[] total;
         switch (type) {
             case 0:
-                currency = NumberUtils.getCurrencyFormat(mContext, balance);
+                total = NumberUtils.getCurrencyFormat(mContext, balance);
+                setTotalColor(balance, holder.mTotal, holder.mCurrencySymbol);
                 break;
             case 1:
-                currency = NumberUtils.getCurrencyFormat(mContext, income);
+                total = NumberUtils.getCurrencyFormat(mContext, income);
+                setTotalColor(income, holder.mTotal, holder.mCurrencySymbol);
                 break;
             default:
-                currency = NumberUtils.getCurrencyFormat(mContext, expense);
+                total = NumberUtils.getCurrencyFormat(mContext, expense);
+                setTotalColor(expense, holder.mTotal, holder.mCurrencySymbol);
         }
-        holder.mCurrencySymbol.setText(currency[0]);
-        holder.mTotal.setText(currency[1]);
+        holder.mCurrencySymbol.setText(total[0]);
+        holder.mTotal.setText(total[1]);
+
+    }
+
+    private void setTotalColor(float value, TextView total, TextView currency) {
+        if (value < 0) {
+            total.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+            currency.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        }
+        else if (value == 0) {
+            total.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
+            currency.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
+        }
+        else {
+            total.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+            currency.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        }
     }
 
     @Override

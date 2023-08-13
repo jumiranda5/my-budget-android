@@ -229,7 +229,7 @@
                     <TextView
                         android:id="@+id/home_expense_label"
                         style="@style/HomeBalanceItemLabel"
-                        android:text="@string/label_expenses"
+                        android:text="@string/label_expense"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/home_expense_currency_symbol"
                         app:layout_constraintStart_toEndOf="@+id/home_expenses_icon"
