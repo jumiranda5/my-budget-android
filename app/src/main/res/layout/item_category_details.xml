@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    android:paddingStart="@dimen/page_padding"
+    android:paddingEnd="@dimen/page_padding"
     android:clickable="false">
 
     <TextView
@@ -22,12 +22,13 @@
     <TextView
         android:id="@+id/item_category_details_count"
         style="@style/MySubtitle2"
-        android:layout_height="22dp"
-        android:layout_width="22dp"
-        android:layout_marginStart="4dp"
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:layout_marginStart="6dp"
         android:text="22"
-        android:textSize="12sp"
+        android:textSize="@dimen/caption"
         android:gravity="center"
+        android:textColor="@color/income_toggle_icon"
         android:background="@drawable/ic_app_circle_24"
         android:backgroundTint="@color/colorAccentLight"
         app:layout_constraintBottom_toBottomOf="parent"

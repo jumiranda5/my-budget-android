@@ -161,17 +161,22 @@
     <dimen name="form_divider_space">24dp</dimen>
 
 
-    <!-- ==================  CATEGORIES  ================== -->
+    <!-- ===========================================================================================
+                                              CATEGORIES
+     =========================================================================================== -->
 
-    <integer name="categories_chart_size_int">208</integer>
+    <integer name="categories_chart_size_int">220</integer>
     <integer name="categories_chart_indicator_int">10</integer>
-    <dimen name="categories_chart_text_size">20sp</dimen>
+
+    <dimen name="categories_chart_size">220dp</dimen>
+    <dimen name="categories_chart_margin">48dp</dimen>
+    <dimen name="categories_chart_list_margin">40dp</dimen>
+
+    <dimen name="categories_chart_text_size">22sp</dimen>
     <dimen name="categories_chart_text_padding">32sp</dimen>
-    <dimen name="categories_chart_size">208dp</dimen>
-    <dimen name="categories_chart_margin">40dp</dimen>
-    <dimen name="categories_chart_list_margin">32dp</dimen>
     <dimen name="categories_chart_list_padding">4dp</dimen>
     <dimen name="categories_list_percent_padding_land">0dp</dimen>
+
 
     <!-- =============  FRAGMENTS WITH 1 LIST  ============= -->
 

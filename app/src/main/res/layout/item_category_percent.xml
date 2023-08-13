@@ -3,22 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/ClickableListItem"
+    android:paddingStart="0dp"
+    android:paddingEnd="@dimen/transactions_item_padding_end"
     android:id="@+id/category_item_percent">
+
+    <!-- Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_padding" />
 
     <ImageView
         android:id="@+id/category_icon"
         style="@style/IconNormal"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_house_fill0_300_48" />
+        app:srcCompat="@drawable/ic_house_fill1_300_48" />
 
     <TextView
         android:id="@+id/category_name"
-        style="@style/BodyItemEllipse"
+        style="@style/MyBody1"
         android:layout_width="0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_marginStart="@dimen/inner_space"
+        android:layout_marginEnd="16dp"
         android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/category_percent"
@@ -30,19 +50,8 @@
         style="@style/CurrencyMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
         android:text="@string/initial_percent"
         app:layout_constraintBaseline_toBaselineOf="@+id/category_name"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        style="@style/MyDivider"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/border"
-        android:contentDescription="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_item_end" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

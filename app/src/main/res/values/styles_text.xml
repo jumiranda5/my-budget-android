@@ -279,6 +279,16 @@
     </style>
 
 
+    <!-- ===========================================================================================
+                                              TABS
+     =========================================================================================== -->
+
+    <style name="MyTabText" parent="AppTheme">
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:fontFamily">@font/titillium_web_regular</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
     <!-- ==========================================================
                              TEXT STYLES
     ============================================================ -->
@@ -298,19 +308,6 @@
     <style name="DialogTitle" parent="MyHeadline6">
         <item name="android:layout_marginTop">24dp</item>
         <item name="android:layout_marginBottom">12dp</item>
-    </style>
-
-    <!-- Labels -->
-
-    <!-- Body -->
-
-    <!-- Numbers -->
-
-    <!-- Tabs -->
-
-    <style name="MyTabText" parent="AppTheme">
-        <item name="android:textSize">@dimen/text_normal</item>
-        <item name="android:fontFamily">@font/assistant_medium</item>
     </style>
 
     <!-- Other -->

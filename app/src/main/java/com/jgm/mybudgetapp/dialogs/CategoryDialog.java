@@ -70,8 +70,9 @@ public class CategoryDialog extends BottomSheetDialogFragment {
 
         // Total
         TextView mTotal = view.findViewById(R.id.dialog_category_total);
-        String total = NumberUtils.getCurrencyFormat(mContext, category.getTotal())[2];
+        String total = NumberUtils.getCurrencyFormat(mContext, category.getTotal())[3];
         mTotal.setText(total);
+        mTotal.setTextColor(ContextCompat.getColor(mContext, color.getColor()));
 
         // List
         RecyclerView mRecyclerView = view.findViewById(R.id.dialog_category_list);

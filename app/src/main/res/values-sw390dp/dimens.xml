@@ -66,13 +66,15 @@
     <dimen name="button_save_height">58dp</dimen>
 
 
-    <!-- ==================  CATEGORIES  ================== -->
+    <!-- ===========================================================================================
+                                               CATEGORIES
+     =========================================================================================== -->
 
     <integer name="categories_chart_size_int">260</integer>
+
     <dimen name="categories_chart_size">260dp</dimen>
-    <dimen name="categories_chart_text_size">24sp</dimen>
-    <!--    <dimen name="categories_chart_margin">64dp</dimen>-->
-    <!--    <dimen name="categories_chart_list_margin">56dp</dimen>-->
+    <dimen name="categories_chart_margin">64dp</dimen>
+    <dimen name="categories_chart_list_margin">56dp</dimen>
 
 
 </resources>

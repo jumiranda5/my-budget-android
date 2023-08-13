@@ -17,35 +17,36 @@
     <ImageView
         android:id="@+id/dialog_category_icon"
         style="@style/IconNormal"
+        android:layout_marginStart="@dimen/page_padding"
         android:contentDescription="@null"
-        android:layout_marginStart="@dimen/inner_space"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_category_divider"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_category_title"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dialog_category_title"
         app:srcCompat="@drawable/ic_category_fill0_300_40" />
 
     <TextView
         android:id="@+id/dialog_category_title"
         style="@style/DialogTitle"
-        android:layout_marginTop="0dp"
+        android:letterSpacing="0.05"
+        android:textSize="@dimen/body1"
         android:layout_marginStart="16dp"
         android:text="@string/hint_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/dialog_category_icon"
-        app:layout_constraintStart_toEndOf="@+id/dialog_category_icon"
-        app:layout_constraintTop_toTopOf="@+id/dialog_category_icon" />
+        app:layout_constraintBottom_toTopOf="@+id/dialog_category_divider"
+        app:layout_constraintStart_toEndOf="@+id/dialog_category_icon" />
 
     <TextView
         android:id="@+id/dialog_category_total"
         style="@style/CurrencyMedium"
-        android:textSize="@dimen/h6"
-        android:layout_marginEnd="@dimen/inner_space"
+        android:letterSpacing="0.05"
+        android:fontFamily="@font/titillium_web_semi_bold"
+        android:textSize="@dimen/body1"
+        android:layout_marginEnd="@dimen/page_padding"
         app:layout_constraintBaseline_toBaselineOf="@+id/dialog_category_title"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/dialog_category_divider"
         style="@style/DialogDivider"
-        android:layout_marginTop="72dp"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +55,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_category_list"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"

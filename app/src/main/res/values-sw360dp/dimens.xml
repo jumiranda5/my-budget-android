@@ -77,15 +77,15 @@
     <dimen name="input_icon_padding">16dp</dimen>
     <dimen name="button_save_height">58dp</dimen>
 
+    <!-- ===========================================================================================
+                                               CATEGORIES
+     =========================================================================================== -->
 
+    <integer name="categories_chart_size_int">236</integer>
 
-    <!-- ==================  CATEGORIES  ================== -->
-
-    <integer name="categories_chart_size_int">220</integer>
-    <dimen name="categories_chart_size">220dp</dimen>
+    <dimen name="categories_chart_size">236dp</dimen>
     <dimen name="categories_chart_margin">56dp</dimen>
     <dimen name="categories_chart_list_margin">48dp</dimen>
-    <dimen name="categories_chart_list_padding">16dp</dimen>
 
 
 
