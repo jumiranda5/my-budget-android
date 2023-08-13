@@ -5,8 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:focusable="false"
     android:clickable="false"
-    android:paddingStart="@dimen/transactions_day_padding"
-    android:paddingEnd="@dimen/transactions_day_padding"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -20,50 +18,64 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="@dimen/page_width_anchor" />
 
+    <!-- Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_day_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_day_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_padding" />
+
+    <!-- todo: remove item -->
     <ImageView
         android:id="@+id/item_day_calendar"
         style="@style/ItemIcon"
-        android:visibility="visible"
         android:contentDescription="@null"
-        android:layout_marginStart="@dimen/inner_space"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/item_day_title"
-        app:layout_constraintStart_toStartOf="@id/transactions_day_width_anchor"
+        app:layout_constraintStart_toStartOf="@+id/guideline_day_start"
         app:layout_constraintTop_toTopOf="@+id/item_day_title"
-        app:srcCompat="@drawable/ic_24_calendar_month_fill1_300" />
+        app:srcCompat="@drawable/ic_40_calendar_month_fill1_300" />
 
     <TextView
         android:id="@+id/item_day_title"
         style="@style/DayTitle"
+        android:paddingStart="2dp"
+        android:paddingEnd="0dp"
         android:layout_width="wrap_content"
-        android:layout_marginStart="@dimen/inner_space"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_vertical"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/test_monday_2"
         app:layout_constraintBottom_toTopOf="@id/item_day_list"
         app:layout_constraintStart_toEndOf="@id/item_day_calendar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        style="@style/ItemDivider"
+        android:id="@+id/day_divider"
+        style="@style/MyDivider"
+        android:background="@color/divider_darker"
+        android:layout_marginStart="32dp"
         android:visibility="visible"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/item_day_title"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_day_end"
         app:layout_constraintStart_toEndOf="@+id/item_day_title"
-        app:layout_constraintTop_toTopOf="@+id/item_day_title"
-        app:layout_constraintEnd_toEndOf="@id/transactions_day_width_anchor"/>
+        app:layout_constraintTop_toTopOf="@+id/item_day_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_day_list"
         style="@style/NestedListNoScroll"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/transactions_day_width_anchor"
         app:layout_constraintStart_toStartOf="@id/transactions_day_width_anchor"
         tools:itemCount="3"
-        tools:listitem="@layout/item_transaction2" />
+        tools:listitem="@layout/item_transaction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,11 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:width="18dp"
-        android:height="18dp"
-        android:top="8dp"
-        android:bottom="8dp"
-        android:left="12dp"
+        android:width="22dp"
+        android:height="22dp"
+        android:gravity="center"
+        android:start="17dp"
         android:drawable="@drawable/arrow_north_east_600" />
 
 </layer-list>

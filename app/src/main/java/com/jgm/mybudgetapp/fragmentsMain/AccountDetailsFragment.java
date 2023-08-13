@@ -67,7 +67,7 @@ public class AccountDetailsFragment extends Fragment {
     private TextView mAccountName, mTotal;
     private ImageView mAccountIcon;
     private RecyclerView mRecyclerView;
-    private FloatingActionButton mFab;
+    private ImageButton mEdit;
 
     private void setBinding() {
         buttonBack = binding.accountBackButton;
@@ -75,7 +75,7 @@ public class AccountDetailsFragment extends Fragment {
         mAccountIcon = binding.accountIcon;
         mTotal = binding.accountTotal;
         mRecyclerView = binding.accountDetailsList;
-        mFab = binding.acountEditButton;
+        mEdit = binding.accountEditButton;
     }
 
     // Interfaces
@@ -126,7 +126,7 @@ public class AccountDetailsFragment extends Fragment {
 
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
 
-        mFab.setOnClickListener(v -> {
+        mEdit.setOnClickListener(v -> {
             // Set account db object to send to edit from
             Account accountToEdit = new Account(
                     accountTotal.getName(),

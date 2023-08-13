@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_00dp"
+    android:background="@color/bg_form"
     tools:context=".fragmentsMain.CategoriesFormFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -23,7 +23,7 @@
                 android:id="@+id/cat_form_back_button"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_back"
-                android:src="@drawable/ic_24_arrow_back_fill0_300"
+                android:src="@drawable/ic_40_arrow_back_fill0_300"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_archive_fill0_300"
+                app:srcCompat="@drawable/ic_40_archive_fill0_300"
                 app:tint="@color/danger" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -64,16 +64,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                style="@style/GuidelineStart"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/transaction_form_padding" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                style="@style/GuidelineEnd"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/transaction_form_padding" />
+
             <EditText
                 android:id="@+id/category_name_input"
                 style="@style/InputWithIcon"
-                android:layout_margin="@dimen/form_padding"
+                android:layout_marginTop="@dimen/form_margin"
                 android:hint="@string/hint_category_name"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                android:imeOptions="actionDone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -126,6 +138,7 @@
                 android:id="@+id/button_save_category"
                 style="@style/ButtonSave"
                 android:layout_width="0dp"
+                android:layout_marginTop="@dimen/form_margin"
                 app:layout_constraintEnd_toEndOf="@+id/category_name_input"
                 app:layout_constraintStart_toStartOf="@+id/category_name_input"
                 app:layout_constraintTop_toBottomOf="@+id/category_icon_button" />

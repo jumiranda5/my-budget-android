@@ -354,9 +354,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     }
 
     private void setAddButton(String tag) {
+        // padding is lost on setBackground => get padding
+        int padding = mAdd.getPaddingTop();
+        Log.d("padding", "add button padding: " + padding);
+
         switch (tag) {
             case accountsTag:
-                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_accent_inset));
+                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_savings_inset));
                 mAdd.setOnClickListener(v -> openAccountForm(false, null));
                 break;
             case transactionsInTag:
@@ -367,6 +371,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
                 mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_expense_inset));
                 mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
         }
+
+        // reset padding
+        mAdd.setPadding(padding, padding, padding, padding);
     }
 
 

@@ -5,77 +5,86 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#F3F3F3</color>
     <color name="colorSecondary">#767676</color>
-    <color name="colorAccent">#FF6859</color>
-    <color name="colorAccentLight">#6BFFB489</color>
+    <color name="colorAccent">#13BA7C</color>
+    <color name="colorAccentLight">#6B13BA7C</color>
     <color name="colorControlHighlight">#BABABA</color>
     <color name="colorSecondaryContainer">#424242</color>
 
     <!-- Text -->
-    <color name="high_emphasis_text">#DEFFFFFF</color>
-    <color name="medium_emphasis_text">#99FFFFFF</color>
-    <color name="disabled_text">#61FFFFFF</color>
+    <color name="high_emphasis_text">#E1E1E2</color> <!-- using -->
+    <color name="medium_emphasis_text">#AEAFB0</color> <!-- using -->
+    <color name="disabled_text">#707173</color> <!-- using -->
     <color name="button_text">#121212</color>
 
     <!-- Backgrounds -->
-    <color name="bg_home">@color/bg_00dp</color>
-    <color name="bg_00dp">#181A1E</color>
-    <color name="bg_01dp">#0DFFFFFF</color>
-    <color name="bg_04dp">#17FFFFFF</color>
-    <color name="bg_progress_track">#2E2E2E</color>
-    <color name="bg_day">#252525</color>
+    <color name="bg_00dp">#181A1E</color> <!-- using -->
+    <color name="bg_01dp">#242529</color> <!-- using -->
+    <color name="bg_02dp">#282A2E</color> <!-- using -->
+    <color name="bg_04dp">#2D2F32</color>
+    <color name="bg_status_bar">@color/bg_01dp</color> <!-- using -->
+    <color name="bg_form">@color/bg_00dp</color> <!-- using -->
+    <color name="bg_input">#1F2125</color> <!-- using -->
+    <color name="bg_progress_track">@color/bg_02dp</color> <!-- using -->
+    <color name="bg_expense_container">#0DD00B46</color> <!-- using -->
+    <color name="bg_income_container">#120BD072</color> <!-- using -->
 
     <!-- Borders -->
-    <color name="border">#191919</color>
-    <color name="border_darker">#202020</color>
-    <color name="divisor">#2C2C2C</color>
+    <color name="border">#1F2125</color>
+    <color name="form_divider">@color/bg_01dp</color>
+    <color name="divider">#2A2C30</color>
+    <color name="divider_darker">#343539</color>
 
     <!-- Button -->
-    <color name="disabled_button">#383838</color>
+    <color name="disabled_button">@color/disabled_text</color>
     <color name="button_accent">@color/colorAccent</color>
-    <color name="button_accent_click">#DF6040</color>
-    <color name="button_accent_text">#1E1E1E</color>
+    <color name="button_accent_click">#159B69</color>
+    <color name="button_accent_text">#DE181A1E</color>
     <color name="switch_thumb_off">#BABABA</color>
     <color name="switch_track_off">#40FFFFFF</color>
     <color name="switch_track_off_stroke">#FAFAFA</color>
     <color name="switch_thumb_on">@color/colorAccent</color>
-    <color name="switch_track_on">#FF6859</color>
-    <color name="switch_track_on_stroke">#FF2914</color>
+    <color name="switch_track_on">#9913BA7C</color>
+    <color name="switch_track_on_stroke">#159B69</color>
     <color name="check_circle_color">#13BA7C</color>
-    <color name="active_nav_button">@color/colorAccent</color>
+    <color name="active_nav_button">@color/high_emphasis_text</color>
+    <color name="inactive_nav_button">@color/medium_emphasis_text</color>
 
     <!-- Interactions -->
-    <color name="click">#2C2C2C</color>
-    <color name="ripple">#4DFF6859</color>
+    <color name="click">@color/bg_02dp</color>
+    <color name="ripple">@color/bg_02dp</color>
 
     <!-- Inputs -->
-    <color name="input_stroke">#2C2C2C</color>
-    <color name="input_focused">#F3FFF9</color>
-    <color name="input_stroke_focused">#8BEDBE</color>
+    <color name="input_stroke">@color/bg_01dp</color>
+    <color name="input_focused">#182223</color>
+    <color name="input_stroke_focused">#173930</color>
 
     <!-- Error -->
-    <color name="danger">#CF6679</color>
+    <color name="danger">#FF6E6E</color>
     <color name="bg_error">#EE879A</color>
     <color name="border_error">#871B2F</color>
     <color name="ripple_error">#C45E70</color>
     <color name="text_error">#6F1425</color>
 
-    <!-- Inputs -->
-    <color name="item_pressed">#6BFFB489</color>
-    <color name="item_focused">#6BFFB489</color>
-    <color name="item_stroke_focused">#FD7D5D</color>
-
     <!-- transactions colors -->
     <color name="expense">#FF519A</color>
-    <color name="expense_pressed">#BC1616</color>
+    <color name="expense_pressed">#F13785</color>
     <color name="expense_chart">#CCFF3F8F</color>
 
-    <color name="income">#2CF0A9</color>
-    <color name="income_pressed">#095F40</color>
+    <color name="cash">#16CB89</color>
+    <color name="income">#F22CF0A9</color>
+    <color name="income_pressed">#16CB89</color>
     <color name="income_chart">#CC2CF0A9</color>
 
     <color name="savings">#9A89FF</color>
-    <color name="savings_pressed">#5A0C97</color>
-    <color name="accumulated">#C67700</color>
+    <color name="savings_pressed">#8471F2</color>
+
+    <!-- Toggle button - form type -->
+    <color name="expense_toggle_bg">#6D2144</color>
+    <color name="income_toggle_bg">#136A44</color>
+    <color name="transfer_toggle_bg">#55346A</color>
+    <color name="expense_toggle_icon">#FF80B5</color>
+    <color name="income_toggle_icon">#32F1AB</color>
+    <color name="transfer_toggle_icon">#D099FA</color>
 
     <!-- Color Picker -->
     <color name="red">#FF5454</color>
@@ -94,40 +103,7 @@
     <color name="orange">#FF9B4F</color>
     <color name="deep_orange">#FD7C53</color>
     <color name="brown">#A1887F</color>
-    <color name="grey">#BDBDBD</color>
+    <color name="grey">#7B7B7B</color>
 
-<!--    <color name="grey">#dadada</color>-->
-
-<!--    &lt;!&ndash; Main &ndash;&gt;-->
-
-<!--    &lt;!&ndash; Backgrounds &ndash;&gt;-->
-<!--    <color name="bg_00dp">#121212</color>-->
-<!--    <color name="bg_01dp">#1E1E1E</color>-->
-<!--    <color name="bg_02dp">#12FFFFFF</color>-->
-<!--    <color name="bg_03dp">#14FFFFFF</color>-->
-<!--    <color name="bg_04dp">#17FFFFFF</color>-->
-<!--    <color name="bg_06dp">#1CFFFFFF</color>-->
-<!--    <color name="bg_08dp">#1FFFFFFF</color>-->
-<!--    <color name="bg_12dp">#24FFFFFF</color>-->
-<!--    <color name="bg_16dp">#26FFFFFF</color>-->
-<!--    <color name="bg_24dp">#29FFFFFF</color>-->
-
-<!--    &lt;!&ndash; Text &ndash;&gt;-->
-<!--    <color name="high_emphasis_text">#DEFFFFFF</color>-->
-<!--    <color name="medium_emphasis_text">#99FFFFFF</color>-->
-<!--    <color name="disabled_text">#61FFFFFF</color>-->
-<!--    <color name="main_text">#1E1E1E</color>-->
-<!--    <color name="secondary_icon">#99FFFFFF</color>-->
-
-<!--    <color name="expense">#FF3F8F</color>-->
-<!--    <color name="expense_pressed">#BC1616</color>-->
-<!--    <color name="expense_chart">#CCFF3F8F</color>-->
-
-<!--    <color name="income">#2CF0A9</color>-->
-<!--    <color name="income_pressed">#095F40</color>-->
-<!--    <color name="income_chart">#CC2CF0A9</color>-->
-
-<!--    <color name="savings">#9A89FF</color>-->
-<!--    <color name="savings_pressed">#5A0C97</color>-->
 
 </resources>

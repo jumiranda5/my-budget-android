@@ -8,6 +8,8 @@
     <ImageView
         android:id="@+id/item_account_icon"
         style="@style/IconNormal"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,40 +31,17 @@
 
     <TextView
         android:id="@+id/item_account_total"
-        style="@style/CurrencySpaceMedium"
+        style="@style/CurrencySpace"
         android:text="@string/initial_value_no_symbol"
         android:layout_marginEnd="4dp"
-        android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_account_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/item_account_currency_symbol"
-        style="@style/CurrencyMedium"
+        style="@style/CurrencySymbol"
         android:text="@string/currency_symbol"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_account_total"
         app:layout_constraintEnd_toStartOf="@id/item_account_total" />
-
-<!--    <ImageView-->
-<!--        android:id="@+id/item_account_nav_icon"-->
-<!--        style="@style/IconNormal"-->
-<!--        android:layout_marginTop="2dp"-->
-<!--        android:layout_marginEnd="-8dp"-->
-<!--        android:contentDescription="@null"-->
-<!--        app:tint="@color/disabled_text"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:srcCompat="@drawable/ic_app_navigate_next" />-->
-
-<!--    <ImageView-->
-<!--        style="@style/ItemDivisor"-->
-<!--        android:layout_marginStart="4dp"-->
-<!--        android:layout_marginEnd="4dp"-->
-<!--        android:contentDescription="@null"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/item_account_icon"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/item_account_name" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

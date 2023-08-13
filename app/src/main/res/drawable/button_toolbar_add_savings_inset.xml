@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/button_pill_format"
-    android:inset="8dp"/>
+    android:drawable="@drawable/button_toolbar_add_savings"
+    android:inset="2dp"/>

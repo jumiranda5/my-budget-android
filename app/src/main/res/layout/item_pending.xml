@@ -34,7 +34,10 @@
 
     <TextView
         android:id="@+id/item_pending_name"
-        style="@style/BodyItemEllipse"
+        style="@style/MyBody1"
+        android:layout_width="0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_marginStart="@dimen/inner_space"
         android:layout_marginEnd="@dimen/inner_space"
         android:text="@string/hint_description"

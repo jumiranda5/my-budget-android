@@ -3,28 +3,46 @@
     style="@style/ClickableListItem"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:paddingStart="@dimen/transactions_item_padding"
-    android:paddingEnd="@dimen/transactions_item_padding"
     android:clickable="false"
+    android:paddingStart="0dp"
+    android:paddingEnd="@dimen/transactions_item_padding_end"
     android:id="@+id/item_transaction2"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_padding" />
 
     <ImageView
         android:id="@+id/item_transaction2_icon"
         style="@style/ItemIcon"
-        android:layout_marginStart="12dp"
-        android:visibility="gone"
+        android:layout_width="35dp"
+        android:paddingEnd="13dp"
+        android:paddingStart="0dp"
         android:contentDescription="@null"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_48_category_300" />
 
     <TextView
         android:id="@+id/item_transaction2_name"
         style="@style/BodyItemEllipse"
-        android:text="Transaction"
-        android:layout_marginStart="@dimen/inner_space"
+        android:paddingEnd="16dp"
+        android:paddingStart="2dp"
+        android:text="@string/hint_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction2_currency_symbol"
         app:layout_constraintStart_toEndOf="@+id/item_transaction2_icon"
@@ -34,14 +52,12 @@
         android:id="@+id/item_transaction2_total"
         style="@style/CurrencySpace"
         android:text="@string/initial_value_no_symbol"
-        android:layout_marginEnd="@dimen/inner_space"
-        android:textColor="@color/income"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_name"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_item_end" />
 
     <TextView
         android:id="@+id/item_transaction2_currency_symbol"
-        style="@style/Currency"
+        style="@style/CurrencySymbol"
         android:text="@string/currency_symbol"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction2_total"
         app:layout_constraintEnd_toStartOf="@id/item_transaction2_total" />

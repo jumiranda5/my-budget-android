@@ -4,27 +4,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ClickableListItem"
-    android:paddingStart="@dimen/transactions_item_padding"
+    android:paddingStart="0dp"
     android:paddingEnd="@dimen/transactions_item_padding_end"
     android:id="@+id/item_transaction"
     tools:ignore="RtlSymmetry">
 
+    <!-- Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_item_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_padding" />
+
     <ImageView
         android:id="@+id/item_transaction_icon"
         style="@style/ItemIcon"
-        android:visibility="gone"
-        android:layout_marginStart="12dp"
+        android:layout_width="31dp"
+        android:paddingEnd="10dp"
         android:contentDescription="@null"
-        app:tint="@color/medium_emphasis_text"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_40_subdirectory_arrow_right_300" />
+        app:srcCompat="@drawable/ic_40_subdirectory_arrow_right_300"
+        app:tint="@color/medium_emphasis_text" />
 
     <TextView
         android:id="@+id/item_transaction_name"
         style="@style/BodyItemEllipse"
-        android:layout_marginStart="@dimen/inner_space"
+        android:layout_marginStart="2dp"
         android:layout_marginEnd="@dimen/inner_space"
         android:text="@string/hint_description"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,42 +50,44 @@
 
     <TextView
         android:id="@+id/item_transaction_currency_symbol"
-        style="@style/CurrencySymbol"
+        style="@style/ItemCurrencySymbol"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
         app:layout_constraintEnd_toStartOf="@id/item_transaction_total" />
 
     <TextView
         android:id="@+id/item_transaction_total"
-        style="@style/CurrencySpace"
+        style="@style/ItemCurrencySpace"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_transaction_name"
-        app:layout_constraintEnd_toStartOf="@id/item_transaction_toggle" />
+        app:layout_constraintEnd_toStartOf="@id/guideline_item_end" />
 
     <ToggleButton
         android:id="@+id/item_transaction_toggle"
         style="@style/IconButton"
         android:layout_width="@dimen/item_end_button_width"
         android:layout_height="0dp"
+        android:layout_marginEnd="-20dp"
         android:background="@drawable/button_toggle_paid"
         android:checked="false"
         android:contentDescription="@null"
         android:textOff="@string/label_not_paid"
         android:textOn="@string/label_paid"
         android:textSize="0sp"
-        android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/item_transaction_card_icon"
+        app:layout_constraintEnd_toEndOf="@id/guideline_item_end"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/item_transaction_card_icon"
         style="@style/IconNormal"
         android:layout_width="@dimen/item_end_button_width"
+        android:layout_marginEnd="-20dp"
         android:contentDescription="@null"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_item_end"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_40_credit_card_fill0_300"
+        app:srcCompat="@drawable/ic_48_credit_card_300"
         app:tint="@color/medium_emphasis_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

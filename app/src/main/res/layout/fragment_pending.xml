@@ -22,32 +22,18 @@
                 android:id="@+id/pending_toolbar_close"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_close"
-                android:src="@drawable/ic_24_close_300"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/pending_icon"
-                style="@style/IconNormal"
-                android:contentDescription="@null"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_40_arrow_back_fill0_300"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_pending_fill1_300"
-                app:tint="@color/danger" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/pending_toolbar_title"
                 style="@style/MyHeadline6"
                 android:text="@string/title_pending"
-                android:layout_marginStart="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/pending_toolbar_close"
-                app:layout_constraintStart_toEndOf="@+id/pending_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/pending_toolbar_close"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

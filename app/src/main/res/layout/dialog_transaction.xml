@@ -11,7 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/inner_space" />
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_padding" />
 
     <ImageView
         android:id="@+id/drag_indicator"
@@ -24,40 +31,40 @@
     <ImageButton
         android:id="@+id/dialog_transaction_dismiss"
         style="@style/IconButton"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="-11dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
-        app:srcCompat="@drawable/ic_24_close_300" />
+        app:srcCompat="@drawable/ic_40_close_300" />
 
     <ImageButton
         android:id="@+id/dialog_transaction_delete"
         style="@style/IconButton"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="6dp"
         android:contentDescription="@string/action_delete"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_dismiss"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
-        app:srcCompat="@drawable/ic_24_delete_fill0_300" />
+        app:srcCompat="@drawable/ic_40_delete_fill0_300" />
 
     <ImageButton
         android:id="@+id/dialog_transaction_edit"
         style="@style/IconButton"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="6dp"
         android:contentDescription="@string/nav_edit"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_delete"
         app:layout_constraintTop_toTopOf="@+id/dialog_transaction_title"
-        app:srcCompat="@drawable/ic_24_edit_fill0_300" />
+        app:srcCompat="@drawable/ic_40_edit_fill0_300" />
 
     <TextView
         android:id="@+id/dialog_transaction_title"
         style="@style/DialogTitle"
         android:text="@string/title_expense"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toStartOf="@+id/dialog_transaction_edit"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/drag_indicator" />
+        app:layout_constraintStart_toStartOf="@id/guideline_start" />
 
     <ImageView
         android:id="@+id/divider"
@@ -65,7 +72,7 @@
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_transaction_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Description -->
 

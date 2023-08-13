@@ -123,6 +123,7 @@ public class CategoriesFormFragment extends Fragment {
         });
 
         // form is only editable on settings activity
+        // todo: settings interface being called from main activity
         mArchive.setOnClickListener(v -> {
             mSettingsInterface.showConfirmationDialog(
                     getString(R.string.msg_archive_category),

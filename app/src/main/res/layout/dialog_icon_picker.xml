@@ -18,17 +18,17 @@
         android:id="@+id/dialog_icon_title"
         style="@style/DialogTitle"
         android:text="@string/hint_icon"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toStartOf="@+id/dialog_icon_dismiss"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_start" />
 
     <ImageView
-        android:id="@+id/divisor"
+        android:id="@+id/divider"
         style="@style/DialogDivider"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_icon_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/dialog_icon_dismiss"
@@ -38,18 +38,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/dialog_icon_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dialog_icon_title"
-        app:srcCompat="@drawable/ic_24_close_300" />
+        app:srcCompat="@drawable/ic_40_close_300" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_icon_list"
         android:layout_width="0dp"
         android:layout_height="400dp"
         android:clipToPadding="false"
-        android:layout_marginTop="16dp"
+        android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divisor"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="5"
         tools:listitem="@layout/item_icon" />

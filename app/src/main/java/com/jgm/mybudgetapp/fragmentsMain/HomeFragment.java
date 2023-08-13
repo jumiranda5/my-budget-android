@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -63,9 +64,11 @@ public class HomeFragment extends Fragment {
             mCash, mChecking, mSavings, mCashSymbol, mCheckingSymbol, mSavingsSymbol,
             mPendingMsg, mProgress, mProgressText, mYearLabel;
     private CircularProgressIndicator mBalanceProgress;
+    private LinearLayout mBalanceContainer;
 
     private void bindViews() {
         // Balance
+        mBalanceContainer = binding.homeMonthContainer;
         mBalance = binding.homeMonthBalance;
         mIncome = binding.homeIncome;
         mExpenses = binding.homeExpenses;
@@ -246,8 +249,14 @@ public class HomeFragment extends Fragment {
 
         // size and color
         if (monthBalance > 999999.99) mBalance.setTextAppearance(R.style.ShrinkHomeBalance);
-        if (monthBalance < 0) mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
-        else mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        if (monthBalance < 0) {
+            mBalanceContainer.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bg_expense_container));
+            mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+        }
+        else {
+            mBalanceContainer.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bg_income_container));
+            mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+        }
 
         if (accumulated < 0) {
             mAccumulated.setTextColor(ContextCompat.getColor(mContext, R.color.expense));

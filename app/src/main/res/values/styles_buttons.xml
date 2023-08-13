@@ -1,51 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TransparentButton" parent="AppTheme">
+    <style name="MainButton" parent="MyButtonText">
         <item name="android:stateListAnimator">@null</item>
         <item name="backgroundTint">@null</item>
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="IconButton" parent="TransparentButton">
-        <item name="android:layout_width">@dimen/icon_button_size</item>
-        <item name="android:layout_height">@dimen/icon_button_size</item>
-        <item name="android:padding">@dimen/icon_button_padding</item>
-        <item name="android:scaleType">fitCenter</item>
-        <item name="android:adjustViewBounds">true</item>
-        <item name="tint">@color/high_emphasis_text</item>
-    </style>
-
-    <style name="ToolbarButton" parent="IconButton">
-        <item name="android:layout_width">@dimen/toolbar_button_size</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:padding">16dp</item>
-    </style>
-
-    <style name="ToolbarButtonWithBg" parent="IconButton">
-        <item name="android:layout_width">@dimen/bottomBar_button_size</item>
-        <item name="android:layout_height">@dimen/bottomBar_button_size</item>
-        <item name="android:background">@drawable/button_toolbar_accent_inset</item>
-        <item name="tint">@color/button_accent_text</item>
-        <item name="android:padding">12dp</item>
-    </style>
-
-    <style name="ItemButton" parent="IconButton">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:padding">14dp</item>
-        <item name="layout_constraintHeight_max">56dp</item>
-        <item name="android:background">@drawable/bg_list_item</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="layout_constraintDimensionRatio">1:1</item>
-    </style>
-
-    <!-- Forms -->
-
-    <style name="MainButton" parent="TransparentButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
         <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
@@ -61,30 +22,98 @@
         <item name="android:drawableTint">@color/button_accent_text</item>
     </style>
 
-    <style name="ButtonPicker" parent="InputWithIcon">
+    <style name="TransparentButton" parent="AppTheme">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- icon size: 26dp => width 48dp => padding 11dp -->
+    <style name="IconButton" parent="TransparentButton">
+        <item name="android:layout_width">@dimen/icon_button_size</item>
+        <item name="android:layout_height">@dimen/icon_button_size</item>
+        <item name="android:padding">@dimen/icon_button_padding</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="tint">@color/high_emphasis_text</item>
+    </style>
+
+    <!-- ===========================================================================================
+                                               TOOLBAR
+     =========================================================================================== -->
+
+    <!-- icon size: 26dp => width 56dp => padding 15dp -->
+    <style name="ToolbarButton" parent="IconButton">
+        <item name="android:layout_width">@dimen/toolbar_button_size</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:padding">15dp</item>
+        <item name="tint">@color/medium_emphasis_text</item>
+    </style>
+
+    <style name="ToolbarNextPrevButton" parent="IconButton">
+        <item name="android:padding">9dp</item>
+        <item name="tint">@color/medium_emphasis_text</item>
+    </style>
+
+    <!-- todo: tablets (?) -->
+    <style name="ToolbarButtonWithBg" parent="IconButton">
+        <item name="android:layout_width">@dimen/bottomBar_button_size</item>
+        <item name="android:layout_height">@dimen/bottomBar_button_size</item>
+        <item name="android:background">@drawable/button_toolbar_accent_inset</item>
+        <item name="tint">@color/button_accent_text</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+
+    <!-- ===========================================================================================
+                                           BOTTOM BAR
+     =========================================================================================== -->
+
+    <style name="BottomBarActionButton" parent="IconButton">
+        <item name="android:layout_width">@dimen/bottomBar_action_button_size</item>
+        <item name="android:layout_height">@dimen/bottomBar_action_button_size</item>
+        <item name="android:background">@drawable/button_toolbar_accent_inset</item>
+        <item name="android:padding">@dimen/bottomBar_action_button_padding</item>
+        <item name="android:elevation">4dp</item>
+        <item name="srcCompat">@drawable/ic_app_add_500</item>
+        <item name="tint">@color/button_accent_text</item>
+        <item name="android:scaleType">fitXY</item><!-- icon size not changing with fitCenter -->
+    </style>
+
+    <!-- ===========================================================================================
+                                            FORMS
+    =========================================================================================== -->
+
+    <style name="toggleButtonPill" parent="MyButtonText">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">0sp</item>
+        <item name="android:background">@drawable/button_pill</item>
+    </style>
+
+    <style name="ButtonPicker" parent="Field">
         <item name="android:stateListAnimator">@null</item>
         <item name="backgroundTint">@null</item>
         <item name="android:background">@drawable/button_picker</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:paddingStart">@dimen/input_icon_space</item>
     </style>
 
-    <!-- Checkbox -->
-
-    <style name="RadioWithIcon" parent="TextNormal">
+    <style name="RadioWithIcon" parent="MyBody1">
         <item name="android:paddingStart">40dp</item>
         <item name="android:paddingEnd">16dp</item>
+        <item name="android:textColor">@color/high_emphasis_text</item>
+        <item name="android:letterSpacing">0.06</item>
     </style>
 
     <style name="RadioButtonIcon" parent="IconNormal">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:padding">13dp</item>
         <item name="android:layout_marginStart">26dp</item>
-        <item name="tint">@color/high_emphasis_text</item>
     </style>
-
-    <!-- Switch buttons -->
 
     <style name="MySwitchButton" parent="MainButton">
         <item name="layout_constraintWidth_min">112dp</item>
@@ -98,6 +127,7 @@
         <item name="android:paddingStart">12dp</item>
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="track">@drawable/switch_track</item>
+        <item name="android:letterSpacing">0.06</item>
     </style>
 
     <style name="FormSwitchWithIcon" parent="Field">
@@ -105,6 +135,30 @@
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="track">@drawable/switch_track</item>
     </style>
+
+
+    <!-- ================================================================== -->
+
+    <style name="ItemButton" parent="IconButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="layout_constraintHeight_max">56dp</item>
+        <item name="android:background">@drawable/bg_list_item</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="layout_constraintDimensionRatio">1:1</item>
+    </style>
+
+    <!-- Forms -->
+
+
+
+
+    <!-- Checkbox -->
+
+    <!-- Switch buttons -->
+
+
 
     <!-- Settings -->
 
@@ -126,21 +180,6 @@
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
         <item name="android:fontFamily">@font/titillium_web_regular</item>
-    </style>
-
-    <!-- Toggle -->
-
-    <style name="toggleButtonPill" parent="MySubtitle2">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:minWidth">@dimen/toggle_pill_min_width</item>
-        <item name="android:maxWidth">@dimen/toggle_pill_max_width</item>
-        <item name="android:background">@drawable/button_pill</item>
-        <item name="android:paddingStart">@dimen/toggle_pill_padding_start</item>
-        <item name="android:paddingEnd">@dimen/toggle_pill_padding_end</item>
-        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
     </style>
 
 

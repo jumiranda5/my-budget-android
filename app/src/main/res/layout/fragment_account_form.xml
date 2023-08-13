@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/bg_00dp"
+    android:background="@color/bg_form"
     tools:context=".fragmentsMain.AccountFormFragment">
 
     <!-- Toolbar -->
@@ -25,7 +25,7 @@
                 android:id="@+id/account_form_back_button"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_back"
-                android:src="@drawable/ic_24_arrow_back_fill0_300"
+                android:src="@drawable/ic_40_arrow_back_fill0_300"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_archive_fill0_300"
+                app:srcCompat="@drawable/ic_40_archive_fill0_300"
                 app:tint="@color/danger" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -56,8 +56,9 @@
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
         android:layout_height="0dp"
-        android:paddingBottom="@dimen/form_padding"
+        android:paddingBottom="@dimen/transaction_form_padding"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/account_form_toolbar">
 
@@ -65,18 +66,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                style="@style/GuidelineStart"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/transaction_form_padding" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                style="@style/GuidelineEnd"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/transaction_form_padding" />
+
             <!-- Nickname Input -->
 
             <EditText
                 android:id="@+id/account_form_nickname"
                 style="@style/InputWithIcon"
-                android:layout_margin="@dimen/form_padding"
+                android:layout_marginTop="@dimen/form_margin"
                 android:hint="@string/hint_account_nickname"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -115,7 +128,7 @@
                 android:id="@+id/account_type_radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/form_inner_space"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@+id/account_form_color"
                 app:layout_constraintTop_toBottomOf="@+id/account_form_color">
@@ -142,7 +155,7 @@
                 android:id="@+id/account_form_cash_icon"
                 style="@style/RadioButtonIcon"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_40_cash_fill0_300"
+                android:src="@drawable/ic_cash_fill0_300_48"
                 app:layout_constraintStart_toStartOf="@+id/account_type_radio_group"
                 app:layout_constraintTop_toTopOf="@+id/account_type_radio_group" />
 
@@ -150,7 +163,7 @@
                 android:id="@+id/account_form_checking_icon"
                 style="@style/RadioButtonIcon"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_40_account_balance_fill0_300"
+                android:src="@drawable/ic_account_balance_fill0_300_48"
                 app:layout_constraintStart_toStartOf="@+id/account_type_radio_group"
                 app:layout_constraintTop_toBottomOf="@+id/account_form_cash_icon" />
 
@@ -158,10 +171,9 @@
                 android:id="@+id/account_form_savings_icon"
                 style="@style/RadioButtonIcon"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_40_savings_fill0_300"
+                android:src="@drawable/ic_savings_fill0_300_48"
                 app:layout_constraintStart_toStartOf="@+id/account_type_radio_group"
                 app:layout_constraintTop_toBottomOf="@+id/account_form_checking_icon" />
-
 
             <!-- Add Button -->
 
@@ -169,9 +181,9 @@
                 android:id="@+id/account_form_save_button"
                 style="@style/ButtonSave"
                 android:layout_width="0dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintEnd_toEndOf="@+id/account_form_nickname"
-                app:layout_constraintStart_toStartOf="@+id/account_form_nickname"
+                android:layout_marginTop="@dimen/form_inner_space"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/account_type_radio_group" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

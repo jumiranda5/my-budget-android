@@ -29,6 +29,8 @@
         <item name="android:textColorSecondary">@color/medium_emphasis_text</item>
     </style>
 
+    <!-- SWITCH BUTTON -->
+
     <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
     </style>
@@ -41,6 +43,8 @@
         <item name="colorPrimaryContainer">@color/switch_track_on</item>
         <item name="colorOutline">@color/switch_track_off</item>
     </style>
+
+    <!-- RADIO BUTTON -->
 
     <style name="Widget.App.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.RadioButton</item>

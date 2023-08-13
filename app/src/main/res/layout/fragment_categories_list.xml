@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/inner_space"
         android:backgroundTint="@color/colorAccent"
-        app:tint="@color/white"
+        app:tint="@color/button_accent_text"
         android:contentDescription="@string/desc_add_category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

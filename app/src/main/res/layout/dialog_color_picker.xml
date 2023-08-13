@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp">
+    android:paddingBottom="24dp">
 
     <ImageView
         android:id="@+id/drag_indicator"
@@ -18,38 +18,40 @@
         android:id="@+id/dialog_color_title"
         style="@style/DialogTitle"
         android:text="@string/hint_color"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toStartOf="@+id/dialog_color_dismiss"
-        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/drag_indicator" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_start" />
 
     <ImageButton
         android:id="@+id/dialog_color_dismiss"
         style="@style/IconButton"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="-11dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_color_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintTop_toTopOf="@+id/dialog_color_title"
-        app:srcCompat="@drawable/ic_24_close_300" />
+        app:srcCompat="@drawable/ic_40_close_300" />
 
     <ImageView
-        android:id="@+id/divisor"
+        android:id="@+id/divider"
         style="@style/DialogDivider"
         android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_color_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_color_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:isScrollContainer="false"
+        android:layout_marginStart="-12dp"
+        android:layout_marginEnd="-12dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/divisor"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:spanCount="6"
         tools:listitem="@layout/item_color" />
 
@@ -58,13 +60,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/inner_space" />
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/inner_space" />
+        app:layout_constraintGuide_end="@dimen/page_padding" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

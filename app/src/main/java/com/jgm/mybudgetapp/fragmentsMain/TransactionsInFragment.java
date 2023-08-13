@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.MainInterface;
@@ -47,12 +48,15 @@ public class TransactionsInFragment extends Fragment {
     // UI
     private FragmentTransactionsBinding binding;
     private TextView mTotal, mDue, mTotalOverline, mPaid;
+    private ImageView mPaidIcon, mDueIcon;
     private RecyclerView mRecyclerView;
 
     private void setBinding() {
         mTotal = binding.transactionsTotal;
         mDue = binding.transactionsDue;
         mPaid = binding.transactionsPaid;
+        mPaidIcon = binding.transactionsPaidIcon;
+        mDueIcon = binding.transactionsDueIcon;
         mTotalOverline = binding.transactionsTitle;
         mRecyclerView = binding.transactionsList;
     }
@@ -125,13 +129,13 @@ public class TransactionsInFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             income = transactionDao.getTransactions(1, month, year);
-            float prevTotal = transactionDao.getAccumulated(month, year);
+            //float prevTotal = transactionDao.getAccumulated(month, year);
 
             handler.post(() -> {
-                if (prevTotal > 0) {
-                    TransactionResponse accumulated = TransactionsUtils.setAccumulated(mContext, prevTotal, month, year);
-                    income.add(0, accumulated);
-                }
+//                if (prevTotal > 0) {
+//                    TransactionResponse accumulated = TransactionsUtils.setAccumulated(mContext, prevTotal, month, year);
+//                    income.add(0, accumulated);
+//                }
                 setIncomeData(month, year);
             });
         });
@@ -149,6 +153,9 @@ public class TransactionsInFragment extends Fragment {
 
         // set textViews
         TransactionsUtils.setTotalsTextViews(mContext, mTotal, mDue, mPaid, total, due, paid);
+
+        // set icons colors
+        TransactionsUtils.setDueAndPaidIconColor(mContext, mPaidIcon, mDueIcon, paid, due);
     }
 
     /* ------------------------------------------------------------------------------
@@ -196,6 +203,7 @@ public class TransactionsInFragment extends Fragment {
 
         // Set total in currency format
         TransactionsUtils.setTotalsTextViews(mContext, mTotal, mDue, mPaid, total, due, paid);
+        TransactionsUtils.setDueAndPaidIconColor(mContext, mPaidIcon, mDueIcon, paid, due);
 
         // init list view
         initRecyclerView(dayGroups);

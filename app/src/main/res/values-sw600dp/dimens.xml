@@ -47,7 +47,7 @@
     <dimen name="bottomBar_height">64dp</dimen>
     <dimen name="bottomBar_icon_size">26dp</dimen>
     <dimen name="bottomBar_icon_padding">12dp</dimen>
-    <dimen name="bottomBar_button_size">52dp</dimen>
+    <dimen name="bottomBar_action_button_size">52dp</dimen>
 
 
     <!-- ==================  TRANSACTIONS  ================== -->

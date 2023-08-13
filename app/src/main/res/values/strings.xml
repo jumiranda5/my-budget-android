@@ -69,6 +69,9 @@
     <string name="label_repeat">Repeat</string>
     <string name="desc_increase">Increase</string>
     <string name="desc_decrease">Decrease</string>
+    <string name="title_transfer">Transfer</string>
+    <string name="title_expense">Expense</string>
+    <string name="title_income">Income</string>
 
     <!-- Home -->
     <string name="msg_pending">You have 0 outstanding payments.</string>
@@ -135,8 +138,6 @@
     <string name="action_delete">Delete</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_confirm">Continue</string>
-    <string name="title_expense">Expense</string>
-    <string name="title_income">Income</string>
     <string name="desc_amount">Amount</string>
     <string name="progress_msg_delete">Deleting item…</string>
     <string name="msg_archive_account">Do you want to permanently archive this account? You will not have access to it anymore, but the items related to it will not be affected.</string>
@@ -146,6 +147,7 @@
     <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
     <string name="msg_item_click">Click on the items to see details.</string>
     <string name="desc_see_more">See more</string>
+    <string name="label_paid_dots">Paid:</string>
 
 
     <!--    &lt;!&ndash; Actions (buttons) &ndash;&gt;-->

@@ -2,21 +2,22 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MyBudgetApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/bg_01dp</item>
-        <item name="colorOnPrimary">@color/bg_01dp</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/high_emphasis_text</item>
+        <item name="colorOnPrimary">@color/medium_emphasis_text</item>
+        <item name="colorSecondary">@color/medium_emphasis_text</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:spotShadowAlpha">0.09</item>
         <item name="android:ambientShadowAlpha">0.09</item>
         <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/bg_01dp</item>
+        <item name="android:statusBarColor">@color/bg_status_bar</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Bottom bar indicator -->
         <item name="colorSecondaryContainer">@color/bg_04dp</item>
         <!-- Custom material 3 -->
         <item name="materialSwitchStyle">@style/Widget.App.Switch</item>
         <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
     </style>
 
     <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
@@ -30,6 +31,13 @@
         <!-- Track -->
         <item name="colorPrimaryContainer">@color/switch_track_on</item>
         <item name="colorOutline">@color/switch_track_off</item>
+    </style>
+
+    <!-- Date Picker -->
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorOnPrimary">#11553C</item>
+        <item name="colorOnSurface">@color/high_emphasis_text</item>
     </style>
 
 </resources>

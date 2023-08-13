@@ -17,12 +17,9 @@
 
     <TextView
         android:id="@+id/item_home_cat_text"
-        style="@style/MyBody2"
-        android:layout_width="0dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        style="@style/HomeAccounts"
         android:textColor="@color/medium_emphasis_text"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="14dp"
         android:paddingBottom="1dp"
         android:text="@string/category_default"
         app:layout_constraintBottom_toBottomOf="parent"

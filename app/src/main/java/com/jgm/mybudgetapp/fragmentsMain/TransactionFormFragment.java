@@ -52,6 +52,8 @@ import java.util.Objects;
 
 public class TransactionFormFragment extends Fragment {
 
+    // Todo: fix visibilities when returning from transfer
+
     public TransactionFormFragment() {
         // Required empty public constructor
     }
@@ -89,7 +91,7 @@ public class TransactionFormFragment extends Fragment {
     private ToggleButton mToggleExpense, mToggleIncome, mToggleTransfer;
     private Group mTransferGroup, mMainGroup;
     private ConstraintLayout mCreditCardMonthContainer;
-    private TextView mFormattedPrice, mRepeatLabel;
+    private TextView mFormattedPrice, mRepeatLabel, mToolbarTitle;
     private EditText mAmountInput, mRepeatInput;
     private MaterialSwitch mSwitchPaid, mSwitchEditAll;
     private RadioButton mMonth1, mMonth2;
@@ -97,9 +99,10 @@ public class TransactionFormFragment extends Fragment {
     private ProgressBar mProgressBar;
 
     private void setBinding() {
-        mClose = binding.addCloseButton;
-        mMainGroup = binding.transactionsGroupMain;
-        mTransferGroup = binding.transactionsGroupTransfer;
+        mToolbarTitle = binding.formToolbarTitle;
+        mClose = binding.formButtonBack;
+        mMainGroup = binding.formGroupMain;
+        mTransferGroup = binding.formGroupTransfer;
         mToggleExpense = binding.toggleExpense;
         mToggleIncome = binding.toggleIncome;
         mToggleTransfer = binding.toggleTransfer;
@@ -353,9 +356,12 @@ public class TransactionFormFragment extends Fragment {
         setAdvancedOptionsVisibility(true);
         setMainGroup(R.drawable.button_save_expense);
         changeColorOnTypeSwitch(R.color.expense);
+        changeTitleOnTypeSwitch(Tags.expense);
 
         if (paymentMethod != null && paymentMethod.getType() == 3)
             mCreditCardMonthContainer.setVisibility(View.VISIBLE);
+
+        mSave.setEnabled(true);
     }
 
     private void showIncomeForm() {
@@ -364,11 +370,14 @@ public class TransactionFormFragment extends Fragment {
         formType = Tags.income;
         transaction.setType(Tags.TYPE_IN);
         setAdvancedOptionsVisibility(true);
-        setMainGroup(R.drawable.button_save);
+        setMainGroup(R.drawable.button_save_income);
         changeColorOnTypeSwitch(R.color.income);
+        changeTitleOnTypeSwitch(Tags.income);
 
         if (paymentMethod != null && paymentMethod.getType() == 3)
             mCreditCardMonthContainer.setVisibility(View.VISIBLE);
+
+        mSave.setEnabled(true);
     }
 
     private void showTransferForm() {
@@ -380,7 +389,10 @@ public class TransactionFormFragment extends Fragment {
         mMainGroup.setVisibility(View.GONE);
         mCreditCardMonthContainer.setVisibility(View.GONE);
         setAdvancedOptionsVisibility(false);
+
         changeColorOnTypeSwitch(R.color.savings);
+        changeTitleOnTypeSwitch(Tags.transfer);
+
         mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_transfer));
         mSave.setEnabled(false);
     }
@@ -405,12 +417,26 @@ public class TransactionFormFragment extends Fragment {
     }
 
     private void changeColorOnTypeSwitch(int colorId) {
-        mDescIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-        mAmountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-        mCalendarIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
+//        mDescIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
+//        mAmountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
+//        mCalendarIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
         mFormattedPrice.setTextColor(ContextCompat.getColor(mContext, colorId));
-        if (!hasChosenCategory) mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-        if (!hasChosenMethod) mMethodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
+//        if (!hasChosenCategory) mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
+//        if (!hasChosenMethod) mMethodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
+    }
+
+    private void changeTitleOnTypeSwitch(String type) {
+        switch (type) {
+            case Tags.expense:
+                mToolbarTitle.setText(mContext.getString(R.string.title_expense));
+                break;
+            case Tags.income:
+                mToolbarTitle.setText(mContext.getString(R.string.title_income));
+                break;
+            case Tags.transfer:
+                mToolbarTitle.setText(mContext.getString(R.string.title_transfer));
+                break;
+        }
     }
 
 
@@ -518,6 +544,7 @@ public class TransactionFormFragment extends Fragment {
         if (isEdit && transaction.getRepeat() > 1 && isEditAll) dateField = setDateTextForAllParcels();
         if (isEdit && transaction.getRepeat() > 1 && !isEditAll) setDateTextForSingleParcel();
         mDatePicker.setText(dateField);
+        mDatePicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
 
         selectedDate = new MyDate(day, month, year);
         updateIsPaidAccordingToDate();
@@ -550,6 +577,7 @@ public class TransactionFormFragment extends Fragment {
         Color color = ColorUtils.getColor(category.getColorId());
         transaction.setCategoryId(category.getId());
         mCategoryPicker.setText(category.getName());
+        mCategoryPicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
         mCategoryIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
         mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
         hasChosenCategory = true;
@@ -608,6 +636,7 @@ public class TransactionFormFragment extends Fragment {
         }
 
         mMethodPicker.setText(name);
+        mMethodPicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
         mMethodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
         mMethodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
         hasChosenMethod = true;

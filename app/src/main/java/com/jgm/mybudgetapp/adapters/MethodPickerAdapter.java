@@ -19,6 +19,7 @@ import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.IconOutlineUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 
 import java.util.List;
@@ -66,11 +67,11 @@ public class MethodPickerAdapter extends RecyclerView.Adapter<MethodPickerAdapte
 
         // Set icon to credit card if type = 3
         if (method.getType() == 3) {
-            icon = IconUtils.getIcon(70);
+            icon = IconOutlineUtils.getIcon(70);
             info = methodType + " - billing day: " + method.getBillingDay();
         }
         else {
-            icon = IconUtils.getIcon(method.getIconId());
+            icon = IconOutlineUtils.getIcon(method.getIconId());
             info = methodType;
         }
 

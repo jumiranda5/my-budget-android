@@ -30,6 +30,8 @@ import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ListViewHolder> {
 
+    // todo: fix toggle pending
+
     private final Context mContext;
     private final List<TransactionResponse> mDataList;
     private final LayoutInflater layoutInflater;
@@ -149,9 +151,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.mPaid.setVisibility(View.GONE);
             holder.mCardIcon.setVisibility(View.VISIBLE);
             holder.mIcon.setVisibility(View.VISIBLE);
-            holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
-            holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
-            holder.mName.setTextColor(ContextCompat.getColor(mContext, R.color.medium_emphasis_text));
+            holder.mName.setTextAppearance(R.style.CreditCardItem);
+            holder.mTotal.setTextAppearance(R.style.CreditCardItemCurrencySpace);
+            holder.mCurrencySymbol.setTextAppearance(R.style.CreditCardItemCurrency);
         }
 
         if (isCardTotal) {

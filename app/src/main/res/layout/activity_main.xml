@@ -24,9 +24,6 @@
             <TextView
                 android:id="@+id/toolbar_month"
                 style="@style/ToolbarMonth"
-                android:layout_width="@dimen/toolbar_month_width"
-                android:text="@string/initial_month"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,16 +34,14 @@
                 style="@style/MySubtitle2"
                 android:layout_marginStart="16dp"
                 android:text="@string/initial_year"
-                android:textColor="@color/high_emphasis_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/toolbar_prev_month_button"
-                style="@style/IconButton"
+                style="@style/ToolbarNextPrevButton"
                 android:contentDescription="@string/action_prev_month"
-                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/toolbar_month"
                 app:layout_constraintTop_toTopOf="parent"
@@ -54,9 +49,8 @@
 
             <ImageButton
                 android:id="@+id/toolbar_next_month_button"
-                style="@style/IconButton"
+                style="@style/ToolbarNextPrevButton"
                 android:contentDescription="@string/action_next_month"
-                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/toolbar_month"
                 app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +63,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_settings_fill0_300" />
+                app:srcCompat="@drawable/ic_40_settings_fill1_300" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -120,16 +114,13 @@
 
             <ImageButton
                 android:id="@+id/button_add"
-                style="@style/ToolbarButtonWithBg"
+                style="@style/BottomBarActionButton"
                 android:background="@drawable/button_toolbar_add_expense_inset"
                 android:contentDescription="@string/nav_add"
-                android:elevation="4dp"
-                android:scaleType="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_add_300" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_00dp"
+    android:background="@color/bg_form"
     tools:context=".fragmentsSettings.CreditCardFormFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -23,7 +23,7 @@
                 android:id="@+id/card_form_back_button"
                 style="@style/ToolbarButton"
                 android:contentDescription="@string/nav_back"
-                android:src="@drawable/ic_24_arrow_back_fill0_300"
+                android:src="@drawable/ic_40_arrow_back_fill0_300"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_24_archive_fill0_300"
+                app:srcCompat="@drawable/ic_40_archive_fill0_300"
                 app:tint="@color/danger" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -63,17 +63,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                style="@style/GuidelineStart"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/transaction_form_padding" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                style="@style/GuidelineEnd"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/transaction_form_padding" />
+
             <!-- Nickname Input -->
             <EditText
                 android:id="@+id/card_form_nickname"
                 style="@style/InputWithIcon"
-                android:layout_margin="@dimen/form_padding"
+                android:layout_marginTop="@dimen/form_margin"
                 android:hint="@string/hint_card_nickname"
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textCapWords"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -133,6 +145,7 @@
                 android:id="@+id/card_form_save_button"
                 style="@style/ButtonSave"
                 android:layout_width="0dp"
+                android:layout_marginTop="@dimen/form_margin"
                 app:layout_constraintEnd_toEndOf="@+id/card_form_nickname"
                 app:layout_constraintStart_toStartOf="@+id/card_form_nickname"
                 app:layout_constraintTop_toBottomOf="@+id/card_form_day" />

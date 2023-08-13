@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
+import com.jgm.mybudgetapp.utils.IconOutlineUtils;
+import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;
@@ -45,9 +48,13 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
 
         // Data
         TransactionResponse item = mDataList.get(position);
+        Icon icon = IconOutlineUtils.getIcon(item.getIconId());
         boolean isAccumulated = item.getId() == 0;
         boolean isCardItem = item.getCardId() > 0;
         boolean isNotPaid = !item.isPaid();
+
+        // Set icon
+        holder.mIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
 
         // Set description
         String description = item.getDescription();

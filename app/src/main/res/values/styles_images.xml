@@ -13,20 +13,15 @@
 
     <!-- Regular icons -->
 
-    <style name="IconNormal" parent="AppTheme">
-        <item name="android:layout_width">24dp</item>
-        <item name="android:layout_height">24dp</item>
+    <style name="IconNormal" parent="MyImage">
+        <item name="android:layout_width">@dimen/icon_size</item>
+        <item name="android:layout_height">@dimen/icon_size</item>
         <item name="tint">@color/high_emphasis_text</item>
     </style>
 
     <style name="IconSmall" parent="IconNormal">
-        <item name="android:layout_width">20dp</item>
-        <item name="android:layout_height">20dp</item>
-    </style>
-
-    <style name="HomeAccountIcon" parent="IconSmall">
-        <item name="android:layout_marginTop">@dimen/home_accounts_icon_margin</item>
-        <item name="tint">@color/medium_emphasis_text</item>
+        <item name="android:layout_width">@dimen/icon_size_small</item>
+        <item name="android:layout_height">@dimen/icon_size_small</item>
     </style>
 
     <style name="IconImage" parent="MyImage">
@@ -36,13 +31,55 @@
     </style>
 
     <style name="ItemIcon" parent="IconNormal">
-        <item name="android:layout_width">22dp</item>
-        <item name="android:layout_height">22dp</item>
+        <item name="android:layout_width">@dimen/item_icon_size</item>
+        <item name="android:layout_height">@dimen/item_icon_size</item>
     </style>
 
+
+    <!-- ===========================================================================================
+                                            HOME FRAGMENT
+     =========================================================================================== -->
+
     <style name="HomeArrow" parent="IconNormal">
-        <item name="srcCompat">@drawable/ic_24_arrow_forward_300</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="srcCompat">@drawable/ic_40_arrow_forward_fill0_300</item>
     </style>
+
+    <style name="HomeAccountIcon" parent="IconSmall">
+        <item name="android:layout_marginTop">@dimen/home_accounts_icon_margin</item>
+        <item name="tint">@color/medium_emphasis_text</item>
+    </style>
+
+    <!-- ===========================================================================================
+                                            DIVIDERS
+     =========================================================================================== -->
+
+    <style name="MyDivider" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
+    <style name="FormDivider" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">@dimen/form_divider_space</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
+    <style name="DialogDivider" parent="MyDivider">
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginTop">72dp</item>
+        <item name="android:background">@color/divider_darker</item>
+    </style>
+
+    <!-- ===========================================================================================
+
+     =========================================================================================== -->
 
     <!-- Charts -->
 
@@ -74,27 +111,6 @@
         <item name="android:background">@color/divider</item>
     </style>
 
-    <style name="FormDivisor" parent="AppTheme">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginTop">@dimen/form_divisor_space</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:background">@color/divider</item>
-    </style>
-
-    <style name="MyDivider" parent="AppTheme">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/divider</item>
-    </style>
-
-    <style name="DialogDivider" parent="MyDivider">
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginStart">0dp</item>
-        <item name="android:layout_marginEnd">0dp</item>
-    </style>
-
     <style name="PageDivider" parent="MyDivider">
         <item name="android:layout_marginStart">@dimen/page_padding</item>
         <item name="android:layout_marginEnd">@dimen/page_padding</item>
@@ -104,41 +120,10 @@
     <!-- Dialog -->
 
     <style name="DragIndicator" parent="AppTheme">
-        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">3dp</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">6dp</item>
         <item name="android:background">@color/disabled_text</item>
     </style>
-
-<!--    &lt;!&ndash; ==========================================================-->
-<!--                              IMAGES-->
-<!--    ============================================================ &ndash;&gt;-->
-
-<!--    <style name="Icon" parent="AppTheme">-->
-<!--        <item name="android:layout_width">24dp</item>-->
-<!--        <item name="android:layout_height">24dp</item>-->
-<!--        <item name="tint">@color/high_emphasis_text</item>-->
-<!--    </style>-->
-
-<!--    <style name="SmallIcon" parent="AppTheme">-->
-<!--        <item name="android:layout_width">18dp</item>-->
-<!--        <item name="android:layout_height">18dp</item>-->
-<!--    </style>-->
-
-<!--    <style name="IconMedium" parent="AppTheme">-->
-<!--        <item name="android:layout_width">@dimen/icon_medium</item>-->
-<!--        <item name="android:layout_height">@dimen/icon_medium</item>-->
-<!--        <item name="tint">@color/high_emphasis_text</item>-->
-<!--    </style>-->
-
-<!--    <style name="IconMediumSecondary" parent="IconMedium">-->
-<!--        <item name="tint">@color/medium_emphasis_text</item>-->
-<!--    </style>-->
-
-<!--    <style name="IconLarge" parent="AppTheme">-->
-<!--        <item name="android:layout_width">@dimen/icon_large</item>-->
-<!--        <item name="android:layout_height">@dimen/icon_large</item>-->
-<!--        <item name="tint">@color/high_emphasis_text</item>-->
-<!--    </style>-->
 
 </resources>
