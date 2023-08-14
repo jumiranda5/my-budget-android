@@ -185,17 +185,20 @@
     <dimen name="year_divider_margin">24dp</dimen>
 
 
+    <!-- ===========================================================================================
+                                               SETTINGS
+     =========================================================================================== -->
+
+    <dimen name="settings_button_height">56dp</dimen>
+    <dimen name="settings_padding">0dp</dimen>
+    <dimen name="settings_icon_width">48dp</dimen>
+    <dimen name="settings_icon_padding">14dp</dimen>
 
     <!-- =============  FRAGMENTS WITH 1 LIST  ============= -->
 
     <dimen name="list_max_width">580dp</dimen>
     <dimen name="list_padding_top">8dp</dimen>
     <dimen name="list_padding_start">0dp</dimen>
-
-    <!-- ==================  SETTINGS  ================== -->
-
-    <dimen name="settings_padding">0dp</dimen>
-    <dimen name="settings_icon_width">48dp</dimen>
 
 
 

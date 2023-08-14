@@ -280,16 +280,20 @@ public class HomeFragment extends Fragment {
         mIncomeSymbol.setText(formattedIncome[0]);
         mAccumulatedSymbol.setText(formattedAccumulated[0]);
 
-        setIncomeProgress(monthIncome, monthExpenses);
+        setIncomeProgress(monthIncome, monthExpenses, accumulated);
 
     }
 
-    private void setIncomeProgress(float income, float expense) {
+    private void setIncomeProgress(float income, float expense, float accumulated) {
+
+        if (accumulated > 0) income = income + accumulated;
+        else if (accumulated < 0) expense = expense + accumulated;
+
         // Progress
         float percentage = (Math.abs(expense)/Math.abs(income)) * 100;
         if (percentage < 0) percentage = 0;
         if (percentage > 999) percentage = 100;
-        int progress = (int) percentage;
+        int progress = Math.round(percentage);
 
         String progressString = progress + "%";
         mProgress.setText(progressString);

@@ -149,37 +149,26 @@
         <item name="layout_constraintDimensionRatio">1:1</item>
     </style>
 
-    <!-- Forms -->
+    <!-- ===========================================================================================
+                                            FORMS
+    =========================================================================================== -->
 
-
-
-
-    <!-- Checkbox -->
-
-    <!-- Switch buttons -->
-
-
-
-    <!-- Settings -->
-
-    <style name="SettingsButton" parent="TransparentButton">
+    <style name="SettingsButton" parent="MyBody1">
+        <item name="android:stateListAnimator">@null</item>
+        <item name="backgroundTint">@null</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:layout_height">@dimen/settings_button_height</item>
         <item name="layout_constraintWidth_max">460dp</item>
         <item name="android:background">@drawable/bg_list_item</item>
-        <item name="android:textColor">@color/high_emphasis_text</item>
-        <item name="android:fontFamily">@font/barlow_regular</item>
-        <item name="android:textSize">@dimen/body1</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
         <item name="android:layout_marginTop">4dp</item>
     </style>
 
-    <style name="SettingsSwitch" parent="FormSwitchWithIcon">
-        <item name="layout_constraintWidth_max">460dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:paddingStart">@dimen/settings_icon_width</item>
-        <item name="android:fontFamily">@font/titillium_web_regular</item>
+    <style name="SettingsSwitch" parent="SettingsButton">
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="track">@drawable/switch_track</item>
+        <item name="android:paddingEnd">16dp</item>
     </style>
 
 
