@@ -30,8 +30,6 @@ import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ListViewHolder> {
 
-    // todo: fix toggle pending
-
     private final Context mContext;
     private final List<TransactionResponse> mDataList;
     private final LayoutInflater layoutInflater;
@@ -97,7 +95,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Toggle paid
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isPending) {
+            if (isPendingMonth && isPendingDay) {
                 holder.mPaid.setBackground(
                         ContextCompat.getDrawable(mContext, R.drawable.button_toggle_paid_pending));
             }
