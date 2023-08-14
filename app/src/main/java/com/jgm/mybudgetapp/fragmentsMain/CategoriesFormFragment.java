@@ -42,8 +42,6 @@ public class CategoriesFormFragment extends Fragment {
     }
 
     private static final String LOG = "debug-cat-form";
-
-    private boolean isSettings = false;
     private boolean isEdit;
     private int position;
     private Icon selectedIcon;
@@ -66,7 +64,7 @@ public class CategoriesFormFragment extends Fragment {
         icIcon = binding.categoryIcon;
         icColor = binding.categoryColor;
         mSave = binding.buttonSaveCategory;
-        //mClose = binding.catFormToolbarClose;
+        mBack = binding.catFormBackButton;
         mArchive = binding.catFormToolbarArchive;
     }
 
@@ -110,11 +108,12 @@ public class CategoriesFormFragment extends Fragment {
         }
         else {
             mTitle.setText(getString(R.string.title_add_category));
+            mArchive.setVisibility(View.GONE);
             setDefaultOptions();
         }
 
         // Init buttons
-        //mClose.setOnClickListener(v -> navigateBack());
+        mBack.setOnClickListener(v -> navigateBack());
         mColorPicker.setOnClickListener(v -> showColorPicker());
         mIconPicker.setOnClickListener(v -> showIconPicker());
         mSave.setOnClickListener(v -> {
@@ -123,7 +122,6 @@ public class CategoriesFormFragment extends Fragment {
         });
 
         // form is only editable on settings activity
-        // todo: settings interface being called from main activity
         mArchive.setOnClickListener(v -> {
             mSettingsInterface.showConfirmationDialog(
                     getString(R.string.msg_archive_category),
