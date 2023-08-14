@@ -30,7 +30,6 @@ import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
-import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 import com.jgm.mybudgetapp.utils.TransactionsUtils;
 
@@ -146,15 +145,7 @@ public class TransactionsOutFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             expenses = transactionDao.getTransactions(-1, month, year);
-            //float prevTotal = transactionDao.getAccumulated(month, year);
-
-            handler.post(() -> {
-//                if (prevTotal < 0) {
-//                    TransactionResponse accumulated = setAccumulated(prevTotal, month, year);
-//                    expenses.add(0, accumulated);
-//                }
-                setExpensesData(month, year);
-            });
+            handler.post(() -> setExpensesData(month, year));
 
         });
 
@@ -181,19 +172,6 @@ public class TransactionsOutFragment extends Fragment {
     /* ------------------------------------------------------------------------------
                                          SET DATA
     ------------------------------------------------------------------------------- */
-
-    private TransactionResponse setAccumulated(float value, int month, int year) {
-        return new TransactionResponse(0,
-                Tags.TYPE_OUT,
-                getString(R.string.label_accumulated),
-                value,
-                year, month, 1,
-                0, 0, 0, true,
-                1, 1, null,
-                "",
-                23,
-                71);
-    }
 
     private void setExpensesData(int month, int year) {
 

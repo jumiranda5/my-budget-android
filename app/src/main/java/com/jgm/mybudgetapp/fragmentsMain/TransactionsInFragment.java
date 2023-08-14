@@ -129,15 +129,8 @@ public class TransactionsInFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             income = transactionDao.getTransactions(1, month, year);
-            //float prevTotal = transactionDao.getAccumulated(month, year);
+            handler.post(() -> setIncomeData(month, year));
 
-            handler.post(() -> {
-//                if (prevTotal > 0) {
-//                    TransactionResponse accumulated = TransactionsUtils.setAccumulated(mContext, prevTotal, month, year);
-//                    income.add(0, accumulated);
-//                }
-                setIncomeData(month, year);
-            });
         });
     }
 
