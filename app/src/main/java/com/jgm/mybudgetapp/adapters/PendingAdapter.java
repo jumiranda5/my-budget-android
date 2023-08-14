@@ -86,21 +86,18 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (item.getCardId() > 0) {
-                if (isChecked) {
-                    holder.mPaid.setChecked(false); // set to true after method picker
-                    mInterface.showMethodPickerDialog(false, null, position);
-                }
-                else {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    AppDatabase.dbExecutor.execute(() -> {
-                        db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
-                        handler.post(() -> item.setPaid(false));
-                    });
-                }
+                holder.mPaid.setChecked(false); // set to true after method picker
+                mInterface.showMethodPickerDialog(false, null, position);
             }
             else {
+                Handler handler = new Handler(Looper.getMainLooper());
                 AppDatabase.dbExecutor.execute(() -> {
                     db.TransactionDao().updatePaid(item.getId(), isChecked);
+                    handler.post(() -> {
+                        item.setPaid(true);
+                        notifyItemChanged(position);
+                        remove(position);
+                    });
                 });
             }
         });
@@ -129,8 +126,17 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
             handler.post(() -> {
                 item.setPaid(true);
                 notifyItemChanged(position);
+                // time to show the checked button
+                Handler handler2 = new Handler();
+                handler2.postDelayed(() -> remove(position), 150);
             });
         });
+    }
+
+    private void remove(int position) {
+        mDataList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
     }
 
     @Override
