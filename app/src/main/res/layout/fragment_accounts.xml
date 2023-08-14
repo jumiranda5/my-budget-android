@@ -14,7 +14,7 @@
         android:id="@+id/accounts_list"
         style="@style/MainList"
         app:layout_constraintWidth_max="@dimen/list_max_width"
-        android:paddingTop="@dimen/list_padding_top"
+        android:paddingTop="@dimen/accounts_list_padding_top"
         android:paddingBottom="@dimen/item_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

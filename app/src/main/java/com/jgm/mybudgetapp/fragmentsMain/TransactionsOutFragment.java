@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jgm.mybudgetapp.MainInterface;
-import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionsBinding;
 import com.jgm.mybudgetapp.objects.Card;
@@ -37,6 +37,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionsOutFragment extends Fragment {
+
+
+    /*
+        todo: can't delay getExpensesData() to improve transition performance...
+         adapter only loads items after page is scrolled (?????)
+
+        delaying setCreditCardItems(dayGroups) inside setExpensesData() instead;
+     */
 
     public TransactionsOutFragment() {
         // Required empty public constructor
@@ -221,7 +229,11 @@ public class TransactionsOutFragment extends Fragment {
 
         // handle credit card items and init list view
         initRecyclerView(dayGroups);
-        if (hasCreditCard) setCreditCardItems(dayGroups);
+        if (hasCreditCard) {
+            // delay to improve transition performance?
+            new Handler(Looper.getMainLooper()).postDelayed(
+                    () -> setCreditCardItems(dayGroups), 100);
+        }
 
     }
 

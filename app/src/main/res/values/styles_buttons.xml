@@ -69,15 +69,24 @@
                                            BOTTOM BAR
      =========================================================================================== -->
 
-    <style name="BottomBarActionButton" parent="IconButton">
+<!--    <style name="BottomBarActionButton" parent="IconButton">-->
+<!--        <item name="android:layout_width">@dimen/bottomBar_action_button_size</item>-->
+<!--        <item name="android:layout_height">@dimen/bottomBar_action_button_size</item>-->
+<!--        <item name="android:background">@drawable/button_toolbar_accent_inset</item>-->
+<!--        <item name="android:padding">@dimen/bottomBar_action_button_padding</item>-->
+<!--        <item name="android:elevation">4dp</item>-->
+<!--        <item name="srcCompat">@drawable/ic_app_add_500</item>-->
+<!--        <item name="tint">@color/button_accent_text</item>-->
+<!--        <item name="android:scaleType">fitXY</item>&lt;!&ndash; icon size not changing with fitCenter &ndash;&gt;-->
+<!--    </style>-->
+
+    <style name="BottomBarActionButton" parent="AppTheme">
+        <item name="fabCustomSize">@dimen/bottomBar_action_button_size</item>
         <item name="android:layout_width">@dimen/bottomBar_action_button_size</item>
         <item name="android:layout_height">@dimen/bottomBar_action_button_size</item>
-        <item name="android:background">@drawable/button_toolbar_accent_inset</item>
-        <item name="android:padding">@dimen/bottomBar_action_button_padding</item>
-        <item name="android:elevation">4dp</item>
         <item name="srcCompat">@drawable/ic_app_add_500</item>
         <item name="tint">@color/button_accent_text</item>
-        <item name="android:scaleType">fitXY</item><!-- icon size not changing with fitCenter -->
+        <item name="backgroundTint">@color/expense</item>
     </style>
 
     <!-- ===========================================================================================

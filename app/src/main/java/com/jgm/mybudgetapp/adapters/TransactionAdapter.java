@@ -116,7 +116,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                     db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
                     handler.post(() -> {
                         item.setPaid(false);
-                        startToggleAnimation(holder, (isPendingMonth && isPendingDay), false, position);
+                        startToggleAnimation(holder, (isPendingMonth && isPendingDay), false);
                         updateCreditCardItemsNotPaidStatus(item.getCardId());
                         mInterface.updateTotal(item.getAmount(), false);
                     });
@@ -130,7 +130,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                     db.TransactionDao().updatePaid(item.getId(), isChecked);
                     handler.post(() -> {
                         item.setPaid(isChecked);
-                        startToggleAnimation(holder, (isPendingMonth && isPendingDay), isChecked, position);
+                        startToggleAnimation(holder, (isPendingMonth && isPendingDay), isChecked);
                         mInterface.updateTotal(item.getAmount(), isChecked);
                     });
                 });
@@ -179,7 +179,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
-    private void startToggleAnimation(ListViewHolder holder, boolean isPendingButton, boolean checked, int position) {
+    private void startToggleAnimation(ListViewHolder holder, boolean isPendingButton, boolean checked) {
 
         // animate out
         Animator animatorSetOut = AnimatorInflater.loadAnimator(mContext, R.animator.like_button_out);

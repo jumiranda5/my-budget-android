@@ -44,6 +44,8 @@ public class DayGroupAdapter extends RecyclerView.Adapter<DayGroupAdapter.ListVi
 
         DayGroup dayGroup = mDataList.get(position);
 
+        Log.d("debug-day-item", "day item onBindViewHolder");
+
         // Set day title
         int day = dayGroup.getDay();
         int month = dayGroup.getMonth();

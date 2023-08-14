@@ -7,6 +7,7 @@
     android:layout_marginTop="@dimen/toolbar_height"
     android:layout_marginBottom="@dimen/bottomBar_height"
     android:background="@color/bg_00dp"
+    android:id="@+id/transactions_coordinator_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentsMain.TransactionsOutFragment">
 
@@ -130,11 +131,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactions_list"
         style="@style/MainList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:paddingBottom="@dimen/item_height"
         android:overScrollMode="never"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         tools:itemCount="2"
         tools:listitem="@layout/item_transaction_day" />
 

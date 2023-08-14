@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp;
 
+import static com.jgm.mybudgetapp.utils.Tags.LOG_NAV;
 import static com.jgm.mybudgetapp.utils.Tags.accountDetailsTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountsTag;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +25,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +37,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
@@ -98,8 +103,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private ActivityMainBinding binding;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
-    private ImageButton settingsButton, mNextMonth, mPrevMonth, mAdd;
+    private ImageButton settingsButton, mNextMonth, mPrevMonth;
     private TextView mToolbarMonth, mToolbarYear;
+    private FloatingActionButton mAdd;
+    private MotionLayout mMotion;
 
     private void setBinding() {
         toolbar = binding.mainToolbar;
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mNextMonth = binding.toolbarNextMonthButton;
         mPrevMonth = binding.toolbarPrevMonthButton;
         mAdd = binding.buttonAdd;
+        mMotion = binding.mainMotionContainer;
     }
 
     @Override
@@ -164,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         for (int i = 0; i < mFragmentTagList.size(); i++) {
             reReferenceFragment(mFragmentTagList.get(i));
         }
-        updateBottomNav(currentFragment);
+        updateBottomNavOnBackPressed(currentFragment);
         setToolbarVisibilities(currentFragment);
 
         // init fragment data
@@ -292,53 +300,66 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         MenuItem itemExpense = bottomNavigationView.getMenu().getItem(3);
 
         itemHome.setOnMenuItemClickListener(item -> {
-            setAddButton(homeTag);
-            openFragment(homeTag);
+            if (!currentFragment.equals(homeTag)) {
+                mAdd.hide();
+                transitionContentOut();
+                transitionContentIn(homeTag);
+            }
             return false;
         });
 
         itemAccounts.setOnMenuItemClickListener(item -> {
-            setAddButton(accountsTag);
-            openFragment(accountsTag);
+            if (!currentFragment.equals(accountsTag)) {
+                mAdd.hide();
+                transitionContentOut();
+                transitionContentIn(accountsTag);
+            }
             return false;
         });
 
         itemIncome.setOnMenuItemClickListener(item -> {
-            setAddButton(transactionsInTag);
-            openFragment(transactionsInTag);
+            if (!currentFragment.equals(transactionsInTag)) {
+                mAdd.hide();
+                transitionContentOut();
+                transitionContentIn(transactionsInTag);
+            }
             return false;
         });
 
         itemExpense.setOnMenuItemClickListener(item -> {
-            setAddButton(transactionsOutTag);
-            openFragment(transactionsOutTag);
+            if (!currentFragment.equals(transactionsOutTag)) {
+                mAdd.hide();
+                transitionContentOut();
+                transitionContentIn(transactionsOutTag);
+            }
             return false;
         });
 
     }
 
-    private void updateBottomNav(String tag) {
+    private void updateBottomNavOnBackPressed(String tag) {
 
-        Log.d(LOG_MAIN, "=> Update bottom nav");
-
-        showBottomNav();
+        Log.d(LOG_MAIN, "=> Update bottom nav => " + tag);
 
         switch (tag) {
+            case homeTag:
+                Log.d(LOG_MAIN, "set home selected");
+                bottomNavigationView.setSelectedItemId(R.id.menu_home);
+                break;
+            case accountsTag:
+                Log.d(LOG_MAIN, "set accounts selected");
+                bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
+                break;
             case transactionsOutTag:
+                Log.d(LOG_MAIN, "set expenses selected");
                 bottomNavigationView.setSelectedItemId(R.id.menu_expense);
                 break;
             case transactionsInTag:
+                Log.d(LOG_MAIN, "set income selected");
                 bottomNavigationView.setSelectedItemId(R.id.menu_income);
                 break;
-            case accountsTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_accounts);
-                break;
-            case homeTag:
-                bottomNavigationView.setSelectedItemId(R.id.menu_home);
-                break;
-            default:
-                hideBottomNav();
         }
+
     }
 
     private void hideBottomNav() {
@@ -360,15 +381,15 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
         switch (tag) {
             case accountsTag:
-                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_savings_inset));
+                mAdd.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.savings));
                 mAdd.setOnClickListener(v -> openAccountForm(false, null));
                 break;
             case transactionsInTag:
-                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_income_inset));
+                mAdd.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.income));
                 mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_IN, false, null, null));
                 break;
             default:
-                mAdd.setBackground(ContextCompat.getDrawable(this, R.drawable.button_toolbar_add_expense_inset));
+                mAdd.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.expense));
                 mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
         }
 
@@ -376,6 +397,35 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mAdd.setPadding(padding, padding, padding, padding);
     }
 
+
+    /* ===============================================================================
+                              BOTTOM NAV FRAGMENTS TRANSITIONS
+     =============================================================================== */
+
+    private void transitionContentOut() {
+        Log.d(LOG_NAV, "should start transition animation... out");
+        mMotion.setTransition(R.id.transition_content);
+        mMotion.transitionToEnd();
+    }
+
+    private void transitionContentIn(String tag) {
+        // transition in after loading new fragment
+        new Handler(Looper.getMainLooper()).postDelayed(
+                () -> {
+                    Log.d(LOG_NAV, "should start transition animation... in");
+                    mMotion.setProgress(1);
+                    mMotion.setTransition(R.id.transition_content);
+                    openFragment(tag);
+
+                    // Open new fragment after transitioning out
+                    new Handler(Looper.getMainLooper()).postDelayed(
+                            () -> {
+                                setAddButton(tag);
+                                mMotion.transitionToStart();
+                                mAdd.show();
+                            }, 100);
+                }, 150);
+    }
 
     /* ===============================================================================
                                          INTERFACE
@@ -386,8 +436,19 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     @Override
     public void open(String tag) {
         Log.d(LOG_MAIN, "-- Interface => open");
-        if (tag.equals(yearTag)) startActivity(new Intent(MainActivity.this, YearActivity.class));
-        else openFragment(tag);
+        // todo...
+        switch (tag) {
+            case yearTag:
+                startActivity(new Intent(MainActivity.this, YearActivity.class));
+                break;
+//            case accountFormTag: ; break;
+//            case accountDetailsTag: ;break;
+//            case categoriesListTag: ; break;
+//            case categoriesFormTag: ; break;
+//            case transactionFormTag: ; break;
+//            case pendingTag: ; break;
+        }
+
     }
 
     @Override
@@ -662,8 +723,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         if (!currentFragment.equals(tag)) {
             if (tag.equals(homeTag)) resetFragmentStack();
             setFragment(tag);
-            setToolbarVisibilities(tag);
-            updateBottomNav(tag);
         }
     }
 
@@ -853,35 +912,38 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
             mFragmentTagList.remove(topFragmentTag);
 
-            // remove or replace top fragment
-            switch (topFragmentTag) {
-                case categoriesListTag:
-                    destroyFragment(mCategoriesList, categoriesListTag);
-                    break;
-                case categoriesFormTag:
-                    destroyFragment(mCategoriesForm, categoriesFormTag);
-                    break;
-                case accountFormTag:
-                    destroyFragment(mAccountForm, accountFormTag);
-                    break;
-                default:
-                    setFragment(newTopFragmentTag);
-                    break;
-            }
-
-            // show hidden newTopFragment
+            // destroy and show hidden newTopFragment when necessary
             if (topFragmentTag.equals(accountFormTag)
                     || topFragmentTag.equals(categoriesFormTag)
                     || topFragmentTag.equals(categoriesListTag)) {
+
+                // destroy prev fragment
+                switch (topFragmentTag) {
+                    case categoriesListTag:
+                        destroyFragment(mCategoriesList, categoriesListTag);
+                        break;
+                    case categoriesFormTag:
+                        destroyFragment(mCategoriesForm, categoriesFormTag);
+                        break;
+                    case accountFormTag:
+                        destroyFragment(mAccountForm, accountFormTag);
+                        break;
+                }
 
                 Log.d(Tags.LOG_NAV, "show hidden newTopFragment");
                 showHiddenFragment(newTopFragmentTag, topFragmentTag);
 
             }
 
-            // Update toolbar and bottom nav
-            setToolbarVisibilities(newTopFragmentTag);
-            updateBottomNav(newTopFragmentTag);
+            // On main navigation => add transition animation
+            if (newTopFragmentTag.equals(homeTag)
+                    || newTopFragmentTag.equals(accountsTag)
+                    || newTopFragmentTag.equals(transactionsOutTag)
+                    || newTopFragmentTag.equals(transactionsInTag)) {
+
+                updateBottomNavOnBackPressed(newTopFragmentTag);
+
+            }
 
         }
         else if( backStackCount == 1 ){

@@ -68,7 +68,7 @@
     <dimen name="bottomBar_width">0dp</dimen>
     <dimen name="bottomBar_icon_size">24dp</dimen>
     <dimen name="bottomBar_icon_padding">9dp</dimen>
-    <dimen name="bottomBar_action_button_size">50dp</dimen>
+    <dimen name="bottomBar_action_button_size">48dp</dimen>
     <dimen name="bottomBar_action_button_padding">13dp</dimen>
 
 
@@ -109,6 +109,7 @@
                                        ACCOUNTS DETAILS FRAGMENT
      =========================================================================================== -->
 
+    <dimen name="accounts_list_padding_top">16dp</dimen>
     <dimen name="account_details_title_space_top">56dp</dimen>
     <dimen name="account_details_title_space_bottom">48dp</dimen>
     <dimen name="account_details_margin">16dp</dimen>
