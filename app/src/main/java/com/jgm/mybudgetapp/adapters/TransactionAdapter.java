@@ -1,5 +1,7 @@
 package com.jgm.mybudgetapp.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -28,7 +31,7 @@ import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;
 
-public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ListViewHolder> {
+public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ListViewHolder> implements Animation.AnimationListener {
 
     private final Context mContext;
     private final List<TransactionResponse> mDataList;
@@ -53,6 +56,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+
+        holder.setIsRecyclable(false);  // only parent recycler view item (day) is recyclable;
 
         TransactionResponse item = mDataList.get(position);
         Color color = ColorUtils.getColor(item.getColorId());
@@ -95,37 +100,37 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         // Toggle paid
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isPendingMonth && isPendingDay) {
-                holder.mPaid.setBackground(
-                        ContextCompat.getDrawable(mContext, R.drawable.button_toggle_paid_pending));
+
+            // toggle a credit card to paid
+            if (isCardTotal && isChecked) {
+                Log.d("debug-item", "card item check paid");
+                holder.mPaid.setChecked(false); // set to true after method picker
+                mInterface.showMethodPickerDialog(false, item, dayPosition);
             }
 
-            if (isCardTotal) {
-                Log.d("debug-item", "card item on toggle");
-                if (isChecked) {
-                    Log.d("debug-item", "card item on toggle On");
-                    holder.mPaid.setChecked(false); // set to true after method picker
-                    mInterface.showMethodPickerDialog(false, item, dayPosition);
-                }
-                else {
-                    Log.d("debug-item", "card item on toggle Off => cardId = " + item.getCardId());
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    AppDatabase.dbExecutor.execute(() -> {
-                        db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
-                        handler.post(() -> {
-                            item.setPaid(false);
-                            updateCreditCardItemsNotPaidStatus(item.getCardId());
-                            mInterface.updateTotal(item.getAmount(), false);
-                        });
+            // toggle a credit card to not paid
+            else if (isCardTotal) {
+                Log.d("debug-item", "card item on toggle Off => cardId = " + item.getCardId());
+                Handler handler = new Handler(Looper.getMainLooper());
+                AppDatabase.dbExecutor.execute(() -> {
+                    db.TransactionDao().updatePaidCard(item.getCardId(), false, item.getMonth(), item.getYear(), 0);
+                    handler.post(() -> {
+                        item.setPaid(false);
+                        startToggleAnimation(holder, (isPendingMonth && isPendingDay), false, position);
+                        updateCreditCardItemsNotPaidStatus(item.getCardId());
+                        mInterface.updateTotal(item.getAmount(), false);
                     });
-                }
+                });
             }
+
+            // toggle a normal transaction
             else {
                 Handler handler = new Handler(Looper.getMainLooper());
                 AppDatabase.dbExecutor.execute(() -> {
                     db.TransactionDao().updatePaid(item.getId(), isChecked);
                     handler.post(() -> {
                         item.setPaid(isChecked);
+                        startToggleAnimation(holder, (isPendingMonth && isPendingDay), isChecked, position);
                         mInterface.updateTotal(item.getAmount(), isChecked);
                     });
                 });
@@ -174,9 +179,46 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 
+    private void startToggleAnimation(ListViewHolder holder, boolean isPendingButton, boolean checked, int position) {
+
+        // animate out
+        Animator animatorSetOut = AnimatorInflater.loadAnimator(mContext, R.animator.like_button_out);
+        animatorSetOut.setTarget(holder.mPaid);
+        animatorSetOut.start();
+
+        // wait animation, check if pending and notify item changed
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            if (isPendingButton && !checked) holder.mPaid.setBackground(ContextCompat.getDrawable(
+                    mContext, R.drawable.button_toggle_paid_pending));
+        }, 100);
+
+        // animate in
+        Animator animatorSetIn = AnimatorInflater.loadAnimator(mContext, R.animator.like_button_in);
+        animatorSetIn.setTarget(holder.mPaid);
+        animatorSetIn.setStartDelay(150);
+        animatorSetIn.start();
+
+    }
+
     @Override
     public int getItemCount() {
         return mDataList.size();
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 
     public static class ListViewHolder extends RecyclerView.ViewHolder {
