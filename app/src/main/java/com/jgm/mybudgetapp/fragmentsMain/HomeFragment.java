@@ -163,8 +163,8 @@ public class HomeFragment extends Fragment {
         mCardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
         mCardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
         mCardAccounts.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        mCardExpensesCategories.setOnClickListener(v -> mInterface.openExpensesCategories());
-        mCardIncomeCategories.setOnClickListener(v -> mInterface.openIncomeCategories());
+        mCardExpensesCategories.setOnClickListener(v -> mInterface.openCategories(1));
+        mCardIncomeCategories.setOnClickListener(v -> mInterface.openCategories(0));
         mCardYear.setOnClickListener(v -> mInterface.open(Tags.yearTag));
     }
 

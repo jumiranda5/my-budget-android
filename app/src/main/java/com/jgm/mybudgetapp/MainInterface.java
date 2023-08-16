@@ -14,8 +14,7 @@ public interface MainInterface {
     // Navigation
     void open(String tag);
     void openCategoriesList(boolean isEdit);
-    void openExpensesCategories();
-    void openIncomeCategories();
+    void openCategories(int tab);
     void openCategoryForm(boolean isEdit, Category category, int position);
     void openAccountDetails(AccountTotal accountTotal);
     void openAccountForm(boolean isEdit, Account account);
