@@ -11,6 +11,8 @@ import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionsInTag;
 import static com.jgm.mybudgetapp.utils.Tags.transactionsOutTag;
 
+import android.util.Log;
+
 import androidx.constraintlayout.motion.widget.MotionLayout;
 
 import com.jgm.mybudgetapp.R;
@@ -21,35 +23,55 @@ public class MotionUtils {
 
     public static void setTransition(MotionLayout mMotion, String from, String to) {
 
+        Log.w("debug-animation", "transition from: " + from + " => to: " + to);
+
         switch (from) {
             case homeTag:
-                // transition only content
-                // unless next fragment is pending or form => transition bottom nav, toolbar and content
                 if (to.equals(pendingTag)
-                        || to.equals(transactionFormTag))
+                        || to.equals(transactionFormTag)){
                     mMotion.setTransition(R.id.transition_content_and_bars);
-                else mMotion.setTransition(R.id.transition_content);
+                    Log.d("debug-animation", "CONTENT AND BARS");
+                }
+
+                else {
+                    mMotion.setTransition(R.id.transition_content);
+                    Log.d("debug-animation", "CONTENT");
+                }
                 break;
             case accountsTag:
-                // if nextFragment is home, expense or income => transition only content
-                // if nextFragment is accounts details => transition content and bottom bar
-                // if nextFragment is account form => transition content, bottom bar and toolbar
-                if (to.equals(accountDetailsTag)) mMotion.setTransition(R.id.transition_content_and_bottom_bar);
-                else if (to.equals(accountFormTag)) mMotion.setTransition(R.id.transition_content_and_bars);
-                else mMotion.setTransition(R.id.transition_content);
+                if (to.equals(accountDetailsTag)) {
+                    mMotion.setTransition(R.id.transition_content_and_bottom_bar);
+                    Log.d("debug-animation", "CONTENT AND BOTTOM BAR");
+                }
+                else if (to.equals(accountFormTag)) {
+                    mMotion.setTransition(R.id.transition_content_and_bars);
+                    Log.d("debug-animation", "CONTENT AND BARS");
+                }
+                else {
+                    mMotion.setTransition(R.id.transition_content);
+                    Log.d("debug-animation", "CONTENT");
+                }
                 break;
             case accountDetailsTag:
-                // if nextFragment is accounts => transition only content (back press)
-                // if nextFragment is accounts form => transition content and toolbar (bottom bar is already gone)
-                if (to.equals(accountsTag)) mMotion.setTransition(R.id.transition_content_no_bottom_bar);
-                else if (to.equals(accountFormTag)) mMotion.setTransition(R.id.transition_content_and_toolbar_no_bottom_bar);
+                if (to.equals(accountsTag)) {
+                    mMotion.setTransition(R.id.transition_content_no_bottom_bar);
+                    Log.d("debug-animation", "CONTENT NO BOTTOM BAR");
+                }
+                else if (to.equals(accountFormTag)) {
+                    mMotion.setTransition(R.id.transition_content_and_toolbar_no_bottom_bar);
+                    Log.d("debug-animation", "CONTENT AND TOOLBAR NO BOTTOM BAR");
+                }
                 break;
             case transactionsOutTag:
             case transactionsInTag:
-                // if nextFragment is home, account or income => transition only content
-                // if nextFragment is form => transition content, toolbar and bottom bar
-                if (to.equals(transactionFormTag)) mMotion.setTransition(R.id.transition_content_and_bars);
-                else mMotion.setTransition(R.id.transition_content);
+                if (to.equals(transactionFormTag)) {
+                    mMotion.setTransition(R.id.transition_content_and_bars);
+                    Log.d("debug-animation", "CONTENT AND BARS");
+                }
+                else {
+                    mMotion.setTransition(R.id.transition_content);
+                    Log.d("debug-animation", "CONTENT");
+                }
                 break;
             case accountFormTag:
             case transactionFormTag:
@@ -57,8 +79,8 @@ public class MotionUtils {
             case categoriesFormTag:
             case pendingTag:
                 mMotion.setTransition(R.id.transition_content_slide_bottom);
+                Log.d("debug-animation", "SLIDE");
                 break;
         }
-
     }
 }

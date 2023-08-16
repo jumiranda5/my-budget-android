@@ -159,13 +159,13 @@ public class HomeFragment extends Fragment {
      =============================================================================== */
 
     private void initNavigation() {
-        mCardPending.setOnClickListener(v -> mInterface.open(Tags.pendingTag));
-        mCardIncome.setOnClickListener(v -> mInterface.open(Tags.transactionsInTag));
-        mCardExpenses.setOnClickListener(v -> mInterface.open(Tags.transactionsOutTag));
-        mCardAccounts.setOnClickListener(v -> mInterface.open(Tags.accountsTag));
-        mCardExpensesCategories.setOnClickListener(v -> mInterface.openCategories(1));
-        mCardIncomeCategories.setOnClickListener(v -> mInterface.openCategories(0));
-        mCardYear.setOnClickListener(v -> mInterface.open(Tags.yearTag));
+        mCardPending.setOnClickListener(v -> mInterface.openPendingFragment());
+        mCardIncome.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.transactionsInTag));
+        mCardExpenses.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.transactionsOutTag));
+        mCardAccounts.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.accountsTag));
+        mCardExpensesCategories.setOnClickListener(v -> mInterface.openCategoriesActivity(1));
+        mCardIncomeCategories.setOnClickListener(v -> mInterface.openCategoriesActivity(0));
+        mCardYear.setOnClickListener(v -> mInterface.openYearActivity());
     }
 
     /* ===============================================================================

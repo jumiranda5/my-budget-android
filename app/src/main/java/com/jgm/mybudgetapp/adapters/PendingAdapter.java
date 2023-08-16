@@ -105,8 +105,8 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
         // Container click listener
         holder.mContainer.setOnClickListener(v -> {
             mInterface.setSelectedToolbarDate(day, month, year);
-            if (item.getType() == Tags.TYPE_IN) mInterface.open(Tags.transactionsInTag);
-            else mInterface.open(Tags.transactionsOutTag);
+            if (item.getType() == Tags.TYPE_IN) mInterface.openBottomNavFragment(Tags.transactionsInTag);
+            else mInterface.openBottomNavFragment(Tags.transactionsOutTag);
         });
     }
 

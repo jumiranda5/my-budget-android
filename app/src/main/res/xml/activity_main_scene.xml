@@ -11,7 +11,8 @@
         android:id="@+id/transition_content"
         motion:constraintSetEnd="@+id/endContent"
         motion:constraintSetStart="@id/start"
-        motion:duration="100">
+        motion:motionInterpolator="easeInOut"
+        motion:duration="125">
        <KeyFrameSet>
            <KeyAttribute
                motion:framePosition="0"
@@ -22,8 +23,8 @@
            <KeyAttribute
                motion:framePosition="100"
                android:alpha="0"
-               android:scaleX="0.96"
-               android:scaleY="0.96"
+               android:scaleX="0.98"
+               android:scaleY="0.98"
                motion:motionTarget="@+id/main_content_frame" />
        </KeyFrameSet>
     </Transition>
@@ -32,7 +33,8 @@
         android:id="@+id/transition_content_and_bottom_bar"
         motion:constraintSetEnd="@+id/endContentAndBottomBar"
         motion:constraintSetStart="@id/start"
-        motion:duration="100">
+        motion:motionInterpolator="easeInOut"
+        motion:duration="125">
         <KeyFrameSet>
 
             <KeyAttribute
@@ -44,8 +46,8 @@
             <KeyAttribute
                 motion:framePosition="100"
                 android:alpha="0"
-                android:scaleX="0.96"
-                android:scaleY="0.96"
+                android:scaleX="0.98"
+                android:scaleY="0.98"
                 motion:motionTarget="@+id/main_content_frame" />
 
         </KeyFrameSet>
@@ -55,7 +57,8 @@
         android:id="@+id/transition_content_no_bottom_bar"
         motion:constraintSetEnd="@+id/endContentAndBottomBar"
         motion:constraintSetStart="@id/endContentNoBottomBar"
-        motion:duration="100">
+        motion:motionInterpolator="easeInOut"
+        motion:duration="125">
         <KeyFrameSet>
             <KeyAttribute
                 motion:framePosition="0"
@@ -66,8 +69,8 @@
             <KeyAttribute
                 motion:framePosition="100"
                 android:alpha="0"
-                android:scaleX="0.96"
-                android:scaleY="0.96"
+                android:scaleX="0.98"
+                android:scaleY="0.98"
                 motion:motionTarget="@+id/main_content_frame" />
         </KeyFrameSet>
     </Transition>
@@ -76,7 +79,8 @@
         android:id="@+id/transition_content_and_bars"
         motion:constraintSetEnd="@+id/endContentAndBars"
         motion:constraintSetStart="@id/start"
-        motion:duration="100">
+        motion:motionInterpolator="easeInOut"
+        motion:duration="125">
         <KeyFrameSet>
             <KeyAttribute
                 motion:framePosition="0"
@@ -87,8 +91,8 @@
             <KeyAttribute
                 motion:framePosition="100"
                 android:alpha="0"
-                android:scaleX="0.96"
-                android:scaleY="0.96"
+                android:scaleX="0.98"
+                android:scaleY="0.98"
                 motion:motionTarget="@+id/main_content_frame" />
         </KeyFrameSet>
     </Transition>
@@ -97,7 +101,8 @@
         android:id="@+id/transition_content_and_toolbar_no_bottom_bar"
         motion:constraintSetEnd="@+id/endContentAndBars"
         motion:constraintSetStart="@id/endContentNoBottomBar"
-        motion:duration="100">
+        motion:motionInterpolator="easeInOut"
+        motion:duration="125">
         <KeyFrameSet>
 
             <KeyAttribute
@@ -109,8 +114,8 @@
             <KeyAttribute
                 motion:framePosition="100"
                 android:alpha="0"
-                android:scaleX="0.96"
-                android:scaleY="0.96"
+                android:scaleX="0.98"
+                android:scaleY="0.98"
                 motion:motionTarget="@+id/main_content_frame" />
 
         </KeyFrameSet>
@@ -120,7 +125,8 @@
         android:id="@+id/transition_content_slide_bottom"
         motion:constraintSetEnd="@+id/endSlide"
         motion:constraintSetStart="@id/startSlide"
-        motion:duration="100">
+        motion:motionInterpolator="easeInOut"
+        motion:duration="125">
         <KeyFrameSet>
 
             <KeyAttribute
@@ -226,7 +232,7 @@
             <Layout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="-30dp"
+                android:layout_marginTop="-24dp"
                 motion:layout_constraintBottom_toBottomOf="parent"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toStartOf="parent"

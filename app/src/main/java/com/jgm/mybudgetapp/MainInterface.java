@@ -12,13 +12,15 @@ import com.jgm.mybudgetapp.room.entity.Category;
 public interface MainInterface {
 
     // Navigation
-    void open(String tag);
-    void openCategoriesList(boolean isEdit);
-    void openCategories(int tab);
-    void openCategoryForm(boolean isEdit, Category category, int position);
+    void openYearActivity();
+    void openBottomNavFragment(String tag);
+    void openPendingFragment();
     void openAccountDetails(AccountTotal accountTotal);
     void openAccountForm(boolean isEdit, Account account);
     void openTransactionForm(int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
+    void openCategoriesList(boolean isEdit);
+    void openCategoriesActivity(int tab);
+    void openCategoryForm(boolean isEdit, Category category, int position);
     void navigateBack();
 
     // Dialogs
