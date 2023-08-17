@@ -55,6 +55,9 @@
     <string name="label_income_dots">Income:</string>
     <string name="label_expense">Expense</string>
     <string name="label_expense_dots">Expense:</string>
+    <string name="label_date_picker_day">Day:</string>
+    <string name="label_date_picker_first">First:</string>
+    <string name="label_today">Today</string>
 
     <!-- Form -->
     <string name="action_add">Add</string>
@@ -99,7 +102,6 @@
 
     <!-- Transactions -->
     <string name="label_accumulated">Accumulated</string>
-    <string name="label_today">Today</string>
     <string name="action_edit">Edit</string>
     <string name="label_transfer_from">Transfer from</string>
     <string name="label_transfer_to">Transfer to</string>

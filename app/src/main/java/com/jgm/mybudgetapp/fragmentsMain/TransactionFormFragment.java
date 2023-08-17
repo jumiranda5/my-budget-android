@@ -2,14 +2,6 @@ package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
@@ -27,6 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.jgm.mybudgetapp.MainInterface;
@@ -48,15 +47,12 @@ import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
-import java.util.Objects;
-
-public class TransactionFormFragment extends Fragment {
-
-    // Todo: fix visibilities when returning from transfer
+public class TransactionFormFragment extends Fragment  {
 
     public TransactionFormFragment() {
         // Required empty public constructor
     }
+
 
     private static final String LOG = "debug-add";
     private static final int METHOD_PICKER_MAIN = 0;
@@ -64,72 +60,67 @@ public class TransactionFormFragment extends Fragment {
     private static final int METHOD_PICKER_IN = 2;
 
     // VARS
-    private int type = Tags.TYPE_OUT;
-    private boolean isEdit = false;
-    private TransactionResponse edit;
     private Transaction transaction;
-    private String formType;
-    private boolean hasChosenCategory = false;
-    private boolean hasChosenMethod = false;
+    private TransactionResponse edit;
     private int currentMethodPicker = METHOD_PICKER_MAIN;
+    private int type = Tags.TYPE_OUT;
+    private String formType;
+    private AppDatabase db;
+    private boolean isEdit = false;
     private boolean isEditAll = false;
     private MyDate today;
     private MyDate selectedDate;
-    private Category selectedCategory;
-    private Category defaultCategory;
     private MyDate cardBillingDate;
-    private PaymentMethod paymentMethod;
+    private PaymentMethod selectedMethod;
     private PaymentMethod transferAccountIn;
     private PaymentMethod transferAccountOut;
-    private AppDatabase db;
+    private Category selectedCategory;
 
     // UI
     private FragmentTransactionFormBinding binding;
-    private Button mCategoryPicker, mDatePicker, mMethodPicker, mAccountPickerOut, mAccountPickerIn, mSave;
-    private ImageButton mIncreaseRepeat, mDecreaseRepeat, mClose;
-    private ImageView mCategoryIcon, mDescIcon, mCalendarIcon, mMethodIcon, mAmountIcon;
+    private Group mTransferGroup, mIncomeExpenseGroup, mOptionsGroup;
     private ToggleButton mToggleExpense, mToggleIncome, mToggleTransfer;
-    private Group mTransferGroup, mMainGroup;
     private ConstraintLayout mCreditCardMonthContainer;
-    private TextView mFormattedPrice, mRepeatLabel, mToolbarTitle;
-    private EditText mAmountInput, mRepeatInput;
-    private MaterialSwitch mSwitchPaid, mSwitchEditAll;
-    private RadioButton mMonth1, mMonth2;
-    private AutoCompleteTextView mDescription;
     private ProgressBar mProgressBar;
+    private Button mSave, mDatePicker, mCategoryPicker, mMethodPicker, mAccountPickerOut, mAccountPickerIn;
+    private MaterialSwitch mSwitchPaid, mSwitchEditAll;
+    private ImageButton mClose, mIncreaseRepeat, mDecreaseRepeat;
+    private TextView mToolbarTitle, mFormattedPrice, mRepeatLabel;
+    private EditText mAmount, mRepeatInput;
+    private AutoCompleteTextView mDescription;
+    private ImageView mCategoryIcon, mMethodIcon;
+    private RadioButton mMonth1, mMonth2;
 
     private void setBinding() {
-        mToolbarTitle = binding.formToolbarTitle;
-        mClose = binding.formButtonBack;
-        mMainGroup = binding.formGroupMain;
-        mTransferGroup = binding.formGroupTransfer;
+        mTransferGroup = binding.groupOnlyTransfer;
+        mIncomeExpenseGroup = binding.groupSharedIncomeExpense;
+        mOptionsGroup = binding.groupAdvancedOptions;
         mToggleExpense = binding.toggleExpense;
         mToggleIncome = binding.toggleIncome;
         mToggleTransfer = binding.toggleTransfer;
+        mCreditCardMonthContainer = binding.creditCardMonthPicker;
+        mProgressBar = binding.addProgressBar;
+        mSave = binding.saveButton;
+        mSwitchPaid = binding.addSwitchPaid;
+        mSwitchEditAll = binding.addSwitchEditAll;
+        mClose = binding.formButtonBack;
+        mToolbarTitle = binding.formToolbarTitle;
+        mFormattedPrice = binding.addFormattedPrice;
+        mAmount = binding.addAmount;
+        mDescription = binding.addDescription;
         mDatePicker = binding.addDatePicker;
         mCategoryPicker = binding.addCategoryPicker;
+        mCategoryIcon = binding.addIconCategory;
         mMethodPicker = binding.addMethodPicker;
-        mAccountPickerOut = binding.addAccountPickerOut;
-        mAccountPickerIn = binding.addAccountPickerIn;
-        mSave = binding.saveButton;
-        mCreditCardMonthContainer = binding.creditCardMonthPicker;
-        mFormattedPrice = binding.addFormattedPrice;
-        mAmountInput = binding.addAmount;
-        mRepeatInput = binding.addQuantityInput;
-        mSwitchPaid = binding.addSwitchPaid;
+        mMethodIcon = binding.addIconMethod;
         mMonth1 = binding.billingMonth1;
         mMonth2 = binding.billingMonth2;
+        mAccountPickerOut = binding.addAccountPickerOut;
+        mAccountPickerIn = binding.addAccountPickerIn;
+        mRepeatInput = binding.addQuantityInput;
         mIncreaseRepeat = binding.buttonRepeatIncrease;
         mDecreaseRepeat = binding.buttonRepeatDecrease;
-        mDescription = binding.addDescription;
-        mProgressBar = binding.addProgressBar;
         mRepeatLabel = binding.repeatLabel;
-        mSwitchEditAll = binding.addSwitchEditAll;
-        mCategoryIcon = binding.addIconCategory;
-        mDescIcon = binding.addIconDesc;
-        mCalendarIcon = binding.addIconDate;
-        mMethodIcon = binding.addIconMethod;
-        mAmountIcon = binding.addIconAmount;
     }
 
     // Interfaces
@@ -161,173 +152,163 @@ public class TransactionFormFragment extends Fragment {
 
         Log.d(Tags.LOG_LIFECYCLE, "Transactions form onViewCreated");
 
+        // init database
         db = AppDatabase.getDatabase(mContext);
 
-        // uncheck toggle buttons
-        mToggleExpense.setChecked(false);
-        mToggleIncome.setChecked(false);
-        mToggleTransfer.setChecked(false);
-
-        // hide card month container
-        mCreditCardMonthContainer.setVisibility(View.GONE);
-
-        transaction = new Transaction(type, "", 0f, 0, 0, 0,
-                0, 0, 0, false, 1, 1, null);
-
-        if (isEdit) setEditForm();
-        else setDefaults();
-
+        // Init back button
         mClose.setOnClickListener(v -> mInterface.navigateBack());
 
-    }
-
-    private void initForm() {
-        initType(transaction.getType());
-        initAmount(Math.abs(transaction.getAmount()));
-        initDescription(transaction.getDescription());
-        initDate(selectedDate);
-        initCategory(selectedCategory);
+        // init form fields
+        initFormType();
+        initAmount();
+        initDescription();
+        initDate();
+        initCategory();
         initMethod();
         initTransferMethodPicker();
         initSwitchPayed();
-        initRepeat(transaction.getRepeat());
+        initSwitchEditAll();
+        initRepeat();
         initSaveButton();
+
     }
 
-    /* ===============================================================================
-                                       EDIT FORM
-     =============================================================================== */
+    /* ---------------------------------------------------------------------------------------------
+                                            INTERFACE
+     -------------------------------------------------------------------------------------------- */
 
-    public void setFormType(int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
+    // This happens before onCreateView
+    public void setFormType(int type, boolean isEdit, TransactionResponse edit, PaymentMethod paymentMethod) {
         Log.d(LOG, "=> setFormType: isEdit = " + isEdit);
         this.type = type;
         this.isEdit = isEdit;
         if (isEdit) {
-            edit = transaction;
-            this.paymentMethod = paymentMethod;
+            this.edit = edit;
+            setEditValues(edit);
+            selectedMethod = paymentMethod;
+            selectedCategory = new Category(edit.getCategoryName(), edit.getColorId(), edit.getIconId(), true);
+            selectedCategory.setId(edit.getCategoryId());
+        }
+        else setEmptyValues();
+    }
+
+    public void setSelectedDate(long selection) {
+        MyDate date = MyDateUtils.getDateFromMilliseconds(mContext, selection);
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+        String weekday = date.getWeekday();
+        selectedDate = new MyDate(day, month, year);
+
+        setTransactionDate(day, month, year);
+
+        String dateFormatted = MyDateUtils.getFormattedFieldDate(mContext, year, month, day);
+        String dateField = weekday + " - " + dateFormatted;
+
+        if (isEdit && transaction.getRepeat() > 1) {
+            if (isEditAll) {
+                dateField = setDateTextForAllParcels();
+                mDatePicker.setText(dateField);
+            }
+            else setDateTextForSingleParcel();
+        }
+        else mDatePicker.setText(dateField);
+
+        mDatePicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
+
+        Log.d(LOG, "=> setSelectedDate: " + dateField);
+
+        updateIsPaidAccordingToDate();
+
+        if (transaction.getCardId() != 0 && selectedMethod != null) {
+            setBillingMonthOptions(selectedMethod.getBillingDay());
         }
     }
 
-    private void setEditForm() {
+    public void setSelectedCategory(Category category) {
+        Log.d(LOG, "=> Selected category: " + category.getName());
+        Icon icon = IconUtils.getIcon(category.getIconId());
+        Color color = ColorUtils.getColor(category.getColorId());
+        transaction.setCategoryId(category.getId());
+        mCategoryPicker.setText(category.getName());
+        mCategoryPicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
+        mCategoryIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+        mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+    }
 
-        Log.d(LOG, "=> setEditForm");
+    public void setSelectedPaymentMethod(PaymentMethod paymentMethod) {
+        Log.d(LOG, "=> setSelectedPaymentMethod: " + paymentMethod.getName());
 
-        mToggleTransfer.setVisibility(View.GONE);
+        selectedMethod = paymentMethod;
 
-        // Set first parcel date, if parcel
-        int parcel = edit.getRepeatCount();
-        int month;
-        if (parcel > 1) month = (edit.getMonth() - parcel) + 1;
-        else month = edit.getMonth();
-
-        // Set date
-        selectedDate = new MyDate(edit.getDay(), month, edit.getYear());
-        selectedCategory = new Category(edit.getCategoryName(), edit.getColorId(), edit.getIconId(), true);
-        selectedCategory.setId(edit.getCategoryId());
-
-        transaction.setId(edit.getId());
-        transaction.setType(edit.getType());
-        transaction.setAmount(Math.abs(edit.getAmount()));
-        transaction.setDescription(edit.getDescription());
-        transaction.setPaid(edit.isPaid());
-        transaction.setRepeat(edit.getRepeat());
-
-        mAmountInput.setText(String.valueOf(Math.abs(edit.getAmount())));
-        String formattedPrice = NumberUtils.getCurrencyFormat(mContext, Math.abs(edit.getAmount()))[2];
-        mFormattedPrice.setText(formattedPrice);
-
-        initSwitchPayed();
-
-        if (transaction.getRepeat() == 1) initRepeat(transaction.getRepeat());
+        if (paymentMethod.getType() == 3) {
+            transaction.setCardId(paymentMethod.getId());
+            transaction.setAccountId(0);
+            mSwitchPaid.setEnabled(false);
+        }
         else {
-            isEditAll = true;
-            mSwitchPaid.setVisibility(View.GONE);
-            mSwitchEditAll.setVisibility(View.VISIBLE);
-            mSwitchEditAll.setChecked(true);
-            mSwitchEditAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                isEditAll = isChecked;
-                if (isChecked) {
-                    mDatePicker.setText(setDateTextForAllParcels());
-                    showRepeatInput();
-                    mRepeatLabel.setVisibility(View.VISIBLE);
-                    mIncreaseRepeat.setVisibility(View.VISIBLE);
-                }
-                else {
-                    // don't allow repeat count changes
-                    hideRepeatInput();
-                    mRepeatLabel.setVisibility(View.GONE);
-                    mIncreaseRepeat.setVisibility(View.GONE);
-                    transaction.setRepeat(edit.getRepeat());
-                    setDateTextForSingleParcel();
-                }
-            });
+            if (!formType.equals(Tags.transfer)) mSwitchPaid.setVisibility(View.VISIBLE);
+            transaction.setAccountId(paymentMethod.getId());
+            transaction.setCardId(0);
+            mSwitchPaid.setEnabled(true);
         }
 
-        initForm();
-    }
-
-    private void setDateTextForSingleParcel() {
-        String monthName = MyDateUtils.getMonthName(mContext, selectedDate.getMonth(), selectedDate.getYear())[0];
-        String dateField = "Day: " + selectedDate.getDay() + " (" + monthName + ")";
-        mDatePicker.setText(dateField);
-    }
-
-    private String setDateTextForAllParcels() {
-        String formattedDate = MyDateUtils.getFormattedFieldDate(
-                mContext, selectedDate.getDay(), selectedDate.getMonth(), selectedDate.getDay());
-
-        return "First: " + formattedDate;
-    }
-
-    /* ===============================================================================
-                                      DEFAULT VALUES
-     =============================================================================== */
-
-    private void setDefaults() {
-        Log.d(LOG, "=> setDefaults");
-
-        // get default account and category (first on db)
-        Handler handler = new Handler();
-        AppDatabase.dbExecutor.execute(() -> {
-
-            Account account = db.AccountDao().getDefaultPaymentMethod();
-            Category category = db.CategoryDao().getDefaultCategory();
-
-            handler.post(() -> {
-                Log.d(LOG, "default category: " + category.getName());
-                Log.d(LOG, "default method: " + account.getName());
-
-                defaultCategory = category;
-                transaction.setAccountId(account.getId());
-                transaction.setCategoryId(category.getId());
-                paymentMethod = new PaymentMethod(
-                        account.getId(),
-                        account.getType(),
-                        account.getName(),
-                        account.getColorId(),
-                        account.getIconId(),
-                        1);
-
-                initForm();
-            });
-        });
+        switch (currentMethodPicker) {
+            case METHOD_PICKER_MAIN: updateMethod(paymentMethod); break;
+            case METHOD_PICKER_OUT: updateTransferOut(paymentMethod); break;
+            case METHOD_PICKER_IN: updateTransferIn(paymentMethod); break;
+        }
     }
 
 
-    /* ===============================================================================
-                                          TYPE
-     =============================================================================== */
+    /* ---------------------------------------------------------------------------------------------
+                                            INITIAL VALUES
+     -------------------------------------------------------------------------------------------- */
 
-    private void initType(int type) {
-        Log.d(LOG, "=> initType: " + type);
+    private void setEditValues(TransactionResponse edit) {
+        transaction = new Transaction(edit.getType(), edit.getDescription(), edit.getAmount(),
+                edit.getYear(), edit.getMonth(), edit.getDay(),
+                edit.getCategoryId(), edit.getAccountId(), edit.getCardId(), edit.isPaid(),
+                edit.getRepeat(), edit.getRepeatCount(), edit.getRepeatId());
+        transaction.setId(edit.getId());
+    }
 
-        mCreditCardMonthContainer.setVisibility(View.GONE);
+    private void setEmptyValues() {
+        transaction = new Transaction(type, "", 0f, 0, 0, 0,
+                0, 0, 0, false, 1, 1, null);
+    }
+
+
+    /* ---------------------------------------------------------------------------------------------
+                                            FORM TYPE
+     -------------------------------------------------------------------------------------------- */
+
+    private void initFormType() {
+        Log.d(LOG, "=> initFormType: " + type);
+
+        String tag;
+
+        if (type == Tags.TYPE_IN) {
+            showIncomeForm();
+            mToggleIncome.setChecked(true);
+            tag = Tags.income;
+        }
+        else {
+            showExpenseForm();
+            mToggleExpense.setChecked(true);
+            tag = Tags.expense;
+        }
+
+        formType = tag;
+        changeTitleAndColorOnTypeSwitch(tag);
+
+        mOptionsGroup.setVisibility(View.VISIBLE);
+        mSwitchEditAll.setVisibility(View.GONE);
+        if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setVisibility(View.VISIBLE);
+
         setTypeToggleButton(mToggleExpense, Tags.expense);
         setTypeToggleButton(mToggleIncome, Tags.income);
         setTypeToggleButton(mToggleTransfer, Tags.transfer);
-
-        if (type == Tags.TYPE_IN) showIncomeForm();
-        else showExpenseForm();
     }
 
     private void setTypeToggleButton(ToggleButton button, String tag) {
@@ -337,116 +318,85 @@ public class TransactionFormFragment extends Fragment {
             mToggleExpense.setChecked(false);
             mToggleIncome.setChecked(false);
             mToggleTransfer.setChecked(false);
+            button.setChecked(true);
+
+            formType = tag;
+            changeTitleAndColorOnTypeSwitch(tag);
+            mCreditCardMonthContainer.setVisibility(View.GONE);
+            mSave.setEnabled(true);
+
+            mOptionsGroup.setVisibility(View.VISIBLE);
+            if (transaction.getRepeat() == 1) hideRepeatInput();
+            mSwitchEditAll.setVisibility(View.GONE);
+            if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setVisibility(View.VISIBLE);
 
             if (tag.equals(Tags.expense)) showExpenseForm();
             else if (tag.equals(Tags.income)) showIncomeForm();
             else showTransferForm();
-
-            if (paymentMethod != null && paymentMethod.getType() != 3)
-                mCreditCardMonthContainer.setVisibility(View.GONE);
-
         });
     }
 
     private void showExpenseForm() {
         Log.d(LOG, "=> showExpenseForm");
-        mToggleExpense.setChecked(true);
-        formType = Tags.expense;
         transaction.setType(Tags.TYPE_OUT);
-        setAdvancedOptionsVisibility(true);
-        setMainGroup(R.drawable.button_save_expense);
-        changeColorOnTypeSwitch(R.color.expense);
-        changeTitleOnTypeSwitch(Tags.expense);
-
-        if (paymentMethod != null && paymentMethod.getType() == 3)
-            mCreditCardMonthContainer.setVisibility(View.VISIBLE);
-
-        mSave.setEnabled(true);
+        mIncomeExpenseGroup.setVisibility(View.VISIBLE);
+        mTransferGroup.setVisibility(View.GONE);
+        if (selectedMethod != null && selectedMethod.getType() == Tags.METHOD_CARD && selectedDate != null)
+            setBillingMonthOptions(selectedMethod.getBillingDay());
     }
 
     private void showIncomeForm() {
         Log.d(LOG, "=> showIncomeForm");
-        mToggleIncome.setChecked(true);
-        formType = Tags.income;
         transaction.setType(Tags.TYPE_IN);
-        setAdvancedOptionsVisibility(true);
-        setMainGroup(R.drawable.button_save_income);
-        changeColorOnTypeSwitch(R.color.income);
-        changeTitleOnTypeSwitch(Tags.income);
-
-        if (paymentMethod != null && paymentMethod.getType() == 3)
-            mCreditCardMonthContainer.setVisibility(View.VISIBLE);
-
-        mSave.setEnabled(true);
+        mIncomeExpenseGroup.setVisibility(View.VISIBLE);
+        mTransferGroup.setVisibility(View.GONE);
     }
 
     private void showTransferForm() {
         Log.d(LOG, "=> showTransferForm");
-        mToggleTransfer.setChecked(true);
-        formType = Tags.transfer;
         mTransferGroup.setVisibility(View.VISIBLE);
-        mSwitchPaid.setVisibility(View.GONE);
-        mMainGroup.setVisibility(View.GONE);
-        mCreditCardMonthContainer.setVisibility(View.GONE);
-        setAdvancedOptionsVisibility(false);
-
-        changeColorOnTypeSwitch(R.color.savings);
-        changeTitleOnTypeSwitch(Tags.transfer);
-
-        mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_transfer));
+        mIncomeExpenseGroup.setVisibility(View.GONE);
         mSave.setEnabled(false);
+        mOptionsGroup.setVisibility(View.GONE);
     }
 
-    private void setAdvancedOptionsVisibility(boolean isVisible) {
-        if (isVisible) {
-            mIncreaseRepeat.setVisibility(View.VISIBLE);
-            mRepeatLabel.setVisibility(View.VISIBLE);
-        }
-        else {
-            hideRepeatInput();
-            transaction.setRepeat(1);
-            mIncreaseRepeat.setVisibility(View.GONE);
-            mRepeatLabel.setVisibility(View.GONE);
-        }
-    }
-
-    private void setMainGroup(int buttonDrawable) {
-        mTransferGroup.setVisibility(View.GONE);
-        mMainGroup.setVisibility(View.VISIBLE);
-        mSave.setBackground(ContextCompat.getDrawable(mContext, buttonDrawable));
-    }
-
-    private void changeColorOnTypeSwitch(int colorId) {
-//        mDescIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-//        mAmountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-//        mCalendarIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-        mFormattedPrice.setTextColor(ContextCompat.getColor(mContext, colorId));
-//        if (!hasChosenCategory) mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-//        if (!hasChosenMethod) mMethodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, colorId));
-    }
-
-    private void changeTitleOnTypeSwitch(String type) {
+    private void changeTitleAndColorOnTypeSwitch(String type) {
         switch (type) {
             case Tags.expense:
                 mToolbarTitle.setText(mContext.getString(R.string.title_expense));
+                mFormattedPrice.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
+                mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_expense));
                 break;
             case Tags.income:
                 mToolbarTitle.setText(mContext.getString(R.string.title_income));
+                mFormattedPrice.setTextColor(ContextCompat.getColor(mContext, R.color.income));
+                mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_income));
                 break;
             case Tags.transfer:
                 mToolbarTitle.setText(mContext.getString(R.string.title_transfer));
+                mFormattedPrice.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+                mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_transfer));
                 break;
         }
     }
 
 
-    /* ===============================================================================
-                                          AMOUNT
-     =============================================================================== */
+    /* ---------------------------------------------------------------------------------------------
+                                            AMOUNT
+     -------------------------------------------------------------------------------------------- */
 
-    private void initAmount(float amount) {
-        Log.d(LOG, "=> initAmount: " + amount);
-        mAmountInput.addTextChangedListener(priceWatcher);
+    private void initAmount() {
+        Log.d(LOG, "=> initAmount: " + transaction.getAmount());
+        mAmount.addTextChangedListener(priceWatcher);
+
+        float amount = Math.abs(transaction.getAmount());
+        if (amount > 0) mAmount.setText(String.valueOf(amount));
+        setFormattedAmount(transaction.getAmount());
+    }
+
+    private void setFormattedAmount(float amount) {
+        String formattedPrice = NumberUtils.getCurrencyFormat(mContext, Math.abs(amount))[2];
+        mFormattedPrice.setText(formattedPrice);
     }
 
     private final TextWatcher priceWatcher = new TextWatcher() {
@@ -458,25 +408,25 @@ public class TransactionFormFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            String priceString = mAmountInput.getText().toString();
+            String priceString = mAmount.getText().toString();
             if (priceString.length() == 0) priceString = "0";
 
             float typedPrice = Float.parseFloat(priceString);
-            String formattedPrice = NumberUtils.getCurrencyFormat(mContext, typedPrice)[2];
-
-            mFormattedPrice.setText(formattedPrice);
+            setFormattedAmount(typedPrice);
             transaction.setAmount(typedPrice);
         }
     };
 
 
-    /* ===============================================================================
-                                        DESCRIPTION
-     =============================================================================== */
+    /* ---------------------------------------------------------------------------------------------
+                                           DESCRIPTION
+     -------------------------------------------------------------------------------------------- */
 
     // Todo: autocomplete
 
-    private void initDescription(String description) {
+    private void initDescription() {
+        Log.d(LOG, "=> initDescription: " + transaction.getDescription());
+        String description = transaction.getDescription();
         mDescription.addTextChangedListener(descriptionWatcher);
         transaction.setDescription(description);
         mDescription.setText(description);
@@ -497,29 +447,29 @@ public class TransactionFormFragment extends Fragment {
     };
 
 
-    /* ===============================================================================
-                                        DATE PICKER
-     =============================================================================== */
+    /* ---------------------------------------------------------------------------------------------
+                                              DATE
+     -------------------------------------------------------------------------------------------- */
 
-    private void initDate(MyDate date) {
+    private void initDate() {
 
-        today = MyDateUtils.getCurrentDate(mContext);
-        if (date == null) selectedDate = today;
+        initSelectedDate();
 
         int day = selectedDate.getDay();
         int month = selectedDate.getMonth();
         int year = selectedDate.getYear();
-        updateTransactionDate(day, month, year);
-
+        setTransactionDate(day, month, year);
         String formattedDate = MyDateUtils.getFormattedFieldDate(mContext, year, month, day);
 
         Log.d(LOG, "=> initDate: " + formattedDate);
 
+        // Init date picker button
         String btnText;
         if (isEdit) {
             String weekday = MyDateUtils.getDayOfWeek(mContext, day, month, year)[0];
             btnText = weekday + " - " + formattedDate;
             if (transaction.getRepeat() > 1) btnText = setDateTextForAllParcels();
+            mDatePicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
         }
         else btnText = getString(R.string.label_today) + " - " + formattedDate;
 
@@ -527,99 +477,103 @@ public class TransactionFormFragment extends Fragment {
         mDatePicker.setOnClickListener(view -> mInterface.showDatePickerDialog());
     }
 
-    public void setSelectedDate(long selection) {
+    private void initSelectedDate() {
+        today = MyDateUtils.getCurrentDate(mContext);
+        if (isEdit) {
+            // Set date from first parcel, if parcel
+            int parcel = transaction.getRepeatCount();
+            int month;
+            if (parcel > 1) month = (transaction.getMonth() - parcel) + 1;
+            else month = transaction.getMonth();
 
-        MyDate date = MyDateUtils.getDateFromMilliseconds(mContext, selection);
-        int year = date.getYear();
-        int month = date.getMonth();
-        int day = date.getDay();
-        String weekday = date.getWeekday();
-
-        updateTransactionDate(day, month, year);
-
-        Log.d(LOG, "setSelectedDate: " + day + "/" + month + "/" + year);
-
-        String dateFormatted = MyDateUtils.getFormattedFieldDate(mContext, year, month, day);
-        String dateField = weekday + " - " + dateFormatted;
-        if (isEdit && transaction.getRepeat() > 1 && isEditAll) dateField = setDateTextForAllParcels();
-        if (isEdit && transaction.getRepeat() > 1 && !isEditAll) setDateTextForSingleParcel();
-        mDatePicker.setText(dateField);
-        mDatePicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
-
-        selectedDate = new MyDate(day, month, year);
-        updateIsPaidAccordingToDate();
-
-        if (transaction.getCardId() != 0 && paymentMethod != null) {
-            setBillingMonthOptions(paymentMethod.getBillingDay());
+            // Set date
+            selectedDate = new MyDate(transaction.getDay(), month, transaction.getYear());
         }
+        else selectedDate = today;
     }
 
-    private void updateTransactionDate(int day, int month, int year) {
+    private void setTransactionDate(int day, int month, int year) {
         transaction.setDay(day);
         transaction.setMonth(month);
         transaction.setYear(year);
     }
 
+    private void setDateTextForSingleParcel() {
+        String monthName = MyDateUtils.getMonthName(mContext, edit.getMonth(), selectedDate.getYear())[0];
+        String dateField = mContext.getString(R.string.label_date_picker_day) + " " + selectedDate.getDay() + " (" + monthName + ")";
+        mDatePicker.setText(dateField);
 
-    /* ===============================================================================
-                                         CATEGORY
-     =============================================================================== */
+        Log.d(LOG, "---- single parcel date: " + dateField);
+    }
 
-    private void initCategory(Category category) {
+    private String setDateTextForAllParcels() {
+        String formattedDate = MyDateUtils.getFormattedFieldDate(
+                mContext, selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay());
+
+        Log.d(LOG, "---- first parcel date: " + formattedDate);
+
+        return mContext.getString(R.string.label_date_picker_first) + " " + formattedDate;
+    }
+
+
+    /* ---------------------------------------------------------------------------------------------
+                                             CATEGORIES
+     -------------------------------------------------------------------------------------------- */
+
+    private void initCategory() {
         Log.d(LOG, "=> initCategory");
-        if (category != null) setSelectedCategory(category);
+
         mCategoryPicker.setOnClickListener(view -> mInterface.openCategoriesList(false));
+
+        if (!isEdit) {
+            // get default account and category (first on db)
+            Handler handler = new Handler();
+            AppDatabase.dbExecutor.execute(() -> {
+
+                Category category = db.CategoryDao().getDefaultCategory();
+
+                handler.post(() -> {
+                    Log.d(LOG, "default category: " + category.getName());
+                    selectedCategory = category;
+                    transaction.setCategoryId(category.getId());
+                });
+            });
+
+        }
+        else setSelectedCategory(selectedCategory);
     }
 
-    public void setSelectedCategory(Category category) {
-        Log.d(LOG, "Category: " + category.getName());
-        Icon icon = IconUtils.getIcon(category.getIconId());
-        Color color = ColorUtils.getColor(category.getColorId());
-        transaction.setCategoryId(category.getId());
-        mCategoryPicker.setText(category.getName());
-        mCategoryPicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
-        mCategoryIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-        mCategoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
-        hasChosenCategory = true;
-    }
 
-    /* ===============================================================================
-                                         METHOD
-     =============================================================================== */
+    /* ---------------------------------------------------------------------------------------------
+                                            PAYMENT METHOD
+     -------------------------------------------------------------------------------------------- */
 
     private void initMethod() {
-        Log.d(LOG, "=> initMethod: " + paymentMethod.getName());
-        if (isEdit) setSelectedPaymentMethod(paymentMethod);
+        Log.d(LOG, "=> initMethod");
+
         mMethodPicker.setOnClickListener(view -> {
             boolean isExpense = formType.equals(Tags.expense);
             mInterface.showMethodPickerDialog(isExpense, null, 0);
         });
-    }
 
-    public void setSelectedPaymentMethod(PaymentMethod paymentMethod) {
+        if (!isEdit) {
+            // get default account and category (first on db)
+            Handler handler = new Handler();
+            AppDatabase.dbExecutor.execute(() -> {
 
-        Log.d(LOG, "=> setSelectedPaymentMethod: " + paymentMethod.getName());
+                Account account = db.AccountDao().getDefaultPaymentMethod();
 
-        this.paymentMethod = paymentMethod;
+                handler.post(() -> {
+                    Log.d(LOG, "---- default method: " + account.getName());
 
-        if (paymentMethod.getType() == 3) {
-            transaction.setCardId(paymentMethod.getId());
-            transaction.setAccountId(0);
-            mSwitchPaid.setVisibility(View.GONE);
-            if (!isEdit) transaction.setPaid(false);
+                    transaction.setAccountId(account.getId());
+                    selectedMethod = new PaymentMethod(account.getId(), account.getType(),
+                            account.getName(), account.getColorId(), account.getIconId(), 1);
+
+                });
+            });
         }
-        else {
-            if (!formType.equals(Tags.transfer)) mSwitchPaid.setVisibility(View.VISIBLE);
-            transaction.setAccountId(paymentMethod.getId());
-            transaction.setCardId(0);
-        }
-
-        switch (currentMethodPicker) {
-            case METHOD_PICKER_MAIN: updateMethod(paymentMethod); break;
-            case METHOD_PICKER_OUT: updateTransferOut(paymentMethod); break;
-            case METHOD_PICKER_IN: updateTransferIn(paymentMethod); break;
-        }
-
+        else updateMethod(selectedMethod);
     }
 
     private void updateMethod(PaymentMethod paymentMethod) {
@@ -628,21 +582,25 @@ public class TransactionFormFragment extends Fragment {
         String name = paymentMethod.getName();
 
         if (paymentMethod.getType() == 3) {
-            mCreditCardMonthContainer.setVisibility(View.VISIBLE);
             setBillingMonthOptions(paymentMethod.getBillingDay());
+            mSwitchPaid.setChecked(false);
+            mSwitchPaid.setEnabled(false);
         }
         else {
             mCreditCardMonthContainer.setVisibility(View.GONE);
+            mSwitchPaid.setEnabled(true);
         }
 
         mMethodPicker.setText(name);
         mMethodPicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
         mMethodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
         mMethodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
-        hasChosenMethod = true;
     }
 
     private void setBillingMonthOptions(int billingDay) {
+
+        mCreditCardMonthContainer.setVisibility(View.VISIBLE);
+
         int month1;
         int month2;
         int year1;
@@ -663,7 +621,7 @@ public class TransactionFormFragment extends Fragment {
             year2 = nextDate2[1];
         }
 
-        cardBillingDate = new MyDate(paymentMethod.getBillingDay(), month1, year1);
+        cardBillingDate = new MyDate(selectedMethod.getBillingDay(), month1, year1);
 
         mMonth1.setChecked(true);
         mMonth2.setChecked(false);
@@ -677,19 +635,14 @@ public class TransactionFormFragment extends Fragment {
         mMonth1.setOnClickListener(v -> {
             mMonth1.setChecked(true);
             mMonth2.setChecked(false);
-            cardBillingDate = new MyDate(paymentMethod.getBillingDay(), month1, year1);
+            cardBillingDate = new MyDate(selectedMethod.getBillingDay(), month1, year1);
         });
         mMonth2.setOnClickListener(v -> {
             mMonth1.setChecked(false);
             mMonth2.setChecked(true);
-            cardBillingDate = new MyDate(paymentMethod.getBillingDay(), month2, year2);
+            cardBillingDate = new MyDate(selectedMethod.getBillingDay(), month2, year2);
         });
     }
-
-
-    /* ===============================================================================
-                                         TRANSFER
-     =============================================================================== */
 
     private void initTransferMethodPicker() {
         mAccountPickerOut.setOnClickListener(view -> {
@@ -714,9 +667,47 @@ public class TransactionFormFragment extends Fragment {
         if (transferAccountOut != null) mSave.setEnabled(true);
     }
 
-    /* ===============================================================================
-                                        SWITCH PAYED
-     =============================================================================== */
+
+    /* ---------------------------------------------------------------------------------------------
+                                           SWITCH EDIT ALL
+     -------------------------------------------------------------------------------------------- */
+
+    private void initSwitchEditAll() {
+        if (isEdit) {
+            if (transaction.getRepeat() == 1) {
+                mSwitchEditAll.setVisibility(View.GONE);
+                if (selectedMethod.getType() != Tags.METHOD_CARD) mSwitchPaid.setEnabled(true);
+            }
+            else {
+                isEditAll = true;
+                mSwitchPaid.setEnabled(false);
+                mSwitchEditAll.setVisibility(View.VISIBLE);
+                mSwitchEditAll.setChecked(true);
+                mSwitchEditAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    isEditAll = isChecked;
+                    if (isChecked) {
+                        mDatePicker.setText(setDateTextForAllParcels());
+                        setRepeatEnabled();
+                        mSwitchPaid.setEnabled(false);
+                    }
+                    else {
+                        setDateTextForSingleParcel();
+                        // don't allow repeat count changes or paid status changes
+                        setRepeatDisabled();
+                        // allow paid status changes if method is not credit card
+                        if (selectedMethod.getType() != Tags.METHOD_CARD) mSwitchPaid.setEnabled(true);
+                        // initial repeat value
+                        transaction.setRepeat(edit.getRepeat());
+                    }
+                });
+            }
+        }
+    }
+
+
+    /* ---------------------------------------------------------------------------------------------
+                                             SWITCH PAID
+     -------------------------------------------------------------------------------------------- */
 
     private void initSwitchPayed() {
         if (isEdit) mSwitchPaid.setChecked(transaction.isPaid());
@@ -732,9 +723,11 @@ public class TransactionFormFragment extends Fragment {
     }
 
     private void updateIsPaidAccordingToDate() {
-        if (selectedDate.getYear() <= today.getYear() &&
-                selectedDate.getMonth() <= today.getMonth() &&
-                selectedDate.getDay() <= today.getDay()) {
+        boolean isTodayOrBefore = (selectedDate.getYear() <= today.getYear()
+                && selectedDate.getMonth() <= today.getMonth()
+                && selectedDate.getDay() <= today.getDay());
+
+        if (isTodayOrBefore) {
             mSwitchPaid.setChecked(true);
             transaction.setPaid(true);
         }
@@ -744,39 +737,65 @@ public class TransactionFormFragment extends Fragment {
         }
     }
 
-    /* ===============================================================================
-                                           REPEAT
-     =============================================================================== */
 
-    private void initRepeat(int repeat) {
+    /* ---------------------------------------------------------------------------------------------
+                                               REPEAT
+     -------------------------------------------------------------------------------------------- */
+
+    private void initRepeat() {
+        int repeat = transaction.getRepeat();
         Log.d(LOG, "=> initRepeat: " + repeat);
-        setQuantityInputValue(repeat);
+        updateQuantityInputValue(repeat);
         if (repeat < 2) hideRepeatInput();
         mRepeatInput.addTextChangedListener(quantityWatcher);
         mIncreaseRepeat.setOnClickListener(view -> increaseRepeat());
         mDecreaseRepeat.setOnClickListener(view -> decreaseRepeat());
     }
 
+    private void setRepeatDisabled() {
+        hideRepeatInput();
+        mIncreaseRepeat.setEnabled(false);
+        mIncreaseRepeat.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.disabled_text));
+        mRepeatLabel.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
+    }
+
+    private void setRepeatEnabled() {
+        if (transaction.getRepeat() > 1) showRepeatInput();
+        mIncreaseRepeat.setEnabled(false);
+        mIncreaseRepeat.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.high_emphasis_text));
+        mRepeatLabel.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
+    }
+
+    private void updateQuantityInputValue(int repeat) {
+        String sQt = String.valueOf(repeat);
+        mRepeatInput.setText(sQt);
+        transaction.setRepeat(repeat);
+    }
+
+    private void showRepeatInput() {
+        mRepeatInput.setVisibility(View.VISIBLE);
+        mDecreaseRepeat.setVisibility(View.VISIBLE);
+    }
+
+    private void hideRepeatInput() {
+        mRepeatInput.setVisibility(View.GONE);
+        mDecreaseRepeat.setVisibility(View.GONE);
+    }
+
     private void increaseRepeat() {
         int repeat = transaction.getRepeat();
         if (repeat == 1) showRepeatInput();
         repeat++;
-        setQuantityInputValue(repeat);
+        updateQuantityInputValue(repeat);
     }
 
     private void decreaseRepeat() {
         int repeat = transaction.getRepeat();
         if (repeat > 1) {
             repeat--;
-            setQuantityInputValue(repeat);
+            updateQuantityInputValue(repeat);
         }
         if (repeat == 1) hideRepeatInput();
-    }
-
-    private void setQuantityInputValue(int repeat) {
-        String sQt = String.valueOf(repeat);
-        mRepeatInput.setText(sQt);
-        transaction.setRepeat(repeat);
     }
 
     private final TextWatcher quantityWatcher = new TextWatcher() {
@@ -797,52 +816,23 @@ public class TransactionFormFragment extends Fragment {
 
             if (qt > 120) {
                 repeat = 120;
-                setQuantityInputValue(repeat);
+                updateQuantityInputValue(repeat);
             }
             if (qt < 1) {
                 repeat = 1;
-                setQuantityInputValue(repeat);
+                updateQuantityInputValue(repeat);
             }
         }
     };
 
-    private void showRepeatInput() {
-        mRepeatInput.setVisibility(View.VISIBLE);
-        mDecreaseRepeat.setVisibility(View.VISIBLE);
-    }
-
-    private void hideRepeatInput() {
-        mRepeatInput.setVisibility(View.GONE);
-        mDecreaseRepeat.setVisibility(View.GONE);
-    }
-
-    /* ===============================================================================
-                                           SAVE
-     =============================================================================== */
-
-    // todo: refactor...
-
-    private void initSaveButton() {
-
-        if (isEdit) mSave.setText(getString(R.string.action_edit));
-
-        mSave.setOnClickListener(view -> {
-
-            // Disable button
-            mSave.setEnabled(false);
-            mSave.setText("");
-            mProgressBar.setVisibility(View.VISIBLE);
-
-            // transfer
-            if (formType.equals(Tags.transfer)) setTransfer();
-            else setTransaction();
-
-        });
-    }
+    /* ---------------------------------------------------------------------------------------------
+                                                SAVE
+     -------------------------------------------------------------------------------------------- */
 
     private void initSaveButtonProgress() {
         mProgressBar.setVisibility(View.VISIBLE);
         mSave.setText("");
+        mSave.setEnabled(false);
     }
 
     private void endSaveButtonProgress() {
@@ -852,45 +842,39 @@ public class TransactionFormFragment extends Fragment {
         mInterface.navigateBack();
     }
 
-    private void setTransaction() {
+    private void initSaveButton() {
 
+        if (isEdit) mSave.setText(getString(R.string.action_edit));
+
+        mSave.setOnClickListener(view -> {
+            initSaveButtonProgress();
+            if (formType.equals(Tags.transfer)) setTransfer();
+            else setTransaction();
+        });
+    }
+
+    private void setTransaction() {
         // If method is credit card => day is billing day;
-        if (paymentMethod != null && paymentMethod.getType() == 3) {
-            transaction.setDay(paymentMethod.getBillingDay());
+        if (selectedMethod.getType() == 3 && cardBillingDate != null) {
+            transaction.setDay(selectedMethod.getBillingDay());
             transaction.setMonth(cardBillingDate.getMonth());
             transaction.setYear(cardBillingDate.getYear());
-            // keep account id if editing
-            if (isEdit) transaction.setAccountId(edit.getAccountId());
         }
 
         // Set default description if empty
-        int transactionType = transaction.getType();
         if (transaction.getDescription().isEmpty()) {
-            if (transactionType == -1) transaction.setDescription(getString(R.string.action_out));
+            if (transaction.getType() == -1) transaction.setDescription(getString(R.string.action_out));
             else transaction.setDescription(getString(R.string.action_in));
         }
 
         // save negative amount if expense
         float amount = transaction.getAmount();
-        if (transactionType == Tags.TYPE_OUT) amount = amount * -1;
+        if (transaction.getType() == -1) amount = amount * -1;
         transaction.setAmount(amount);
 
-        if (!isEdit) {
-            // Add single transaction | add multiple
-            if (transaction.getRepeat() == 1) saveSingleTransaction();
-            else {
-                long repeatId = System.currentTimeMillis();
-                transaction.setRepeatId(repeatId);
-                saveMultipleTransactions(false);
-            }
-        }
-        else {
-            // get account id if new method id a different card or old method is not card
-            boolean isNewCard = (paymentMethod.getType() == 3 &&
-                    !Objects.equals(edit.getCardId(), transaction.getCardId()));
-
-            // keep repeatId if editing parcels
-            if (edit.getRepeat() > 1) transaction.setRepeatId(edit.getRepeatId());
+        if (isEdit) {
+            // get account id if new method is a different card or old method is not card
+            boolean isNewCard = selectedMethod.getType() == 3 && !edit.getCardId().equals(transaction.getCardId());
 
             boolean isSingleTransaction = (edit.getRepeat() == 1 && transaction.getRepeat() == 1);
             boolean isSingleParcel = (edit.getRepeat() > 1 && !isEditAll);
@@ -902,8 +886,17 @@ public class TransactionFormFragment extends Fragment {
             else if (isMultipleParcels) editAllParcels(isNewCard);
             else if (isAddParcelsToSingle) editSingleAddParcels(isNewCard);
 
-        }
 
+        }
+        else {
+            // Add single transaction | add multiple
+            if (transaction.getRepeat() == 1) saveSingleTransaction();
+            else {
+                long repeatId = System.currentTimeMillis();
+                transaction.setRepeatId(repeatId);
+                saveMultipleTransactions(false);
+            }
+        }
     }
 
     private void saveSingleTransaction() {
@@ -1132,12 +1125,12 @@ public class TransactionFormFragment extends Fragment {
 
         Transaction in = new Transaction(2, descTransferFrom, transaction.getAmount(),
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-                defaultCategory.getId(), transferAccountIn.getId(), null,
+                transaction.getCategoryId(), transferAccountIn.getId(), null,
                 true, 1, null, null);
 
         Transaction out = new Transaction(2, descTransferTo, transaction.getAmount()*-1,
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-                defaultCategory.getId(), transferAccountOut.getId(), null,
+                transaction.getCategoryId(), transferAccountOut.getId(), null,
                 true, 1, null, null);
 
         TransactionDao transactionDao = db.TransactionDao();

@@ -18,7 +18,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="48dp">
 
             <!-- Toolbar -->
 
@@ -47,6 +48,7 @@
                         style="@style/MyHeadline6"
                         android:text="@string/title_expense"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/add_toggle_group"
                         app:layout_constraintStart_toEndOf="@id/form_button_back"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,9 +60,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ToggleButton
                             android:id="@+id/toggle_transfer"
@@ -117,11 +119,24 @@
                 app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method, add_description, add_icon_desc" />
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/form_group_transfer"
+                android:id="@+id/group_shared_income_expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="add_account_picker_out,add_icon_out,add_account_picker_in,add_icon_in" />
+                android:visibility="visible"
+                app:constraint_referenced_ids="add_description,add_icon_desc,add_category_picker,add_icon_category,add_method_picker,add_icon_method" />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_only_transfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="add_account_picker_out,add_account_picker_in,add_icon_out,add_icon_in" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_advanced_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="add_switch_paid,add_quantity_input,button_repeat_increase,button_repeat_decrease,repeat_label,add_switch_edit_all" />
 
             <!-- Amount -->
 
@@ -244,6 +259,7 @@
                 android:layout_marginTop="@dimen/input_margin"
                 android:background="@drawable/bg_transparent_border"
                 android:padding="8dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/add_method_picker"
                 app:layout_constraintStart_toStartOf="@+id/add_method_picker"
                 app:layout_constraintTop_toBottomOf="@+id/add_method_picker">
@@ -251,8 +267,8 @@
                 <TextView
                     android:id="@+id/credit_card_month_picker_label"
                     style="@style/MyBody2"
-                    android:textColor="@color/medium_emphasis_text"
                     android:text="@string/label_billing_month"
+                    android:textColor="@color/medium_emphasis_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -293,8 +309,8 @@
             <ImageView
                 android:id="@+id/add_icon_out"
                 style="@style/InputIcon"
-                android:padding="16dp"
                 android:contentDescription="@null"
+                android:padding="16dp"
                 android:src="@drawable/arrow_north_east_600"
                 app:layout_constraintBottom_toBottomOf="@+id/add_account_picker_out"
                 app:layout_constraintStart_toStartOf="@+id/add_account_picker_out"
@@ -306,7 +322,6 @@
             <Button
                 android:id="@+id/add_account_picker_in"
                 style="@style/ButtonPicker"
-                android:layout_marginTop="12dp"
                 android:text="@string/action_in"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
@@ -315,13 +330,26 @@
             <ImageView
                 android:id="@+id/add_icon_in"
                 style="@style/InputIcon"
-                android:padding="16dp"
                 android:contentDescription="@null"
+                android:padding="16dp"
                 android:src="@drawable/arrow_south_west_600"
                 app:layout_constraintBottom_toBottomOf="@+id/add_account_picker_in"
                 app:layout_constraintStart_toStartOf="@+id/add_account_picker_in"
                 app:layout_constraintTop_toTopOf="@+id/add_account_picker_in"
                 app:tint="@color/income" />
+
+            <!-- Edit All -->
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/add_switch_edit_all"
+                style="@style/FormSwitch"
+                android:layout_marginTop="@dimen/form_divider_space"
+                android:checked="true"
+                android:text="@string/label_edit_all"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/add_account_picker_in" />
 
 
             <!-- Is payed - toggle button -->
@@ -329,26 +357,12 @@
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/add_switch_paid"
                 style="@style/FormSwitch"
-                android:layout_marginTop="@dimen/form_divider_space"
+                android:layout_marginTop="@dimen/input_margin"
                 android:checked="true"
                 android:text="@string/label_paid"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@+id/add_account_picker_in" />
-
-
-            <!-- Edit All -->
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/add_switch_edit_all"
-                style="@style/FormSwitch"
-                android:layout_marginTop="@dimen/input_margin"
-                android:checked="true"
-                android:text="@string/label_edit_all"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@+id/add_switch_paid" />
+                app:layout_constraintTop_toBottomOf="@+id/add_switch_edit_all" />
 
             <!-- Repeat -->
 
@@ -359,13 +373,13 @@
                 android:text="@string/label_repeat"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                app:layout_constraintTop_toBottomOf="@id/add_switch_edit_all" />
+                app:layout_constraintTop_toBottomOf="@id/add_switch_paid" />
 
             <ImageButton
                 android:id="@+id/button_repeat_increase"
                 style="@style/IconButton"
-                android:padding="12dp"
                 android:contentDescription="@string/desc_increase"
+                android:padding="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
                 app:layout_constraintEnd_toEndOf="@id/repeat_label"
                 app:layout_constraintTop_toTopOf="@+id/repeat_label"
@@ -375,7 +389,6 @@
                 android:id="@+id/add_quantity_input"
                 style="@style/InputQuantity"
                 android:importantForAutofill="no"
-                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/repeat_label"
                 app:layout_constraintEnd_toStartOf="@+id/button_repeat_increase"
                 app:layout_constraintTop_toTopOf="@+id/repeat_label" />
@@ -383,10 +396,9 @@
             <ImageButton
                 android:id="@+id/button_repeat_decrease"
                 style="@style/IconButton"
-                android:padding="12dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/desc_decrease"
-                android:visibility="visible"
+                android:padding="12dp"
                 app:layout_constraintBottom_toBottomOf="@id/repeat_label"
                 app:layout_constraintEnd_toStartOf="@+id/add_quantity_input"
                 app:layout_constraintTop_toTopOf="@+id/repeat_label"
@@ -399,8 +411,6 @@
                 style="@style/ButtonSave"
                 android:layout_width="0dp"
                 android:layout_marginTop="48dp"
-                android:layout_marginBottom="48dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/repeat_label" />
