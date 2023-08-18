@@ -42,7 +42,7 @@
      =========================================================================================== -->
 
     <dimen name="transactions_total_margin">72dp</dimen>
-    <dimen name="transactions_info_margin_top">48dp</dimen>
+    <dimen name="transactions_info_margin_top">56dp</dimen>
     <dimen name="transactions_list_margin">40dp</dimen>
 
 

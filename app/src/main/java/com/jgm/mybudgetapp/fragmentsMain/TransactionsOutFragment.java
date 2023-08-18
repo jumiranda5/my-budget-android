@@ -37,14 +37,6 @@ import java.util.List;
 
 public class TransactionsOutFragment extends Fragment {
 
-
-    /*
-        todo: can't delay getExpensesData() to improve transition performance...
-         adapter only loads items after page is scrolled (?????)
-
-        delaying setCreditCardItems(dayGroups) inside setExpensesData() instead;
-     */
-
     public TransactionsOutFragment() {
         // Required empty public constructor
     }
