@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -30,6 +32,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -68,7 +72,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements MainInterface {
+public class MainActivity extends AppCompatActivity implements MainInterface, Animation.AnimationListener {
 
     // Constants
     private static final String LOG_MAIN = "debug-main";
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
     private FloatingActionButton mAdd;
     private MotionLayout mMotion;
     private ConstraintLayout bottomNavContainer;
+    private FrameLayout mContentFrame;
 
     private void setBinding() {
         toolbar = binding.mainToolbar;
@@ -123,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mPrevMonth = binding.toolbarPrevMonthButton;
         mAdd = binding.buttonAdd;
         mMotion = binding.mainMotionContainer;
+        mContentFrame = binding.mainContentFrame;
     }
 
     @Override
@@ -237,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarMonth.setText(nextDate.getMonthName());
         mToolbarYear.setText(String.valueOf(nextDate.getYear()));
         setToolbarMonthStyle();
-        updateMonthOnCurrentFragment();
+        initMonthTransition();
 
         Log.d(LOG_MAIN, "Next month: " + nextDate.getMonthName());
     }
@@ -248,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
         mToolbarMonth.setText(prevDate.getMonthName());
         mToolbarYear.setText(String.valueOf(prevDate.getYear()));
         setToolbarMonthStyle();
-        updateMonthOnCurrentFragment();
+        initMonthTransition();
 
         Log.d(LOG_MAIN, "Previous month: " + prevDate.getMonthName());
     }
@@ -263,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     private void updateMonthOnCurrentFragment() {
         if (mHome != null)
-            mHome.getHomeData(selectedDate.getMonth(), selectedDate.getYear());
+            mHome.initMonthTransition(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsOut != null)
             mTransactionsOut.getExpensesData(selectedDate.getMonth(), selectedDate.getYear());
         else if (mTransactionsIn != null)
@@ -290,6 +296,29 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
             toolbar.setVisibility(View.GONE);
         }
 
+    }
+
+    private void initMonthTransition() {
+        if (currentFragment.equals(homeTag)) updateMonthOnCurrentFragment();
+        else {
+            initFadeOutAnimation();
+            initFadeInAnimation();
+            new Handler(Looper.getMainLooper()).postDelayed(
+                    this::updateMonthOnCurrentFragment, 150);
+        }
+    }
+
+    private void initFadeOutAnimation() {
+        Animator animatorSetOut = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
+        animatorSetOut.setTarget(mContentFrame);
+        animatorSetOut.start();
+    }
+
+    private void initFadeInAnimation() {
+        Animator animatorSetIn = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
+        animatorSetIn.setTarget(mContentFrame);
+        animatorSetIn.setStartDelay(170);
+        animatorSetIn.start();
     }
 
     /* ===============================================================================
@@ -381,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
 
     /* =============================================================================================
-                                             NAVIGATION
+                                         NAVIGATION TRANSITIONS
      ============================================================================================ */
 
     private void initTransitionOut(String nextFragment) {
@@ -1084,4 +1113,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface {
 
     }
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 }

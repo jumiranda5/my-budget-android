@@ -74,7 +74,7 @@ public class AccountsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initRecyclerView();
+        //initRecyclerView();
         MyDate date = mInterface.getDate();
         getAccountsData(date);
         //mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
@@ -125,6 +125,8 @@ public class AccountsFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
 
+            Log.d(LOG, "get data");
+
             Map<Account, String> accountsTotals = mAccountDao.getAccountsWithTotals2(date.getMonth(), date.getYear());
 
             Log.d(LOG, "size: " + accountsTotals.size());
@@ -152,7 +154,8 @@ public class AccountsFragment extends Fragment {
                     accountsList.add(accountTotal);
                 }
 
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
+                initRecyclerView();
 
                 Log.d(LOG, "Done reading all accounts from db: " + accountsTotals.size());
             });

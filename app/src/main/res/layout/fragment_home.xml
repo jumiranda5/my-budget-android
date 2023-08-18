@@ -123,18 +123,17 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_month_container">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <ImageView
                         android:id="@+id/home_accumulated_icon"
                         style="@style/ItemIcon"
                         android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:srcCompat="@drawable/ic_40_autorenew_fill0_300"
-                        app:tint="@color/medium_emphasis_text"/>
+                        app:tint="@color/medium_emphasis_text" />
 
                     <TextView
                         android:id="@+id/home_accumulated_label"
@@ -148,8 +147,8 @@
                     <TextView
                         android:id="@+id/home_accumulated_currency_symbol"
                         style="@style/CurrencySymbolMedium"
-                        android:textSize="@dimen/body1"
                         android:textColor="@color/medium_emphasis_text"
+                        android:textSize="@dimen/body1"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_accumulated"
                         app:layout_constraintEnd_toStartOf="@id/home_accumulated" />
 

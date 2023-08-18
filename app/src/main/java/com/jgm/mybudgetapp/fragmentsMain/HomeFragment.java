@@ -1,5 +1,7 @@
 package com.jgm.mybudgetapp.fragmentsMain;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,7 +48,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements Animation.AnimationListener {
 
     public HomeFragment() {
         // Required empty public constructor
@@ -166,6 +169,27 @@ public class HomeFragment extends Fragment {
         mCardExpensesCategories.setOnClickListener(v -> mInterface.openCategoriesActivity(1));
         mCardIncomeCategories.setOnClickListener(v -> mInterface.openCategoriesActivity(0));
         mCardYear.setOnClickListener(v -> mInterface.openYearActivity());
+    }
+
+    public void initMonthTransition(int month, int year) {
+        initFadeOutAnimation();
+        initFadeInAnimation();
+        new Handler(Looper.getMainLooper()).postDelayed(
+                () -> getHomeData(month, year), 150);
+
+    }
+
+    private void initFadeOutAnimation() {
+        Animator animatorSetOut = AnimatorInflater.loadAnimator(mContext, R.animator.fade_out);
+        animatorSetOut.setTarget(mBalance);
+        animatorSetOut.start();
+    }
+
+    private void initFadeInAnimation() {
+        Animator animatorSetIn = AnimatorInflater.loadAnimator(mContext, R.animator.fade_in);
+        animatorSetIn.setTarget(mBalance);
+        animatorSetIn.setStartDelay(170);
+        animatorSetIn.start();
     }
 
     /* ===============================================================================
@@ -478,4 +502,18 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 }

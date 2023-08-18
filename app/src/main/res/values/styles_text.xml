@@ -156,6 +156,7 @@
     <style name="ToolbarNotCurrentMonth" parent="ToolbarMonth">
         <item name="android:fontFamily">@font/titillium_web_light</item>
         <item name="android:textColor">@color/medium_emphasis_text</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 

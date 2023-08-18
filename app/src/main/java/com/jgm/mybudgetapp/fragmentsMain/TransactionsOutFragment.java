@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,8 +53,10 @@ public class TransactionsOutFragment extends Fragment {
     private TextView mTotal, mDue, mPaid;
     private ImageView mPaidIcon, mDueIcon;
     private RecyclerView mRecyclerView;
+    private NestedScrollView nestedScrollView;
 
     private void setBinding() {
+        nestedScrollView = binding.transactionsNestedScrollView;
         mTotal = binding.transactionsTotal;
         mDue = binding.transactionsDue;
         mPaid = binding.transactionsPaid;
@@ -144,7 +147,10 @@ public class TransactionsOutFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             expenses = transactionDao.getTransactions(-1, month, year);
-            handler.post(() -> setExpensesData(month, year));
+            handler.post(() -> {
+                setExpensesData(month, year);
+                nestedScrollView.scrollTo(0,0);
+            });
 
         });
 

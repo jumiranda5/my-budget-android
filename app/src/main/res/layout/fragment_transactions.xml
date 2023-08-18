@@ -9,6 +9,8 @@
     android:background="@color/bg_form">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/transactions_nested_scroll_view"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
