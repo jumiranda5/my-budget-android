@@ -33,7 +33,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/page_padding" />
 
-    <!-- todo: remove item -->
+    <!-- todo: remove -->
     <ImageView
         android:id="@+id/item_day_calendar"
         style="@style/ItemIcon"

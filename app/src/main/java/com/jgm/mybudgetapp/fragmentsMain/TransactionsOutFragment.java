@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -229,11 +228,7 @@ public class TransactionsOutFragment extends Fragment {
 
         // handle credit card items and init list view
         initRecyclerView(dayGroups);
-        if (hasCreditCard) {
-            // delay to improve transition performance?
-            new Handler(Looper.getMainLooper()).postDelayed(
-                    () -> setCreditCardItems(dayGroups), 100);
-        }
+        if (hasCreditCard) setCreditCardItems(dayGroups);
 
     }
 
