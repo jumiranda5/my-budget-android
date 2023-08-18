@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/form_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="48dp">
@@ -113,10 +114,11 @@
                 app:layout_constraintGuide_end="@dimen/transaction_form_padding" />
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/form_group_main"
+                android:id="@+id/group_transition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="add_category_picker,add_icon_category,add_method_picker,add_icon_method, add_description, add_icon_desc" />
+                app:constraint_referenced_ids="add_formatted_price,add_amount,add_icon_amount,add_description,add_icon_desc,add_date_picker,add_icon_date,add_category_picker,add_icon_category,add_method_picker,add_icon_method,credit_card_month_picker,add_account_picker_out,add_icon_out,add_account_picker_in,add_icon_in,add_switch_edit_all,add_switch_paid,repeat_label,button_repeat_increase,add_quantity_input,button_repeat_decrease,save_button" />
+
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_shared_income_expense"

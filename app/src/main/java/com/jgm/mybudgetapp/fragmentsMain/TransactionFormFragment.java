@@ -1,5 +1,7 @@
 package com.jgm.mybudgetapp.fragmentsMain;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +50,7 @@ import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
-public class TransactionFormFragment extends Fragment  {
+public class TransactionFormFragment extends Fragment implements Animation.AnimationListener {
 
     public TransactionFormFragment() {
         // Required empty public constructor
@@ -320,20 +323,29 @@ public class TransactionFormFragment extends Fragment  {
             mToggleTransfer.setChecked(false);
             button.setChecked(true);
 
-            formType = tag;
-            changeTitleAndColorOnTypeSwitch(tag);
-            mCreditCardMonthContainer.setVisibility(View.GONE);
-            mSave.setEnabled(true);
-
-            mOptionsGroup.setVisibility(View.VISIBLE);
-            if (transaction.getRepeat() == 1) hideRepeatInput();
-            mSwitchEditAll.setVisibility(View.GONE);
-            if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setVisibility(View.VISIBLE);
-
-            if (tag.equals(Tags.expense)) showExpenseForm();
-            else if (tag.equals(Tags.income)) showIncomeForm();
-            else showTransferForm();
+            handleTypeChange(tag);
         });
+    }
+
+    private void handleTypeChange(String tag) {
+        initFadeOutAnimation();
+        initFadeInAnimation();
+        new Handler(Looper.getMainLooper()).postDelayed(
+                () -> {
+                    formType = tag;
+                    changeTitleAndColorOnTypeSwitch(tag);
+                    mCreditCardMonthContainer.setVisibility(View.GONE);
+                    mSave.setEnabled(true);
+
+                    mOptionsGroup.setVisibility(View.VISIBLE);
+                    if (transaction.getRepeat() == 1) hideRepeatInput();
+                    mSwitchEditAll.setVisibility(View.GONE);
+                    if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setVisibility(View.VISIBLE);
+
+                    if (tag.equals(Tags.expense)) showExpenseForm();
+                    else if (tag.equals(Tags.income)) showIncomeForm();
+                    else showTransferForm();
+                }, 150);
     }
 
     private void showExpenseForm() {
@@ -378,6 +390,19 @@ public class TransactionFormFragment extends Fragment  {
                 mSave.setBackground(ContextCompat.getDrawable(mContext, R.drawable.button_save_transfer));
                 break;
         }
+    }
+
+    private void initFadeOutAnimation() {
+        Animator animatorSetOut = AnimatorInflater.loadAnimator(mContext, R.animator.fade_out);
+        animatorSetOut.setTarget(mToolbarTitle);
+        animatorSetOut.start();
+    }
+
+    private void initFadeInAnimation() {
+        Animator animatorSetIn = AnimatorInflater.loadAnimator(mContext, R.animator.fade_in);
+        animatorSetIn.setTarget(mToolbarTitle);
+        animatorSetIn.setStartDelay(170);
+        animatorSetIn.start();
     }
 
 
@@ -1162,4 +1187,18 @@ public class TransactionFormFragment extends Fragment  {
                 "repeat: " + t.getRepeat() + " | " + "repeatCount: " + t.getRepeatCount() + " | " + "repeat id: " + t.getRepeatId());
     }
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 }
