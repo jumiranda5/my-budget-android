@@ -15,7 +15,7 @@ public interface MainInterface {
     void openYearActivity();
     void openBottomNavFragment(String tag);
     void openPendingFragment();
-    void openAccountDetails(AccountTotal accountTotal);
+    void openAccountDetails(int id);
     void openAccountForm(boolean isEdit, Account account);
     void openTransactionForm(int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod);
     void openCategoriesList(boolean isEdit);

@@ -1145,18 +1145,20 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private void setTransfer() {
         // Transfer don't allow credit card => set accountId and selected date
 
+        long repeatId = System.currentTimeMillis();
+
         String descTransferTo = getString(R.string.label_transfer_to) + " " + transferAccountIn.getName();
         String descTransferFrom = getString(R.string.label_transfer_from) + " " + transferAccountOut.getName();
 
         Transaction in = new Transaction(2, descTransferFrom, transaction.getAmount(),
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
                 transaction.getCategoryId(), transferAccountIn.getId(), 0,
-                true, 1, null, null);
+                true, 1, null, repeatId);
 
         Transaction out = new Transaction(2, descTransferTo, transaction.getAmount()*-1,
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
                 transaction.getCategoryId(), transferAccountOut.getId(), 0,
-                true, 1, null, null);
+                true, 1, null, repeatId);
 
         logTransaction(in);
         logTransaction(out);

@@ -1,6 +1,7 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,6 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
         TransactionResponse item = mDataList.get(position);
         Icon icon = IconOutlineUtils.getIcon(item.getIconId());
         boolean isAccumulated = item.getId() == 0;
-        boolean isCardItem = item.getCardId() != null && item.getCardId() > 0;
         boolean isNotPaid = !item.isPaid();
 
         // Set icon
@@ -101,6 +101,13 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
             holder.mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
             holder.mCurrencySymbol.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
         }
+
+        // Open transaction details dialog
+        if (item.getId() > 0)
+            holder.mContainer.setOnClickListener(v -> mInterface.showTransactionDialog(item));
+
+        // set card item not clickable
+        if (item.getCardId() != null && item.getCardId() > 0) holder.mContainer.setClickable(false);
 
     }
 

@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.DayGroupAdapter;
@@ -54,12 +53,13 @@ public class AccountDetailsFragment extends Fragment {
     private static final String STATE_ID = "id";
 
     // Vars
-    private int id;
+    private int id = 0;
     private AccountTotal accountTotal;
     private MyDate date;
     private TransactionDao transactionDao;
     private DayGroupAdapter adapter;
     private final ArrayList<DayGroup> dayGroups = new ArrayList<>();
+    private List<TransactionResponse> transactions;
 
     // UI
     private FragmentAccountDetailsBinding binding;
@@ -117,12 +117,10 @@ public class AccountDetailsFragment extends Fragment {
             id = savedInstanceState.getInt(STATE_ID);
             Log.d(LOG, "savedInstanceState id = " + id);
             date = mInterface.getDate();
-            getAccountById();
         }
-        else {
-            initAccountInfo();
-            getAccountTransactions();
-        }
+
+        if (id == 0) mInterface.navigateBack();
+        else getAccountById();
 
         buttonBack.setOnClickListener(v-> mInterface.navigateBack());
 
@@ -165,9 +163,9 @@ public class AccountDetailsFragment extends Fragment {
                                        INTERFACE
      =============================================================================== */
 
-    public void setAccount(AccountTotal accountTotal, MyDate date) {
+    public void setAccount(int id, MyDate date) {
         Log.d(LOG, "=> setAccount");
-        this.accountTotal = accountTotal;
+        this.id = id;
         this.date = date;
     }
 
@@ -190,6 +188,24 @@ public class AccountDetailsFragment extends Fragment {
         initAccountInfo();
     }
 
+    public void updateOnTransactionDeleted(int id) {
+        TransactionResponse transaction = transactions.stream()
+                .filter(t -> id == t.getId())
+                .findAny()
+                .orElse(null);
+        transactions.remove(transaction);
+
+        if (transaction != null) {
+            setListData(transactions, transaction.getMonth(), transaction.getYear());
+
+            float total = accountTotal.getTotal();
+            total = total - transaction.getAmount();
+            accountTotal.setTotal(total);
+            mTotal.setText(NumberUtils.getCurrencyFormat(mContext, accountTotal.getTotal())[2]);
+            setTotalColor(accountTotal.getTotal());
+        }
+    }
+
     /* ===============================================================================
                                           DATA
      =============================================================================== */
@@ -198,26 +214,6 @@ public class AccountDetailsFragment extends Fragment {
         if (accountTotal.getType() == 2) mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
         else if (value < 0) mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
         else mTotal.setTextColor(ContextCompat.getColor(mContext, R.color.income));
-    }
-
-    private void initAccountInfo() {
-        Log.d(LOG, "=> initAccountInfo");
-
-        // set id
-        id = accountTotal.getId();
-
-        // Account name
-        mAccountName.setText(accountTotal.getName());
-
-        // Account icon
-        Color color = ColorUtils.getColor(accountTotal.getColorId());
-        Icon icon = IconUtils.getIcon(accountTotal.getIconId());
-        mAccountIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-        mAccountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
-
-        // Account total
-        mTotal.setText(NumberUtils.getCurrencyFormat(mContext, accountTotal.getTotal())[2]);
-        setTotalColor(accountTotal.getTotal());
     }
 
     private void getAccountById() {
@@ -245,6 +241,26 @@ public class AccountDetailsFragment extends Fragment {
         });
     }
 
+    private void initAccountInfo() {
+        Log.d(LOG, "=> initAccountInfo");
+
+        // set id
+        id = accountTotal.getId();
+
+        // Account name
+        mAccountName.setText(accountTotal.getName());
+
+        // Account icon
+        Color color = ColorUtils.getColor(accountTotal.getColorId());
+        Icon icon = IconUtils.getIcon(accountTotal.getIconId());
+        mAccountIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+        mAccountIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+
+        // Account total
+        mTotal.setText(NumberUtils.getCurrencyFormat(mContext, accountTotal.getTotal())[2]);
+        setTotalColor(accountTotal.getTotal());
+    }
+
     private void getAccountTotal() {
         Handler handler = new Handler(Looper.getMainLooper());
         AppDatabase.dbExecutor.execute(() -> {
@@ -270,9 +286,7 @@ public class AccountDetailsFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             Log.d(LOG, "account id: " + accountTotal.getId());
-
-            List<TransactionResponse> transactions = transactionDao.getAccountTransactions2(
-                    accountTotal.getId(), date.getMonth(), date.getYear());
+            transactions = transactionDao.getAccountTransactions2(accountTotal.getId(), date.getMonth(), date.getYear());
 
             float prevTotal = transactionDao.getAccountAccumulated(
                     accountTotal.getId(), date.getMonth(), date.getYear());

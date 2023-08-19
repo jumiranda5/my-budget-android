@@ -57,7 +57,6 @@ import com.jgm.mybudgetapp.fragmentsMain.PendingFragment;
 import com.jgm.mybudgetapp.fragmentsMain.TransactionFormFragment;
 import com.jgm.mybudgetapp.fragmentsMain.TransactionsInFragment;
 import com.jgm.mybudgetapp.fragmentsMain.TransactionsOutFragment;
-import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
@@ -105,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     private MyDate selectedDate;
     private MyDate today;
     private TransactionResponse selectedTransaction;
+    private int accountId = 0;
 
     // UI
     private ActivityMainBinding binding;
@@ -514,14 +514,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     }
 
     @Override
-    public void openAccountDetails(AccountTotal accountTotal) {
+    public void openAccountDetails(int id) {
         Log.d(LOG_MAIN, "-- Interface => open account details");
+
+        // if editing an item from accounts details fragment, it's necessary to send the account id
+        // to the fragment on back press.// todo: improve this.
+        accountId = id;
 
         initTransitionOut(accountDetailsTag);
         new Handler(Looper.getMainLooper()).postDelayed(
                 () -> {
                     setTransitionIn(accountDetailsTag, false);
-                    if (mAccountDetails != null) mAccountDetails.setAccount(accountTotal, selectedDate);
+                    if (mAccountDetails != null) mAccountDetails.setAccount(id, selectedDate);
 
                     // Give time to load fragment
                     new Handler(Looper.getMainLooper()).postDelayed(
@@ -657,6 +661,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         Log.d(LOG_MAIN, "-- Interface => handleTransactionDeleted");
         if (mTransactionsOut != null) mTransactionsOut.updateOnTransactionDeleted(id);
         else if (mTransactionsIn != null) mTransactionsIn.updateOnTransactionDeleted(id);
+        else if (mAccountDetails != null) mAccountDetails.updateOnTransactionDeleted(id);
     }
 
     @Override
@@ -1022,6 +1027,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
                                 destroyFragment(mAccountForm, accountFormTag);
                                 bottomNavContainer.setVisibility(View.VISIBLE);
                                 break;
+                            case transactionFormTag:
+                                if (newTopFragmentTag.equals(accountDetailsTag)) {
+                                    openFragment(newTopFragmentTag);
+                                    mAccountDetails.setAccount(accountId, selectedDate);
+                                }
                             default:
                                 openFragment(newTopFragmentTag);
                                 updateBottomNav(newTopFragmentTag);
