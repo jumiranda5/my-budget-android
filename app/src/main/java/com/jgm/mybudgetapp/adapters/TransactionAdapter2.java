@@ -50,7 +50,7 @@ public class TransactionAdapter2 extends RecyclerView.Adapter<TransactionAdapter
         TransactionResponse item = mDataList.get(position);
         Icon icon = IconOutlineUtils.getIcon(item.getIconId());
         boolean isAccumulated = item.getId() == 0;
-        boolean isCardItem = item.getCardId() > 0;
+        boolean isCardItem = item.getCardId() != null && item.getCardId() > 0;
         boolean isNotPaid = !item.isPaid();
 
         // Set icon

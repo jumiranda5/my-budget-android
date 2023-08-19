@@ -121,7 +121,7 @@ public interface TransactionDao {
             "   FROM transactions " +
             "   LEFT JOIN categories ON transactions.categoryId = categories.id " +
             "   WHERE transactions.accountId = :accountId " +
-            "   AND cardId = 0 " +
+            "   AND (cardId = 0 OR cardId IS NULL) " +
             "   AND transactions.year = :year " +
             "   AND transactions.month = :month " +
             "ORDER BY year, month, day")
@@ -151,7 +151,7 @@ public interface TransactionDao {
             "WHERE paid = 0 " +
             "AND cardId > 0 " +
             "AND month <= :month AND year <= :year " +
-            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
+            "AND ((month == :month AND day <= :day) OR (month < :month AND day <= 31)) " +
             "GROUP BY cardId, year, month " +
             "UNION " +
             "SELECT id, type, description, amount AS total, cardId, year, month, day, paid " +
@@ -159,7 +159,7 @@ public interface TransactionDao {
             "WHERE paid = 0 " +
             "AND cardId = 0 " +
             "AND month <= :month AND year <= :year " +
-            "AND ((month == :month AND day <= :day) || (month < :month AND day <= 31)) " +
+            "AND ((month == :month AND day <= :day) OR (month < :month AND day <= 31)) " +
             "ORDER BY year, month, day")
     List<PendingListResponse> getPendingList(int day, int month, int year);
 

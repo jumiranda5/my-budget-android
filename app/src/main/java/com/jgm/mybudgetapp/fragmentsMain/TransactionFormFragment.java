@@ -1150,13 +1150,16 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
 
         Transaction in = new Transaction(2, descTransferFrom, transaction.getAmount(),
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-                transaction.getCategoryId(), transferAccountIn.getId(), null,
+                transaction.getCategoryId(), transferAccountIn.getId(), 0,
                 true, 1, null, null);
 
         Transaction out = new Transaction(2, descTransferTo, transaction.getAmount()*-1,
                 selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay(),
-                transaction.getCategoryId(), transferAccountOut.getId(), null,
+                transaction.getCategoryId(), transferAccountOut.getId(), 0,
                 true, 1, null, null);
+
+        logTransaction(in);
+        logTransaction(out);
 
         TransactionDao transactionDao = db.TransactionDao();
         Handler handler = new Handler(Looper.getMainLooper());
