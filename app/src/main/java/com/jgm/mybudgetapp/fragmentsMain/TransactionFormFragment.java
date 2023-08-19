@@ -291,6 +291,9 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
 
         String tag;
 
+        mToggleExpense.setChecked(false);
+        mToggleIncome.setChecked(false);
+
         if (type == Tags.TYPE_IN) {
             showIncomeForm();
             mToggleIncome.setChecked(true);
