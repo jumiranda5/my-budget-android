@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -65,7 +64,6 @@ import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
-import com.jgm.mybudgetapp.utils.MotionUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
@@ -80,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     private static final String STATE_DAY = "day";
     private static final String STATE_MONTH = "month";
     private static final String STATE_YEAR = "year";
-    private static final int TRANSITION_TIME = 125;
-    private static final int DELAY = 50;
 
     // FRAGMENTS
     private AccountsFragment mAccounts;
@@ -113,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     private ImageButton settingsButton, mNextMonth, mPrevMonth;
     private TextView mToolbarMonth, mToolbarYear;
     private FloatingActionButton mAdd;
-    private MotionLayout mMotion;
     private ConstraintLayout bottomNavContainer;
     private FrameLayout mContentFrame;
 
@@ -127,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         mNextMonth = binding.toolbarNextMonthButton;
         mPrevMonth = binding.toolbarPrevMonthButton;
         mAdd = binding.buttonAdd;
-        mMotion = binding.mainMotionContainer;
         mContentFrame = binding.mainContentFrame;
     }
 
@@ -410,53 +404,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
 
 
     /* =============================================================================================
-                                         NAVIGATION TRANSITIONS
-     ============================================================================================ */
-
-    private void initTransitionOut(String nextFragment) {
-        Log.d("debug-animation", "---- init transition out");
-        mMotion.setTransitionDuration(TRANSITION_TIME);
-        MotionUtils.setTransition(mMotion, currentFragment, nextFragment);
-        mMotion.transitionToEnd();
-
-        boolean isFromMain = (currentFragment.equals(homeTag)
-                || currentFragment.equals(accountsTag)
-                || currentFragment.equals(transactionsOutTag)
-                || currentFragment.equals(transactionsInTag));
-
-        boolean isToMain = (nextFragment.equals(homeTag)
-                || nextFragment.equals(accountsTag)
-                || nextFragment.equals(transactionsOutTag)
-                || nextFragment.equals(transactionsInTag));
-
-        if (isFromMain && isToMain) mAdd.hide();
-
-    }
-
-    private void setTransitionIn(String nextFragment, boolean isBackPress) {
-        Log.d("debug-animation", "---- init transition in");
-        mMotion.setTransitionDuration(TRANSITION_TIME);
-        mMotion.setProgress(1);
-        MotionUtils.setTransition(mMotion, nextFragment, currentFragment);
-
-        setToolbarVisibilities(nextFragment);
-
-        if (nextFragment.equals(accountsTag)
-                || nextFragment.equals(homeTag )
-                || nextFragment.equals(transactionsOutTag)
-                || nextFragment.equals(transactionsInTag)) {
-            setAddButton(nextFragment);
-        }
-
-        // some fragments are destroyed on back press => handle onBackPress
-        if (!isBackPress) {
-            openFragment(nextFragment);
-            updateBottomNav(nextFragment);
-        }
-    }
-
-
-    /* =============================================================================================
                                              INTERFACE
      ============================================================================================ */
 
@@ -482,35 +429,35 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     public void openBottomNavFragment(String tag) {
         Log.d(LOG_MAIN, "-- Interface => open bottom nav fragment: " + tag);
 
-        initTransitionOut(tag);
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> {
-                    setTransitionIn(tag, false);
+        boolean isFromMain = (currentFragment.equals(homeTag)
+            || currentFragment.equals(accountsTag)
+            || currentFragment.equals(transactionsOutTag)
+            || currentFragment.equals(transactionsInTag));
 
-                    // Give time to load fragment
-                    new Handler(Looper.getMainLooper()).postDelayed(
-                            () -> {
-                                mMotion.transitionToStart();
-                                mAdd.show();
-                            }, DELAY);
+        if (isFromMain) {
+            mAdd.hide();
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                setAddButton(tag);
+                openFragment(tag);
+                mAdd.show();
+            }, 150);
+        }
+        else {
+            openFragment(tag);
+            setAddButton(tag);
+            setToolbarVisibilities(tag);
+            bottomNavContainer.setVisibility(View.VISIBLE);
+        }
 
-                }, TRANSITION_TIME);
     }
 
     @Override
     public void openPendingFragment() {
         Log.d(LOG_MAIN, "-- Interface => open account details");
-
-        initTransitionOut(pendingTag);
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> {
-                    setTransitionIn(pendingTag, false);
-
-                    // Give time to load fragment
-                    new Handler(Looper.getMainLooper()).postDelayed(
-                            () -> mMotion.transitionToStart(), DELAY);
-
-                }, TRANSITION_TIME);
+        openFragment(pendingTag);
+        updateBottomNav(pendingTag);
+        setToolbarVisibilities(pendingTag);
     }
 
     @Override
@@ -521,37 +468,23 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         // to the fragment on back press.// todo: improve this.
         accountId = id;
 
-        initTransitionOut(accountDetailsTag);
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> {
-                    setTransitionIn(accountDetailsTag, false);
-                    if (mAccountDetails != null) mAccountDetails.setAccount(id, selectedDate);
-
-                    // Give time to load fragment
-                    new Handler(Looper.getMainLooper()).postDelayed(
-                            () -> mMotion.transitionToStart(), DELAY);
-
-                }, TRANSITION_TIME);
+        openFragment(accountDetailsTag);
+        updateBottomNav(accountDetailsTag);
+        setToolbarVisibilities(accountDetailsTag);
+        if (mAccountDetails != null) mAccountDetails.setAccount(id, selectedDate);
     }
 
     @Override
     public void openAccountForm(boolean isEdit, Account account) {
         Log.d(LOG_MAIN, "-- Interface => open account form");
 
-        initTransitionOut(accountFormTag);
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> {
-                    setTransitionIn(accountFormTag, false);
-                    if (mAccountForm != null) {
-                        mAccountForm.setFormType(isEdit);
-                        if (isEdit) mAccountForm.setAccount(account);
-                    }
-
-                    // Give time to load fragment
-                    new Handler(Looper.getMainLooper()).postDelayed(
-                            () -> mMotion.transitionToStart(), DELAY);
-
-                }, TRANSITION_TIME);
+        openFragment(accountFormTag);
+        updateBottomNav(accountFormTag);
+        setToolbarVisibilities(accountFormTag);
+        if (mAccountForm != null) {
+            mAccountForm.setFormType(isEdit);
+            if (isEdit) mAccountForm.setAccount(account);
+        }
     }
 
     @Override
@@ -559,18 +492,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
             int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
         Log.d(LOG_MAIN, "-- Interface => open transaction form");
 
-        initTransitionOut(transactionFormTag);
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> {
-                    setTransitionIn(transactionFormTag, false);
-                    if (mTransactionForm != null)
-                        mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
-
-                    // Give time to load fragment
-                    new Handler(Looper.getMainLooper()).postDelayed(
-                            () -> mMotion.transitionToStart(), DELAY);
-
-                }, TRANSITION_TIME);
+        openFragment(transactionFormTag);
+        updateBottomNav(transactionFormTag);
+        setToolbarVisibilities(transactionFormTag);
+        if (mTransactionForm != null)
+            mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
 
     }
 
@@ -578,33 +504,23 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     public void openCategoriesList(boolean isEdit) {
         Log.d(LOG_MAIN, "-- Interface => open categories list");
 
-        // always opened from transition form
-        // don't animate form out
-
-        setTransitionIn(categoriesListTag, false);
+        openFragment(categoriesListTag);
+        updateBottomNav(categoriesListTag);
+        setToolbarVisibilities(categoriesListTag);
         if (mCategoriesList != null) mCategoriesList.setListType(isEdit);
-
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> mMotion.transitionToStart(), 25);
-
     }
 
     @Override
     public void openCategoryForm(boolean isEdit, Category category, int position) {
         Log.d(LOG_MAIN, "-- Interface => open category form");
 
-        // always opened from categories list
-        // don't animate list out
-
-        setTransitionIn(categoriesFormTag, false);
-
+        openFragment(categoriesFormTag);
+        updateBottomNav(categoriesFormTag);
+        setToolbarVisibilities(categoriesFormTag);
         if (mCategoriesForm != null) {
             mCategoriesForm.setFormType(isEdit);
             mCategoriesForm.setCategoryToEdit(category, position);
         }
-
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> mMotion.transitionToStart(), 25);
 
     }
 
@@ -1001,61 +917,40 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
 
             mFragmentTagList.remove(topFragmentTag);
 
-            boolean isToMain = (newTopFragmentTag.equals(homeTag)
-                    || newTopFragmentTag.equals(accountsTag)
-                    || newTopFragmentTag.equals(transactionsOutTag)
-                    || newTopFragmentTag.equals(transactionsInTag));
+            // remove or replace top fragment
+            switch (topFragmentTag) {
+                case categoriesListTag:
+                    destroyFragment(mCategoriesList, categoriesListTag);
+                    break;
+                case categoriesFormTag:
+                    destroyFragment(mCategoriesForm, categoriesFormTag);
+                    break;
+                case accountFormTag:
+                    destroyFragment(mAccountForm, accountFormTag);
+                    bottomNavContainer.setVisibility(View.VISIBLE);
+                    break;
+                case transactionFormTag:
+                    if (newTopFragmentTag.equals(accountDetailsTag)) {
+                        openFragment(newTopFragmentTag);
+                        mAccountDetails.setAccount(accountId, selectedDate);
+                    }
+                    break;
+                default:
+                    openFragment(newTopFragmentTag);
+            }
 
+            // show hidden newTopFragment
+            if (topFragmentTag.equals(accountFormTag)
+                    || topFragmentTag.equals(categoriesFormTag)
+                    || topFragmentTag.equals(categoriesListTag)) {
 
-            // transition out
-            initTransitionOut(newTopFragmentTag);
+                Log.d(Tags.LOG_NAV, "show hidden newTopFragment");
+                showHiddenFragment(newTopFragmentTag, topFragmentTag);
+            }
 
-            new Handler(Looper.getMainLooper()).postDelayed(
-                    () -> {
-
-                        setTransitionIn(newTopFragmentTag, true);
-
-                        // remove or replace top fragment
-                        switch (topFragmentTag) {
-                            case categoriesListTag:
-                                destroyFragment(mCategoriesList, categoriesListTag);
-                                break;
-                            case categoriesFormTag:
-                                destroyFragment(mCategoriesForm, categoriesFormTag);
-                                break;
-                            case accountFormTag:
-                                destroyFragment(mAccountForm, accountFormTag);
-                                bottomNavContainer.setVisibility(View.VISIBLE);
-                                break;
-                            case transactionFormTag:
-                                if (newTopFragmentTag.equals(accountDetailsTag)) {
-                                    openFragment(newTopFragmentTag);
-                                    mAccountDetails.setAccount(accountId, selectedDate);
-                                }
-                            default:
-                                openFragment(newTopFragmentTag);
-                                updateBottomNav(newTopFragmentTag);
-                        }
-
-                        // show hidden newTopFragment
-                        if (topFragmentTag.equals(accountFormTag)
-                                || topFragmentTag.equals(categoriesFormTag)
-                                || topFragmentTag.equals(categoriesListTag)) {
-
-                            Log.d(Tags.LOG_NAV, "show hidden newTopFragment");
-                            showHiddenFragment(newTopFragmentTag, topFragmentTag);
-                            mMotion.setTransitionDuration(75);
-                            mMotion.transitionToStart();
-                        }
-                        else {
-                            new Handler(Looper.getMainLooper()).postDelayed(
-                                    () -> {
-                                        mMotion.transitionToStart();
-                                        if (isToMain) mAdd.show();
-                                    }, 50);
-                        }
-
-                    }, TRANSITION_TIME);
+            // update bottom bar and toolbar
+            updateBottomNav(newTopFragmentTag);
+            setToolbarVisibilities(newTopFragmentTag);
         }
         else if( backStackCount == 1 ){
             Log.d(LOG_NAV, "EXIT");
