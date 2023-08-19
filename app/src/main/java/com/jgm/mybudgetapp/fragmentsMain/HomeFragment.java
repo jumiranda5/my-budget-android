@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,7 +49,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements Animation.AnimationListener {
+public class HomeFragment extends Fragment {
 
     public HomeFragment() {
         // Required empty public constructor
@@ -68,8 +69,10 @@ public class HomeFragment extends Fragment implements Animation.AnimationListene
             mPendingMsg, mProgress, mProgressText, mYearLabel;
     private CircularProgressIndicator mBalanceProgress;
     private LinearLayout mBalanceContainer;
+    private ConstraintLayout mContainer;
 
     private void bindViews() {
+        mContainer = binding.homeContentContainer;
         // Balance
         mBalanceContainer = binding.homeMonthContainer;
         mBalance = binding.homeMonthBalance;
@@ -137,6 +140,7 @@ public class HomeFragment extends Fragment implements Animation.AnimationListene
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         bindViews();
+        mContainer.setVisibility(View.GONE);
         return view;
     }
 
@@ -171,26 +175,6 @@ public class HomeFragment extends Fragment implements Animation.AnimationListene
         mCardYear.setOnClickListener(v -> mInterface.openYearActivity());
     }
 
-    public void initMonthTransition(int month, int year) {
-        initFadeOutAnimation();
-        initFadeInAnimation();
-        new Handler(Looper.getMainLooper()).postDelayed(
-                () -> getHomeData(month, year), 150);
-
-    }
-
-    private void initFadeOutAnimation() {
-        Animator animatorSetOut = AnimatorInflater.loadAnimator(mContext, R.animator.fade_out);
-        animatorSetOut.setTarget(mBalance);
-        animatorSetOut.start();
-    }
-
-    private void initFadeInAnimation() {
-        Animator animatorSetIn = AnimatorInflater.loadAnimator(mContext, R.animator.fade_in);
-        animatorSetIn.setTarget(mBalance);
-        animatorSetIn.setStartDelay(170);
-        animatorSetIn.start();
-    }
 
     /* ===============================================================================
                                           DATA
@@ -236,6 +220,8 @@ public class HomeFragment extends Fragment implements Animation.AnimationListene
                 setIncomeCategories(incomeCategories);
                 setExpensesCategories(expensesCategories);
                 setYearChart(yearBalance, year);
+
+                mContainer.setVisibility(View.VISIBLE);
             });
 
         });
@@ -499,21 +485,5 @@ public class HomeFragment extends Fragment implements Animation.AnimationListene
         HomeCategoryAdapter adapter = new HomeCategoryAdapter(mContext, cat);
         mExpensesCategoryListView.setAdapter(adapter);
         mExpensesCategoryListView.suppressLayout(true);
-    }
-
-
-    @Override
-    public void onAnimationStart(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-
     }
 }

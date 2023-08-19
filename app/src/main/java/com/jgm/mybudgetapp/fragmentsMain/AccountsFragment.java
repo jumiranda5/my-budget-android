@@ -74,10 +74,8 @@ public class AccountsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //initRecyclerView();
         MyDate date = mInterface.getDate();
         getAccountsData(date);
-        //mAddAccount.setOnClickListener(v -> mInterface.openAccountForm(false, null, 0));
 
     }
 
@@ -154,7 +152,6 @@ public class AccountsFragment extends Fragment {
                     accountsList.add(accountTotal);
                 }
 
-                //adapter.notifyDataSetChanged();
                 initRecyclerView();
 
                 Log.d(LOG, "Done reading all accounts from db: " + accountsTotals.size());

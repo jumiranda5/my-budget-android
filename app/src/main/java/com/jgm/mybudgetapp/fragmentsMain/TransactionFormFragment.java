@@ -83,7 +83,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private FragmentTransactionFormBinding binding;
     private Group mTransferGroup, mIncomeExpenseGroup, mOptionsGroup;
     private ToggleButton mToggleExpense, mToggleIncome, mToggleTransfer;
-    private ConstraintLayout mCreditCardMonthContainer;
+    private ConstraintLayout mCreditCardMonthContainer, mFormContainer;
     private ProgressBar mProgressBar;
     private Button mSave, mDatePicker, mCategoryPicker, mMethodPicker, mAccountPickerOut, mAccountPickerIn;
     private MaterialSwitch mSwitchPaid, mSwitchEditAll;
@@ -95,6 +95,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private RadioButton mMonth1, mMonth2;
 
     private void setBinding() {
+        mFormContainer = binding.formContainer;
         mTransferGroup = binding.groupOnlyTransfer;
         mIncomeExpenseGroup = binding.groupSharedIncomeExpense;
         mOptionsGroup = binding.groupAdvancedOptions;
@@ -146,6 +147,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         binding = FragmentTransactionFormBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setBinding();
+        mFormContainer.setVisibility(View.GONE);
         return view;
     }
 
@@ -173,6 +175,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         initSwitchEditAll();
         initRepeat();
         initSaveButton();
+        mFormContainer.setVisibility(View.VISIBLE);
 
     }
 

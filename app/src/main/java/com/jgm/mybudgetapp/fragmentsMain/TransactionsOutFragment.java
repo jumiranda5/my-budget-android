@@ -83,6 +83,7 @@ public class TransactionsOutFragment extends Fragment {
         binding = FragmentTransactionsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         setBinding();
+        nestedScrollView.setVisibility(View.GONE);
         return view;
     }
 
@@ -149,6 +150,7 @@ public class TransactionsOutFragment extends Fragment {
             expenses = transactionDao.getTransactions(-1, month, year);
             handler.post(() -> {
                 setExpensesData(month, year);
+                nestedScrollView.setVisibility(View.VISIBLE);
                 nestedScrollView.scrollTo(0,0);
             });
 

@@ -14,6 +14,7 @@
         android:padding="@dimen/home_padding">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/home_content_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/home_section_margin">
@@ -22,13 +23,13 @@
                 android:id="@+id/guideline_home_start"
                 style="@style/GuidelineStart"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/page_padding"/>
+                app:layout_constraintGuide_begin="@dimen/page_padding" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_home_end"
                 style="@style/GuidelineEnd"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/page_padding"/>
+                app:layout_constraintGuide_end="@dimen/page_padding" />
 
             <!-- Pending -->
 
@@ -73,7 +74,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/text_error"/>
+                        app:tint="@color/text_error" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,8 +97,8 @@
                     android:id="@+id/home_month_label"
                     style="@style/HomeBalanceLabel"
                     android:layout_width="wrap_content"
-                    android:text="@string/label_month"
                     android:layout_marginStart="@dimen/page_padding"
+                    android:text="@string/label_month"
                     android:textColor="@color/medium_emphasis_text" />
 
                 <TextView
@@ -173,16 +174,15 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_accumulated">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <ImageView
                         android:id="@+id/home_income_icon"
                         style="@style/ItemIcon"
                         android:layout_height="@dimen/icon_size_small"
                         android:contentDescription="@null"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/arrow_south_west_600"
                         app:tint="@color/income" />
@@ -199,8 +199,8 @@
                     <TextView
                         android:id="@+id/home_income_currency_symbol"
                         style="@style/CurrencySymbolMedium"
-                        android:textSize="@dimen/body1"
                         android:textColor="@color/income"
+                        android:textSize="@dimen/body1"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_income"
                         app:layout_constraintEnd_toStartOf="@id/home_income" />
 
@@ -225,8 +225,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_income">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <TextView
                         android:id="@+id/home_expense_label"
@@ -242,8 +241,8 @@
                         style="@style/ItemIcon"
                         android:layout_height="@dimen/icon_size_small"
                         android:contentDescription="@null"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/arrow_north_east_600"
                         app:tint="@color/expense" />
@@ -251,8 +250,8 @@
                     <TextView
                         android:id="@+id/home_expense_currency_symbol"
                         style="@style/CurrencySymbolMedium"
-                        android:textSize="@dimen/body1"
                         android:textColor="@color/expense"
+                        android:textSize="@dimen/body1"
                         app:layout_constraintBaseline_toBaselineOf="@+id/home_expenses"
                         app:layout_constraintEnd_toStartOf="@id/home_expenses" />
 
@@ -276,8 +275,8 @@
                 style="@style/HomeExpensesProgress"
                 android:layout_marginTop="@dimen/home_progress_section_margin"
                 android:contentDescription="@null"
-                app:layout_constraintTop_toBottomOf="@id/home_card_expenses"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start" />
+                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintTop_toBottomOf="@id/home_card_expenses" />
 
             <TextView
                 android:id="@+id/home_month_progress_text"
@@ -309,14 +308,14 @@
             <TextView
                 android:id="@+id/home_progress_text"
                 style="@style/MyBody2"
-                app:layout_constraintWidth_max="@dimen/progress_info_width"
                 android:lineSpacingExtra="1dp"
                 android:maxLines="5"
                 android:text="@string/msg_progress"
                 app:layout_constraintBottom_toTopOf="@id/home_progress_section_divider"
                 app:layout_constraintEnd_toEndOf="@+id/home_balance_section_divider"
                 app:layout_constraintStart_toStartOf="@+id/home_balance_section_divider"
-                app:layout_constraintTop_toBottomOf="@+id/home_balance_section_divider" />
+                app:layout_constraintTop_toBottomOf="@+id/home_balance_section_divider"
+                app:layout_constraintWidth_max="@dimen/progress_info_width" />
 
 
             <!-- Accounts -->
@@ -329,8 +328,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_progress_section_divider">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <TextView
                         android:id="@+id/home_accounts_label"
@@ -470,8 +468,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_accounts">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <TextView
                         android:id="@+id/home_income_categories_label"
@@ -488,7 +485,7 @@
                         android:contentDescription="@string/desc_see_more"
                         app:layout_constraintBottom_toBottomOf="@id/home_income_categories_label"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/home_categories_in"
@@ -501,10 +498,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/home_income_categories_list"
                         style="@style/CategoriesListSmall"
+                        app:layout_constraintBottom_toBottomOf="@id/home_categories_in"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/home_categories_in"
                         app:layout_constraintTop_toTopOf="@+id/home_categories_in"
-                        app:layout_constraintBottom_toBottomOf="@id/home_categories_in"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_home_category" />
 
@@ -521,8 +518,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_income_categories">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <TextView
                         android:id="@+id/home_expenses_categories_label"
@@ -538,7 +534,7 @@
                         android:contentDescription="@string/desc_see_more"
                         app:layout_constraintBottom_toBottomOf="@id/home_expenses_categories_label"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/home_categories_out"
@@ -551,10 +547,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/home_expenses_categories_list"
                         style="@style/CategoriesListSmall"
+                        app:layout_constraintBottom_toBottomOf="@id/home_categories_out"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/home_categories_out"
                         app:layout_constraintTop_toTopOf="@+id/home_categories_out"
-                        app:layout_constraintBottom_toBottomOf="@id/home_categories_out"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_home_category" />
 
@@ -572,8 +568,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_expenses_categories">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/HomeCardContainer">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
 
                     <TextView
                         android:id="@+id/home_year_label"
@@ -589,14 +584,14 @@
                         android:contentDescription="@string/desc_see_more"
                         app:layout_constraintBottom_toBottomOf="@id/home_year_label"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/home_year_chart"
                         style="@style/BarChart"
-                        app:layout_constraintDimensionRatio="h,3:1.2"
                         android:layout_marginTop="@dimen/home_label_margin_bottom"
                         android:contentDescription="@string/desc_year_bar_chart"
+                        app:layout_constraintDimensionRatio="h,3:1.2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/home_year_label" />
