@@ -39,6 +39,10 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsInterface {
 
+    // todo: handle archive button on category form
+    // todo: something is wrong with dark mode after screen rotation
+    // todo: credit card archive is returning to settings. Should return to card list...
+
     // Constants
     private static final String LOG_SETTINGS = "debug-settings";
     private static final String STATE_FRAGMENT = "current-fragment";
@@ -261,10 +265,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
 
     private void openFragment(String tag) {
         Log.d(Tags.LOG_NAV, "== openFragment / " + tag + " | " + "currentFragment " + currentFragment);
-        if (!currentFragment.equals(tag)) {
-            if (tag.equals(homeTag)) resetFragmentStack();
-            setFragment(tag);
-        }
+        if (!currentFragment.equals(tag)) setFragment(tag);
     }
 
     private void resetFragmentStack() {

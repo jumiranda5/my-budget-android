@@ -39,6 +39,12 @@ public class CreditCardFormFragment extends Fragment {
     }
 
     private static final String LOG = "debug-card-form";
+    private static final String STATE_EDIT = "EDIT";
+    private static final String STATE_NAME = "NAME";
+    private static final String STATE_COLOR = "COLOR";
+    private static final String STATE_DAY = "DAY";
+    private static final String STATE_POSITION = "POSITION";
+    private static final String STATE_ID = "ID";
 
     // Vars
     private boolean isEdit = false;
@@ -91,26 +97,21 @@ public class CreditCardFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mBack.setOnClickListener(v -> mInterface.navigateBack());
-        mSave.setOnClickListener(v -> mInterface.navigateBack());
-        mArchive.setOnClickListener(v-> {
-            mInterface.showConfirmationDialog(
-                    getString(R.string.msg_archive_credit_card),
-                    getString(R.string.action_archive),
-                    R.drawable.ic_40_archive_fill0_300);
-        });
-        mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
-        mSave.setOnClickListener(v -> {
-            if (isEdit) editCreditCard(true);
-            else createCard();
-        });
+        if (savedInstanceState != null) {
+            isEdit = savedInstanceState.getBoolean(STATE_EDIT, false);
+            String name = savedInstanceState.getString(STATE_NAME, "");
+            int colorId = savedInstanceState.getInt(STATE_COLOR, 4);
+            billingDay = savedInstanceState.getInt(STATE_DAY, 1);
+            creditCard = new CreditCard(name, colorId, billingDay, true);
+            if (isEdit) {
+                int id = savedInstanceState.getInt(STATE_ID);
+                position = savedInstanceState.getInt(STATE_POSITION, 0);
+                creditCard.setId(id);
+            }
+        }
 
-        initCreditCardForm();
+        initButtons();
 
-    }
-
-    private void initCreditCardForm() {
-        mSave.setEnabled(false);
         mNicknameInput.addTextChangedListener(cardNameWatcher);
         if (isEdit) {
             mToolbarTitle.setText(getString(R.string.title_edit_card));
@@ -118,8 +119,49 @@ public class CreditCardFormFragment extends Fragment {
         }
         else {
             mToolbarTitle.setText(getString(R.string.title_add_card));
-            setDefaultOptions();
+            if (savedInstanceState == null) setDefaultOptions();
+            else setEditOptions();
         }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(STATE_EDIT, isEdit);
+        outState.putInt(STATE_POSITION, position);
+        outState.putInt(STATE_COLOR, selectedColor.getId());
+
+        String billingDayText = mBillingDayInput.getText().toString();
+        if (billingDayText.equals("")) billingDayText = "1";
+        billingDay = Integer.parseInt(billingDayText);
+        outState.putInt(STATE_DAY, billingDay);
+
+        outState.putString(STATE_NAME, mNicknameInput.getText().toString());
+
+        if (isEdit) outState.putInt(STATE_ID, creditCard.getId());
+    }
+
+    private void initButtons() {
+        mBack.setOnClickListener(v -> mInterface.navigateBack());
+
+        mArchive.setOnClickListener(v-> {
+            mInterface.showConfirmationDialog(
+                    getString(R.string.msg_archive_credit_card),
+                    getString(R.string.action_archive),
+                    R.drawable.ic_40_archive_fill0_300);
+        });
+
+        mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
+
+        mSave.setEnabled(false);
+        mSave.setOnClickListener(v -> {
+            if (isEdit) editCreditCard(true);
+            else createCard();
+        });
+
+
     }
 
     /* ===============================================================================
@@ -189,6 +231,9 @@ public class CreditCardFormFragment extends Fragment {
         if (billingDayText.equals("")) billingDayText = "1";
         billingDay = Integer.parseInt(billingDayText);
 
+        if (billingDay > 31) billingDay = 31;
+        if (billingDay < 1) billingDay = 1;
+
         CreditCard newCard = new CreditCard(nickname, selectedColor.getId(), billingDay, true);
 
         Handler handler = new Handler(Looper.getMainLooper());
@@ -211,6 +256,9 @@ public class CreditCardFormFragment extends Fragment {
         String billingDayText = mBillingDayInput.getText().toString();
         if (billingDayText.equals("")) billingDayText = "1";
         billingDay = Integer.parseInt(billingDayText);
+
+        if (billingDay > 31) billingDay = 31;
+        if (billingDay < 1) billingDay = 1;
 
         CreditCard editedCard = new CreditCard(
                 nickname,

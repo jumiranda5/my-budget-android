@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/ClickableListItem"
     android:layout_height="@dimen/item_double_height"
+    android:clickable="false"
     android:id="@+id/item_card_container"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

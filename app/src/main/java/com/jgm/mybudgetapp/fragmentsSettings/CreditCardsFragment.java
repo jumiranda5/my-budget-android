@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.adapters.CardAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCreditCardsBinding;
@@ -44,8 +45,10 @@ public class CreditCardsFragment extends Fragment {
     private FragmentCreditCardsBinding binding;
     private ImageButton mAddCard, mBack;
     private RecyclerView mRecyclerView;
+    private FloatingActionButton mAdd;
 
     private void setBinding() {
+        mAdd = binding.fabAddCard;
         mAddCard = binding.buttonAddCard;
         mBack = binding.cardsToolbarClose;
         mRecyclerView = binding.cardsList;
@@ -80,7 +83,7 @@ public class CreditCardsFragment extends Fragment {
 
         Log.d(Tags.LOG_LIFECYCLE, "Credit Cards onViewCreated");
 
-        mAddCard.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
+        mAdd.setOnClickListener(v -> mInterface.openCardForm(false, null, 0));
         mBack.setOnClickListener(v -> mInterface.navigateBack());
 
         Handler handler = new Handler(Looper.getMainLooper());
