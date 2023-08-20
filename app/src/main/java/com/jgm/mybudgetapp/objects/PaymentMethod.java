@@ -1,6 +1,11 @@
 package com.jgm.mybudgetapp.objects;
 
-public class PaymentMethod {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class PaymentMethod implements Parcelable {
 
     private int id;
     private int type; // 0 = cash | 1 = checking | 2 = savings | 3 = credit card
@@ -22,6 +27,27 @@ public class PaymentMethod {
         this.iconId = iconId;
         this.billingDay = billingDay;
     }
+
+    protected PaymentMethod(Parcel in) {
+        id = in.readInt();
+        type = in.readInt();
+        name = in.readString();
+        colorId = in.readInt();
+        iconId = in.readInt();
+        billingDay = in.readInt();
+    }
+
+    public static final Creator<PaymentMethod> CREATOR = new Creator<PaymentMethod>() {
+        @Override
+        public PaymentMethod createFromParcel(Parcel in) {
+            return new PaymentMethod(in);
+        }
+
+        @Override
+        public PaymentMethod[] newArray(int size) {
+            return new PaymentMethod[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -69,5 +95,20 @@ public class PaymentMethod {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(type);
+        dest.writeString(name);
+        dest.writeInt(colorId);
+        dest.writeInt(iconId);
+        dest.writeInt(billingDay);
     }
 }

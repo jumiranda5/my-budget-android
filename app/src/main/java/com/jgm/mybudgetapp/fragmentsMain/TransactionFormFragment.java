@@ -52,6 +52,8 @@ import com.jgm.mybudgetapp.utils.Tags;
 
 public class TransactionFormFragment extends Fragment implements Animation.AnimationListener {
 
+    // todo: this fragment is a nightmare, specially after screen rotation... (note to self => improve that someday)
+
     public TransactionFormFragment() {
         // Required empty public constructor
     }
@@ -61,6 +63,12 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private static final int METHOD_PICKER_MAIN = 0;
     private static final int METHOD_PICKER_OUT = 1;
     private static final int METHOD_PICKER_IN = 2;
+    private static final String STATE_EDIT = "EDIT";
+    private static final String STATE_TYPE = "TYPE";
+    private static final String STATE_TRANSACTION = "TRANSACTION";
+    private static final String STATE_METHOD = "METHOD";
+    private static final String STATE_METHOD_IN = "METHOD_IN";
+    private static final String STATE_METHOD_OUT = "METHOD_OUT";
 
     // VARS
     private Transaction transaction;
@@ -78,6 +86,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private PaymentMethod transferAccountIn;
     private PaymentMethod transferAccountOut;
     private Category selectedCategory;
+    private boolean isSavedInstanceState = false;
 
     // UI
     private FragmentTransactionFormBinding binding;
@@ -163,6 +172,37 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         // Init back button
         mClose.setOnClickListener(v -> mInterface.navigateBack());
 
+        if (savedInstanceState != null) {
+            isSavedInstanceState = true;
+            isEdit = savedInstanceState.getBoolean(STATE_EDIT, false);
+            type = savedInstanceState.getInt(STATE_TYPE, 0);
+            Log.d(LOG, "==================== TYPE SAVED: " + type);
+
+            selectedMethod = savedInstanceState.getParcelable(STATE_METHOD);
+            if (isEdit) {
+                edit = savedInstanceState.getParcelable(STATE_TRANSACTION);
+                setEditValues(edit);
+                selectedCategory = new Category(edit.getCategoryName(), edit.getColorId(), edit.getIconId(), true);
+                selectedCategory.setId(edit.getCategoryId());
+            }
+            else {
+                transaction = savedInstanceState.getParcelable(STATE_TRANSACTION);
+            }
+
+            if (type == 2) {
+                transferAccountIn = savedInstanceState.getParcelable(STATE_METHOD_IN);
+                transferAccountOut = savedInstanceState.getParcelable(STATE_METHOD_OUT);
+                if (transferAccountOut != null) updateTransferOut(transferAccountOut);
+                if (transferAccountIn != null) updateTransferIn(transferAccountIn);
+            }
+
+            // Todo: mSwitchEditAll appears on screen rotation. Can't set visibility to gone. Why?
+            mSwitchEditAll.setEnabled(false);
+            if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setEnabled(true);
+
+            // Todo: same thing happens to repeat input... can't hide it after screen rotation
+        }
+
         // init form fields
         initFormType();
         initAmount();
@@ -177,6 +217,24 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         initSaveButton();
         mFormContainer.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.d(LOG, "==================== TYPE TO SAVE: " + type);
+
+        outState.putInt(STATE_TYPE, type);
+        outState.putBoolean(STATE_EDIT, isEdit);
+        outState.putParcelable(STATE_METHOD, selectedMethod);
+        if (isEdit) outState.putParcelable(STATE_TRANSACTION, edit);
+        else outState.putParcelable(STATE_TRANSACTION, transaction);
+
+        if (type == 2) {
+            outState.putParcelable(STATE_METHOD_IN, transferAccountIn);
+            outState.putParcelable(STATE_METHOD_OUT, transferAccountOut);
+        }
     }
 
     /* ---------------------------------------------------------------------------------------------
@@ -296,24 +354,33 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
 
         mToggleExpense.setChecked(false);
         mToggleIncome.setChecked(false);
+        mToggleTransfer.setChecked(false);
+        mCreditCardMonthContainer.setVisibility(View.GONE);
 
         if (type == Tags.TYPE_IN) {
             showIncomeForm();
             mToggleIncome.setChecked(true);
             tag = Tags.income;
         }
-        else {
+        else if (type == Tags.TYPE_OUT) {
             showExpenseForm();
             mToggleExpense.setChecked(true);
             tag = Tags.expense;
+        }
+        else {
+            showTransferForm();
+            mToggleTransfer.setChecked(true);
+            tag = Tags.transfer;
         }
 
         formType = tag;
         changeTitleAndColorOnTypeSwitch(tag);
 
-        mOptionsGroup.setVisibility(View.VISIBLE);
-        mSwitchEditAll.setVisibility(View.GONE);
-        if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setVisibility(View.VISIBLE);
+        if (type != 2) {
+            mOptionsGroup.setVisibility(View.VISIBLE);
+            mSwitchEditAll.setVisibility(View.GONE);
+            if (isEdit && transaction.getRepeat() > 1) mSwitchEditAll.setVisibility(View.VISIBLE);
+        }
 
         setTypeToggleButton(mToggleExpense, Tags.expense);
         setTypeToggleButton(mToggleIncome, Tags.income);
@@ -357,6 +424,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private void showExpenseForm() {
         Log.d(LOG, "=> showExpenseForm");
         transaction.setType(Tags.TYPE_OUT);
+        type = Tags.TYPE_OUT;
         mIncomeExpenseGroup.setVisibility(View.VISIBLE);
         mTransferGroup.setVisibility(View.GONE);
         if (selectedMethod != null && selectedMethod.getType() == Tags.METHOD_CARD && selectedDate != null)
@@ -366,16 +434,19 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private void showIncomeForm() {
         Log.d(LOG, "=> showIncomeForm");
         transaction.setType(Tags.TYPE_IN);
+        type = Tags.TYPE_IN;
         mIncomeExpenseGroup.setVisibility(View.VISIBLE);
         mTransferGroup.setVisibility(View.GONE);
     }
 
     private void showTransferForm() {
         Log.d(LOG, "=> showTransferForm");
+        transaction.setType(2);
+        type = 2;
         mTransferGroup.setVisibility(View.VISIBLE);
         mIncomeExpenseGroup.setVisibility(View.GONE);
-        mSave.setEnabled(false);
         mOptionsGroup.setVisibility(View.GONE);
+        mSave.setEnabled(false);
     }
 
     private void changeTitleAndColorOnTypeSwitch(String type) {
@@ -496,7 +567,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
 
         // Init date picker button
         String btnText;
-        if (isEdit) {
+        if (isEdit || isSavedInstanceState) {
             String weekday = MyDateUtils.getDayOfWeek(mContext, day, month, year)[0];
             btnText = weekday + " - " + formattedDate;
             if (transaction.getRepeat() > 1) btnText = setDateTextForAllParcels();
@@ -519,6 +590,9 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
 
             // Set date
             selectedDate = new MyDate(transaction.getDay(), month, transaction.getYear());
+        }
+        else if (isSavedInstanceState) {
+            selectedDate = new MyDate(transaction.getDay(), transaction.getMonth(), transaction.getYear());
         }
         else selectedDate = today;
     }
@@ -554,6 +628,8 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private void initCategory() {
         Log.d(LOG, "=> initCategory");
 
+        Log.d(LOG, "-------- category id: " + transaction.getCategoryId());
+
         mCategoryPicker.setOnClickListener(view -> mInterface.openCategoriesList(false));
 
         if (!isEdit) {
@@ -561,7 +637,15 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
             Handler handler = new Handler();
             AppDatabase.dbExecutor.execute(() -> {
 
-                Category category = db.CategoryDao().getDefaultCategory();
+                // if onSavedInstanceState => get category by id
+                Category category;
+                if (transaction.getCategoryId() != 0 && isSavedInstanceState) {
+                    category = db.CategoryDao().getCategoryById(transaction.getCategoryId());
+                    setSelectedCategory(category);
+                }
+                else {
+                    category = db.CategoryDao().getDefaultCategory();
+                }
 
                 handler.post(() -> {
                     Log.d(LOG, "default category: " + category.getName());
@@ -587,7 +671,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
             mInterface.showMethodPickerDialog(isExpense, null, 0);
         });
 
-        if (!isEdit) {
+        if (!isEdit && selectedMethod == null) {
             // get default account and category (first on db)
             Handler handler = new Handler();
             AppDatabase.dbExecutor.execute(() -> {
@@ -733,6 +817,9 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
                 });
             }
         }
+        else {
+            mSwitchEditAll.setVisibility(View.GONE);
+        }
     }
 
 
@@ -785,15 +872,23 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
 
     private void setRepeatDisabled() {
         hideRepeatInput();
+        mRepeatInput.setEnabled(false);
+        mDecreaseRepeat.setEnabled(false);
         mIncreaseRepeat.setEnabled(false);
         mIncreaseRepeat.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.disabled_text));
+        mDecreaseRepeat.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.disabled_text));
+        mRepeatInput.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
         mRepeatLabel.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
     }
 
     private void setRepeatEnabled() {
         if (transaction.getRepeat() > 1) showRepeatInput();
-        mIncreaseRepeat.setEnabled(false);
+        mRepeatInput.setEnabled(true);
+        mDecreaseRepeat.setEnabled(true);
+        mIncreaseRepeat.setEnabled(true);
         mIncreaseRepeat.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.high_emphasis_text));
+        mDecreaseRepeat.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.high_emphasis_text));
+        mRepeatInput.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
         mRepeatLabel.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
     }
 

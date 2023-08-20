@@ -1,6 +1,11 @@
 package com.jgm.mybudgetapp.objects;
 
-public class TransactionResponse {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class TransactionResponse implements Parcelable {
 
     private int id;
     private int type;  // in(1)|out(-1)
@@ -59,6 +64,54 @@ public class TransactionResponse {
     }
 
     // Getters
+
+    protected TransactionResponse(Parcel in) {
+        id = in.readInt();
+        type = in.readInt();
+        description = in.readString();
+        amount = in.readFloat();
+        year = in.readInt();
+        month = in.readInt();
+        day = in.readInt();
+        categoryId = in.readInt();
+        if (in.readByte() == 0) {
+            accountId = null;
+        } else {
+            accountId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            cardId = null;
+        } else {
+            cardId = in.readInt();
+        }
+        paid = in.readByte() != 0;
+        repeat = in.readInt();
+        if (in.readByte() == 0) {
+            repeatCount = null;
+        } else {
+            repeatCount = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            repeatId = null;
+        } else {
+            repeatId = in.readLong();
+        }
+        categoryName = in.readString();
+        colorId = in.readInt();
+        iconId = in.readInt();
+    }
+
+    public static final Creator<TransactionResponse> CREATOR = new Creator<TransactionResponse>() {
+        @Override
+        public TransactionResponse createFromParcel(Parcel in) {
+            return new TransactionResponse(in);
+        }
+
+        @Override
+        public TransactionResponse[] newArray(int size) {
+            return new TransactionResponse[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -138,5 +191,75 @@ public class TransactionResponse {
 
     public void setCardId(Integer cardId) {
         this.cardId = cardId;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(type);
+        dest.writeString(description);
+        dest.writeFloat(amount);
+        dest.writeInt(year);
+        dest.writeInt(month);
+        dest.writeInt(day);
+        dest.writeInt(categoryId);
+        if (accountId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(accountId);
+        }
+        if (cardId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(cardId);
+        }
+        dest.writeByte((byte) (paid ? 1 : 0));
+        dest.writeInt(repeat);
+        if (repeatCount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(repeatCount);
+        }
+        if (repeatId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(repeatId);
+        }
+        dest.writeString(categoryName);
+        dest.writeInt(colorId);
+        dest.writeInt(iconId);
     }
 }

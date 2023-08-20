@@ -1,11 +1,15 @@
 package com.jgm.mybudgetapp.room.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "transactions")
-public class Transaction {
+public class Transaction implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -59,6 +63,51 @@ public class Transaction {
     }
 
     // Getters
+
+    protected Transaction(Parcel in) {
+        id = in.readInt();
+        type = in.readInt();
+        description = in.readString();
+        amount = in.readFloat();
+        year = in.readInt();
+        month = in.readInt();
+        day = in.readInt();
+        categoryId = in.readInt();
+        if (in.readByte() == 0) {
+            accountId = null;
+        } else {
+            accountId = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            cardId = null;
+        } else {
+            cardId = in.readInt();
+        }
+        isPaid = in.readByte() != 0;
+        repeat = in.readInt();
+        if (in.readByte() == 0) {
+            repeatCount = null;
+        } else {
+            repeatCount = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            repeatId = null;
+        } else {
+            repeatId = in.readLong();
+        }
+    }
+
+    public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
+        @Override
+        public Transaction createFromParcel(Parcel in) {
+            return new Transaction(in);
+        }
+
+        @Override
+        public Transaction[] newArray(int size) {
+            return new Transaction[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -170,5 +219,48 @@ public class Transaction {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(type);
+        dest.writeString(description);
+        dest.writeFloat(amount);
+        dest.writeInt(year);
+        dest.writeInt(month);
+        dest.writeInt(day);
+        dest.writeInt(categoryId);
+        if (accountId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(accountId);
+        }
+        if (cardId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(cardId);
+        }
+        dest.writeByte((byte) (isPaid ? 1 : 0));
+        dest.writeInt(repeat);
+        if (repeatCount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(repeatCount);
+        }
+        if (repeatId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(repeatId);
+        }
     }
 }

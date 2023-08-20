@@ -28,6 +28,9 @@ public interface CategoryDao {
     @Query("SELECT * FROM categories LIMIT 1")
     Category getDefaultCategory();
 
+    @Query("SELECT * FROM categories WHERE id = :id")
+    Category getCategoryById(int id);
+
     @Query("DELETE FROM categories")
     void clearCategoriesTable();
 
