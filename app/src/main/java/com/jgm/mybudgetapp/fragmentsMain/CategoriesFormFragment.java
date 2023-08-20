@@ -42,6 +42,12 @@ public class CategoriesFormFragment extends Fragment {
     }
 
     private static final String LOG = "debug-cat-form";
+    private static final String STATE_EDIT = "EDIT";
+    private static final String STATE_NAME = "NAME";
+    private static final String STATE_COLOR = "COLOR";
+    private static final String STATE_ICON = "ICON";
+    private static final String STATE_POSITION = "POSITION";
+    private static final String STATE_ID = "ID";
     private boolean isEdit;
     private int position;
     private Icon selectedIcon;
@@ -102,6 +108,20 @@ public class CategoriesFormFragment extends Fragment {
         // Default
         mSave.setEnabled(false);
         mCategoryNameInput.addTextChangedListener(categoryWatcher);
+
+        if (savedInstanceState != null) {
+            isEdit = savedInstanceState.getBoolean(STATE_EDIT, false);
+            String name = savedInstanceState.getString(STATE_NAME, "");
+            int colorId = savedInstanceState.getInt(STATE_COLOR, 9);
+            int iconId = savedInstanceState.getInt(STATE_ICON, 0);
+            categoryToEdit = new Category(name, colorId, iconId, true);
+            if (isEdit) {
+                int id = savedInstanceState.getInt(STATE_ID, 0);
+                categoryToEdit.setId(id);
+                position = savedInstanceState.getInt(STATE_POSITION, 0);
+            }
+        }
+
         if (isEdit) {
             mTitle.setText(getString(R.string.title_edit_category));
             setEditOptions();
@@ -109,9 +129,28 @@ public class CategoriesFormFragment extends Fragment {
         else {
             mTitle.setText(getString(R.string.title_add_category));
             mArchive.setVisibility(View.GONE);
-            setDefaultOptions();
+            if (savedInstanceState == null) setDefaultOptions();
+            else setOptionsOnRestore();
         }
 
+        initButtons();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(STATE_EDIT, isEdit);
+        outState.putInt(STATE_POSITION, position);
+        outState.putInt(STATE_COLOR, selectedColor.getId());
+        outState.putInt(STATE_ICON, selectedIcon.getId());
+        outState.putString(STATE_NAME, mCategoryNameInput.getText().toString());
+
+        if (isEdit) outState.putInt(STATE_ID, categoryToEdit.getId());
+    }
+
+    private void initButtons() {
         // Init buttons
         mBack.setOnClickListener(v -> navigateBack());
         mColorPicker.setOnClickListener(v -> showColorPicker());
@@ -122,12 +161,10 @@ public class CategoriesFormFragment extends Fragment {
         });
 
         // form is only editable on settings activity
-        mArchive.setOnClickListener(v -> {
-            mSettingsInterface.showConfirmationDialog(
-                    getString(R.string.msg_archive_category),
-                    getString(R.string.action_archive),
-                    R.drawable.ic_48_dangerous_300);
-        });
+        mArchive.setOnClickListener(v -> mSettingsInterface.showConfirmationDialog(
+                getString(R.string.msg_archive_category),
+                getString(R.string.action_archive),
+                R.drawable.ic_40_archive_fill0_300));
     }
 
     /* ===============================================================================
@@ -192,6 +229,15 @@ public class CategoriesFormFragment extends Fragment {
     private void setDefaultOptions() {
         selectedIcon = IconUtils.getIcon(0);
         selectedColor = ColorUtils.getColor(9);
+        icIcon.setImageDrawable(ContextCompat.getDrawable(mContext, selectedIcon.getIcon()));
+        icIcon.setContentDescription(selectedIcon.getIconName());
+        icColor.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
+        icColor.setContentDescription(selectedColor.getColorName());
+    }
+
+    private void setOptionsOnRestore() {
+        selectedIcon = IconUtils.getIcon(categoryToEdit.getIconId());
+        selectedColor = ColorUtils.getColor(categoryToEdit.getColorId());
         icIcon.setImageDrawable(ContextCompat.getDrawable(mContext, selectedIcon.getIcon()));
         icIcon.setContentDescription(selectedIcon.getIconName());
         icColor.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
