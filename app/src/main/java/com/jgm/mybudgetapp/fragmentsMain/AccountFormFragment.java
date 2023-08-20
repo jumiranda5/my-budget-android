@@ -39,6 +39,12 @@ public class AccountFormFragment extends Fragment {
     }
 
     private static final String LOG = "debug-account-form";
+    private static final String STATE_EDIT = "EDIT";
+    private static final String STATE_TYPE = "TYPE";
+    private static final String STATE_COLOR = "COLOR";
+    private static final String STATE_ICON = "ICON";
+    private static final String STATE_NAME = "NAME";
+    private static final String STATE_ID = "ID";
 
     // Vars
     private boolean isEdit = false;
@@ -94,9 +100,49 @@ public class AccountFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initTypeRadioGroup();
-        setDefaultOptions();
+        mArchive.setVisibility(View.GONE);
 
+        if (savedInstanceState != null) {
+            isEdit = savedInstanceState.getBoolean(STATE_EDIT, false);
+            selectedType = savedInstanceState.getInt(STATE_TYPE, 0);
+            selectedIconId = savedInstanceState.getInt(STATE_ICON, 67);
+            String name = savedInstanceState.getString(STATE_NAME, "");
+            int colorId = savedInstanceState.getInt(STATE_COLOR, 4);
+            account = new Account(name, colorId, selectedIconId, selectedType, true);
+            if (isEdit) {
+                int id = savedInstanceState.getInt(STATE_ID, 0);
+                account.setId(id);
+            }
+        }
+
+        initTypeRadioGroup();
+        initButtons();
+
+        if (isEdit) {
+            mArchive.setVisibility(View.VISIBLE);
+            mToolbarTitle.setText(getString(R.string.title_edit_account));
+            setEditOptions();
+        }
+        else {
+            mToolbarTitle.setText(getString(R.string.title_add_account));
+            if (savedInstanceState == null) setDefaultOptions();
+            else setOptionsOnRestore();
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_EDIT, isEdit);
+        outState.putInt(STATE_COLOR, selectedColor.getId());
+        outState.putInt(STATE_ICON, selectedIconId);
+        outState.putInt(STATE_TYPE, selectedType);
+        outState.putString(STATE_NAME, mNicknameInput.getText().toString());
+        if (isEdit) outState.putInt(STATE_ID, account.getId());
+    }
+
+    private void initButtons() {
         mNicknameInput.addTextChangedListener(accountNameWatcher);
         mBack.setOnClickListener(v -> mInterface.navigateBack());
         mArchive.setOnClickListener(v -> {
@@ -108,21 +154,10 @@ public class AccountFormFragment extends Fragment {
         mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
 
         mSave.setEnabled(false);
-        mSave.setOnClickListener(v -> mInterface.navigateBack());
         mSave.setOnClickListener(v -> {
             if (isEdit) editAccount(true);
             else createAccount();
         });
-
-        if (isEdit) {
-            mToolbarTitle.setText(getString(R.string.title_edit_account));
-            setEditOptions();
-        }
-        else {
-            mToolbarTitle.setText(getString(R.string.title_add_account));
-            setDefaultOptions();
-        }
-
     }
 
     /* ===============================================================================
@@ -157,9 +192,29 @@ public class AccountFormFragment extends Fragment {
         selectedColor = ColorUtils.getColor(4);
         mCashType.setChecked(true);
         selectedType = 0;
-        selectedIconId = 1;
+        selectedIconId = 67;
         mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
         mColorIcon.setContentDescription(selectedColor.getColorName());
+    }
+
+    private void setOptionsOnRestore() {
+        mNicknameInput.setText(account.getName());
+        selectedColor = ColorUtils.getColor(account.getColorId());
+
+        switch (selectedType) {
+            case 0: mCashType.setChecked(true); break;
+            case 1: mCheckingType.setChecked(true); break;
+            case 2: mSavingsType.setChecked(true); break;
+        }
+
+        mColorIcon.setImageTintList(ContextCompat.getColorStateList(mContext, selectedColor.getColor()));
+        mColorIcon.setContentDescription(selectedColor.getColorName());
+
+        Log.d(LOG, "Restore: " + "id: " + account.getId() + "\n" +
+                "name: " + account.getName() + "\n" +
+                "color: " + selectedColor.getId() + " | " + selectedColor.getColorName() + "\n" +
+                "type: " + selectedType + "\n" +
+                "icon: " + selectedIconId);
     }
 
     private void setEditOptions() {
@@ -176,6 +231,12 @@ public class AccountFormFragment extends Fragment {
             case 1: mCheckingType.setChecked(true); break;
             case 2: mSavingsType.setChecked(true); break;
         }
+
+        Log.d(LOG, "Edit: " + "id: " + account.getId() + "\n" +
+                "name: " + account.getName() + "\n" +
+                "color: " + selectedColor.getId() + " | " + selectedColor.getColorName() + "\n" +
+                "type: " + selectedType + "\n" +
+                "icon: " + selectedIconId);
     }
 
     /* ===============================================================================
@@ -185,15 +246,15 @@ public class AccountFormFragment extends Fragment {
     private void initTypeRadioGroup() {
         mCashType.setOnClickListener(v -> {
             selectedType = 0;
-            selectedIconId = 1;
+            selectedIconId = 67;
         });
         mCheckingType.setOnClickListener(v -> {
             selectedType = 1;
-            selectedIconId = 13;
+            selectedIconId = 68;
         });
         mSavingsType.setOnClickListener(v -> {
             selectedType = 2;
-            selectedIconId = 4;
+            selectedIconId = 69;
         });
     }
 

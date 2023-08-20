@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         }
         updateBottomNav(currentFragment);
         setToolbarVisibilities(currentFragment);
+        setAddButton(currentFragment);
 
         // init fragment data
         updateMonthOnCurrentFragment();
@@ -931,6 +932,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
             // update bottom bar and toolbar
             updateBottomNav(newTopFragmentTag);
             setToolbarVisibilities(newTopFragmentTag);
+            setAddButton(newTopFragmentTag);
         }
         else if( backStackCount == 1 ){
             Log.d(LOG_NAV, "EXIT");
