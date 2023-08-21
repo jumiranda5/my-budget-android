@@ -4,6 +4,7 @@ import static com.jgm.mybudgetapp.utils.Tags.LOG_NAV;
 import static com.jgm.mybudgetapp.utils.Tags.accountDetailsTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.accountsTag;
+import static com.jgm.mybudgetapp.utils.Tags.adLockTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesListTag;
 import static com.jgm.mybudgetapp.utils.Tags.homeTag;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     private TransactionsOutFragment mTransactionsOut;
     private TransactionsInFragment mTransactionsIn;
     private PendingFragment mPending;
+    private AdLockFragment mAdLock;
 
     // Vars
     private ArrayList<String> mFragmentTagList = new ArrayList<>();
@@ -168,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
 
         Log.i(Tags.LOG_LIFECYCLE, "onRestoreInstanceState => current fragment: " + currentFragment);
 
+
         for (int i = 0; i < mFragmentTagList.size(); i++) {
             reReferenceFragment(mFragmentTagList.get(i));
         }
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         setAddButton(currentFragment);
 
         // init fragment data
-        updateMonthOnCurrentFragment();
+        updateMonthOnCurrentFragment(); // todo nullPointerException
 
     }
 
@@ -207,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
+
 
     /* ===============================================================================
                                          TOOLBAR
@@ -473,11 +477,16 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
             int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
         Log.d(LOG_MAIN, "-- Interface => open transaction form");
 
+        long lockTimer = MyDateUtils.getLockTimer(this, transactionFormTag);
+
         openFragment(transactionFormTag);
         updateBottomNav(transactionFormTag);
         setToolbarVisibilities(transactionFormTag);
         if (mTransactionForm != null)
             mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
+
+        long hour = 60 * 60000;
+        if (lockTimer > hour) openFragment(adLockTag);
 
     }
 
@@ -768,13 +777,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
                 mPending = new PendingFragment();
                 fragment = mPending;
                 break;
+            case adLockTag:
+                mAdLock = AdLockFragment.newInstance(transactionFormTag);
+                fragment = mAdLock;
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + tag);
         }
 
         if (tag.equals(categoriesListTag)
                 || tag.equals(categoriesFormTag)
-                || tag.equals(accountFormTag)) {
+                || tag.equals(accountFormTag)
+                || tag.equals(adLockTag)) {
             addFragment(fragment, tag);
         }
         else {
@@ -817,6 +831,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
         switch (tag) {
             case categoriesListTag:
+            case adLockTag:
                 transaction2.hide(mTransactionForm);
                 break;
             case categoriesFormTag:
@@ -844,6 +859,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (prevTag) {
             case categoriesListTag:
+            case adLockTag:
                 if (tag.equals(transactionFormTag)) transaction.show(mTransactionForm);
                 break;
             case categoriesFormTag:
@@ -864,22 +880,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(fragment);
         transaction.commit();
-
-        // show prev fragment
-        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        switch (tag) {
-            case categoriesListTag:
-                transaction2.show(mTransactionForm);
-                break;
-            case categoriesFormTag:
-                transaction2.show(mCategoriesList);
-                break;
-            case accountFormTag:
-                if (currentFragment.equals(accountsTag)) transaction2.show(mAccounts);
-                if (currentFragment.equals(accountDetailsTag)) transaction2.show(mAccountDetails);
-                break;
-        }
-        transaction2.commit();
     }
 
     @Override
@@ -910,6 +910,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
                     destroyFragment(mAccountForm, accountFormTag);
                     bottomNavContainer.setVisibility(View.VISIBLE);
                     break;
+                case adLockTag:
+                    destroyFragment(mAdLock, adLockTag);
+                    break;
                 case transactionFormTag:
                     if (newTopFragmentTag.equals(accountDetailsTag)) {
                         openFragment(newTopFragmentTag);
@@ -923,7 +926,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
             // show hidden newTopFragment
             if (topFragmentTag.equals(accountFormTag)
                     || topFragmentTag.equals(categoriesFormTag)
-                    || topFragmentTag.equals(categoriesListTag)) {
+                    || topFragmentTag.equals(categoriesListTag)
+                    || topFragmentTag.equals(adLockTag)) {
 
                 Log.d(Tags.LOG_NAV, "show hidden newTopFragment");
                 showHiddenFragment(newTopFragmentTag, topFragmentTag);
@@ -976,6 +980,9 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
             case pendingTag:
                 mPending = (PendingFragment) getSupportFragmentManager().findFragmentByTag(pendingTag);
                 break;
+            case adLockTag:
+                mAdLock = (AdLockFragment) getSupportFragmentManager().findFragmentByTag(adLockTag);
+                break;
         }
     }
 
@@ -994,6 +1001,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
                 case transactionsOutTag: mTransactionsOut = null; break;
                 case transactionsInTag: mTransactionsIn = null; break;
                 case transactionFormTag: mTransactionForm = null; break;
+                case adLockTag: mAdLock = null; break;
                 case pendingTag: mPending = null; break;
             }
         }

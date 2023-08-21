@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 
+import com.google.android.gms.ads.MobileAds;
 import com.jgm.mybudgetapp.databinding.ActivityLoginBinding;
 import com.jgm.mybudgetapp.utils.Populate;
 import com.jgm.mybudgetapp.utils.Tags;
@@ -38,15 +39,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setBinding();
 
-        if (savedInstanceState == null) {
-            handleSplashScreenDelay(splashScreen);
-        }
+        if (savedInstanceState == null) handleSplashScreenDelay(splashScreen);
 
-        mLoginButton.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        });
+        initializeAds();
+        initLogin();
 
     }
+
+    /* ---------------------------------------------------------------------------------------------
+                                          SPLASH SCREEN
+     -------------------------------------------------------------------------------------------- */
 
     private void handleSplashScreenDelay(SplashScreen splashScreen) {
 
@@ -66,4 +68,32 @@ public class LoginActivity extends AppCompatActivity {
 
         }, DELAY);
     }
+
+
+    /* ---------------------------------------------------------------------------------------------
+                                                ADS
+     -------------------------------------------------------------------------------------------- */
+
+    private void initializeAds() {
+        // Todo: implement ads consent form
+        // Disable login button until ads library is initialized
+        mLoginButton.setEnabled(false);
+        MobileAds.initialize(this, initializationStatus -> mLoginButton.setEnabled(true));
+    }
+
+    /* ---------------------------------------------------------------------------------------------
+                                               LOGIN
+     -------------------------------------------------------------------------------------------- */
+
+    private void initLogin() {
+        mLoginButton.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        });
+    }
+
+    /* ---------------------------------------------------------------------------------------------
+                                             ADS CONSENT
+     -------------------------------------------------------------------------------------------- */
+
 }

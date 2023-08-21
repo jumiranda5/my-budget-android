@@ -1,8 +1,12 @@
 package com.jgm.mybudgetapp.utils;
 
+import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
+
 import android.content.Context;
+import android.util.Log;
 
 import com.jgm.mybudgetapp.objects.MyDate;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 
 import java.time.DayOfWeek;
 import java.time.Instant;
@@ -160,6 +164,17 @@ public class MyDateUtils {
         // get the local date in millis
         return zonedDateTime.toInstant().toEpochMilli();
 
+    }
+
+    public static long getLockTimer(Context context, String tag) {
+
+        long now = Instant.now().toEpochMilli();
+        long reward = SettingsPrefs.getSettingsPrefsMilliseconds(context, tag);
+        long lockTimer = now - reward;
+        long hour = 60 * 60000;
+        if (reward == 0) lockTimer = hour + 1;
+
+        return lockTimer;
     }
 
 }

@@ -38,6 +38,7 @@ public class Tags {
     public static final String transactionsInTag = "TRANSACTIONS_IN";
     public static final String yearTag = "YEAR";
     public static final String pendingTag = "PENDING";
+    public static final String adLockTag = "AD_LOCK";
 
     // Main icons
     public static final Integer cardIconId = 70;
