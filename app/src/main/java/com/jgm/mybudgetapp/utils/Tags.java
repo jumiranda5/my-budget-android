@@ -26,7 +26,6 @@ public class Tags {
     public static final String accountsTag = "ACCOUNTS";
     public static final String accountFormTag = "ACCOUNT_FORM";
     public static final String accountDetailsTag = "ACCOUNT_DETAILS";
-    public static final String categoriesTag = "CATEGORIES";
     public static final String categoriesFormTag = "CATEGORIES_FORM";
     public static final String categoriesListTag = "CATEGORIES_LIST";
     public static final String cardsTag = "CARDS";
@@ -36,9 +35,12 @@ public class Tags {
     public static final String transactionFormTag = "TRANSACTION_FORM";
     public static final String transactionsOutTag = "TRANSACTIONS_OUT";
     public static final String transactionsInTag = "TRANSACTIONS_IN";
-    public static final String yearTag = "YEAR";
     public static final String pendingTag = "PENDING";
     public static final String adLockTag = "AD_LOCK";
+
+    // Activity tags
+    public static final String categoriesTag = "CATEGORIES";
+    public static final String yearTag = "YEAR";
 
     // Main icons
     public static final Integer cardIconId = 70;

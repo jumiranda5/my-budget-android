@@ -168,13 +168,22 @@ public class MyDateUtils {
 
     public static long getLockTimer(Context context, String tag) {
 
-        long now = Instant.now().toEpochMilli();
         long reward = SettingsPrefs.getSettingsPrefsMilliseconds(context, tag);
-        long lockTimer = now - reward;
-        long hour = 60 * 60000;
-        if (reward == 0) lockTimer = hour + 1;
-
-        return lockTimer;
+        Log.d("debug-ads", "reward time: " + reward);
+        if (reward == 0) return 0;
+        else {
+            long now = Instant.now().toEpochMilli();
+            long lockTimer = now - reward;
+            long hour = 60 * 60000;
+            Log.d("debug-ads", "lock time: " + lockTimer);
+            Log.d("debug-ads", "now: " + now);
+            if (lockTimer > hour) {
+                lockTimer = 0;
+                SettingsPrefs.setSettingsPrefsMilliseconds(context, tag, 0);
+            }
+            Log.d("debug-ads", "timer: " + lockTimer);
+            return lockTimer;
+        }
     }
 
 }

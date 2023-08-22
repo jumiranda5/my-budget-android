@@ -66,7 +66,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements MainInterface, Animation.AnimationListener {
+public class MainActivity extends AppCompatActivity implements MainInterface, AdInterface, Animation.AnimationListener {
 
     // Constants
     private static final String LOG_MAIN = "debug-main";
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         setAddButton(currentFragment);
 
         // init fragment data
-        updateMonthOnCurrentFragment(); // todo nullPointerException
+        updateMonthOnCurrentFragment();
 
     }
 
@@ -485,8 +485,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
         if (mTransactionForm != null)
             mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
 
-        long hour = 60 * 60000;
-        if (lockTimer > hour) openFragment(adLockTag);
+        if (lockTimer == 0) openFragment(adLockTag);
 
     }
 
@@ -1021,5 +1020,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface, An
     @Override
     public void onAnimationRepeat(Animation animation) {
 
+    }
+
+    @Override
+    public void onAdFragmentDismiss(boolean isRewardGranted) {
+        onBackPressed();
     }
 }

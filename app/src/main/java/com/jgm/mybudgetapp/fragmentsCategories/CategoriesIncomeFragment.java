@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.CategoryPercentAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesPagerBinding;
@@ -33,6 +35,8 @@ public class CategoriesIncomeFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private static final String LOG = "debug-categories";
+
     // UI
     private FragmentCategoriesPagerBinding binding;
     private ImageView mChartImage;
@@ -47,11 +51,13 @@ public class CategoriesIncomeFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
+    private CategoryInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+        mInterface = (CategoryInterface) context;
     }
 
     @Override
@@ -62,9 +68,17 @@ public class CategoriesIncomeFragment extends Fragment {
         View view = binding.getRoot();
         bindViews();
 
-        Log.w("omg", "onCreateView - income");
+        Log.w("debug-categories", "onCreateView - income");
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.w("debug-categories", "onViewCreated - income");
+
     }
 
     /* ===============================================================================
@@ -73,7 +87,8 @@ public class CategoriesIncomeFragment extends Fragment {
 
     public void setIncomeCategoriesData(List<CategoryResponse> categories) {
 
-        Log.w("omg", "is imageView null - income? " + (mChartImage == null));
+        Log.w("debug-categories", "setExpensesCategoriesData => " + categories.size());
+        Log.w("debug-categories", "is image null => " + (mChartImage == null));
 
         if (mChartImage != null) {
             mChartImage.post(() -> {

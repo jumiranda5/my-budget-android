@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CategoriesActivity">
+
+    <!-- Ad content frame -->
+    <FrameLayout
+        android:id="@+id/category_content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Toolbar -->
 
@@ -42,12 +52,12 @@
             <ImageButton
                 android:id="@+id/categories_prev_month"
                 style="@style/IconButton"
-                android:padding="10dp"
                 android:contentDescription="@string/action_prev_month"
+                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/categories_toolbar_month"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_navigate_before"/>
+                app:srcCompat="@drawable/ic_app_navigate_before" />
 
             <ImageButton
                 android:id="@+id/categories_next_month"
@@ -57,7 +67,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/categories_toolbar_month"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_navigate_next"/>
+                app:srcCompat="@drawable/ic_app_navigate_next" />
 
             <ImageButton
                 android:id="@+id/categories_close_button"
@@ -85,16 +95,16 @@
             android:id="@+id/categories_tabs"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            app:tabTextAppearance="@style/MyTabText"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="2dp"
-            app:tabTextColor="@color/medium_emphasis_text"
-            app:tabSelectedTextColor="@color/high_emphasis_text"
             android:background="@drawable/bg_toolbar"
             android:contentDescription="@string/desc_categories_tabs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="@color/high_emphasis_text"
+            app:tabTextAppearance="@style/MyTabText"
+            app:tabTextColor="@color/medium_emphasis_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -108,5 +118,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categories_tabs_container" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_categories_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="categories_toolbar,categories_tabs_container,categories_view_pager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

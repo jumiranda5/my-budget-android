@@ -58,6 +58,7 @@ public class AdLockFragment extends Fragment {
     // Vars
     private RewardedAd rewardedAd;
     private boolean isRewardGranted = false;
+    private String prefsTag;
 
     // UI
     private FragmentAdLockBinding binding;
@@ -80,13 +81,13 @@ public class AdLockFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
-    private MainInterface mInterface;
+    private AdInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
-        mInterface = (MainInterface) context;
+        mInterface = (AdInterface) context;
     }
 
     @Override
@@ -114,6 +115,8 @@ public class AdLockFragment extends Fragment {
         if (savedInstanceState != null)
             isRewardGranted = savedInstanceState.getBoolean("reward", false);
 
+        Log.d(LOG, "------------- onCreateView ---------");
+
         setPageInfo();
         initButtons();
         loadAd();
@@ -132,7 +135,18 @@ public class AdLockFragment extends Fragment {
 
     private void setPageInfo() {
         Log.d(LOG, "Page name: " + mPage);
-        if (mPage.equals(Tags.transactionFormTag)) mPageTitle.setText("Form");
+        prefsTag = mPage;
+        switch (mPage) {
+            case Tags.transactionFormTag:
+                mPageTitle.setText("Form");
+                break;
+            case Tags.categoriesTag:
+                mPageTitle.setText("Categories");
+                break;
+            case Tags.yearTag:
+                mPageTitle.setText("Year Balance");
+                break;
+        }
     }
 
     /* ---------------------------------------------------------------------------------------------
@@ -141,7 +155,7 @@ public class AdLockFragment extends Fragment {
 
     private void initButtons() {
 
-        mClose.setOnClickListener(v -> mInterface.navigateBack());
+        mClose.setOnClickListener(v -> mInterface.onAdFragmentDismiss(false));
 
         mButtonWatchAd.setOnClickListener(v -> {
             if (rewardedAd == null) loadAd();
@@ -221,7 +235,7 @@ public class AdLockFragment extends Fragment {
                     Log.d(LOG, "Ad dismissed fullscreen content.");
                     rewardedAd = null;
                     // go to unlocked page if reward was granted or reload ad if not
-                    if (isRewardGranted) mInterface.navigateBack();
+                    if (isRewardGranted) mInterface.onAdFragmentDismiss(true);
                     else loadAd();
                 }
 
@@ -241,7 +255,7 @@ public class AdLockFragment extends Fragment {
                     // Handle the reward.
                     Log.d(LOG, "The user earned the reward. / " + rewardItem.getType());
                     long time = Instant.now().toEpochMilli();
-                    SettingsPrefs.setSettingsPrefsMilliseconds(mContext, Tags.transactionFormTag, time);
+                    SettingsPrefs.setSettingsPrefsMilliseconds(mContext, prefsTag, time);
                     isRewardGranted = true;
                 }
             });

@@ -1,14 +1,20 @@
 package com.jgm.mybudgetapp;
 
+import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -33,25 +39,27 @@ import com.jgm.mybudgetapp.utils.Tags;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesActivity extends AppCompatActivity implements CategoryInterface {
+public class CategoriesActivity extends AppCompatActivity implements CategoryInterface, AdInterface {
 
     private static final String STATE_DAY = "day";
     private static final String STATE_MONTH = "month";
     private static final String STATE_YEAR = "year";
     private static final String STATE_TAB = "tab";
-
     private static final String LOG = "debug-categories";
 
     // Fragments
     private CategoriesExpensesFragment expensesFragment;
     private CategoriesIncomeFragment incomeFragment;
     private CategoriesPagerAdapter tabsAdapter;
+    private AdLockFragment mAdLock;
 
     // Vars
     private MyDate selectedDate;
     private MyDate today;
     private CategoryPercent selectedCategory;
     private List<CategoryItemResponse> categoryItems;
+    private int tab;
+    private boolean isAdFragment;
 
     // UI
     private ActivityCategoriesBinding binding;
@@ -59,8 +67,10 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     private TextView mToolbarMonth, mToolbarYear;
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
+    private Group mMainGroup;
 
     private void setBinding() {
+        mMainGroup = binding.groupCategoriesMain;
         mClose = binding.categoriesCloseButton;
         mNextMonth = binding.categoriesNextMonth;
         mPrevMonth = binding.categoriesPrevMonth;
@@ -71,55 +81,51 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-
         binding = ActivityCategoriesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBinding();
 
-        // reference fragments
+        Log.d(LOG, "======== onCreate");
+
         expensesFragment = new CategoriesExpensesFragment();
         incomeFragment = new CategoriesIncomeFragment();
 
-        // get current date
+        // init date
         today = MyDateUtils.getCurrentDate(this);
         selectedDate = today;
+        int day = today.getDay();
+        int month = today.getMonth();
+        int year = today.getYear();
 
-        // get info from intent extra or savedInstanceState
-        int tab = 0;
+        // get intents
         if (savedInstanceState == null) {
+            Log.d(LOG, "savedInstanceState = null");
+
             if (getIntent().getExtras() != null) {
                 tab = getIntent().getIntExtra("tab", 0);
-                int day = getIntent().getIntExtra("day", selectedDate.getDay());
-                int month = getIntent().getIntExtra("month", selectedDate.getMonth());
-                int year = getIntent().getIntExtra("year", selectedDate.getYear());
-                selectedDate = new MyDate(day, month, year);
-                selectedDate.setMonthName(MyDateUtils.getMonthName(this, month, year)[0]);
+                day = getIntent().getIntExtra("day", selectedDate.getDay());
+                month = getIntent().getIntExtra("month", selectedDate.getMonth());
+                year = getIntent().getIntExtra("year", selectedDate.getYear());
+                Log.d(LOG, "intent extras => tab: " + tab + " | day: " + day + " | month: " + month + " | year: " + year);
             }
+
+            setDate(day, month, year);
+            initToolbar();
+
+            // If activity is locked by Ad, load ad fragment / else load tabs
+            long lockTimer = MyDateUtils.getLockTimer(this, categoriesTag);
+            Log.d(LOG, "lockTimer: " + lockTimer);
+            if (lockTimer == 0) setAdLock(null);
+            else loadTabs(tab);
+
         }
         else {
-            Log.d(LOG, "savedInstance NOT null => get saved info and set toolbar date");
-            int day = savedInstanceState.getInt(STATE_DAY, selectedDate.getDay());
-            int month = savedInstanceState.getInt(STATE_MONTH, selectedDate.getMonth());
-            int year = savedInstanceState.getInt(STATE_YEAR, selectedDate.getYear());
-            int savedTab = savedInstanceState.getInt(STATE_TAB, 0);
-            selectedDate = new MyDate(day,month,year);
-            selectedDate.setMonthName(MyDateUtils.getMonthName(this, month, year)[0]);
-            tab = savedTab;
+            // The tabs fragments only work if I load the tabs twice after screen rotation...
+            // must be loaded here and onRestoreInstanceState todo: WHY??
+            loadTabs(tab);
         }
-
-        initToolbar();
-
-        // init tabs
-        prepareTabs();
-        setTabs();
-        setInitialTab(tab);
-
-        // get categories data
-        Log.d("debug-omg", "Is fragment null? " + (expensesFragment == null));
-        getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
 
     }
 
@@ -127,33 +133,52 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        // only working if I init tabs onCreate and here... ???
+        Log.i(LOG, "======== onRestoreInstanceState");
+        tab = savedInstanceState.getInt(STATE_TAB, 0);
+        int day = savedInstanceState.getInt(STATE_DAY, selectedDate.getDay());
+        int month = savedInstanceState.getInt(STATE_MONTH, selectedDate.getMonth());
+        int year = savedInstanceState.getInt(STATE_YEAR, selectedDate.getYear());
+        Log.d(LOG, "savedInstanceState => tab: " + tab + " | day: " + day + " | month: " + month + " | year: " + year);
 
-        // init tabs
-        prepareTabs();
-        setTabs();
-        setInitialTab(savedInstanceState.getInt(STATE_TAB, 0));
+        setDate(day, month, year);
+        initToolbar();
 
-        // get categories data
-        Log.d("debug-omg", "Is fragment null onRestore? " + (expensesFragment == null));
-        getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
-
+        // If activity is locked by Ad, load ad fragment / else load tabs
+        long lockTimer = MyDateUtils.getLockTimer(this, categoriesTag);
+        Log.d(LOG, "lockTimer: " + lockTimer);
+        if (lockTimer == 0) {
+            mMainGroup.setVisibility(View.GONE);
+            setAdLock(savedInstanceState);
+        }
+        else loadTabs(tab);
 
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.i(Tags.LOG_LIFECYCLE, "Main Activity onSaveInstanceState");
-        outState.putInt(STATE_TAB, viewPager.getCurrentItem());
+        Log.d(Tags.LOG_LIFECYCLE, "======== onSaveInstanceState");
+
+        int currentTab;
+        if (isAdFragment) currentTab = tab;
+        else currentTab = viewPager.getCurrentItem();
+
+        outState.putInt(STATE_TAB, currentTab);
         outState.putInt(STATE_DAY, selectedDate.getDay());
         outState.putInt(STATE_MONTH, selectedDate.getMonth());
         outState.putInt(STATE_YEAR, selectedDate.getYear());
+
     }
 
-    /* ===============================================================================
-                                         TOOLBAR
-     =============================================================================== */
+    /* =============================================================================================
+                                              TOOLBAR
+     ============================================================================================ */
+
+    private void setDate(int day, int month, int year) {
+        Log.d(LOG, "=> setDate");
+        selectedDate = new MyDate(day, month, year);
+        selectedDate.setMonthName(MyDateUtils.getMonthName(this, month, year)[0]);
+    }
 
     private void initToolbar() {
         Log.d(LOG, "=> Init toolbar");
@@ -174,7 +199,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
         mToolbarMonth.setText(nextDate.getMonthName());
         mToolbarYear.setText(String.valueOf(nextDate.getYear()));
         setToolbarMonthStyle();
-        getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
+        setCategoriesDataOnMonthChange(selectedDate.getMonth(), selectedDate.getYear());
 
         Log.d(LOG, "Next month: " + nextDate.getMonthName());
     }
@@ -185,7 +210,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
         mToolbarMonth.setText(prevDate.getMonthName());
         mToolbarYear.setText(String.valueOf(prevDate.getYear()));
         setToolbarMonthStyle();
-        getCategoriesData(selectedDate.getMonth(), selectedDate.getYear());
+        setCategoriesDataOnMonthChange(selectedDate.getMonth(), selectedDate.getYear());
 
         Log.d(LOG, "Previous month: " + prevDate.getMonthName());
     }
@@ -198,13 +223,19 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
         else mToolbarMonth.setTextAppearance(R.style.ToolbarMonth);
     }
 
+    /* =============================================================================================
+                                               TABS
+     ============================================================================================ */
 
-    /* ===============================================================================
-                                           TABS
-     =============================================================================== */
+    private void loadTabs(int tab) {
+        Log.d(LOG, "==========> load tabs: " + tab);
+        prepareTabs();
+        setTabs();
+        setInitialTab(tab);
+    }
 
     private void prepareTabs() {
-        // Tabs
+        Log.d(LOG, "=========> prepare tabs");
         List<Fragment> tabFragments = new ArrayList<>();
         tabFragments.add(incomeFragment);
         tabFragments.add(expensesFragment);
@@ -212,59 +243,72 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     }
 
     private void setTabs() {
+        Log.d(LOG, "==========> setTabs");
         viewPager.setAdapter(tabsAdapter);
         viewPager.setOffscreenPageLimit(2);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             if (position == 0) tab.setText(R.string.title_income);
             else tab.setText(R.string.title_expense);
+            setCategoriesDataOnMonthChange(selectedDate.getMonth(), selectedDate.getYear());
         }).attach();
     }
 
     private void setInitialTab(int tab) {
-        Log.d("debug-categories", "TYPE => " + tab);
-        viewPager.setCurrentItem(tab);
+        Log.d(LOG, "=> setInitialTab => TYPE: " + tab);
+        viewPager.setCurrentItem(tab, false);
+    }
+
+    /* =============================================================================================
+                                               ADS
+     ============================================================================================ */
+
+    private void setAdLock(Bundle savedInstanceState) {
+        isAdFragment = true;
+        if (savedInstanceState == null) loadAdLockFragment();
+        else mAdLock = (AdLockFragment) getSupportFragmentManager().findFragmentByTag(Tags.adLockTag);
+    }
+
+    private void loadAdLockFragment() {
+        Log.d(LOG, "=> loadAdLockFragment");
+        mMainGroup.setVisibility(View.GONE);
+        mAdLock = AdLockFragment.newInstance(categoriesTag);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.category_content_frame, mAdLock, Tags.adLockTag);
+        transaction.commit();
+    }
+
+    private void destroyAdLockFragment() {
+        Log.d(LOG, "=> destroyAdLockFragment");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.remove(mAdLock);
+        transaction.commit();
+        mMainGroup.setVisibility(View.VISIBLE);
     }
 
 
-    /* ===============================================================================
-                                           DATA
-     =============================================================================== */
+    /* =============================================================================================
+                                             INTERFACE
+     ============================================================================================ */
 
-    private void getCategoriesData(int month, int year) {
-        TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
-        Handler handler = new Handler(Looper.getMainLooper());
-        AppDatabase.dbExecutor.execute(() -> {
-
-            float accumulated = transactionDao.getAccumulated(month, year);
-            List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
-            List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
-
-            handler.post(() -> {
-
-                // Set accumulated
-                CategoryResponse accumulatedCategory = new CategoryResponse(0, accumulated, getString(R.string.label_accumulated), 16, 71);
-                if (accumulated > 0) {
-                    incomeCategories.add(0, accumulatedCategory);
-                    incomeCategories.sort(ListSort.categoryResponseComparator);
-                }
-                else if (accumulated < 0) {
-                    expensesCategories.add(0, accumulatedCategory);
-                    expensesCategories.sort(ListSort.categoryResponseComparator);
-                }
-
-                expensesFragment.setExpensesCategoriesData(expensesCategories);
-                incomeFragment.setIncomeCategoriesData(incomeCategories);
-            });
-
-        });
+    // Ads
+    @Override
+    public void onAdFragmentDismiss(boolean isRewardGranted) {
+        Log.d(LOG, "dismiss ad fragment. isRewardGranted: " + isRewardGranted);
+        isAdFragment = false;
+        if (isRewardGranted) {
+            destroyAdLockFragment();
+            loadTabs(tab);
+        }
+        else onBackPressed();
     }
 
+    // Fragments
     @Override
     public void showCategoryDetails(CategoryPercent category) {
 
         selectedCategory = category;
 
-        Log.d("debug-category", category.getName() + " = " + category.getTotal());
+        Log.d(LOG, "=> showCategoryDetails: " + category.getName() + " = " + category.getTotal());
 
         TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
         Handler handler = new Handler(Looper.getMainLooper());
@@ -301,5 +345,89 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     public List<CategoryItemResponse> getCategoryItems() {
         return categoryItems;
     }
+
+    @Override
+    public MyDate getSelectedDate() {
+        return selectedDate;
+    }
+
+
+
+    /* =============================================================================================
+                                                DATA
+     ============================================================================================ */
+
+    private void setCategoriesDataOnMonthChange(int month, int year) {
+        Log.d(LOG, "======== getCategoriesDataOnMonthChange");
+
+        TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            Log.d(LOG, "month: " + month + " | year: " + year);
+
+            float accumulated = transactionDao.getAccumulated(month, year);
+            List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
+            List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
+
+            handler.post(() -> {
+
+                Log.d(LOG, "data successfully retrieved");
+
+                // Set accumulated
+                CategoryResponse accumulatedCategory = new CategoryResponse(0, accumulated, getString(R.string.label_accumulated), 16, 71);
+                if (accumulated > 0) {
+                    incomeCategories.add(0, accumulatedCategory);
+                    incomeCategories.sort(ListSort.categoryResponseComparator);
+                }
+                else if (accumulated < 0) {
+                    expensesCategories.add(0, accumulatedCategory);
+                    expensesCategories.sort(ListSort.categoryResponseComparator);
+                }
+
+                expensesFragment.setExpensesCategoriesData(expensesCategories);
+                incomeFragment.setIncomeCategoriesData(incomeCategories);
+
+            });
+
+        });
+    }
+
+
+//    private void getCategoriesData(int month, int year, int type) {
+//        Log.d(LOG, "=> getCategoriesData");
+//
+//        TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
+//        Handler handler = new Handler(Looper.getMainLooper());
+//        AppDatabase.dbExecutor.execute(() -> {
+//
+//            Log.d(LOG, "month: " + month + " | year: " + year);
+//
+//            float accumulated = transactionDao.getAccumulated(month, year);
+//            List<CategoryResponse> categories = transactionDao.getCategoriesWithTotals(month, year, type);
+//
+//            handler.post(() -> {
+//
+//                Log.d(LOG, "data successfully retrieved");
+//
+//                // Set accumulated
+//                CategoryResponse accumulatedCategory = new CategoryResponse(0, accumulated, getString(R.string.label_accumulated), 16, 71);
+//                if (accumulated > 0 && type == Tags.TYPE_IN) {
+//                    categories.add(0, accumulatedCategory);
+//                    categories.sort(ListSort.categoryResponseComparator);
+//                }
+//                else if (accumulated < 0 && type == Tags.TYPE_OUT) {
+//                    categories.add(0, accumulatedCategory);
+//                    categories.sort(ListSort.categoryResponseComparator);
+//                }
+//
+//                if (type == Tags.TYPE_OUT) expensesFragment.setExpensesCategoriesData(categories);
+//                else incomeFragment.setIncomeCategoriesData(categories);
+//
+//            });
+//
+//        });
+//    }
+
 
 }

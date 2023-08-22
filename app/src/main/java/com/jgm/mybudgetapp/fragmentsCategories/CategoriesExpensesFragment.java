@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.CategoryPercentAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesPagerBinding;
@@ -23,6 +25,7 @@ import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.utils.CategoryUtils;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,8 @@ public class CategoriesExpensesFragment extends Fragment {
     public CategoriesExpensesFragment() {
         // Required empty public constructor
     }
+
+    private static final String LOG = "debug-categories";
 
     // UI
     private FragmentCategoriesPagerBinding binding;
@@ -47,11 +52,14 @@ public class CategoriesExpensesFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
+    private CategoryInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
+        mInterface = (CategoryInterface) context;
+        Log.d(Tags.LOG_LIFECYCLE, "onAttach --- categories expenses");
     }
 
     @Override
@@ -62,9 +70,17 @@ public class CategoriesExpensesFragment extends Fragment {
         View view = binding.getRoot();
         bindViews();
 
-        Log.w("omg", "onCreateView ");
+        Log.d("debug-categories", "CategoriesExpensesData onCreateView ");
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.w("debug-categories", "onViewCreated - expense");
+
     }
 
     /* ===============================================================================
@@ -73,7 +89,8 @@ public class CategoriesExpensesFragment extends Fragment {
 
     public void setExpensesCategoriesData(List<CategoryResponse> categories) {
 
-        Log.w("omg", "is imageView null? " + (mChartImage == null));
+        Log.w("debug-categories", "setExpensesCategoriesData => " + categories.size());
+        Log.w("debug-categories", "is image null => " + (mChartImage == null));
 
         if (mChartImage != null) {
             mChartImage.post(() -> {

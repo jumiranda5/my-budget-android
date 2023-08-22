@@ -1,7 +1,14 @@
 package com.jgm.mybudgetapp;
 
+import static com.jgm.mybudgetapp.utils.Tags.adLockTag;
+import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
+import static com.jgm.mybudgetapp.utils.Tags.yearTag;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,19 +32,25 @@ import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
+import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class YearActivity extends AppCompatActivity {
+public class YearActivity extends AppCompatActivity implements AdInterface {
 
     private static final String LOG = "debug-year";
+    private static final String STATE_AD = "ad";
+    private static final String STATE_YEAR = "year";
+
+    private AdLockFragment mAdLock;
 
     // VARS
     private MyDate mCurrentDate;
     private int year;
     private TransactionDao transactionDao;
+    private boolean isAdFragment;
 
     // UI
     private ActivityYearBinding binding;
@@ -44,11 +58,13 @@ public class YearActivity extends AppCompatActivity {
             mIncome, mIncomeCurrency,
             mExpense, mExpenseCurrency,
             mYear;
+    private Group mMainGroup;
     private ImageView mChart;
     private ImageButton mBack, mNextYear, mPrevYear;
     private RecyclerView mBalanceList, mIncomeList, mExpenseList;
 
     private void setBinding() {
+        mMainGroup = binding.groupYearMain;
         mYear = binding.toolbarYear;
         mBalance = binding.yearBalanceTotal;
         mIncome = binding.yearIncomeTotal;
@@ -69,18 +85,51 @@ public class YearActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.w(LOG, "====> activity on create");
+
         binding = ActivityYearBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBinding();
 
+        mMainGroup.setVisibility(View.GONE);
+
         transactionDao = AppDatabase.getDatabase(this).TransactionDao();
 
         mCurrentDate = MyDateUtils.getCurrentDate(this);
-        year = mCurrentDate.getYear();
+
+        if (savedInstanceState == null) year = mCurrentDate.getYear();
+        else year = savedInstanceState.getInt(STATE_YEAR);
 
         initToolbar();
-        getYearData();
 
+        if (savedInstanceState == null) {
+            long lockTimer = MyDateUtils.getLockTimer(this, yearTag);
+            if (lockTimer == 0) setAdLock();
+            else getYearData();
+        }
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        Log.w(LOG, "====> activity on restore");
+
+        isAdFragment = savedInstanceState.getBoolean(STATE_AD);
+
+        if (isAdFragment) {
+            mAdLock = (AdLockFragment) getSupportFragmentManager().findFragmentByTag(adLockTag);
+        }
+        else getYearData();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_YEAR, year);
+        outState.putBoolean(STATE_AD, isAdFragment);
     }
 
     // Set toolbar year and buttons
@@ -119,6 +168,7 @@ public class YearActivity extends AppCompatActivity {
 
             handler.post(() -> {
                 Log.d(LOG, "Data successfully retrieved");
+                mMainGroup.setVisibility(View.VISIBLE);
                 setBalanceTotal(totals, yearMonths);
                 setIncomeTotals(totals, yearMonths);
                 setExpenseTotals(totals, yearMonths);
@@ -258,4 +308,40 @@ public class YearActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
+    /* ===============================================================================
+                                     AD FRAGMENT
+     =============================================================================== */
+
+    private void setAdLock() {
+        loadAdLockFragment();
+        isAdFragment = true;
+    }
+
+    private void loadAdLockFragment() {
+        Log.d(LOG, "loadAdLockFragment");
+        mAdLock = AdLockFragment.newInstance(yearTag);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.year_content_frame, mAdLock, Tags.adLockTag);
+        transaction.commit();
+    }
+
+    private void destroyAdLockFragment() {
+        Log.d(LOG, "destroyAdLockFragment");
+        // todo: taking too long to destroy fragment... ???
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.remove(mAdLock);
+        transaction.commit();
+    }
+
+    @Override
+    public void onAdFragmentDismiss(boolean isRewardGranted) {
+        Log.d(LOG, "onAdFragmentDismiss");
+        if (isRewardGranted) {
+            destroyAdLockFragment();
+            getYearData();
+            isAdFragment = false;
+        }
+        else onBackPressed();
+    }
 }

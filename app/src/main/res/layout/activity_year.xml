@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".YearActivity">
 
+    <!-- Ad content frame -->
+    <FrameLayout
+        android:id="@+id/year_content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Toolbar -->
 
     <androidx.appcompat.widget.Toolbar
@@ -64,6 +74,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/year_scroll_view"
         style="@style/MyNestedScrollView"
         android:layout_height="0dp"
         android:paddingBottom="@dimen/year_chart_margin"
@@ -220,16 +231,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_list_label"
-                tools:listitem="@layout/item_year_month"
-                tools:itemCount="2"/>
+                tools:itemCount="2"
+                tools:listitem="@layout/item_year_month" />
 
             <!-- Income list -->
 
             <TextView
                 android:id="@+id/year_income_list_label"
                 style="@style/MySubtitle1"
-                android:text="@string/label_income_dots"
                 android:layout_marginTop="@dimen/year_chart_margin"
+                android:text="@string/label_income_dots"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_list" />
 
@@ -240,16 +251,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_list_label"
-                tools:listitem="@layout/item_year_month"
-                tools:itemCount="2"/>
+                tools:itemCount="2"
+                tools:listitem="@layout/item_year_month" />
 
             <!-- Expense list -->
 
             <TextView
                 android:id="@+id/year_expense_list_label"
                 style="@style/MySubtitle1"
-                android:text="@string/label_expense_dots"
                 android:layout_marginTop="@dimen/year_chart_margin"
+                android:text="@string/label_expense_dots"
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_list" />
 
@@ -260,9 +271,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/year_expense_list_label"
-                tools:listitem="@layout/item_year_month"
-                tools:itemCount="2"/>
+                tools:itemCount="2"
+                tools:listitem="@layout/item_year_month" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_year_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="year_toolbar, year_scroll_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
