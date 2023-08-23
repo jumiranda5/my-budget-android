@@ -1,5 +1,6 @@
 package com.jgm.mybudgetapp.fragmentsSettings;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,7 +20,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import com.google.android.ump.ConsentForm;
+import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentRequestParameters;
+import com.google.android.ump.UserMessagingPlatform;
 import com.jgm.mybudgetapp.R;
+import com.jgm.mybudgetapp.SettingsActivity;
 import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.databinding.FragmentSettingsBinding;
 import com.jgm.mybudgetapp.room.AppDatabase;
@@ -34,13 +40,14 @@ public class SettingsFragment extends Fragment {
     }
 
     private static final String LOG_SETTINGS = "debug-settings";
+    private static final String LOG_UMP = "debug-consent";
 
     // UI
     private NestedScrollView mNestedScrollView;
     private ProgressBar mProgressBar;
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
-    private Button mOpenCategories, mOpenCreditCards, mClearDatabase;
+    private Button mOpenCategories, mOpenCreditCards, mClearDatabase, mReviewConsent;
     private ImageButton mBack;
 
     private void setBinding() {
@@ -51,6 +58,7 @@ public class SettingsFragment extends Fragment {
         mOpenCategories = binding.settingsEditCategories;
         mOpenCreditCards = binding.settingsEditCards;
         mClearDatabase = binding.settingsClearData;
+        mReviewConsent = binding.settingsReviewAdsConsent;
     }
 
     // Interfaces
@@ -97,6 +105,7 @@ public class SettingsFragment extends Fragment {
                     getString(R.string.action_reset_database),
                     R.drawable.ic_48_dangerous_300);
         });
+        mReviewConsent.setOnClickListener(v -> requestLatestConsentInformation());
         mBack.setOnClickListener(v -> mInterface.navigateBack());
     }
 
@@ -137,5 +146,50 @@ public class SettingsFragment extends Fragment {
             });
 
         });
+    }
+
+
+    /* ---------------------------------------------------------------------------------------------
+                                             ADS CONSENT
+     -------------------------------------------------------------------------------------------- */
+
+
+    private void requestLatestConsentInformation() {
+        Log.d(LOG_UMP, "LOADING CONSENT");
+
+        // Set tag for underage of consent. false means users are not underage.
+        ConsentRequestParameters params = new ConsentRequestParameters
+                .Builder()
+                .setTagForUnderAgeOfConsent(false)
+                .build();
+
+        // Consent
+        ConsentInformation consentInformation = UserMessagingPlatform.getConsentInformation(mContext);
+        Log.d(LOG_UMP, "Consent status: " + consentInformation.getConsentStatus());
+        consentInformation.reset();
+
+        consentInformation.requestConsentInfoUpdate(
+                (SettingsActivity) mContext,
+                params,
+                (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
+                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
+                            (SettingsActivity) mContext,
+                            (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
+                                if (loadAndShowError != null) {
+                                    // Consent gathering failed.
+                                    Log.w(LOG_UMP, String.format("%s: %s",
+                                            loadAndShowError.getErrorCode(),
+                                            loadAndShowError.getMessage()));
+                                }
+                            }
+                    );
+                },
+                (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
+                    // Consent gathering failed.
+                    Log.w(LOG_UMP, String.format("%s: %s",
+                            requestConsentError.getErrorCode(),
+                            requestConsentError.getMessage()));
+                });
+
     }
 }

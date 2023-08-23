@@ -59,6 +59,7 @@ public class AdLockFragment extends Fragment {
     private RewardedAd rewardedAd;
     private boolean isRewardGranted = false;
     private String prefsTag;
+    private String ad_unit;
 
     // UI
     private FragmentAdLockBinding binding;
@@ -139,12 +140,15 @@ public class AdLockFragment extends Fragment {
         switch (mPage) {
             case Tags.transactionFormTag:
                 mPageTitle.setText("Form");
+                ad_unit = mContext.getString(R.string.ad_form);
                 break;
             case Tags.categoriesTag:
                 mPageTitle.setText("Categories");
+                ad_unit = mContext.getString(R.string.ad_categories);
                 break;
             case Tags.yearTag:
                 mPageTitle.setText("Year Balance");
+                ad_unit = mContext.getString(R.string.ad_year);
                 break;
         }
     }
@@ -203,7 +207,7 @@ public class AdLockFragment extends Fragment {
     private void loadAd() {
         setAdButtonLoading();
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(mContext, "ca-app-pub-3940256099942544/5224354917",
+        RewardedAd.load(mContext, ad_unit,
                 adRequest, new RewardedAdLoadCallback() {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {

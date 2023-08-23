@@ -21,6 +21,10 @@ import android.util.Log;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.ump.ConsentForm;
+import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentRequestParameters;
+import com.google.android.ump.UserMessagingPlatform;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.fragmentsMain.CategoriesFormFragment;
@@ -42,6 +46,7 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
     // todo: handle archive button on category form
     // todo: something is wrong with dark mode after screen rotation
     // todo: credit card archive is returning to settings. Should return to card list...
+    // todo: add loader on review ads button click
 
     // Constants
     private static final String LOG_SETTINGS = "debug-settings";

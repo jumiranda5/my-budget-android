@@ -208,13 +208,32 @@
                 app:srcCompat="@drawable/ic_48_policy_300" />
 
             <Button
+                android:id="@+id/settings_review_ads_consent"
+                style="@style/SettingsButton"
+                android:text="Review Ads Consent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settings_privacy_policy" />
+
+            <ImageView
+                android:id="@+id/settings_ads_icon"
+                style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
+                android:padding="@dimen/settings_icon_padding"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_review_ads_consent"
+                app:layout_constraintStart_toStartOf="@+id/settings_review_ads_consent"
+                app:layout_constraintTop_toTopOf="@+id/settings_review_ads_consent"
+                app:srcCompat="@drawable/ic_48_ads_click_fill0_300" />
+
+            <Button
                 android:id="@+id/settings_clear_data"
                 style="@style/SettingsButton"
                 android:text="@string/action_reset_database"
                 android:textColor="@color/danger"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_privacy_policy" />
+                app:layout_constraintTop_toBottomOf="@+id/settings_review_ads_consent" />
 
             <ImageView
                 android:id="@+id/settings_clear_data_icon"
