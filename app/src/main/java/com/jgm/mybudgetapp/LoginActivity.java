@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
 
@@ -20,64 +21,71 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.ProductDetails;
-import com.android.billingclient.api.ProductDetailsResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.QueryPurchasesParams;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.ump.ConsentForm;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
-import com.google.common.collect.ImmutableList;
 import com.jgm.mybudgetapp.databinding.ActivityLoginBinding;
 import com.jgm.mybudgetapp.utils.Populate;
 import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
+
+    // Login flow:
+    // - check device credentials =>
+    //      if ok, proceed to Billing Client.
+    //      Else, stop and show error
+    // - billing client: query purchases =>
+    //      if premium user, show auth prompt.
+    //      Else, init ads and show auth
 
     private static final String LOG = "debug-login";
     private static final String LOG_UMP = "debug-consent";
     private static final String LOG_AUTH = "debug-auth";
     private static final String LOG_BILLING = "debug-billing";
     private boolean keep = true;
+    private boolean hasWarning = false;
 
     // Consent
     private ConsentInformation consentInformation;
 
-    // Authentication
-    private Executor executor;
-    private BiometricPrompt biometricPrompt;
-    private BiometricPrompt.PromptInfo promptInfo;
-
     // Billing
     private BillingClient billingClient;
-    private ProductDetails productDetails;
 
     // UI
     private ActivityLoginBinding binding;
-    private Button mLoginButton, mBuyPremiumAccess;
-    private ProgressBar mBillingProgressBar;
+    private Button mContinueButton, mRetryButton;
+    private ProgressBar mProgressBar;
+    private Group mIapGroup, mAdsGroup, mAuthGroup;
+    private TextView mAuthMessage;
+    private ImageView mLockIcon;
 
     private void setBinding() {
-        mLoginButton = binding.loginButton;
-        mBuyPremiumAccess = binding.buttonTestBilling;
-        mBillingProgressBar = binding.progressBarTestBilling;
+        mContinueButton = binding.loginContinueButton;
+        mRetryButton = binding.loginRetryButton;
+        mProgressBar = binding.loginProgressBar;
+        mIapGroup = binding.groupLoginIap;
+        mAdsGroup = binding.groupLoginAds;
+        mAuthGroup = binding.groupLoginAuth;
+        mAuthMessage = binding.loginAuthWarning;
+        mLockIcon = binding.loginIcon;
     }
 
     @Override
@@ -92,13 +100,27 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setBinding();
 
-        if (savedInstanceState == null) handleSplashScreenDelay(splashScreen);
+        handleSplashScreenDelay(splashScreen);
 
-        // set purchase button to disable until connection is ready
-        mBuyPremiumAccess.setEnabled(false);
-        mBuyPremiumAccess.setOnClickListener(v -> launchBillingFlow());
+        mRetryButton.setOnClickListener(v -> {
+            initBillingClient();
+            checkDeviceCredentials();
+            mProgressBar.setVisibility(View.VISIBLE);
+            mAuthGroup.setVisibility(View.GONE);
+            mAdsGroup.setVisibility(View.GONE);
+            mIapGroup.setVisibility(View.GONE);
+            mContinueButton.setVisibility(View.GONE);
+            mRetryButton.setVisibility(View.GONE);
+        });
+
+        mContinueButton.setOnClickListener(v -> initAuthPrompt());
 
     }
+
+    // verify if user is premium
+    // if premium => init authentication
+    // if not premium => init admob => init authentication
+
 
     /* ---------------------------------------------------------------------------------------------
                                           SPLASH SCREEN
@@ -110,102 +132,94 @@ public class LoginActivity extends AppCompatActivity {
 
         splashScreen.setKeepOnScreenCondition(() -> keep);
 
-        mLoginButton.setEnabled(false);
+        Populate.initDefaultAccounts(this);
+        Populate.initDefaultCategories(this);
 
-        requestLatestConsentInformation();
+        initBillingClient();
 
         int DELAY = 1000;
         Handler handler = new Handler();
         handler.postDelayed(() -> {
 
-            Populate.initDefaultAccounts(this);
-            Populate.initDefaultCategories(this);
-
-            checkDeviceAuth();
-            initAuthPrompt();
-
-            initBillingClient();
-            connectToGooglePlay();
+            checkDeviceCredentials();
 
             keep = false;
 
         }, DELAY);
     }
 
-    private void enablePurchaseButton() {
-        mBillingProgressBar.setVisibility(View.GONE);
-        mBuyPremiumAccess.setEnabled(true);
-    }
-
-
     /* ---------------------------------------------------------------------------------------------
                                           AUTHENTICATION
      -------------------------------------------------------------------------------------------- */
 
     // Check if the device supports biometric authentication
-    private void checkDeviceAuth() {
+    private void checkDeviceCredentials() {
         BiometricManager biometricManager = BiometricManager.from(this);
-        switch (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)) {
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                Log.d(LOG_AUTH, "App can authenticate using biometrics.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Log.e(LOG_AUTH, "No biometric features available on this device.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Log.e(LOG_AUTH, "Biometric features are currently unavailable.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Log.e(LOG_AUTH, "Biometric features are currently not enrolled.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED:
-                Log.e(LOG_AUTH, "Biometric features are unsupported.");
-                break;
-            case BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED:
-                Log.e(LOG_AUTH, "Biometric security update required.");
-                break;
-            case BiometricManager.BIOMETRIC_STATUS_UNKNOWN:
-                Log.e(LOG_AUTH, "Biometric status unknown.");
-                break;
+        if (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
+                == BiometricManager.BIOMETRIC_SUCCESS) {
+            Log.d(LOG_AUTH, "App can authenticate using biometrics.");
+            connectToGooglePlay();
+        }
+        else {
+            Log.e(LOG_AUTH, "Biometric features are currently not available.");
+            mAuthGroup.setVisibility(View.VISIBLE);
+            mRetryButton.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
     // Show the prompt
     private void initAuthPrompt() {
-
-        // todo: show message when auth fails
-
-        executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(LoginActivity.this, executor,
+        Log.d(LOG_AUTH, "Should init auth prompt");
+        // Authentication
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor,
                 new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-                Log.e(LOG_AUTH, "onAuthenticationError: " + errString);
-            }
+                    @Override
+                    public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                        super.onAuthenticationError(errorCode, errString);
+                        Log.e(LOG_AUTH, "onAuthenticationError: " + errString);
+                        showAuthError();
+                    }
 
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                Log.d(LOG_AUTH, "Successfully authenticated.");
-                startMainActivity();
-            }
+                    @Override
+                    public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        Log.d(LOG_AUTH, "Successfully authenticated.");
+                        mLockIcon.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_48_lock_open_fill0_200));
+                        mRetryButton.setVisibility(View.GONE);
+                        mContinueButton.setVisibility(View.GONE);
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        mAuthGroup.setVisibility(View.GONE);
+                        mAdsGroup.setVisibility(View.GONE);
+                        mIapGroup.setVisibility(View.GONE);
+                        startMainActivity();
+                    }
 
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                Log.d(LOG_AUTH, "onAuthenticationFailed");
-            }
-        });
+                    @Override
+                    public void onAuthenticationFailed() {
+                        super.onAuthenticationFailed();
+                        Log.d(LOG_AUTH, "onAuthenticationFailed");
+                        showAuthError();
+                    }
+                });
 
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
                 .setAllowedAuthenticators(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
                 .build();
 
-        mLoginButton.setOnClickListener(v -> biometricPrompt.authenticate(promptInfo));
+        biometricPrompt.authenticate(promptInfo);
+        mRetryButton.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+    }
 
+    private void showAuthError() {
+        mAuthGroup.setVisibility(View.VISIBLE);
+        mRetryButton.setVisibility(View.VISIBLE);
+        mAuthMessage.setText(getString(R.string.auth_fail));
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private void startMainActivity() {
@@ -222,7 +236,12 @@ public class LoginActivity extends AppCompatActivity {
         // Disable login button until ads library is initialized
         MobileAds.initialize(this, initializationStatus -> {
             Log.d(LOG_UMP, "MobileAds initialized");
-            mLoginButton.setEnabled(true);
+            if (!hasWarning) initAuthPrompt();
+            else {
+                mRetryButton.setVisibility(View.VISIBLE);
+                mContinueButton.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+            }
         });
     }
 
@@ -254,7 +273,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.w(LOG_UMP, String.format("%s: %s",
                                             loadAndShowError.getErrorCode(),
                                             loadAndShowError.getMessage()));
-                                    mLoginButton.setEnabled(true);
+                                    showAdsFailureWarning();
                                 }
 
                                 // Consent has been gathered.
@@ -269,16 +288,13 @@ public class LoginActivity extends AppCompatActivity {
                     Log.w(LOG_UMP, String.format("%s: %s",
                             requestConsentError.getErrorCode(),
                             requestConsentError.getMessage()));
-
-                    mLoginButton.setEnabled(true);
+                    showAdsFailureWarning();
                 });
+    }
 
-        // Check if you can initialize the Google Mobile Ads SDK in parallel
-        // while checking for new consent information. Consent obtained in
-        // the previous session can be used to request ads.
-        if (consentInformation.canRequestAds()) {
-            initializeAdsSdk();
-        }
+    private void showAdsFailureWarning() {
+        mAdsGroup.setVisibility(View.VISIBLE);
+        hasWarning = true;
     }
 
 
@@ -290,36 +306,13 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(LOG_BILLING, "=> initBillingClient");
 
         PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, purchases) -> {
-            Log.d(LOG_BILLING, "BillingClient: onPurchaseUpdated");
-
-            int responseCode = billingResult.getResponseCode();
-
-            if (purchases != null) {
-                switch (responseCode) {
-                    case BillingClient.BillingResponseCode.OK:
-                        Log.i(LOG_BILLING, "onPurchasesUpdated: OK");
-                        for (Purchase purchase : purchases) {
-                            handlePurchase(purchase);
-                        }
-                        break;
-                    case BillingClient.BillingResponseCode.USER_CANCELED:
-                        Log.i(LOG_BILLING, "onPurchasesUpdated: User canceled the purchase");
-                        break;
-                    case BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED:
-                        Log.i(LOG_BILLING, "onPurchasesUpdated: The user already owns this item");
-                        break;
-                    default:
-                        Log.e(LOG_BILLING, "Error: " + responseCode + " | " + billingResult.getDebugMessage());
-                }
-            }
-
+            Log.w(LOG_BILLING, "No purchases updates on this activity");
         };
 
         billingClient = BillingClient.newBuilder(this)
                 .setListener(purchasesUpdatedListener)
                 .enablePendingPurchases()
                 .build();
-
     }
 
     private void connectToGooglePlay() {
@@ -328,7 +321,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
 
                 int responseCode = billingResult.getResponseCode();
-
                 if (responseCode == BillingClient.BillingResponseCode.OK) {
 
                     Log.d(LOG_BILLING, "Billing client is ready!");
@@ -336,161 +328,36 @@ public class LoginActivity extends AppCompatActivity {
                     BillingResult supportsProductDetail = billingClient.isFeatureSupported(PRODUCT_DETAILS);
                     if ( supportsProductDetail.getResponseCode() != BillingClient.BillingResponseCode.OK ) {
                         Log.e(LOG_BILLING, "feature unsupported - show warning to user...");
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            mIapGroup.setVisibility(View.VISIBLE);
+                            hasWarning = true;
+                            requestLatestConsentInformation();
+                        });
                     }
-                    else queryProducts();
-
-                    // todo: for login activity: query purchases
-                    queryPurchases();
+                    else queryPurchases();
 
                 }
                 else {
-                    // Try to restart the connection on the next request to
-                    // Google Play by calling the startConnection() method.
+                    // Show warning
                     Log.e(LOG_BILLING, "Billing client not connected: " + billingResult.getDebugMessage());
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        mIapGroup.setVisibility(View.VISIBLE);
+                        hasWarning = true;
+                        requestLatestConsentInformation();
+                    });
                 }
             }
 
             @Override
             public void onBillingServiceDisconnected() {
                 Log.d(LOG_BILLING, "BillingClient disconnected");
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    mIapGroup.setVisibility(View.VISIBLE);
+                    hasWarning = true;
+                    requestLatestConsentInformation();
+                });
             }
         });
-
-    }
-
-    private void queryProducts() {
-        Log.d(LOG_BILLING, "querySkuDetails");
-
-        String productId = getString(R.string.product_id);
-
-        QueryProductDetailsParams queryProductDetailsParams = QueryProductDetailsParams.newBuilder()
-                .setProductList(
-                        ImmutableList.of(
-                                QueryProductDetailsParams.Product.newBuilder()
-                                        .setProductId(productId)
-                                        .setProductType(BillingClient.ProductType.INAPP)
-                                        .build()))
-                .build();
-
-
-        billingClient.queryProductDetailsAsync(queryProductDetailsParams, new ProductDetailsResponseListener() {
-            @Override
-            public void onProductDetailsResponse(@NonNull BillingResult billingResult,
-                                                 @NonNull List<ProductDetails> list) {
-
-                // check billingResult
-                // process returned productDetailsList
-
-                int responseCode = billingResult.getResponseCode();
-                String debugMessage = billingResult.getDebugMessage();
-
-                if (responseCode == BillingClient.BillingResponseCode.OK) {
-                    if (list.size() > 0) {
-
-                        // This app only offers 1 product
-                        productDetails = list.get(0);
-
-                        Log.d(LOG_BILLING, "onProductDetailsResponse: \n" +
-                                productDetails.getName() + "\n" +
-                                productDetails.getDescription() + "\n" +
-                                productDetails.getProductType() + "\n" +
-                                Objects.requireNonNull(list.get(0).getOneTimePurchaseOfferDetails()).getFormattedPrice());
-
-                        new Handler(Looper.getMainLooper()).post(() -> enablePurchaseButton());
-                    }
-
-                }
-                else {
-                    Log.e(LOG_BILLING, debugMessage);
-                }
-
-            }
-        });
-
-    }
-
-    private void launchBillingFlow() {
-
-        ImmutableList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList =
-                ImmutableList.of(
-                        BillingFlowParams.ProductDetailsParams.newBuilder()
-                                .setProductDetails(productDetails)
-                                .build()
-                );
-
-        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
-                .setProductDetailsParamsList(productDetailsParamsList)
-                .build();
-
-
-        // Launch the billing flow
-        BillingResult billingResult = billingClient.launchBillingFlow(LoginActivity.this, billingFlowParams);
-        Log.d(LOG, "launchBillingFlow: response: " + billingResult.getDebugMessage());
-
-        int responseCode = billingResult.getResponseCode();
-        switch (responseCode) {
-            case BillingClient.BillingResponseCode.OK:
-                Log.i(LOG_BILLING, "OK");
-                break;
-            case BillingClient.BillingResponseCode.SERVICE_DISCONNECTED:
-                Log.i(LOG_BILLING, "Service disconnected");
-                break;
-            case BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE:
-                Log.i(LOG_BILLING, "Service unavailable");
-                break;
-            case BillingClient.BillingResponseCode.BILLING_UNAVAILABLE:
-                Log.i(LOG_BILLING, "Billing unavailable");
-                break;
-            case BillingClient.BillingResponseCode.ITEM_UNAVAILABLE:
-                Log.i(LOG_BILLING, "Item unavailable");
-                break;
-            case BillingClient.BillingResponseCode.DEVELOPER_ERROR:
-                Log.i(LOG_BILLING, "Developer error");
-                break;
-            case BillingClient.BillingResponseCode.ERROR:
-                Log.e(LOG_BILLING, "Error: " + billingResult.getDebugMessage());
-                break;
-            case BillingClient.BillingResponseCode.USER_CANCELED:
-                Log.i(LOG_BILLING, "User canceled");
-                break;
-            case BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED:
-                Log.i(LOG_BILLING, "Feature not supported");
-                break;
-            case BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED:
-                Log.i(LOG_BILLING, "Item already owned");
-                break;
-            default:
-                Log.d(LOG_BILLING, "onSkuDetailsResponse: " + billingResult.getDebugMessage());
-        }
-    }
-
-    private void handlePurchase(Purchase purchase) {
-        AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = billingResult -> {
-            int responseCode = billingResult.getResponseCode();
-            String debugMessage = billingResult.getDebugMessage();
-
-            if (responseCode == BillingClient.BillingResponseCode.OK)
-                Log.d(LOG_BILLING, "acknowledgePurchase: ok");
-            else
-                Log.e(LOG_BILLING, "acknowledgePurchase: responseCode: " + responseCode +
-                    "debugMessage: "  + debugMessage);
-        };
-
-        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-            Log.d(LOG_BILLING, "is acknowledged: " + purchase.isAcknowledged());
-            Log.d(LOG_BILLING, "id: " + purchase.getOrderId());
-
-            if (!purchase.isAcknowledged()) {
-
-                AcknowledgePurchaseParams acknowledgePurchaseParams =
-                        AcknowledgePurchaseParams.newBuilder()
-                                .setPurchaseToken(purchase.getPurchaseToken())
-                                .build();
-
-                billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
-
-            }
-        }
     }
 
     private void queryPurchases() {
@@ -501,17 +368,49 @@ public class LoginActivity extends AppCompatActivity {
                         .setProductType(BillingClient.ProductType.INAPP)
                         .build(),
                 new PurchasesResponseListener() {
-                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> purchases) {
-                        // check billingResult
-                        // process returned purchase list, e.g. display the plans user owns
-                        Log.d(LOG_BILLING, "purchases list size: " + purchases.size());
-                        if (purchases.size() > 0) {
-                            for (Purchase purchase : purchases) {
-                                handlePurchase(purchase);
-                            }
-                        }
+                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult,
+                                                         @NonNull List<Purchase> purchases) {
+                        processPurchase(purchases);
                     }
                 }
         );
     }
+
+    private void processPurchase(List<Purchase> purchases) {
+        Log.d(LOG_BILLING, "purchases list size: " + purchases.size());
+        if (purchases.size() > 0) {
+            for (Purchase purchase : purchases) {
+                handlePurchase(purchase);
+            }
+        }
+        else requestLatestConsentInformation();
+    }
+
+    private void handlePurchase(Purchase purchase) {
+        AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = billingResult -> {
+            // purchase is verified => init auth
+            new Handler(Looper.getMainLooper()).post(this::initAuthPrompt);
+        };
+
+        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+            Log.d(LOG_BILLING, "is acknowledged: " + purchase.isAcknowledged());
+            if (!purchase.isAcknowledged()) {
+                AcknowledgePurchaseParams acknowledgePurchaseParams =
+                        AcknowledgePurchaseParams.newBuilder()
+                                .setPurchaseToken(purchase.getPurchaseToken())
+                                .build();
+
+                billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
+            }
+            else {
+                // purchase is verified => init auth
+                new Handler(Looper.getMainLooper()).post(this::initAuthPrompt);
+            }
+        }
+        else {
+            // purchase not verified => init ads
+            new Handler(Looper.getMainLooper()).post(this::requestLatestConsentInformation);
+        }
+    }
+
 }

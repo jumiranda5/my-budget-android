@@ -6,34 +6,150 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/login_icon"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_48_lock_fill0_200" />
+
+    <TextView
+        android:id="@+id/login_title"
+        style="@style/MyHeadline6"
+        android:layout_marginTop="16dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_icon" />
+
+    <!-- IAP -->
+
+    <ImageView
+        android:id="@+id/login_iap_icon"
+        style="@style/IconNormal"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_iap_warning"
+        app:srcCompat="@drawable/ic_40_warning_fill1_400"
+        app:tint="@color/amber" />
+
+    <TextView
+        android:id="@+id/login_iap_warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/iap_connection_error_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_iap_icon"
+        app:layout_constraintTop_toBottomOf="@+id/login_title" />
+
+    <!-- ADS -->
+
+    <ImageView
+        android:id="@+id/login_ads_icon"
+        style="@style/IconNormal"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_ads_warning"
+        app:srcCompat="@drawable/ic_40_warning_fill1_400"
+        app:tint="@color/amber" />
+
+    <TextView
+        android:id="@+id/login_ads_warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/ads_initialization_error_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_ads_icon"
+        app:layout_constraintTop_toBottomOf="@+id/login_iap_warning" />
+
+    <!-- ADS -->
+
+    <ImageView
+        android:id="@+id/login_auth_icon"
+        style="@style/IconNormal"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/login_auth_warning"
+        app:srcCompat="@drawable/ic_40_error_fill1_400"
+        app:tint="@color/danger" />
+
+    <TextView
+        android:id="@+id/login_auth_warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/auth_credentials_not_configured"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_auth_icon"
+        app:layout_constraintTop_toBottomOf="@+id/login_ads_warning" />
+
+    <ProgressBar
+        android:id="@+id/login_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_auth_warning" />
 
     <Button
-        android:id="@+id/button_test_billing"
+        android:id="@+id/login_retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="In app purchase"
+        android:text="Retry"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        app:layout_constraintTop_toBottomOf="@+id/login_progressBar" />
 
-    <ProgressBar
-        android:id="@+id/progressBar_test_billing"
-        style="?android:attr/progressBarStyle"
+    <Button
+        android:id="@+id/login_continue_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button_test_billing"
-        app:layout_constraintEnd_toStartOf="@+id/button_test_billing"
-        app:layout_constraintTop_toTopOf="@+id/button_test_billing" />
+        android:layout_marginTop="24dp"
+        android:text="Continue"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_retry_button" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_login_iap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="login_iap_icon,login_iap_warning" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_login_ads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="login_ads_icon,login_ads_warning" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_login_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="login_auth_icon,login_auth_warning" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
