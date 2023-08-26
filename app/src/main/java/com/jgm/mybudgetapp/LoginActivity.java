@@ -388,7 +388,7 @@ public class LoginActivity extends AppCompatActivity {
                     handlePurchase(purchase);
                 }
             }
-            else requestLatestConsentInformation();
+            else new Handler(Looper.getMainLooper()).post(this::requestLatestConsentInformation);
 
         });
 

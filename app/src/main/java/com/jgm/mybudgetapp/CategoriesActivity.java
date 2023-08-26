@@ -32,6 +32,7 @@ import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.ListSort;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.Tags;
@@ -60,6 +61,7 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     private List<CategoryItemResponse> categoryItems;
     private int tab;
     private boolean isAdFragment;
+    private boolean isPremium = false;
 
     // UI
     private ActivityCategoriesBinding binding;
@@ -115,9 +117,10 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
             initToolbar();
 
             // If activity is locked by Ad, load ad fragment / else load tabs
+            isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
             long lockTimer = MyDateUtils.getLockTimer(this, categoriesTag);
             Log.d(LOG, "lockTimer: " + lockTimer);
-            if (lockTimer == 0) setAdLock(null);
+            if (!isPremium && lockTimer == 0) setAdLock(null);
             else loadTabs(tab);
 
         }
@@ -127,6 +130,12 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
             loadTabs(tab);
         }
 
+    }
+
+    protected void onResume() {
+        super.onResume();
+        Log.i(Tags.LOG_LIFECYCLE, "Main Activity onResume");
+        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
     }
 
     @Override
@@ -144,9 +153,10 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
         initToolbar();
 
         // If activity is locked by Ad, load ad fragment / else load tabs
+        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
         long lockTimer = MyDateUtils.getLockTimer(this, categoriesTag);
         Log.d(LOG, "lockTimer: " + lockTimer);
-        if (lockTimer == 0) {
+        if (!isPremium && lockTimer == 0) {
             mMainGroup.setVisibility(View.GONE);
             setAdLock(savedInstanceState);
         }

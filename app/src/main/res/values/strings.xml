@@ -17,6 +17,18 @@
     <string name="msg_loading_ads">Loading Ads library</string>
     <string name="msg_loading_home">Loading Home Page</string>
 
+    <!-- Ad Lock -->
+    <string name="action_premium">Premium Access</string>
+    <string name="action_premium_unavailable">Service Unavailable</string>
+    <string name="msg_iap_user_canceled">User canceled the purchase.</string>
+    <string name="msg_iap_user_own_item">You already own this item.</string>
+    <string name="msg_iap_purchase_error">An error has occurred while processing the purchase.</string>
+
+    <!-- Titles -->
+    <string name="title_form">Form</string>
+    <string name="title_year_balance">Year Balance</string>
+    <string name="title_categories">Categories</string>
+
 
     <!-- Default categories -->
     <string name="category_default">Category</string>

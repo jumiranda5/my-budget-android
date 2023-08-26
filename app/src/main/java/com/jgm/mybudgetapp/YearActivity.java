@@ -1,7 +1,6 @@
 package com.jgm.mybudgetapp;
 
 import static com.jgm.mybudgetapp.utils.Tags.adLockTag;
-import static com.jgm.mybudgetapp.utils.Tags.categoriesTag;
 import static com.jgm.mybudgetapp.utils.Tags.yearTag;
 
 import androidx.annotation.NonNull;
@@ -29,6 +28,7 @@ import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.objects.YearResponse;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -51,6 +51,7 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
     private int year;
     private TransactionDao transactionDao;
     private boolean isAdFragment;
+    private boolean isPremium = false;
 
     // UI
     private ActivityYearBinding binding;
@@ -103,11 +104,19 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
         initToolbar();
 
         if (savedInstanceState == null) {
+            isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
             long lockTimer = MyDateUtils.getLockTimer(this, yearTag);
-            if (lockTimer == 0) setAdLock();
+            if (!isPremium && lockTimer == 0) setAdLock();
             else getYearData();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(Tags.LOG_LIFECYCLE, "Main Activity onResume");
+        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
     }
 
     @Override
@@ -328,7 +337,6 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
 
     private void destroyAdLockFragment() {
         Log.d(LOG, "destroyAdLockFragment");
-        // todo: taking too long to destroy fragment... ???
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.remove(mAdLock);
         transaction.commit();

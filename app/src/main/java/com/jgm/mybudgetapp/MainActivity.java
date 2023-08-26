@@ -15,7 +15,6 @@ import static com.jgm.mybudgetapp.utils.Tags.transactionsOutTag;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -23,7 +22,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     private MyDate today;
     private TransactionResponse selectedTransaction;
     private int accountId = 0;
+    private boolean isPremium = false;
 
     // UI
     private ActivityMainBinding binding;
@@ -126,18 +125,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
 
         Log.i(Tags.LOG_LIFECYCLE, "Main Activity onCreate");
 
-        // set dark/light mode
-        if (savedInstanceState == null) {
-            Log.d(LOG_MAIN, "Set dark/light mode");
-            boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(this, "isDark");
-            switchDarkMode(isDark);
-        }
-
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBinding();
+
+        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
 
         if (savedInstanceState == null) {
             Log.d(LOG_MAIN, "savedInstance is null => init splash screen delay, get date " +
@@ -160,6 +154,13 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
         initBottomBar();
         initToolbar();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(Tags.LOG_LIFECYCLE, "Main Activity onResume");
+        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -192,23 +193,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
         outState.putInt(STATE_DAY, selectedDate.getDay());
         outState.putInt(STATE_MONTH, selectedDate.getMonth());
         outState.putInt(STATE_YEAR, selectedDate.getYear());
-    }
-
-    /* ==== SETTINGS ==== */
-
-    private void switchDarkMode(boolean isDark) {
-        Log.d(LOG_MAIN, "-- Interface => switchDarkMode");
-        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        if (isDark) {
-            Log.d(LOG_MAIN, "Dark Mode");
-            if (currentNightMode != Configuration.UI_MODE_NIGHT_YES)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            Log.d(LOG_MAIN, "Light Mode");
-            if (currentNightMode != Configuration.UI_MODE_NIGHT_NO)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
     }
 
 
@@ -475,18 +459,26 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void openTransactionForm(
             int type, boolean isEdit, TransactionResponse transaction, PaymentMethod paymentMethod) {
-        Log.d(LOG_MAIN, "-- Interface => open transaction form");
+        Log.d(LOG_MAIN, "-- Interface => open transaction form. Is premium? " + isPremium);
 
-        long lockTimer = MyDateUtils.getLockTimer(this, transactionFormTag);
+        if (isPremium) {
+            openFragment(transactionFormTag);
+            updateBottomNav(transactionFormTag);
+            setToolbarVisibilities(transactionFormTag);
+            if (mTransactionForm != null)
+                mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
+        }
+        else {
+            long lockTimer = MyDateUtils.getLockTimer(this, transactionFormTag);
 
-        openFragment(transactionFormTag);
-        updateBottomNav(transactionFormTag);
-        setToolbarVisibilities(transactionFormTag);
-        if (mTransactionForm != null)
-            mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
+            openFragment(transactionFormTag);
+            updateBottomNav(transactionFormTag);
+            setToolbarVisibilities(transactionFormTag);
+            if (mTransactionForm != null)
+                mTransactionForm.setFormType(type, isEdit, transaction, paymentMethod);
 
-        if (lockTimer == 0) openFragment(adLockTag);
-
+            if (lockTimer == 0) openFragment(adLockTag);
+        }
     }
 
     @Override
@@ -1025,5 +1017,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void onAdFragmentDismiss(boolean isRewardGranted) {
         onBackPressed();
+        // if reward was not granted = back press again to close form page
+        if (!isRewardGranted) onBackPressed();
     }
 }

@@ -183,10 +183,11 @@
                     <TextView
                         android:id="@+id/ad_lock_premium_button_text"
                         style="@style/MyButtonText"
+                        android:maxLines="2"
                         android:layout_marginStart="32dp"
                         android:layout_marginEnd="32dp"
                         android:textAlignment="center"
-                        android:text="Become Premium"
+                        android:text="@string/action_premium"
                         android:textColor="@color/savings"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -195,6 +196,19 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/ad_lock_premium_error"
+                style="@style/MyBody2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/caption"
+                android:textColor="@color/text_error"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/ad_lock_premium"
+                app:layout_constraintStart_toStartOf="@+id/ad_lock_premium"
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_premium" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
