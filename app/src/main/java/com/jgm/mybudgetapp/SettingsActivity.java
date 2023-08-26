@@ -6,7 +6,6 @@ import static com.jgm.mybudgetapp.utils.Tags.cardFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.cardsTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesFormTag;
 import static com.jgm.mybudgetapp.utils.Tags.categoriesListTag;
-import static com.jgm.mybudgetapp.utils.Tags.homeTag;
 import static com.jgm.mybudgetapp.utils.Tags.settingsTag;
 
 import androidx.annotation.NonNull;
@@ -21,10 +20,6 @@ import android.util.Log;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.ump.ConsentForm;
-import com.google.android.ump.ConsentInformation;
-import com.google.android.ump.ConsentRequestParameters;
-import com.google.android.ump.UserMessagingPlatform;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
 import com.jgm.mybudgetapp.fragmentsMain.CategoriesFormFragment;
@@ -42,10 +37,6 @@ import com.jgm.mybudgetapp.utils.Tags;
 import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsInterface {
-
-    // todo: something is wrong with dark mode after screen rotation
-    // todo: credit card archive is returning to settings. Should return to card list...
-    // todo: add loader on review ads button click
 
     // Constants
     private static final String LOG_SETTINGS = "debug-settings";
@@ -197,13 +188,9 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
     @Override
     public void handleCreditCardEdited(int position, CreditCard card) {
         Log.d(LOG_SETTINGS, "-- Interface => handleCreditCardEdited: " + card.getName() + " pos: " + position);
-        if (card.isActive() && mCreditCards != null) {
-            mCreditCards.updateListAfterEdit(position, card);
-        }
-        else {
-            // close cards details fragment and update main
-            onBackPressed();
-            mCreditCards.updateListAfterDelete(position);
+        if (mCreditCards != null) {
+            if (card.isActive()) mCreditCards.updateListAfterEdit(position, card);
+            else mCreditCards.updateListAfterDelete(position);
         }
     }
 
