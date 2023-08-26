@@ -44,5 +44,11 @@ public class Tags {
 
     // Main icons
     public static final Integer cardIconId = 70;
+
+    // Shared Prefs
+    public static final String keyInitialAccounts = "hasInitialAccounts";
+    public static final String keyInitialCategories = "hasInitialCategories";
+    public static final String keyIsPremium = "isPremium";
+    public static final String keyIapOrder = "iapOrder";
     
 }

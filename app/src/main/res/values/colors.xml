@@ -60,6 +60,7 @@
     <!-- Interactions -->
     <color name="click">#EAEAEA</color>
     <color name="ripple">#E0E0E0</color>
+    <color name="success">@color/colorAccent</color>
 
     <!-- Inputs -->
     <color name="input_stroke">#E3E3E3</color>

@@ -7,7 +7,9 @@ import static androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTI
 import static com.android.billingclient.api.BillingClient.FeatureType.PRODUCT_DETAILS;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.constraintlayout.widget.Group;
@@ -15,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,7 +25,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
@@ -31,7 +33,6 @@ import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.QueryPurchasesParams;
 import com.google.android.gms.ads.MobileAds;
@@ -40,28 +41,29 @@ import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
 import com.jgm.mybudgetapp.databinding.ActivityLoginBinding;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.Populate;
 import com.jgm.mybudgetapp.utils.Tags;
 
-import java.util.List;
 import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
 
     // Login flow:
     // - check device credentials =>
-    //      if ok, proceed to Billing Client.
+    //      if ok, proceed to auth prompt.
     //      Else, stop and show error
-    // - billing client: query purchases =>
-    //      if premium user, show auth prompt.
-    //      Else, init ads and show auth
+    // - start billing client: query purchases =>
+    //      if premium user, proceed to Main activity.
+    //      Else, init ads and proceed to Main Activity
 
     private static final String LOG = "debug-login";
     private static final String LOG_UMP = "debug-consent";
     private static final String LOG_AUTH = "debug-auth";
     private static final String LOG_BILLING = "debug-billing";
     private boolean keep = true;
-    private boolean hasWarning = false;
+    private boolean isIapStep = false;
+    private boolean isAdsStep = false;
 
     // Consent
     private ConsentInformation consentInformation;
@@ -71,55 +73,163 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI
     private ActivityLoginBinding binding;
-    private Button mContinueButton, mRetryButton;
-    private ProgressBar mProgressBar;
-    private Group mIapGroup, mAdsGroup, mAuthGroup;
-    private TextView mAuthMessage;
     private ImageView mLockIcon;
+    private TextView mProgressText, mPageTitle;
+    private Button mLoginButton, mContinueButton, mRetryButton;
+    private Group mGroupProgress, mGroupAuthWarning, mGroupIapWarning, mGroupAdsWarning;
 
     private void setBinding() {
-        mContinueButton = binding.loginContinueButton;
-        mRetryButton = binding.loginRetryButton;
-        mProgressBar = binding.loginProgressBar;
-        mIapGroup = binding.groupLoginIap;
-        mAdsGroup = binding.groupLoginAds;
-        mAuthGroup = binding.groupLoginAuth;
-        mAuthMessage = binding.loginAuthWarning;
         mLockIcon = binding.loginIcon;
+        mPageTitle = binding.loginTitle;
+        mProgressText = binding.loginProgressBarText;
+        mLoginButton = binding.loginButton;
+        mRetryButton = binding.loginRetryButton;
+        mContinueButton = binding.loginContinueButton;
+        mGroupProgress = binding.groupLoginProgress;
+        mGroupAuthWarning = binding.groupLoginAuth;
+        mGroupIapWarning = binding.groupLoginIap;
+        mGroupAdsWarning = binding.groupLoginAds;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         Log.i(Tags.LOG_LIFECYCLE, "Login Activity onCreate");
 
+        Log.d(LOG, "Set dark/light mode");
+        boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(this, "isDark");
+        switchDarkMode(isDark);
+
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBinding();
 
+        Log.d(LOG, "Clear premium user on shared prefs");
+        SettingsPrefs.setSettingsPrefsBoolean(this, Tags.keyIsPremium, false);
+        SettingsPrefs.setSettingsPrefsString(this, Tags.keyIapOrder, "");
+
+        resetVisibilities();
+        mGroupProgress.setVisibility(View.GONE);
+
+        initButtons();
+
         handleSplashScreenDelay(splashScreen);
-
-        mRetryButton.setOnClickListener(v -> {
-            initBillingClient();
-            checkDeviceCredentials();
-            mProgressBar.setVisibility(View.VISIBLE);
-            mAuthGroup.setVisibility(View.GONE);
-            mAdsGroup.setVisibility(View.GONE);
-            mIapGroup.setVisibility(View.GONE);
-            mContinueButton.setVisibility(View.GONE);
-            mRetryButton.setVisibility(View.GONE);
-        });
-
-        mContinueButton.setOnClickListener(v -> initAuthPrompt());
 
     }
 
-    // verify if user is premium
-    // if premium => init authentication
-    // if not premium => init admob => init authentication
+    private void startMainActivity() {
+        resetVisibilities();
+        mGroupProgress.setVisibility(View.VISIBLE);
+        mProgressText.setText(getString(R.string.msg_loading_home));
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
+    }
+
+    /* ---------------------------------------------------------------------------------------------
+                                                  UI
+    --------------------------------------------------------------------------------------------- */
+
+    private void switchDarkMode(boolean isDark) {
+        Log.d(LOG, "=> switchDarkMode");
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (isDark) {
+            Log.d(LOG, "Dark Mode");
+            if (currentNightMode != Configuration.UI_MODE_NIGHT_YES)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            Log.d(LOG, "Light Mode");
+            if (currentNightMode != Configuration.UI_MODE_NIGHT_NO)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    // Loading
+
+    private void showAuthLoading() {
+        // show button to relaunch auth dialog in case the activity is stopped in the middle of the process
+        mLoginButton.setVisibility(View.VISIBLE);
+    }
+
+    private void showIapLoading() {
+        mGroupProgress.setVisibility(View.VISIBLE);
+        mProgressText.setText(getString(R.string.msg_loading_iap));
+    }
+
+    private void showAdsLoading() {
+        mGroupProgress.setVisibility(View.VISIBLE);
+        mProgressText.setText(getString(R.string.msg_loading_ads));
+        mRetryButton.setVisibility(View.GONE);
+        mContinueButton.setVisibility(View.GONE);
+    }
+
+    // Error
+
+    private void showAuthError() {
+        mGroupAuthWarning.setVisibility(View.VISIBLE);
+        mGroupProgress.setVisibility(View.GONE);
+        mLoginButton.setVisibility(View.VISIBLE);
+    }
+
+    private void showIapError() {
+        mGroupProgress.setVisibility(View.GONE);
+        mGroupIapWarning.setVisibility(View.VISIBLE);
+        mRetryButton.setVisibility(View.VISIBLE);
+        mContinueButton.setVisibility(View.VISIBLE);
+    }
+
+    private void showAdsError() {
+        mGroupProgress.setVisibility(View.GONE);
+        mGroupAdsWarning.setVisibility(View.VISIBLE);
+        mRetryButton.setVisibility(View.VISIBLE);
+        mContinueButton.setVisibility(View.VISIBLE);
+    }
+
+    // Success
+
+    private void showAuthSuccess() {
+        mLockIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_48_lock_open_fill0_200));
+        mLockIcon.setImageTintList(ContextCompat.getColorStateList(this, R.color.success));
+        mPageTitle.setTextColor(ContextCompat.getColor(this, R.color.success));
+        mPageTitle.setText(getString(R.string.title_logged));
+        mLoginButton.setVisibility(View.GONE);
+        mGroupAuthWarning.setVisibility(View.GONE);
+    }
+
+
+    // ----------
+
+    private void resetVisibilities() {
+        mGroupProgress.setVisibility(View.GONE);
+        mGroupAuthWarning.setVisibility(View.GONE);
+        mGroupIapWarning.setVisibility(View.GONE);
+        mGroupAdsWarning.setVisibility(View.GONE);
+        mLoginButton.setVisibility(View.GONE);
+        mRetryButton.setVisibility(View.GONE);
+        mContinueButton.setVisibility(View.GONE);
+    }
+
+    private void initButtons() {
+        mLoginButton.setOnClickListener(v -> {
+            resetVisibilities();
+            checkDeviceCredentials();
+        });
+
+        mRetryButton.setOnClickListener(v -> {
+            resetVisibilities();
+            connectToGooglePlay();
+        });
+
+        mContinueButton.setOnClickListener(v -> {
+            resetVisibilities();
+            // continue from billing client error => init ads
+            if (isIapStep) requestLatestConsentInformation();
+            // continue from ads error => open main activity
+            else if (isAdsStep) startMainActivity();
+        });
+    }
 
 
     /* ---------------------------------------------------------------------------------------------
@@ -132,18 +242,19 @@ public class LoginActivity extends AppCompatActivity {
 
         splashScreen.setKeepOnScreenCondition(() -> keep);
 
+        initBillingClient();
         Populate.initDefaultAccounts(this);
         Populate.initDefaultCategories(this);
 
-        initBillingClient();
-
-        int DELAY = 1000;
+        int DELAY = 500;
         Handler handler = new Handler();
         handler.postDelayed(() -> {
 
             checkDeviceCredentials();
 
             keep = false;
+
+            Log.d(LOG, "Finish splash screen timer");
 
         }, DELAY);
     }
@@ -158,19 +269,17 @@ public class LoginActivity extends AppCompatActivity {
         if (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
                 == BiometricManager.BIOMETRIC_SUCCESS) {
             Log.d(LOG_AUTH, "App can authenticate using biometrics.");
-            connectToGooglePlay();
+            initAuthPrompt();
         }
         else {
             Log.e(LOG_AUTH, "Biometric features are currently not available.");
-            mAuthGroup.setVisibility(View.VISIBLE);
-            mRetryButton.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
+            showAuthError();
         }
     }
 
     // Show the prompt
     private void initAuthPrompt() {
-        Log.d(LOG_AUTH, "Should init auth prompt");
+        Log.d(LOG_AUTH, "=> Init auth prompt");
         // Authentication
         Executor executor = ContextCompat.getMainExecutor(this);
         BiometricPrompt biometricPrompt = new BiometricPrompt(LoginActivity.this, executor,
@@ -186,14 +295,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                         super.onAuthenticationSucceeded(result);
                         Log.d(LOG_AUTH, "Successfully authenticated.");
-                        mLockIcon.setImageDrawable(ContextCompat.getDrawable(LoginActivity.this, R.drawable.ic_48_lock_open_fill0_200));
-                        mRetryButton.setVisibility(View.GONE);
-                        mContinueButton.setVisibility(View.GONE);
-                        mProgressBar.setVisibility(View.VISIBLE);
-                        mAuthGroup.setVisibility(View.GONE);
-                        mAdsGroup.setVisibility(View.GONE);
-                        mIapGroup.setVisibility(View.GONE);
-                        startMainActivity();
+                        showAuthSuccess();
+                        connectToGooglePlay();
                     }
 
                     @Override
@@ -204,6 +307,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+        // Init prompt
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login for my app")
                 .setSubtitle("Log in using your biometric credential")
@@ -211,90 +315,8 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         biometricPrompt.authenticate(promptInfo);
-        mRetryButton.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
-    }
+        showAuthLoading();
 
-    private void showAuthError() {
-        mAuthGroup.setVisibility(View.VISIBLE);
-        mRetryButton.setVisibility(View.VISIBLE);
-        mAuthMessage.setText(getString(R.string.auth_fail));
-        mProgressBar.setVisibility(View.GONE);
-    }
-
-    private void startMainActivity() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
-    }
-
-
-    /* ---------------------------------------------------------------------------------------------
-                                                ADS
-     -------------------------------------------------------------------------------------------- */
-
-    private void initializeAdsSdk() {
-        // Disable login button until ads library is initialized
-        MobileAds.initialize(this, initializationStatus -> {
-            Log.d(LOG_UMP, "MobileAds initialized");
-            if (!hasWarning) initAuthPrompt();
-            else {
-                mRetryButton.setVisibility(View.VISIBLE);
-                mContinueButton.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    /* ---------------------------------------------------------------------------------------------
-                                             ADS CONSENT
-     -------------------------------------------------------------------------------------------- */
-
-    private void requestLatestConsentInformation() {
-        Log.d(LOG_UMP, "LOADING CONSENT");
-
-        // Set tag for underage of consent. false means users are not underage.
-        ConsentRequestParameters params = new ConsentRequestParameters
-                .Builder()
-                .setTagForUnderAgeOfConsent(false)
-                .build();
-
-        consentInformation = UserMessagingPlatform.getConsentInformation(this);
-        Log.d(LOG_UMP, "Consent status: " + consentInformation.getConsentStatus());
-
-        consentInformation.requestConsentInfoUpdate(
-                this,
-                params,
-                (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
-                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
-                            this,
-                            (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
-                                if (loadAndShowError != null) {
-                                    // Consent gathering failed.
-                                    Log.w(LOG_UMP, String.format("%s: %s",
-                                            loadAndShowError.getErrorCode(),
-                                            loadAndShowError.getMessage()));
-                                    showAdsFailureWarning();
-                                }
-
-                                // Consent has been gathered.
-                                if (consentInformation.canRequestAds()) {
-                                    initializeAdsSdk();
-                                }
-                            }
-                    );
-                },
-                (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
-                    // Consent gathering failed.
-                    Log.w(LOG_UMP, String.format("%s: %s",
-                            requestConsentError.getErrorCode(),
-                            requestConsentError.getMessage()));
-                    showAdsFailureWarning();
-                });
-    }
-
-    private void showAdsFailureWarning() {
-        mAdsGroup.setVisibility(View.VISIBLE);
-        hasWarning = true;
     }
 
 
@@ -316,23 +338,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void connectToGooglePlay() {
+
+        isIapStep = true;
+        showIapLoading();
+
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
 
-                int responseCode = billingResult.getResponseCode();
-                if (responseCode == BillingClient.BillingResponseCode.OK) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
 
                     Log.d(LOG_BILLING, "Billing client is ready!");
 
                     BillingResult supportsProductDetail = billingClient.isFeatureSupported(PRODUCT_DETAILS);
                     if ( supportsProductDetail.getResponseCode() != BillingClient.BillingResponseCode.OK ) {
                         Log.e(LOG_BILLING, "feature unsupported - show warning to user...");
-                        new Handler(Looper.getMainLooper()).post(() -> {
-                            mIapGroup.setVisibility(View.VISIBLE);
-                            hasWarning = true;
-                            requestLatestConsentInformation();
-                        });
+                        new Handler(Looper.getMainLooper()).post(() -> showIapError());
                     }
                     else queryPurchases();
 
@@ -340,22 +361,14 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     // Show warning
                     Log.e(LOG_BILLING, "Billing client not connected: " + billingResult.getDebugMessage());
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        mIapGroup.setVisibility(View.VISIBLE);
-                        hasWarning = true;
-                        requestLatestConsentInformation();
-                    });
+                    new Handler(Looper.getMainLooper()).post(() -> showIapError());
                 }
             }
 
             @Override
             public void onBillingServiceDisconnected() {
                 Log.d(LOG_BILLING, "BillingClient disconnected");
-                new Handler(Looper.getMainLooper()).post(() -> {
-                    mIapGroup.setVisibility(View.VISIBLE);
-                    hasWarning = true;
-                    requestLatestConsentInformation();
-                });
+                new Handler(Looper.getMainLooper()).post(() -> showIapError());
             }
         });
     }
@@ -363,33 +376,31 @@ public class LoginActivity extends AppCompatActivity {
     private void queryPurchases() {
         Log.d(LOG_BILLING, "=> queryPurchases");
 
-        billingClient.queryPurchasesAsync(
-                QueryPurchasesParams.newBuilder()
-                        .setProductType(BillingClient.ProductType.INAPP)
-                        .build(),
-                new PurchasesResponseListener() {
-                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult,
-                                                         @NonNull List<Purchase> purchases) {
-                        processPurchase(purchases);
-                    }
-                }
-        );
-    }
+        QueryPurchasesParams params = QueryPurchasesParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                        .build();
 
-    private void processPurchase(List<Purchase> purchases) {
-        Log.d(LOG_BILLING, "purchases list size: " + purchases.size());
-        if (purchases.size() > 0) {
-            for (Purchase purchase : purchases) {
-                handlePurchase(purchase);
+        billingClient.queryPurchasesAsync(params, (billingResult, purchases) -> {
+
+            Log.d(LOG_BILLING, "purchases list size: " + purchases.size());
+            if (purchases.size() > 0) {
+                for (Purchase purchase : purchases) {
+                    handlePurchase(purchase);
+                }
             }
-        }
-        else requestLatestConsentInformation();
+            else requestLatestConsentInformation();
+
+        });
+
     }
 
     private void handlePurchase(Purchase purchase) {
+
+        String orderId = purchase.getOrderId();
+
         AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = billingResult -> {
             // purchase is verified => init auth
-            new Handler(Looper.getMainLooper()).post(this::initAuthPrompt);
+            new Handler(Looper.getMainLooper()).post(() -> setPremiumUser(orderId));
         };
 
         if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
@@ -404,13 +415,71 @@ public class LoginActivity extends AppCompatActivity {
             }
             else {
                 // purchase is verified => init auth
-                new Handler(Looper.getMainLooper()).post(this::initAuthPrompt);
+                new Handler(Looper.getMainLooper()).post(() -> setPremiumUser(orderId));
             }
         }
         else {
             // purchase not verified => init ads
             new Handler(Looper.getMainLooper()).post(this::requestLatestConsentInformation);
         }
+    }
+
+    private void setPremiumUser(String orderId) {
+        Log.d(LOG, "Set premium user on shared prefs");
+        SettingsPrefs.setSettingsPrefsString(this, Tags.keyIapOrder, orderId);
+        SettingsPrefs.setSettingsPrefsBoolean(this, Tags.keyIsPremium, true);
+        startMainActivity();
+    }
+
+
+    /* ---------------------------------------------------------------------------------------------
+                                                ADS
+     -------------------------------------------------------------------------------------------- */
+
+    private void requestLatestConsentInformation() {
+        Log.d(LOG_UMP, "LOADING CONSENT");
+        isIapStep = false;
+        isAdsStep = true;
+        showAdsLoading();
+
+        // Set tag for underage of consent. false means users are not underage.
+        ConsentRequestParameters params = new ConsentRequestParameters
+                .Builder()
+                .setTagForUnderAgeOfConsent(false)
+                .build();
+
+        consentInformation = UserMessagingPlatform.getConsentInformation(this);
+        Log.d(LOG_UMP, "Consent status: " + consentInformation.getConsentStatus());
+
+        consentInformation.requestConsentInfoUpdate(this, params,
+                (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
+                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
+                            this,
+                            (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
+                                if (loadAndShowError != null) {
+                                    // Consent gathering failed.
+                                    Log.e(LOG_UMP, String.format("%s: %s", loadAndShowError.getErrorCode(), loadAndShowError.getMessage()));
+                                    showAdsError();
+                                }
+
+                                // Consent has been gathered.
+                                if (consentInformation.canRequestAds()) initializeAdsSdk();
+
+                            }
+                    );
+                },
+                (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
+                    // Consent gathering failed.
+                    Log.w(LOG_UMP, String.format("%s: %s", requestConsentError.getErrorCode(), requestConsentError.getMessage()));
+                    showAdsError();
+                });
+    }
+
+    private void initializeAdsSdk() {
+        MobileAds.initialize(this, initializationStatus -> {
+            Log.d(LOG_UMP, "MobileAds initialized");
+            startMainActivity();
+        });
     }
 
 }

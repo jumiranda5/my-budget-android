@@ -8,6 +8,14 @@
     <string name="ads_initialization_error_message">Couldn\'t initialize ads library. If you are not a premium user, you may not be able to unlock some pages. Check your internet connection and try again. Or continue anyway…</string>
     <string name="auth_credentials_not_configured"> Looks like you haven\'t configured your device credentials yet. To increase security, you can only open this application with your credentials. Go to your device\'s Settings page to configure it.</string>
     <string name="auth_fail">Authentication error.</string>
+    <string name="title_login">Login</string>
+    <string name="title_logged">Logged In</string>
+    <string name="action_login">Login</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_continue">Continue</string>
+    <string name="msg_loading_iap">Loading Google Play library</string>
+    <string name="msg_loading_ads">Loading Ads library</string>
+    <string name="msg_loading_home">Loading Home Page</string>
 
 
     <!-- Default categories -->

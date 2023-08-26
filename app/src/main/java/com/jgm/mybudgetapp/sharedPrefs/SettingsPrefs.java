@@ -7,7 +7,7 @@ public class SettingsPrefs {
 
     private static final String SETTINGS_PREFS = "com.jgm.mybudgetapp.settings_prefs";
 
-    private static final SharedPreferences getSettingsPrefs(Context context) {
+    private static SharedPreferences getSettingsPrefs(Context context) {
         return context.getSharedPreferences(SETTINGS_PREFS, Context.MODE_PRIVATE);
     }
 

@@ -23,7 +23,7 @@ public class Populate {
 
         Log.d(LOG_POPULATE, "=> Init default accounts");
 
-        boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(context, "hasInitialAccounts");
+        boolean hasInitialAccounts = SettingsPrefs.getSettingsPrefsBoolean(context, Tags.keyInitialAccounts);
         Log.d(LOG_POPULATE, "hasInitialAccounts: " + hasInitialAccounts);
 
         if (!hasInitialAccounts) {
@@ -57,9 +57,10 @@ public class Populate {
                         Log.d(Tags.LOG_DB, "Account inserted: " + newAccount.getName());
                     }
 
-                    SettingsPrefs.setSettingsPrefsBoolean(context, "hasInitialAccounts", true);
+                    SettingsPrefs.setSettingsPrefsBoolean(context, Tags.keyInitialAccounts, true);
 
                 }
+                else SettingsPrefs.setSettingsPrefsBoolean(context, Tags.keyInitialAccounts, true);
 
             });
         }
@@ -70,7 +71,7 @@ public class Populate {
 
         Log.d(LOG_POPULATE, "=> Init default categories");
 
-        boolean hasInitialCategories = SettingsPrefs.getSettingsPrefsBoolean(context, "hasInitialCategories");
+        boolean hasInitialCategories = SettingsPrefs.getSettingsPrefsBoolean(context, Tags.keyInitialCategories);
         Log.d(LOG_POPULATE, "hasInitialAccounts: " + hasInitialCategories);
 
         if (!hasInitialCategories) {
@@ -113,12 +114,11 @@ public class Populate {
                         Log.d(Tags.LOG_DB, "Category inserted: " + list.get(i).getName());
                     }
 
-                    SettingsPrefs.setSettingsPrefsBoolean(context, "hasInitialCategories", true);
+                    SettingsPrefs.setSettingsPrefsBoolean(context, Tags.keyInitialCategories, true);
                 }
+                else SettingsPrefs.setSettingsPrefsBoolean(context, Tags.keyInitialCategories, true);
 
             });
-
         }
-
     }
 }

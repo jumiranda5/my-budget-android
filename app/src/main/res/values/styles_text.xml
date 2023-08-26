@@ -34,6 +34,13 @@
     </style>
 
     <!-- H6 -->
+    <style name="MyHeadline5" parent="TextEllipse">
+        <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
+        <item name="android:textSize">@dimen/h5</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+    <!-- H6 -->
     <style name="MyHeadline6" parent="TextEllipse">
         <item name="android:fontFamily">@font/titillium_web_semi_bold</item>
         <item name="android:textSize">@dimen/h6</item>
