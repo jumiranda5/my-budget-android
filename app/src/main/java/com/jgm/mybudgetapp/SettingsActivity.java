@@ -43,7 +43,6 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsInterface {
 
-    // todo: handle archive button on category form
     // todo: something is wrong with dark mode after screen rotation
     // todo: credit card archive is returning to settings. Should return to card list...
     // todo: add loader on review ads button click
@@ -208,6 +207,8 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
         }
     }
 
+    /*  ARCHIVE  */
+
     @Override
     public void showConfirmationDialog(String message, String title, int iconDrawable) {
         Log.d(LOG_SETTINGS, "-- Interface => show confirmation dialog");
@@ -228,6 +229,8 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
     public void handleConfirmation() {
         if (currentFragment.equals(cardFormTag) && mCreditCardForm != null)
             mCreditCardForm.handleArchiveConfirmation();
+        else if (currentFragment.equals(categoriesFormTag) && mCategoriesForm != null)
+            mCategoriesForm.handleArchiveConfirmation();
         else if (currentFragment.equals(settingsTag) && mSettings != null)
             mSettings.clearDatabase();
     }
@@ -271,12 +274,6 @@ public class SettingsActivity extends AppCompatActivity implements SettingsInter
     private void openFragment(String tag) {
         Log.d(Tags.LOG_NAV, "== openFragment / " + tag + " | " + "currentFragment " + currentFragment);
         if (!currentFragment.equals(tag)) setFragment(tag);
-    }
-
-    private void resetFragmentStack() {
-        mFragmentTagList.clear();
-        mFragmentTagList = new ArrayList<>();
-        Log.d(Tags.LOG_NAV, "Reset fragment stack: " + mFragmentTagList.size());
     }
 
     private void setFragment(String tag) {
