@@ -8,8 +8,6 @@
     android:background="@color/bg_00dp"
     tools:context=".fragmentsSettings.SettingsFragment">
 
-    <!-- Todo: fix icons width -->
-
     <!-- Toolbar -->
 
     <androidx.appcompat.widget.Toolbar
@@ -59,37 +57,16 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/settings_padding">
 
-            <!-- Biometric lock -->
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/settings_switch_lock"
-                style="@style/SettingsSwitch"
-                android:checked="true"
-                android:text="@string/action_biometric_lock"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/settings_lock_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/settings_switch_lock"
-                app:layout_constraintStart_toStartOf="@+id/settings_switch_lock"
-                app:layout_constraintTop_toTopOf="@+id/settings_switch_lock"
-                app:srcCompat="@drawable/ic_48_fingerprint_300" />
-
             <!-- Dark mode -->
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch_dark_mode"
                 style="@style/SettingsSwitch"
+                android:layout_marginTop="8dp"
                 android:text="@string/action_dark_mode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_switch_lock" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/settings_mode_icon"
@@ -102,6 +79,42 @@
                 app:layout_constraintTop_toTopOf="@+id/switch_dark_mode"
                 app:srcCompat="@drawable/ic_48_dark_mode_300" />
 
+            <!-- Premium member -->
+
+            <Button
+                android:id="@+id/settings_premium_member"
+                style="@style/SettingsButton"
+                android:text="@string/action_buy_premium_access"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switch_dark_mode" />
+
+
+            <ImageView
+                android:id="@+id/settings_premium_icon"
+                style="@style/InputIcon"
+                android:layout_width="@dimen/settings_icon_width"
+                android:padding="@dimen/settings_icon_padding"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_premium_member"
+                app:layout_constraintStart_toStartOf="@+id/settings_premium_member"
+                app:layout_constraintTop_toTopOf="@+id/settings_premium_member"
+                app:srcCompat="@drawable/ic_48_premium_300" />
+
+            <TextView
+                android:id="@+id/settings_premium_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:background="@drawable/bg_transparent_border"
+                app:layout_constraintTop_toBottomOf="@id/settings_premium_member"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <!-- Categories -->
 
             <Button
@@ -110,7 +123,7 @@
                 android:text="@string/action_menage_categories"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch_dark_mode" />
+                app:layout_constraintTop_toBottomOf="@+id/settings_premium_order" />
 
             <ImageView
                 android:id="@+id/settings_category_icon"
@@ -144,27 +157,6 @@
                 app:layout_constraintTop_toTopOf="@+id/settings_edit_cards"
                 app:srcCompat="@drawable/ic_48_credit_card_300" />
 
-            <!-- Premium member -->
-
-            <Button
-                android:id="@+id/settings_premium_member"
-                style="@style/SettingsButton"
-                android:text="@string/action_become_a_premium_user"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_edit_cards" />
-
-            <ImageView
-                android:id="@+id/settings_premium_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/settings_premium_member"
-                app:layout_constraintStart_toStartOf="@+id/settings_premium_member"
-                app:layout_constraintTop_toTopOf="@+id/settings_premium_member"
-                app:srcCompat="@drawable/ic_48_premium_300" />
-
             <!-- Support -->
 
             <Button
@@ -173,7 +165,7 @@
                 android:text="@string/action_support"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_premium_member" />
+                app:layout_constraintTop_toBottomOf="@+id/settings_edit_cards" />
 
             <ImageView
                 android:id="@+id/settings_support_icon"

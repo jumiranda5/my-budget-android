@@ -19,10 +19,12 @@
 
     <!-- Ad Lock -->
     <string name="action_premium">Premium Access</string>
+    <string name="action_buy_premium_access">Buy Premium Access</string>
     <string name="action_premium_unavailable">Service Unavailable</string>
     <string name="msg_iap_user_canceled">User canceled the purchase.</string>
     <string name="msg_iap_user_own_item">You already own this item.</string>
     <string name="msg_iap_purchase_error">An error has occurred while processing the purchase.</string>
+    <string name="label_order_id">Purchase Id:</string>
 
     <!-- Titles -->
     <string name="title_form">Form</string>

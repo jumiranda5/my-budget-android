@@ -52,7 +52,6 @@ import java.util.Objects;
 public class AdLockFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
-    private static final String LOG_BILLING = "debug-billing";
 
     private String mPage;
 
@@ -70,6 +69,7 @@ public class AdLockFragment extends Fragment {
 
     // Constants
     private static final String LOG = "debug-ads";
+    private static final String LOG_BILLING = "debug-billing";
 
     // Vars
     private RewardedAd rewardedAd;
