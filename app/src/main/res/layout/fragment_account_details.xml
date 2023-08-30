@@ -56,6 +56,8 @@
                 <ImageView
                     android:id="@+id/account_icon"
                     style="@style/IconNormal"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_marginTop="@dimen/account_details_title_space_top"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_40_cash_fill0_300"
@@ -65,7 +67,7 @@
                 <TextView
                     android:id="@+id/account_details_title"
                     style="@style/AccountTitle"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
                     android:text="@string/account_checking"
                     app:layout_constraintEnd_toStartOf="@+id/account_edit_button"
@@ -74,10 +76,9 @@
 
                 <TextView
                     android:id="@+id/account_total"
-                    style="@style/MyHeadline6"
-                    android:letterSpacing="0.01"
+                    style="@style/AccountTotal"
                     android:layout_width="0dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/initial_value"
                     android:textColor="@color/income"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_account_end"

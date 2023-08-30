@@ -35,6 +35,8 @@ import com.jgm.mybudgetapp.utils.Tags;
 
 public class TransactionDialog extends BottomSheetDialogFragment {
 
+    // Todo: nullPointerException on screen rotation...
+
     public TransactionDialog() {}
     private MainInterface mInterface;
     private Context mContext;

@@ -10,6 +10,20 @@
         <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
+    <style name="LoginButton" parent="MainButton">
+        <item name="android:layout_width">220dp</item>
+        <item name="android:background">@drawable/button_save_transfer</item>
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ContinueButton" parent="LoginButton">
+        <item name="android:background">@drawable/button_border</item>
+        <item name="android:textColor">@color/savings</item>
+        <item name="android:backgroundTint">@color/savings</item>
+        <item name="android:text">@string/action_continue</item>
+    </style>
+
     <style name="ButtonSave" parent="MainButton">
         <item name="layout_constraintWidth_max">@dimen/input_max_width</item>
         <item name="android:layout_height">@dimen/button_save_height</item>
@@ -42,17 +56,17 @@
                                                TOOLBAR
      =========================================================================================== -->
 
-    <!-- icon size: 26dp => width 56dp => padding 15dp -->
+    <!-- icon size: 24dp => width 56dp => padding 16dp -->
     <style name="ToolbarButton" parent="IconButton">
         <item name="android:layout_width">@dimen/toolbar_button_size</item>
         <item name="android:layout_height">0dp</item>
-        <item name="android:padding">15dp</item>
-        <item name="tint">@color/medium_emphasis_text</item>
+        <item name="android:padding">16dp</item>
+        <item name="tint">@color/high_emphasis_text</item>
     </style>
 
     <style name="ToolbarNextPrevButton" parent="IconButton">
         <item name="android:padding">9dp</item>
-        <item name="tint">@color/medium_emphasis_text</item>
+        <item name="tint">@color/high_emphasis_text</item>
     </style>
 
     <!-- todo: tablets (?) -->
@@ -172,6 +186,8 @@
         <item name="android:background">@drawable/bg_list_item</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:paddingStart">@dimen/settings_icon_width</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">0dp</item>
         <item name="android:layout_marginTop">4dp</item>
     </style>
 

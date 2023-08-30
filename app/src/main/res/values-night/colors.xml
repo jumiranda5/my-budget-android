@@ -6,15 +6,15 @@
     <color name="colorPrimary">#F3F3F3</color>
     <color name="colorSecondary">#767676</color>
     <color name="colorAccent">#13BA7C</color>
-    <color name="colorAccentLight">#6B13BA7C</color>
+    <color name="colorAccentLight">#5913BA7C</color>
     <color name="colorControlHighlight">#BABABA</color>
     <color name="colorSecondaryContainer">#424242</color>
 
     <!-- Text -->
-    <color name="high_emphasis_text">#E1E1E2</color> <!-- using -->
-    <color name="medium_emphasis_text">#AEAFB0</color> <!-- using -->
-    <color name="disabled_text">#707173</color> <!-- using -->
-    <color name="button_text">#121212</color>
+    <color name="high_emphasis_text">#DEFFFFFF</color> <!-- #E1E1E2 -->
+    <color name="medium_emphasis_text">#99FFFFFF</color> <!-- #AEAFB0 -->
+    <color name="disabled_text">#61FFFFFF</color> <!-- #707173 -->
+    <color name="button_text">#181A1E</color>
 
     <!-- Backgrounds -->
     <color name="bg_00dp">#181A1E</color> <!-- using -->
@@ -25,8 +25,8 @@
     <color name="bg_form">@color/bg_00dp</color> <!-- using -->
     <color name="bg_input">#1F2125</color> <!-- using -->
     <color name="bg_progress_track">@color/bg_02dp</color> <!-- using -->
-    <color name="bg_expense_container">#0DD00B46</color> <!-- using -->
-    <color name="bg_income_container">#120BD072</color> <!-- using -->
+    <color name="bg_expense_container">#1AD00B46</color> <!-- using -->
+    <color name="bg_income_container">#1A0BD072</color> <!-- using -->
 
     <!-- Borders -->
     <color name="border">#1F2125</color>
@@ -79,6 +79,7 @@
 
     <color name="savings">#9A89FF</color>
     <color name="savings_pressed">#8471F2</color>
+    <color name="savings_border">#99720EC1</color>
 
     <!-- Toggle button - form type -->
     <color name="expense_toggle_bg">#6D2144</color>

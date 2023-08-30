@@ -97,18 +97,17 @@
                     android:id="@+id/home_month_label"
                     style="@style/HomeBalanceLabel"
                     android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/page_padding"
                     android:text="@string/label_month"
+                    android:layout_gravity="center"
                     android:textColor="@color/medium_emphasis_text" />
 
                 <TextView
                     android:id="@+id/home_month_balance"
                     style="@style/MyHeadline3"
+                    android:layout_marginTop="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-4dp"
-                    android:paddingStart="@dimen/page_padding"
-                    android:paddingEnd="0dp"
+                    android:textAlignment="center"
                     android:text="@string/initial_value"
                     android:textColor="@color/income" />
 
@@ -119,7 +118,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/home_card_accumulated"
                 style="@style/ClickableCardHomeItem"
-                android:layout_marginTop="24dp"
+                android:clickable="false"
+                android:layout_marginTop="@dimen/home_section_margin"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_month_container">
@@ -169,7 +169,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/home_card_income"
                 style="@style/ClickableCardHomeItem"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_accumulated">
@@ -179,7 +179,7 @@
                     <ImageView
                         android:id="@+id/home_income_icon"
                         style="@style/ItemIcon"
-                        android:layout_height="@dimen/icon_size_small"
+                        android:layout_height="18dp"
                         android:contentDescription="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +220,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/home_card_expenses"
                 style="@style/ClickableCardHomeItem"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_income">
@@ -239,7 +239,7 @@
                     <ImageView
                         android:id="@+id/home_expenses_icon"
                         style="@style/ItemIcon"
-                        android:layout_height="@dimen/icon_size_small"
+                        android:layout_height="18dp"
                         android:contentDescription="@null"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

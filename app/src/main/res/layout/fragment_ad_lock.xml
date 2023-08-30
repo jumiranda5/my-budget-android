@@ -9,9 +9,7 @@
 
     <androidx.core.widget.NestedScrollView
         style="@style/MyNestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="40dp">
+        android:paddingBottom="56dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/page_padding" />
+                app:layout_constraintGuide_begin="24dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_end_ad_lock"
@@ -41,50 +39,57 @@
 
             <ImageView
                 android:id="@+id/ad_lock_image"
-                android:layout_width="172dp"
-                android:layout_height="172dp"
+                android:layout_width="@dimen/ad_lock_icon_size"
+                android:layout_height="@dimen/ad_lock_icon_size"
                 android:layout_marginTop="56dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_48_lock_fill0_200"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_page_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ad_lock_close"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
                 app:tint="@color/savings" />
 
             <TextView
                 android:id="@+id/ad_lock_page_name"
-                style="@style/MyHeadline6"
-                app:layout_constraintWidth_max="320dp"
-                android:layout_marginTop="40dp"
-                android:text="Page Name"
+                style="@style/MyHeadline5"
+                android:layout_marginTop="4dp"
+                android:text="@string/initial_page_name"
+                android:textAlignment="center"
                 android:textColor="@color/savings"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_message"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end_ad_lock"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start_ad_lock"
-                app:layout_constraintTop_toBottomOf="@+id/ad_lock_image" />
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_image"
+                app:layout_constraintWidth_max="@dimen/ad_lock_max_width" />
 
             <TextView
                 android:id="@+id/ad_lock_message"
                 style="@style/MyBody1"
+                android:lineSpacingExtra="1dp"
                 android:layout_width="0dp"
-                app:layout_constraintWidth_max="320dp"
+                android:layout_marginTop="@dimen/ad_lock_title_margin"
+                android:text="@string/msg_ad_lock"
                 android:textColor="@color/medium_emphasis_text"
-                android:text="Unlock this page for 1 hour by watching an ad or unlock all features permanently by becoming a premium user."
-                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_watch"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end_ad_lock"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start_ad_lock"
-                app:layout_constraintTop_toBottomOf="@+id/ad_lock_page_name" />
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_page_name"
+                app:layout_constraintWidth_max="@dimen/ad_lock_max_width" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ad_lock_watch"
                 style="@style/Card"
-                app:layout_constraintWidth_max="320dp"
                 android:layout_height="56dp"
-                android:layout_marginTop="56dp"
-                app:contentPadding="0dp"
+                android:layout_marginTop="@dimen/ad_lock_button_margin"
                 app:cardBackgroundColor="@color/savings"
+                app:contentPadding="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_premium"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end_ad_lock"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start_ad_lock"
-                app:layout_constraintTop_toBottomOf="@+id/ad_lock_message">
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_message"
+                app:layout_constraintWidth_max="320dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -109,7 +114,7 @@
                         style="@style/MyButtonText"
                         android:layout_marginStart="32dp"
                         android:layout_marginEnd="32dp"
-                        android:text="Watch an Ad"
+                        android:text="@string/action_watch_ad"
                         android:textAlignment="center"
                         android:textColor="@color/button_text"
                         android:visibility="gone"
@@ -137,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Loading ad..."
+                        android:text="@string/action_load_ad"
                         android:textColor="@color/button_text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -151,43 +156,44 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ad_lock_premium"
                 style="@style/Card"
-                app:layout_constraintWidth_max="320dp"
                 android:layout_height="56dp"
-                android:layout_marginTop="24dp"
-                app:contentPadding="0dp"
+                android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@android:color/transparent"
-                app:strokeColor="@color/savings"
-                app:strokeWidth="1dp"
+                app:contentPadding="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_end_ad_lock"
                 app:layout_constraintStart_toStartOf="@+id/guideline_start_ad_lock"
-                app:layout_constraintTop_toBottomOf="@+id/ad_lock_watch">
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_watch"
+                app:layout_constraintWidth_max="@dimen/ad_lock_max_width"
+                app:strokeColor="@color/savings"
+                app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
                     <ImageView
                         android:id="@+id/ad_lock_premium_icon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:contentDescription="@null"
-                        app:srcCompat="@drawable/ic_40_premium_fill0_300"
-                        app:tint="@color/savings"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_40_premium_fill0_300"
+                        app:tint="@color/savings" />
 
                     <TextView
                         android:id="@+id/ad_lock_premium_button_text"
                         style="@style/MyButtonText"
-                        android:maxLines="2"
                         android:layout_marginStart="32dp"
                         android:layout_marginEnd="32dp"
-                        android:textAlignment="center"
+                        android:maxLines="2"
                         android:text="@string/action_premium"
+                        android:textAlignment="center"
                         android:textColor="@color/savings"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -203,12 +209,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textSize="@dimen/caption"
                 android:textColor="@color/text_error"
+                android:textSize="@dimen/caption"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/ad_lock_premium"
                 app:layout_constraintStart_toStartOf="@+id/ad_lock_premium"
                 app:layout_constraintTop_toBottomOf="@+id/ad_lock_premium" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_ad_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ad_lock_page_name,ad_lock_message,ad_lock_watch,ad_lock_premium,ad_lock_premium_error" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

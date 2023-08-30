@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Text -->
-    <dimen name="h3">42sp</dimen>
+    <dimen name="h3">44sp</dimen>
     <dimen name="h3_shrink">36sp</dimen>
     <dimen name="h4">36sp</dimen>
     <dimen name="currency_width_min">88dp</dimen>
@@ -15,6 +15,13 @@
     <dimen name="inner_space">16dp</dimen>
     <dimen name="page_divisor_space">224dp</dimen>
     <dimen name="page_padding">24dp</dimen>
+
+    <!-- ===========================================================================================
+                                            LOGIN ACTIVITY
+     =========================================================================================== -->
+
+    <dimen name="login_icon_size">140dp</dimen>
+    <dimen name="login_title_size">28sp</dimen>
 
     <!-- ===========================================================================================
                                             MAIN ACTIVITY
@@ -33,13 +40,13 @@
      =========================================================================================== -->
 
     <!-- Containers -->
-    <dimen name="home_balance_height">208dp</dimen>
+    <dimen name="home_balance_height">216dp</dimen>
 
     <!-- Margins -->
     <dimen name="home_section_margin">48dp</dimen>
-    <dimen name="home_progress_section_margin">64dp</dimen>
+    <dimen name="home_progress_section_margin">56dp</dimen>
     <dimen name="progress_info_margin">32dp</dimen>
-    <dimen name="home_label_margin_bottom">14dp</dimen>
+    <dimen name="home_label_margin_bottom">24dp</dimen>
     <dimen name="home_category_list_margin">48dp</dimen>
 
     <!-- Text -->
@@ -51,14 +58,20 @@
     <dimen name="home_pie_width">88dp</dimen>
     <dimen name="progress_indicator">104dp</dimen>
 
+    <!-- ===========================================================================================
+                                       ACCOUNTS DETAILS FRAGMENT
+     =========================================================================================== -->
+
+    <dimen name="account_details_title_space_top">48dp</dimen>
+    <dimen name="account_details_title_space_bottom">88dp</dimen>
 
     <!-- ===========================================================================================
                                              TRANSACTIONS
      =========================================================================================== -->
 
     <dimen name="transactions_total_margin">64dp</dimen>
-    <dimen name="transactions_info_margin_top">48dp</dimen>
-    <dimen name="transactions_list_margin">32dp</dimen>
+    <dimen name="transactions_info_margin_top">56dp</dimen>
+    <dimen name="transactions_list_margin">48dp</dimen>
 
     <!-- ===========================================================================================
                                                FORMS
@@ -81,16 +94,26 @@
                                                CATEGORIES
      =========================================================================================== -->
 
-    <integer name="categories_chart_size_int">236</integer>
+    <integer name="categories_chart_size_int">248</integer>
 
-    <dimen name="categories_chart_size">236dp</dimen>
-    <dimen name="categories_chart_margin">56dp</dimen>
-    <dimen name="categories_chart_list_margin">48dp</dimen>
+    <dimen name="categories_chart_size">248dp</dimen>
+    <dimen name="categories_chart_margin">64dp</dimen>
+    <dimen name="categories_chart_list_margin">64dp</dimen>
+
 
     <!-- ===========================================================================================
-                                              CATEGORIES
+                                                 YEAR
      =========================================================================================== -->
 
     <dimen name="year_chart_margin">64dp</dimen>
+    <dimen name="year_list_margin">96dp</dimen>
+
+    <!-- ===========================================================================================
+                                               AD LOCK
+     =========================================================================================== -->
+
+    <dimen name="ad_lock_icon_size">152dp</dimen>
+    <dimen name="ad_lock_title_margin">40dp</dimen>
+    <dimen name="ad_lock_button_margin">48dp</dimen>
 
 </resources>

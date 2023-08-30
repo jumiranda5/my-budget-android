@@ -53,6 +53,7 @@ import com.jgm.mybudgetapp.utils.Tags;
 public class TransactionFormFragment extends Fragment implements Animation.AnimationListener {
 
     // todo: this fragment is a nightmare, specially after screen rotation... (note to self => improve that someday)
+    // todo: prevent saving income with credit card
 
     public TransactionFormFragment() {
         // Required empty public constructor

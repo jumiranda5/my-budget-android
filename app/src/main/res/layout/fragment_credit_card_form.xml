@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/card_form_title"
-                style="@style/MyHeadline6"
+                style="@style/ToolbarTitle"
                 android:text="@string/title_add_card"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/card_form_archive_button"
@@ -80,6 +80,8 @@
                 android:id="@+id/card_form_nickname"
                 style="@style/InputWithIcon"
                 android:layout_marginTop="@dimen/form_margin"
+                android:layout_marginStart="@dimen/form_extra_margin"
+                android:layout_marginEnd="@dimen/form_extra_margin"
                 android:hint="@string/hint_card_nickname"
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"

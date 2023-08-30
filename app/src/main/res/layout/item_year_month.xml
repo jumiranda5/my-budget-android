@@ -8,12 +8,9 @@
 
     <TextView
         android:id="@+id/item_year_month_name"
-        style="@style/MyBody1"
+        style="@style/YearItem"
         android:layout_width="0dp"
-        android:text="JAN"
-        android:fontFamily="@font/titillium_web_bold"
-        android:textSize="@dimen/body2"
-        android:textAllCaps="true"
+        android:text="@string/initial_month"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_year_month_currency_symbol"
         app:layout_constraintStart_toStartOf="parent"

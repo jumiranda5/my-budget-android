@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -52,6 +53,7 @@ import java.util.Objects;
 public class AdLockFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
+    private static final int LOCK_DELAY = 200;
 
     private String mPage;
 
@@ -86,8 +88,9 @@ public class AdLockFragment extends Fragment {
     private TextView mPageTitle, mAdButtonText, mAdButtonLoaderText, mPremiumButtonText, mPremiumError;
     private ProgressBar mAdLoader;
     private MaterialCardView mButtonWatchAd, mButtonPremium;
-    private ImageView mAdWatchIcon;
+    private ImageView mAdWatchIcon, mAdLockIcon;
     private ImageButton mClose;
+    private Group mAdLockGroup;
 
     private void setBinding() {
         mPageTitle = binding.adLockPageName;
@@ -100,6 +103,8 @@ public class AdLockFragment extends Fragment {
         mPremiumError = binding.adLockPremiumError;
         mAdWatchIcon = binding.adLockMovieIcon;
         mClose = binding.adLockClose;
+        mAdLockGroup = binding.groupAdLock;
+        mAdLockIcon = binding.adLockImage;
     }
 
     // Interfaces
@@ -155,9 +160,12 @@ public class AdLockFragment extends Fragment {
 
     private void setPremiumUser(String orderId) {
         Log.d(LOG, "Set premium user on shared prefs");
-        SettingsPrefs.setSettingsPrefsString(mContext, Tags.keyIapOrder, orderId);
-        SettingsPrefs.setSettingsPrefsBoolean(mContext, Tags.keyIsPremium, true);
-        mInterface.onAdFragmentDismiss(true);
+        setSuccess();
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            SettingsPrefs.setSettingsPrefsString(mContext, Tags.keyIapOrder, orderId);
+            SettingsPrefs.setSettingsPrefsBoolean(mContext, Tags.keyIsPremium, true);
+            mInterface.onAdFragmentDismiss(true);
+        }, LOCK_DELAY);
     }
 
     /* ---------------------------------------------------------------------------------------------
@@ -256,6 +264,13 @@ public class AdLockFragment extends Fragment {
         mPremiumError.setText(msg);
     }
 
+    // Success
+    private void setSuccess() {
+        mAdLockGroup.setVisibility(View.GONE);
+        mAdLockIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_48_lock_open_fill0_200));
+        mAdLockIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.success));
+    }
+
     /* ---------------------------------------------------------------------------------------------
                                               LOAD AD
      -------------------------------------------------------------------------------------------- */
@@ -295,7 +310,14 @@ public class AdLockFragment extends Fragment {
                     Log.d(LOG, "Ad dismissed fullscreen content.");
                     rewardedAd = null;
                     // go to unlocked page if reward was granted or reload ad if not
-                    if (isRewardGranted) mInterface.onAdFragmentDismiss(true);
+                    if (isRewardGranted) {
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            setSuccess();
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                mInterface.onAdFragmentDismiss(true);
+                            }, LOCK_DELAY);
+                        });
+                    }
                     else loadAd();
                 }
 

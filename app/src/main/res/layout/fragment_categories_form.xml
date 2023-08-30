@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/cat_form_title"
-                style="@style/MyHeadline6"
+                style="@style/ToolbarTitle"
                 android:text="@string/title_add_category"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cat_form_toolbar_archive"
@@ -80,6 +80,8 @@
                 android:id="@+id/category_name_input"
                 style="@style/InputWithIcon"
                 android:layout_marginTop="@dimen/form_margin"
+                android:layout_marginStart="@dimen/form_extra_margin"
+                android:layout_marginEnd="@dimen/form_extra_margin"
                 android:hint="@string/hint_category_name"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"

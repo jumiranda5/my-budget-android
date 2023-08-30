@@ -258,7 +258,7 @@ public class HomeFragment extends Fragment {
         float monthIncome = balance.getIncome();
 
         // size and color
-        if (monthBalance > 999999.99) mBalance.setTextAppearance(R.style.ShrinkHomeBalance);
+        if (monthBalance > 99999999999.99) mBalance.setTextAppearance(R.style.ShrinkHomeBalance);
         if (monthBalance < 0) {
             mBalanceContainer.setBackgroundColor(ContextCompat.getColor(mContext, R.color.bg_expense_container));
             mBalance.setTextColor(ContextCompat.getColor(mContext, R.color.expense));

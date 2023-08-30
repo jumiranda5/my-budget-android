@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +58,8 @@ import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
 
+    // todo: add consent form loader
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -77,6 +81,7 @@ public class SettingsFragment extends Fragment {
     private Button mOpenCategories, mOpenCreditCards, mClearDatabase, mReviewConsent, mBuyPremiumAccess;
     private ImageButton mBack;
     private TextView mOrderId;
+    private ImageView mPremiumIcon;
 
     private void setBinding() {
         mBack = binding.settingsButtonBack;
@@ -89,6 +94,7 @@ public class SettingsFragment extends Fragment {
         mReviewConsent = binding.settingsReviewAdsConsent;
         mBuyPremiumAccess = binding.settingsPremiumMember;
         mOrderId = binding.settingsPremiumOrder;
+        mPremiumIcon = binding.settingsPremiumIcon;
     }
 
     // Interfaces
@@ -156,12 +162,15 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void showBillingError(String msg) {
-        // todo
+    private void showBillingError(String msg, boolean isConnectionError) {
+        if (isConnectionError) mBuyPremiumAccess.setText(msg);
+        else Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void setPremiumUser(String orderId) {
         mBuyPremiumAccess.setText(mContext.getString(R.string.action_premium));
+        mBuyPremiumAccess.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+        mPremiumIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.savings));
         String orderText = mContext.getString(R.string.label_order_id) + " " + orderId;
         mOrderId.setText(orderText);
         mOrderId.setVisibility(View.VISIBLE);
@@ -172,7 +181,7 @@ public class SettingsFragment extends Fragment {
             clipboard.setPrimaryClip(clip);
             v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-                Toast.makeText(mContext, "Copied", Toast.LENGTH_SHORT).show(); // todo: getString()
+                Toast.makeText(mContext, mContext.getString(R.string.msg_purchase_id_copied), Toast.LENGTH_SHORT).show();
             return false;
         });
     }
@@ -289,16 +298,16 @@ public class SettingsFragment extends Fragment {
                         break;
                     case BillingClient.BillingResponseCode.USER_CANCELED:
                         new Handler(Looper.getMainLooper()).post(() ->
-                                showBillingError(mContext.getString(R.string.msg_iap_user_canceled)));
+                                showBillingError(mContext.getString(R.string.msg_iap_user_canceled), false));
                         break;
                     case BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED:
                         new Handler(Looper.getMainLooper()).post(() ->
-                                showBillingError(mContext.getString(R.string.msg_iap_user_own_item)));
+                                showBillingError(mContext.getString(R.string.msg_iap_user_own_item), false));
                         break;
                     default:
                         Log.e(LOG_BILLING, "Error: " + responseCode + " | " + billingResult.getDebugMessage());
                         new Handler(Looper.getMainLooper()).post(() ->
-                                showBillingError(mContext.getString(R.string.msg_iap_purchase_error)));
+                                showBillingError(mContext.getString(R.string.msg_iap_purchase_error), false));
                 }
             }
         };
@@ -322,7 +331,7 @@ public class SettingsFragment extends Fragment {
                     BillingResult supportsProductDetail = billingClient.isFeatureSupported(PRODUCT_DETAILS);
                     if ( supportsProductDetail.getResponseCode() != BillingClient.BillingResponseCode.OK ) {
                         Log.e(LOG_BILLING, "feature unsupported - show warning to user...");
-                        new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable)));
+                        new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable), true));
                     }
                     else queryProducts();
 
@@ -331,14 +340,14 @@ public class SettingsFragment extends Fragment {
                     // Try to restart the connection on the next request to
                     // Google Play by calling the startConnection() method.
                     Log.e(LOG_BILLING, "Billing client not connected: " + billingResult.getDebugMessage());
-                    new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable)));
+                    new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable), true));
                 }
             }
 
             @Override
             public void onBillingServiceDisconnected() {
                 Log.d(LOG_BILLING, "BillingClient disconnected");
-                new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable)));
+                new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable), true));
             }
         });
 
@@ -386,7 +395,7 @@ public class SettingsFragment extends Fragment {
             }
             else {
                 Log.e(LOG_BILLING, debugMessage);
-                new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable)));
+                new Handler(Looper.getMainLooper()).post(() -> showBillingError(mContext.getString(R.string.action_premium_unavailable), false));
             }
 
         });

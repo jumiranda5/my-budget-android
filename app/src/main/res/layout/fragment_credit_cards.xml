@@ -30,7 +30,7 @@
 
             <TextView
                 android:id="@+id/cards_toolbar_title"
-                style="@style/MyHeadline6"
+                style="@style/ToolbarTitle"
                 android:text="@string/credit_cards"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_add_card"

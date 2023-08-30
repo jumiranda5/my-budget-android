@@ -76,6 +76,6 @@
         app:layout_constraintEnd_toEndOf="@id/transactions_day_width_anchor"
         app:layout_constraintStart_toStartOf="@id/transactions_day_width_anchor"
         tools:itemCount="3"
-        tools:listitem="@layout/item_transaction" />
+        tools:listitem="@layout/item_transaction2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

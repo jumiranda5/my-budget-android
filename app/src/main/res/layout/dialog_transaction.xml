@@ -31,7 +31,8 @@
     <ImageButton
         android:id="@+id/dialog_transaction_dismiss"
         style="@style/IconButton"
-        android:layout_marginEnd="-11dp"
+        android:padding="12dp"
+        android:layout_marginEnd="-16dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
         app:layout_constraintEnd_toStartOf="@+id/guideline_end"
@@ -41,6 +42,7 @@
     <ImageButton
         android:id="@+id/dialog_transaction_delete"
         style="@style/IconButton"
+        android:padding="12dp"
         android:layout_marginEnd="6dp"
         android:contentDescription="@string/action_delete"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"
@@ -51,6 +53,7 @@
     <ImageButton
         android:id="@+id/dialog_transaction_edit"
         style="@style/IconButton"
+        android:padding="12dp"
         android:layout_marginEnd="6dp"
         android:contentDescription="@string/nav_edit"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_transaction_title"

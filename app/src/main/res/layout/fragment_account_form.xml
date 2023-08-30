@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/account_form_title"
-                style="@style/MyHeadline6"
+                style="@style/ToolbarTitle"
                 android:text="@string/title_add_account"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/account_form_archive_button"
@@ -84,6 +84,8 @@
                 android:id="@+id/account_form_nickname"
                 style="@style/InputWithIcon"
                 android:layout_marginTop="@dimen/form_margin"
+                android:layout_marginEnd="@dimen/form_extra_margin"
+                android:layout_marginStart="@dimen/form_extra_margin"
                 android:hint="@string/hint_account_nickname"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
@@ -130,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_inner_space"
                 android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="@+id/account_form_color"
+                app:layout_constraintStart_toStartOf="@+id/account_form_nickname"
                 app:layout_constraintTop_toBottomOf="@+id/account_form_color">
 
                 <RadioButton
@@ -182,8 +184,8 @@
                 style="@style/ButtonSave"
                 android:layout_width="0dp"
                 android:layout_marginTop="@dimen/form_inner_space"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/account_form_nickname"
+                app:layout_constraintStart_toStartOf="@+id/account_form_nickname"
                 app:layout_constraintTop_toBottomOf="@+id/account_type_radio_group" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

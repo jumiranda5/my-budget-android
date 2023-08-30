@@ -5,7 +5,7 @@
     <color name="colorPrimary">#1E1E1E</color>
     <color name="colorSecondary">#737373</color>
     <color name="colorAccent">#29A56F</color>
-    <color name="colorAccentLight">#95FFD9</color>
+    <color name="colorAccentLight">#C2FFE9</color>
     <color name="colorControlHighlight">#E0E0E0</color>
     <color name="colorSecondaryContainer">#EAEAEA</color>
     <color name="transparent">#00FFFFFF</color>
@@ -28,8 +28,8 @@
     <color name="bg_progress_track">#E0E0E0</color>
     <color name="bg_day">#EBEBEB</color>
     <color name="bg_indicator">@color/disabled_text</color>
-    <color name="bg_expense_container">#0DD00B46</color>
-    <color name="bg_income_container">#120BD072</color>
+    <color name="bg_expense_container">#0FD00B46</color>
+    <color name="bg_income_container">#1A0BD072</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>
@@ -91,6 +91,7 @@
 
     <color name="savings">#720EC1</color>
     <color name="savings_pressed">#5A0C97</color>
+    <color name="savings_border">#61720EC1</color>
     <color name="accumulated">@color/medium_emphasis_text</color>
 
     <!-- Toggle button - form type -->

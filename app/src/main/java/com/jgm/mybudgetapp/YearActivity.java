@@ -229,6 +229,9 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
         Log.d(LOG, "== setYearChart: " + response.size());
 
         mChart.post(() -> {
+            mChart.setImageDrawable(null);
+            mChart.setImageTintList(null);
+
             ArrayList<MonthTotal> yearList = new ArrayList<>();
             float[] expenses = {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
             float[] income =   {0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
@@ -270,7 +273,6 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
                 month++;
             }
 
-            mChart.setImageTintList(null);
             Charts.setYearTotalChart(this, mChart, yearList, highestBar, 300, 150);
         });
 

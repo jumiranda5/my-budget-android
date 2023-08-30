@@ -48,8 +48,7 @@
 
             <TextView
                 android:id="@+id/transactions_title"
-                style="@style/HomeBalanceLabel"
-                android:textColor="@color/high_emphasis_text"
+                style="@style/TransactionsOverline"
                 android:layout_marginTop="@dimen/transactions_total_margin"
                 android:text="@string/title_expense"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_transactions_end"
@@ -69,10 +68,10 @@
                 style="@style/ItemIcon"
                 android:layout_marginTop="@dimen/transactions_info_margin_top"
                 android:contentDescription="@null"
-                app:tint="@color/medium_emphasis_text"
                 app:layout_constraintStart_toStartOf="@+id/transactions_total"
                 app:layout_constraintTop_toBottomOf="@+id/transactions_total"
-                app:srcCompat="@drawable/ic_40_check_circle_fill0_300" />
+                app:srcCompat="@drawable/ic_40_check_circle_fill0_300"
+                app:tint="@color/medium_emphasis_text" />
 
             <TextView
                 android:id="@+id/transactions_paid"

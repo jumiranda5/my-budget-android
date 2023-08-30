@@ -21,6 +21,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/categories_toolbar"
         style="@style/MainToolbar"
+        android:elevation="0dp"
         android:background="@color/bg_01dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,8 +103,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorHeight="2dp"
+            app:tabIndicatorColor="@color/high_emphasis_text"
             app:tabSelectedTextColor="@color/high_emphasis_text"
             app:tabTextAppearance="@style/MyTabText"
+            app:tabSelectedTextAppearance="@style/MyTabTextSelected"
             app:tabTextColor="@color/medium_emphasis_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_category_dialog_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_category_dialog_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_padding" />
+
     <ImageView
         android:id="@+id/drag_indicator"
         style="@style/DragIndicator"
@@ -17,18 +32,16 @@
     <ImageView
         android:id="@+id/dialog_category_icon"
         style="@style/IconNormal"
-        android:layout_marginStart="@dimen/page_padding"
+        android:layout_marginStart="-4dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_category_title"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_category_dialog_start"
         app:layout_constraintTop_toTopOf="@+id/dialog_category_title"
         app:srcCompat="@drawable/ic_category_fill0_300_40" />
 
     <TextView
         android:id="@+id/dialog_category_title"
-        style="@style/DialogTitle"
-        android:letterSpacing="0.05"
-        android:textSize="@dimen/body1"
+        style="@style/DialogTitle2"
         android:layout_marginStart="16dp"
         android:text="@string/hint_icon"
         app:layout_constraintBottom_toTopOf="@+id/dialog_category_divider"
@@ -37,12 +50,9 @@
     <TextView
         android:id="@+id/dialog_category_total"
         style="@style/CurrencyMedium"
-        android:letterSpacing="0.05"
-        android:fontFamily="@font/titillium_web_semi_bold"
-        android:textSize="@dimen/body1"
-        android:layout_marginEnd="@dimen/page_padding"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/dialog_category_title"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/guideline_category_dialog_end" />
 
     <ImageView
         android:id="@+id/dialog_category_divider"

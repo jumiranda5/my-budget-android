@@ -5,7 +5,7 @@
     android:id="@+id/item_pending_container"
     style="@style/ClickableListItem"
     android:layout_width="match_parent"
-    android:layout_height="76dp"
+    android:layout_height="@dimen/item_double_height"
     android:paddingStart="0dp"
     android:paddingEnd="0dp"
     tools:ignore="RtlSymmetry">

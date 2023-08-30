@@ -52,7 +52,7 @@ public class YearMonthAdapter extends RecyclerView.Adapter<YearMonthAdapter.List
         expense = expense  * -1;
 
         // Set month
-        String monthName = MyDateUtils.getMonthName(mContext, month, year)[1];
+        String monthName = MyDateUtils.getMonthName(mContext, month, year)[0];
         holder.mMonth.setText(monthName);
 
         // Set amount
@@ -60,22 +60,22 @@ public class YearMonthAdapter extends RecyclerView.Adapter<YearMonthAdapter.List
         switch (type) {
             case 0:
                 total = NumberUtils.getCurrencyFormat(mContext, balance);
-                setTotalColor(balance, holder.mTotal, holder.mCurrencySymbol);
+                setTotalColor(balance, holder.mTotal, holder.mCurrencySymbol, holder.mMonth);
                 break;
             case 1:
                 total = NumberUtils.getCurrencyFormat(mContext, income);
-                setTotalColor(income, holder.mTotal, holder.mCurrencySymbol);
+                setTotalColor(income, holder.mTotal, holder.mCurrencySymbol, holder.mMonth);
                 break;
             default:
                 total = NumberUtils.getCurrencyFormat(mContext, expense);
-                setTotalColor(expense, holder.mTotal, holder.mCurrencySymbol);
+                setTotalColor(expense, holder.mTotal, holder.mCurrencySymbol, holder.mMonth);
         }
         holder.mCurrencySymbol.setText(total[0]);
         holder.mTotal.setText(total[1]);
 
     }
 
-    private void setTotalColor(float value, TextView total, TextView currency) {
+    private void setTotalColor(float value, TextView total, TextView currency, TextView month) {
         if (value < 0) {
             total.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
             currency.setTextColor(ContextCompat.getColor(mContext, R.color.expense));
@@ -83,6 +83,7 @@ public class YearMonthAdapter extends RecyclerView.Adapter<YearMonthAdapter.List
         else if (value == 0) {
             total.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
             currency.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
+            month.setTextColor(ContextCompat.getColor(mContext, R.color.disabled_text));
         }
         else {
             total.setTextColor(ContextCompat.getColor(mContext, R.color.income));

@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/settings_toolbar_title"
-                style="@style/MyHeadline6"
+                style="@style/ToolbarTitle"
                 android:text="@string/nav_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/settings_button_back"
@@ -57,44 +57,20 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/settings_padding">
 
-            <!-- Dark mode -->
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/switch_dark_mode"
-                style="@style/SettingsSwitch"
-                android:layout_marginTop="8dp"
-                android:text="@string/action_dark_mode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/settings_mode_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
-                android:contentDescription="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/switch_dark_mode"
-                app:layout_constraintStart_toStartOf="@+id/switch_dark_mode"
-                app:layout_constraintTop_toTopOf="@+id/switch_dark_mode"
-                app:srcCompat="@drawable/ic_48_dark_mode_300" />
-
             <!-- Premium member -->
 
             <Button
                 android:id="@+id/settings_premium_member"
                 style="@style/SettingsButton"
+                android:layout_marginTop="8dp"
                 android:text="@string/action_buy_premium_access"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/switch_dark_mode" />
-
+                app:layout_constraintTop_toBottomOf="@id/settings_premium_order" />
 
             <ImageView
                 android:id="@+id/settings_premium_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_premium_member"
                 app:layout_constraintStart_toStartOf="@+id/settings_premium_member"
@@ -103,17 +79,39 @@
 
             <TextView
                 android:id="@+id/settings_premium_order"
+                style="@style/TextExtra"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:visibility="gone"
+                android:textColor="@color/savings"
                 android:background="@drawable/bg_transparent_border"
-                app:layout_constraintTop_toBottomOf="@id/settings_premium_member"
+                android:backgroundTint="@color/savings_border"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Dark mode -->
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_dark_mode"
+                style="@style/SettingsSwitch"
+                android:text="@string/action_dark_mode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/settings_premium_member" />
+
+            <ImageView
+                android:id="@+id/settings_mode_icon"
+                style="@style/SettingsIcon"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/switch_dark_mode"
+                app:layout_constraintStart_toStartOf="@+id/switch_dark_mode"
+                app:layout_constraintTop_toTopOf="@+id/switch_dark_mode"
+                app:srcCompat="@drawable/ic_48_dark_mode_300" />
 
             <!-- Categories -->
 
@@ -123,13 +121,11 @@
                 android:text="@string/action_menage_categories"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/settings_premium_order" />
+                app:layout_constraintTop_toBottomOf="@+id/switch_dark_mode" />
 
             <ImageView
                 android:id="@+id/settings_category_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_edit_categories"
                 app:layout_constraintStart_toStartOf="@+id/settings_edit_categories"
@@ -148,9 +144,7 @@
 
             <ImageView
                 android:id="@+id/settings_cards_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_edit_cards"
                 app:layout_constraintStart_toStartOf="@+id/settings_edit_cards"
@@ -169,9 +163,7 @@
 
             <ImageView
                 android:id="@+id/settings_support_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_support"
                 app:layout_constraintStart_toStartOf="@+id/settings_support"
@@ -190,9 +182,7 @@
 
             <ImageView
                 android:id="@+id/settings_privacy_policy_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_privacy_policy"
                 app:layout_constraintStart_toStartOf="@+id/settings_privacy_policy"
@@ -209,9 +199,7 @@
 
             <ImageView
                 android:id="@+id/settings_ads_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_review_ads_consent"
                 app:layout_constraintStart_toStartOf="@+id/settings_review_ads_consent"
@@ -229,9 +217,7 @@
 
             <ImageView
                 android:id="@+id/settings_clear_data_icon"
-                style="@style/InputIcon"
-                android:layout_width="@dimen/settings_icon_width"
-                android:padding="@dimen/settings_icon_padding"
+                style="@style/SettingsIcon"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/settings_clear_data"
                 app:layout_constraintStart_toStartOf="@+id/settings_clear_data"

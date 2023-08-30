@@ -9,14 +9,14 @@
 
     <!-- Guidelines -->
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_start"
+        android:id="@+id/guideline_item_category_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="@dimen/page_padding" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_item_end"
+        android:id="@+id/guideline_item_category_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -25,15 +25,16 @@
     <ImageView
         android:id="@+id/category_icon"
         style="@style/IconNormal"
+        android:layout_marginStart="-4dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_item_start"
+        app:layout_constraintStart_toStartOf="@+id/guideline_item_category_start"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_house_fill1_300_48" />
 
     <TextView
         android:id="@+id/category_name"
-        style="@style/MyBody1"
+        style="@style/BodyItemEllipse"
         android:layout_width="0dp"
         android:ellipsize="end"
         android:maxLines="1"
@@ -52,6 +53,6 @@
         android:layout_height="wrap_content"
         android:text="@string/initial_percent"
         app:layout_constraintBaseline_toBaselineOf="@+id/category_name"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_item_end" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_item_category_end" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

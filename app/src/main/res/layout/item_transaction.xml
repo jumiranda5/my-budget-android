@@ -27,7 +27,7 @@
     <ImageView
         android:id="@+id/item_transaction_icon"
         style="@style/ItemIcon"
-        android:layout_width="31dp"
+        android:layout_width="29dp"
         android:paddingEnd="10dp"
         android:contentDescription="@null"
         android:visibility="gone"

@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/item_transaction2_name"
-        style="@style/BodyItemEllipse"
+        style="@style/BodyItemEllipse2"
         android:paddingEnd="16dp"
         android:paddingStart="2dp"
         android:text="@string/hint_description"

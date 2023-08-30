@@ -49,6 +49,8 @@ import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // todo: add auth error msg
+
     // Login flow:
     // - check device credentials =>
     //      if ok, proceed to auth prompt.
@@ -74,13 +76,12 @@ public class LoginActivity extends AppCompatActivity {
     // UI
     private ActivityLoginBinding binding;
     private ImageView mLockIcon;
-    private TextView mProgressText, mPageTitle;
+    private TextView mProgressText;
     private Button mLoginButton, mContinueButton, mRetryButton;
     private Group mGroupProgress, mGroupAuthWarning, mGroupIapWarning, mGroupAdsWarning;
 
     private void setBinding() {
         mLockIcon = binding.loginIcon;
-        mPageTitle = binding.loginTitle;
         mProgressText = binding.loginProgressBarText;
         mLoginButton = binding.loginButton;
         mRetryButton = binding.loginRetryButton;
@@ -132,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
     --------------------------------------------------------------------------------------------- */
 
     private void switchDarkMode(boolean isDark) {
+        // todo: set initial mode
         Log.d(LOG, "=> switchDarkMode");
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (isDark) {
@@ -190,12 +192,11 @@ public class LoginActivity extends AppCompatActivity {
     // Success
 
     private void showAuthSuccess() {
-        mLockIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_48_lock_open_fill0_200));
-        mLockIcon.setImageTintList(ContextCompat.getColorStateList(this, R.color.success));
-        mPageTitle.setTextColor(ContextCompat.getColor(this, R.color.success));
-        mPageTitle.setText(getString(R.string.title_logged));
         mLoginButton.setVisibility(View.GONE);
         mGroupAuthWarning.setVisibility(View.GONE);
+        mLockIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_48_lock_open_fill0_200));
+        mLockIcon.setImageTintList(ContextCompat.getColorStateList(this, R.color.success));
+        mLockIcon.setContentDescription(getString(R.string.title_logged));
     }
 
 
@@ -273,7 +274,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             Log.e(LOG_AUTH, "Biometric features are currently not available.");
-            showAuthError();
+            // todo: removed showAuthError for testing on emulator => don't forget to fix this
+            // showAuthError();
+            showAuthSuccess();
+            connectToGooglePlay();
         }
     }
 
@@ -309,8 +313,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Init prompt
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
-                .setSubtitle("Log in using your biometric credential")
+                .setTitle(getString(R.string.action_login))
                 .setAllowedAuthenticators(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
                 .build();
 

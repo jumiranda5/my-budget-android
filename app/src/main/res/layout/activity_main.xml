@@ -14,7 +14,6 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_toolbar"
         style="@style/MainToolbar"
-        android:elevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,6 +36,7 @@
                 style="@style/MySubtitle2"
                 android:layout_marginStart="16dp"
                 android:text="@string/initial_year"
+                android:textColor="@color/high_emphasis_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
