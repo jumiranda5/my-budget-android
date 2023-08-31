@@ -357,6 +357,7 @@
     <style name="YearSmallLabel" parent="MyOverline2">
         <item name="android:textColor">@color/medium_emphasis_text</item>
         <item name="android:letterSpacing">0.14</item>
+        <item name="android:textSize">@dimen/year_small_label</item>
     </style>
 
     <style name="YearLabel" parent="MySubtitle1">
@@ -377,7 +378,7 @@
      =========================================================================================== -->
 
     <style name="MyTabText" parent="AppTheme">
-        <item name="android:textSize">@dimen/body1</item>
+        <item name="android:textSize">@dimen/tab_text</item>
         <item name="android:fontFamily">@font/source_sans_3_regular</item>
         <item name="android:letterSpacing">0.04</item>
     </style>

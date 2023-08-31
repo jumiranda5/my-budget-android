@@ -18,14 +18,25 @@
             android:focusable="true"
             android:focusableInTouchMode="true">
 
+            <!-- Anchor -->
+            <View
+                android:id="@+id/categories_pager_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor_large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
             <ImageView
                 android:id="@+id/categories_donut_chart"
                 android:layout_width="@dimen/categories_chart_size"
                 android:layout_height="@dimen/categories_chart_size"
                 android:layout_marginTop="@dimen/page_padding"
-                android:layout_marginEnd="@dimen/page_padding"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+                app:layout_constraintStart_toStartOf="@+id/categories_pager_anchor"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
 
@@ -45,11 +56,10 @@
                 android:id="@+id/categories_percent_list"
                 style="@style/MainList"
                 android:paddingTop="@dimen/page_padding"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/categories_list_percent_padding_land"
                 android:paddingBottom="@dimen/page_padding"
+                android:layout_marginStart="@dimen/page_padding"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/categories_pager_anchor"
                 app:layout_constraintStart_toStartOf="@+id/guideline_center"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_category_percent" />

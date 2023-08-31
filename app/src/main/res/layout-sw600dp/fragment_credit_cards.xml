@@ -30,24 +30,27 @@
 
             <TextView
                 android:id="@+id/cards_toolbar_title"
-                style="@style/MyHeadline6"
+                style="@style/ToolbarTitle"
                 android:text="@string/credit_cards"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_add_card"
+                app:layout_constraintEnd_toStartOf="@+id/fab_add_card"
                 app:layout_constraintStart_toEndOf="@+id/cards_toolbar_close"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Add button - tablets -->
-            <ImageButton
-                android:id="@+id/button_add_card"
-                style="@style/ToolbarButtonWithBg"
-                android:layout_marginEnd="4dp"
-                android:visibility="visible"
+            <!-- Add button -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabCustomSize="48dp"
+                android:layout_marginEnd="@dimen/inner_space"
+                android:backgroundTint="@color/colorAccent"
                 android:contentDescription="@string/desc_add_category"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_add_500" />
+                app:srcCompat="@drawable/ic_app_add_500"
+                app:tint="@color/button_accent_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,19 +70,5 @@
         app:layout_constraintTop_toBottomOf="@+id/cards_toolbar"
         tools:itemCount="4"
         tools:listitem="@layout/item_card" />
-
-    <!-- Add button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/inner_space"
-        android:backgroundTint="@color/colorAccent"
-        app:tint="@color/white"
-        android:visibility="gone"
-        android:contentDescription="@string/desc_add_category"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_app_add_500" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

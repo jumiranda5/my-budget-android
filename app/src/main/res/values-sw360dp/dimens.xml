@@ -72,6 +72,7 @@
     <dimen name="transactions_total_margin">64dp</dimen>
     <dimen name="transactions_info_margin_top">56dp</dimen>
     <dimen name="transactions_list_margin">48dp</dimen>
+    <dimen name="transactions_day_margin_start">-24dp</dimen>
 
     <!-- ===========================================================================================
                                                FORMS
@@ -99,6 +100,13 @@
     <dimen name="categories_chart_size">248dp</dimen>
     <dimen name="categories_chart_margin">64dp</dimen>
     <dimen name="categories_chart_list_margin">64dp</dimen>
+    <dimen name="categories_chart_list_item_padding">24dp</dimen>
+
+    <!-- ===========================================================================================
+                                            LIST PAGE
+    ============================================================================================ -->
+
+    <dimen name="list_max_width">520dp</dimen> <!-- page anchor width + page padding -->
 
 
     <!-- ===========================================================================================

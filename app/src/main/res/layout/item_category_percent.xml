@@ -13,14 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/page_padding" />
+        app:layout_constraintGuide_begin="@dimen/categories_chart_list_item_padding" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_item_category_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/page_padding" />
+        app:layout_constraintGuide_end="@dimen/categories_chart_list_item_padding" />
 
     <ImageView
         android:id="@+id/category_icon"

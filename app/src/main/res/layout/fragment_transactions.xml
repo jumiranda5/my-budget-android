@@ -35,6 +35,16 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="@dimen/page_padding" />
 
+            <!-- Anchor -->
+            <View
+                android:id="@+id/transactions_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor"
+                app:layout_constraintEnd_toEndOf="@id/guideline_transactions_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_transactions_start"
+                app:layout_constraintTop_toTopOf="parent"/>
+
 
             <!-- Max width -->
             <View
@@ -51,16 +61,16 @@
                 style="@style/TransactionsOverline"
                 android:layout_marginTop="@dimen/transactions_total_margin"
                 android:text="@string/title_expense"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_transactions_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_transactions_start"
+                app:layout_constraintEnd_toEndOf="@+id/transactions_anchor"
+                app:layout_constraintStart_toStartOf="@+id/transactions_anchor"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/transactions_total"
                 style="@style/TransactionsTotal"
                 android:includeFontPadding="false"
-                app:layout_constraintEnd_toEndOf="@id/transactions_width_anchor"
-                app:layout_constraintStart_toStartOf="@+id/guideline_transactions_start"
+                app:layout_constraintEnd_toEndOf="@+id/transactions_anchor"
+                app:layout_constraintStart_toStartOf="@+id/transactions_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/transactions_title" />
 
             <ImageView
@@ -83,7 +93,7 @@
                 android:textColor="@color/medium_emphasis_text"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/transactions_paid_icon"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_transactions_end"
+                app:layout_constraintEnd_toEndOf="@+id/transactions_anchor"
                 app:layout_constraintStart_toEndOf="@+id/transactions_paid_icon"
                 app:layout_constraintTop_toTopOf="@+id/transactions_paid_icon" />
 
@@ -107,7 +117,7 @@
                 android:textColor="@color/medium_emphasis_text"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/transactions_due_icon"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_transactions_end"
+                app:layout_constraintEnd_toEndOf="@+id/transactions_anchor"
                 app:layout_constraintStart_toEndOf="@+id/transactions_due_icon"
                 app:layout_constraintTop_toTopOf="@+id/transactions_due_icon" />
 

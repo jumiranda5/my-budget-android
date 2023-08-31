@@ -33,10 +33,10 @@
     <ImageButton
         android:id="@+id/dialog_icon_dismiss"
         style="@style/IconButton"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="-11dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_icon_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintTop_toTopOf="@+id/dialog_icon_title"
         app:srcCompat="@drawable/ic_40_close_300" />
 
@@ -47,10 +47,12 @@
         android:clipToPadding="false"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
+        android:layout_marginStart="@dimen/icon_list_margin"
+        android:layout_marginEnd="@dimen/icon_list_margin"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:spanCount="5"
         tools:listitem="@layout/item_icon" />
 
@@ -59,13 +61,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/inner_space" />
+        app:layout_constraintGuide_begin="@dimen/page_padding" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/inner_space" />
+        app:layout_constraintGuide_end="@dimen/page_padding" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,13 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/item_icon_list_margin_bottom"
     android:id="@+id/icon_container">
 
     <ImageButton
         android:id="@+id/icon_item"
         style="@style/ItemButton"
         android:contentDescription="@string/hint_icon"
-        app:layout_constraintHeight_max="58dp"
+        app:layout_constraintHeight_max="@dimen/item_icon_list"
         android:layout_marginBottom="4dp"
         app:srcCompat="@drawable/ic_category_fill1_300_48"
         app:tint="@color/medium_emphasis_text"

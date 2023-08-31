@@ -17,16 +17,16 @@
     <color name="button_text">#181A1E</color>
 
     <!-- Backgrounds -->
-    <color name="bg_00dp">#181A1E</color> <!-- using -->
-    <color name="bg_01dp">#242529</color> <!-- using -->
-    <color name="bg_02dp">#282A2E</color> <!-- using -->
+    <color name="bg_00dp">#181A1E</color>
+    <color name="bg_01dp">#242529</color>
+    <color name="bg_02dp">#282A2E</color>
     <color name="bg_04dp">#2D2F32</color>
-    <color name="bg_status_bar">@color/bg_01dp</color> <!-- using -->
-    <color name="bg_form">@color/bg_00dp</color> <!-- using -->
-    <color name="bg_input">#1F2125</color> <!-- using -->
-    <color name="bg_progress_track">@color/bg_02dp</color> <!-- using -->
-    <color name="bg_expense_container">#1AD00B46</color> <!-- using -->
-    <color name="bg_income_container">#1A0BD072</color> <!-- using -->
+    <color name="bg_status_bar">@color/bg_01dp</color>
+    <color name="bg_form">@color/bg_00dp</color>
+    <color name="bg_input">#1F2125</color>
+    <color name="bg_progress_track">@color/bg_02dp</color>
+    <color name="bg_expense_container">#1AD00B46</color>
+    <color name="bg_income_container">#1A0BD072</color>
 
     <!-- Borders -->
     <color name="border">#1F2125</color>

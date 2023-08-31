@@ -102,6 +102,16 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="@dimen/page_padding" />
 
+            <!-- Anchor -->
+            <View
+                android:id="@+id/year_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <!-- Bar Chart -->
 
             <ImageView
@@ -111,8 +121,8 @@
                 android:layout_marginTop="@dimen/year_chart_margin"
                 android:contentDescription="@string/desc_year_bar_chart"
                 app:layout_constraintDimensionRatio="h,3:1.5"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/year_anchor"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Divider -->
@@ -121,8 +131,8 @@
                 style="@style/MyDivider"
                 android:layout_marginTop="@dimen/year_chart_margin"
                 android:contentDescription="@null"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/year_anchor"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_chart" />
 
             <!-- Balance -->
@@ -133,7 +143,7 @@
                 android:layout_marginTop="@dimen/year_divider_margin"
                 android:text="@string/label_balance"
                 app:layout_constraintEnd_toStartOf="@+id/year_balance_currency_symbol"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_section_divider" />
 
             <TextView
@@ -149,7 +159,7 @@
                 style="@style/CurrencySpaceMedium"
                 android:textColor="@color/income"
                 app:layout_constraintBaseline_toBaselineOf="@+id/year_balance_label"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
+                app:layout_constraintEnd_toEndOf="@+id/year_anchor" />
 
             <!-- Income total -->
 
@@ -159,7 +169,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/label_income"
                 app:layout_constraintEnd_toStartOf="@+id/year_income_currency_symbol"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_label" />
 
             <TextView
@@ -175,7 +185,7 @@
                 style="@style/CurrencySpaceMedium"
                 android:textColor="@color/income"
                 app:layout_constraintBaseline_toBaselineOf="@+id/year_income_label"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
+                app:layout_constraintEnd_toEndOf="@+id/year_anchor" />
 
             <!-- Expense total -->
 
@@ -185,7 +195,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/label_expense"
                 app:layout_constraintEnd_toStartOf="@+id/year_expense_currency_symbol"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_label" />
 
             <TextView
@@ -201,7 +211,7 @@
                 style="@style/CurrencySpaceMedium"
                 android:textColor="@color/expense"
                 app:layout_constraintBaseline_toBaselineOf="@+id/year_expense_label"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end" />
+                app:layout_constraintEnd_toEndOf="@+id/year_anchor" />
 
 
             <!-- Divider -->
@@ -210,8 +220,8 @@
                 style="@style/MyDivider"
                 android:layout_marginTop="@dimen/year_divider_margin"
                 android:contentDescription="@null"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@+id/year_anchor"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_expense_label" />
 
             <!-- Balance list -->
@@ -222,15 +232,15 @@
                 android:layout_marginTop="@dimen/year_list_margin"
                 android:text="@string/label_balance_dots"
                 android:textColor="@color/savings"
-                app:layout_constraintStart_toStartOf="@+id/guideline_start"
+                app:layout_constraintStart_toStartOf="@+id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_section_divider2" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/year_balance_list"
                 style="@style/NestedListNoScroll"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/year_anchor"
+                app:layout_constraintStart_toStartOf="@id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_list_label"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_year_month" />
@@ -243,15 +253,15 @@
                 android:layout_marginTop="@dimen/year_list_margin"
                 android:text="@string/label_income_dots"
                 android:textColor="@color/income"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintStart_toStartOf="@id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_balance_list" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/year_income_list"
                 style="@style/NestedListNoScroll"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/year_anchor"
+                app:layout_constraintStart_toStartOf="@id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_list_label"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_year_month" />
@@ -264,15 +274,15 @@
                 android:layout_marginTop="@dimen/year_list_margin"
                 android:text="@string/label_expense_dots"
                 android:textColor="@color/expense"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintStart_toStartOf="@id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_income_list" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/year_expense_list"
                 style="@style/NestedListNoScroll"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/year_anchor"
+                app:layout_constraintStart_toStartOf="@id/year_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/year_expense_list_label"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_year_month" />

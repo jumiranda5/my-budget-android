@@ -25,10 +25,10 @@
     <ImageButton
         android:id="@+id/method_picker_close"
         style="@style/IconButton"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="-11dp"
         android:contentDescription="@string/nav_close"
         app:layout_constraintBottom_toBottomOf="@+id/method_picker_title"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_end"
         app:layout_constraintTop_toTopOf="@+id/method_picker_title"
         app:srcCompat="@drawable/ic_40_close_300" />
 

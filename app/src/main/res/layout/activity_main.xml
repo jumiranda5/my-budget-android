@@ -93,30 +93,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            style="@style/BottomNav"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <View
+            android:id="@+id/bottom_nav_anchor"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_max="@dimen/bottomBar_width"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/menu_bottom_nav" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="@id/bottom_nav_anchor"
+            app:layout_constraintEnd_toEndOf="@id/bottom_nav_anchor"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_add"
-            style="@style/BottomBarActionButton"
-            android:contentDescription="@string/nav_add"
-            app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"
-            app:layout_constraintEnd_toEndOf="@id/bottomNavigationView"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@id/bottomNavigationView" />
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                style="@style/BottomNav"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/menu_bottom_nav" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.8" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_add"
+                style="@style/BottomBarActionButton"
+                android:contentDescription="@string/nav_add"
+                app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"
+                app:layout_constraintEnd_toEndOf="@id/bottomNavigationView"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@id/bottomNavigationView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

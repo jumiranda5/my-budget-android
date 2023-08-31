@@ -41,7 +41,7 @@
         android:id="@+id/item_transaction2_name"
         style="@style/BodyItemEllipse2"
         android:paddingEnd="16dp"
-        android:paddingStart="2dp"
+        android:paddingStart="0dp"
         android:text="@string/hint_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/item_transaction2_currency_symbol"

@@ -30,15 +30,16 @@
                 android:paddingBottom="@dimen/account_details_title_space_bottom"
                 app:layout_collapseMode="none">
 
-                <!-- Max width -->
+                <!-- Anchor -->
                 <View
-                    android:id="@+id/account_width_anchor"
+                    android:id="@+id/account_details_anchor"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_max="@dimen/page_width_anchor" />
+                    app:layout_constraintWidth_max="@dimen/page_width_anchor"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_account_end"
+                    app:layout_constraintStart_toStartOf="@id/guideline_account_start"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
 
                 <!-- Guidelines -->
                 <androidx.constraintlayout.widget.Guideline
@@ -61,8 +62,8 @@
                     android:layout_marginTop="@dimen/account_details_title_space_top"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_40_cash_fill0_300"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_account_start"
-                    app:layout_constraintTop_toBottomOf="@+id/account_width_anchor" />
+                    app:layout_constraintStart_toStartOf="@+id/account_details_anchor"
+                    app:layout_constraintTop_toBottomOf="@+id/account_details_anchor" />
 
                 <TextView
                     android:id="@+id/account_details_title"
@@ -71,7 +72,7 @@
                     android:layout_marginEnd="16dp"
                     android:text="@string/account_checking"
                     app:layout_constraintEnd_toStartOf="@+id/account_edit_button"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_account_start"
+                    app:layout_constraintStart_toStartOf="@+id/account_details_anchor"
                     app:layout_constraintTop_toBottomOf="@+id/account_icon" />
 
                 <TextView
@@ -81,8 +82,8 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/initial_value"
                     android:textColor="@color/income"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_account_end"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_account_start"
+                    app:layout_constraintEnd_toEndOf="@+id/account_details_anchor"
+                    app:layout_constraintStart_toStartOf="@+id/account_details_anchor"
                     app:layout_constraintTop_toBottomOf="@+id/account_details_title" />
 
                 <ImageButton
@@ -98,10 +99,10 @@
                 <ImageButton
                     android:id="@+id/account_back_button"
                     style="@style/IconButton"
-                    android:layout_marginEnd="-12dp"
+                    android:layout_marginEnd="@dimen/account_details_close_margin"
                     android:contentDescription="@string/nav_back"
                     app:layout_constraintBottom_toBottomOf="@+id/account_icon"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_account_end"
+                    app:layout_constraintEnd_toEndOf="@+id/account_details_anchor"
                     app:layout_constraintTop_toTopOf="@+id/account_icon"
                     app:srcCompat="@drawable/ic_40_close_300" />
 

@@ -18,6 +18,7 @@
     <dimen name="caption">12sp</dimen>
     <dimen name="overline">10sp</dimen>
     <dimen name="bottom_nav_text">12sp</dimen>
+    <dimen name="tab_text">16sp</dimen>
     <dimen name="currency_width_min">80dp</dimen>
     <dimen name="currency_width_max">140dp</dimen>
 
@@ -50,7 +51,16 @@
     <dimen name="inner_space">16dp</dimen>
     <dimen name="page_divisor_space">200dp</dimen>
     <dimen name="page_padding">16dp</dimen>
-    <dimen name="page_width_anchor">580dp</dimen>
+    <dimen name="page_width_anchor">496dp</dimen>
+    <dimen name="page_width_anchor_large">600dp</dimen>
+
+    <!-- Tabs width -->
+    <dimen name="tab_layout_width">0dp</dimen>
+
+    <!-- Dialogs -->
+    <dimen name="item_icon_list">56dp</dimen>
+    <dimen name="item_icon_list_margin_bottom">0dp</dimen>
+    <dimen name="icon_list_margin">-12dp</dimen>
 
     <!-- ===========================================================================================
                                             LOGIN ACTIVITY
@@ -113,14 +123,14 @@
     <dimen name="land_home_progress_width">0dp</dimen>
 
     <!-- ===========================================================================================
-                                       ACCOUNTS DETAILS FRAGMENT
+                                       ACCOUNTS FRAGMENTS
      =========================================================================================== -->
 
     <dimen name="accounts_list_padding_top">16dp</dimen>
     <dimen name="account_details_title_space_top">40dp</dimen>
     <dimen name="account_details_title_space_bottom">72dp</dimen>
     <dimen name="account_details_margin">16dp</dimen>
-    <dimen name="account_details_close_margin">12dp</dimen>
+    <dimen name="account_details_close_margin">-12dp</dimen>
     <dimen name="account_details_list_padding">0dp</dimen>
     <dimen name="account_details_list_margin">24dp</dimen>
 
@@ -138,6 +148,8 @@
 
     <dimen name="transactions_day_margin">24dp</dimen>
     <dimen name="transactions_day_padding">0dp</dimen>
+    <dimen name="transactions_day_margin_start">-16dp</dimen>
+    <dimen name="transactions_item_total_margin">32dp</dimen>
     <dimen name="transactions_item_padding">4dp</dimen> <!-- -->
     <dimen name="transactions_item_padding_end">0dp</dimen>
     <dimen name="transactions_total_container_height">200dp</dimen> <!-- -->
@@ -184,6 +196,7 @@
     <dimen name="categories_chart_text_size">24sp</dimen>
     <dimen name="categories_chart_text_padding">24sp</dimen>
     <dimen name="categories_chart_list_padding">4dp</dimen>
+    <dimen name="categories_chart_list_item_padding">16dp</dimen>
     <dimen name="categories_list_percent_padding_land">0dp</dimen>
 
     <!-- ===========================================================================================
@@ -193,6 +206,7 @@
     <dimen name="year_chart_margin">56dp</dimen>
     <dimen name="year_divider_margin">24dp</dimen>
     <dimen name="year_list_margin">80dp</dimen>
+    <dimen name="year_small_label">12sp</dimen>
 
 
     <!-- ===========================================================================================
@@ -201,15 +215,17 @@
 
     <dimen name="settings_button_height">56dp</dimen>
     <dimen name="settings_padding">0dp</dimen>
+    <dimen name="settings_padding_top">0dp</dimen>
     <dimen name="settings_icon_width">56dp</dimen>
     <dimen name="settings_icon_padding">16dp</dimen>
 
-    <!-- =============  FRAGMENTS WITH 1 LIST  ============= -->
+    <!-- ===========================================================================================
+                                             LIST PAGE
+     =========================================================================================== -->
 
-    <dimen name="list_max_width">580dp</dimen>
+    <dimen name="list_max_width">512dp</dimen> <!-- page anchor width + page padding -->
     <dimen name="list_padding_top">12dp</dimen>
     <dimen name="list_padding_start">0dp</dimen>
-
 
     <!-- ===========================================================================================
                                                AD LOCK

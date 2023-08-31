@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_01dp"
+    android:background="@color/bg_00dp"
     tools:context=".LoginActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -30,6 +30,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="@dimen/page_padding" />
+
+            <!-- Anchor -->
+
+            <View
+                android:id="@+id/login_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_login_end"
+                app:layout_constraintStart_toStartOf="@+id/guideline_login_start"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <!-- Main -->
 
             <ImageView
                 android:id="@+id/login_icon"
@@ -70,7 +83,7 @@
                 style="@style/MyBody2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:maxWidth="240dp"
                 android:fontFamily="@font/source_sans_3_regular"
@@ -130,7 +143,7 @@
                 android:id="@+id/login_auth_icon"
                 style="@style/IconNormal"
                 android:contentDescription="@null"
-                app:layout_constraintStart_toStartOf="@+id/guideline_login_start"
+                app:layout_constraintStart_toStartOf="@+id/login_anchor"
                 app:layout_constraintTop_toTopOf="@+id/login_auth_warning"
                 app:srcCompat="@drawable/ic_40_error_fill1_400"
                 app:tint="@color/danger" />
@@ -140,8 +153,7 @@
                 style="@style/LoginError"
                 android:text="@string/auth_credentials_not_configured"
                 app:layout_constraintBottom_toTopOf="@+id/login_iap_warning"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_login_end"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="@id/login_anchor"
                 app:layout_constraintStart_toEndOf="@+id/login_auth_icon"
                 app:layout_constraintTop_toBottomOf="@+id/login_continue_button" />
 
@@ -158,7 +170,7 @@
                 android:id="@+id/login_iap_icon"
                 style="@style/IconNormal"
                 android:contentDescription="@null"
-                app:layout_constraintStart_toStartOf="@+id/guideline_login_start"
+                app:layout_constraintStart_toStartOf="@+id/login_anchor"
                 app:layout_constraintTop_toTopOf="@+id/login_iap_warning"
                 app:srcCompat="@drawable/ic_40_warning_fill1_400"
                 app:tint="@color/amber" />
@@ -168,12 +180,11 @@
                 style="@style/LoginError"
                 android:text="@string/iap_connection_error_message"
                 app:layout_constraintBottom_toTopOf="@+id/login_ads_warning"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_login_end"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="@+id/login_anchor"
                 app:layout_constraintStart_toEndOf="@+id/login_iap_icon"
                 app:layout_constraintTop_toBottomOf="@+id/login_auth_warning" />
 
-            <!--    &lt;!&ndash; ADS &ndash;&gt;-->
+            <!-- ADS -->
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_login_ads"
@@ -186,7 +197,7 @@
                 android:id="@+id/login_ads_icon"
                 style="@style/IconNormal"
                 android:contentDescription="@null"
-                app:layout_constraintStart_toStartOf="@+id/guideline_login_start"
+                app:layout_constraintStart_toStartOf="@+id/login_anchor"
                 app:layout_constraintTop_toTopOf="@+id/login_ads_warning"
                 app:srcCompat="@drawable/ic_40_warning_fill1_400"
                 app:tint="@color/amber" />
@@ -196,8 +207,7 @@
                 style="@style/LoginError"
                 android:text="@string/ads_initialization_error_message"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_login_end"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toEndOf="@+id/login_anchor"
                 app:layout_constraintStart_toEndOf="@+id/login_ads_icon"
                 app:layout_constraintTop_toBottomOf="@+id/login_iap_warning" />
 

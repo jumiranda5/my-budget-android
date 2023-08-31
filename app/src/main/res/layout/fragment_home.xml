@@ -31,6 +31,17 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="@dimen/page_padding" />
 
+            <!-- Anchor -->
+            <View
+                android:id="@+id/home_anchor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor"
+                app:layout_constraintEnd_toEndOf="@id/guideline_home_end"
+                app:layout_constraintStart_toStartOf="@id/guideline_home_start"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
             <!-- Pending -->
 
             <com.google.android.material.card.MaterialCardView
@@ -120,8 +131,8 @@
                 style="@style/ClickableCardHomeItem"
                 android:clickable="false"
                 android:layout_marginTop="@dimen/home_section_margin"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_month_container">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
@@ -170,8 +181,8 @@
                 android:id="@+id/home_card_income"
                 style="@style/ClickableCardHomeItem"
                 android:layout_marginTop="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_accumulated">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
@@ -221,8 +232,8 @@
                 android:id="@+id/home_card_expenses"
                 style="@style/ClickableCardHomeItem"
                 android:layout_marginTop="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_income">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
@@ -275,7 +286,7 @@
                 style="@style/HomeExpensesProgress"
                 android:layout_marginTop="@dimen/home_progress_section_margin"
                 android:contentDescription="@null"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@id/home_card_expenses" />
 
             <TextView
@@ -293,7 +304,7 @@
                 android:layout_marginStart="@dimen/progress_info_margin"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@null"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
                 app:layout_constraintStart_toEndOf="@+id/home_month_progress"
                 app:layout_constraintTop_toTopOf="@+id/home_month_progress" />
 
@@ -302,7 +313,7 @@
                 style="@style/MyDivider"
                 android:contentDescription="@null"
                 app:layout_constraintBottom_toBottomOf="@+id/home_month_progress"
-                app:layout_constraintEnd_toEndOf="@+id/home_balance_section_divider"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
                 app:layout_constraintStart_toStartOf="@+id/home_balance_section_divider" />
 
             <TextView
@@ -324,8 +335,8 @@
                 android:id="@+id/home_card_accounts"
                 style="@style/ClickableCardHome"
                 android:layout_marginTop="@dimen/home_progress_section_margin"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_progress_section_divider">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
@@ -464,8 +475,8 @@
                 android:id="@+id/home_card_income_categories"
                 style="@style/ClickableCardHome"
                 android:layout_marginTop="@dimen/home_section_margin"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_accounts">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
@@ -514,8 +525,8 @@
                 android:id="@+id/home_card_expenses_categories"
                 style="@style/ClickableCardHome"
                 android:layout_marginTop="@dimen/home_section_margin"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_income_categories">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
@@ -564,8 +575,8 @@
                 android:id="@+id/home_card_year"
                 style="@style/ClickableCardHome"
                 android:layout_marginTop="@dimen/home_section_margin"
-                app:layout_constraintEnd_toStartOf="@+id/guideline_home_end"
-                app:layout_constraintStart_toStartOf="@+id/guideline_home_start"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
                 app:layout_constraintTop_toBottomOf="@+id/home_card_expenses_categories">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">

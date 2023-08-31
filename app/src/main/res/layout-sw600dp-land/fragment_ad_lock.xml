@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdLockFragment">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/MyNestedScrollView"
+        android:paddingBottom="56dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start_ad_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/page_padding" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end_ad_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/page_padding" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_center_ad_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageButton
+                android:id="@+id/ad_lock_close"
+                style="@style/ToolbarButton"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/nav_close"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end_ad_lock"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_40_close_300" />
+
+            <ImageView
+                android:id="@+id/ad_lock_image"
+                android:layout_width="@dimen/ad_lock_max_width"
+                android:layout_height="@dimen/ad_lock_icon_size"
+                android:layout_marginEnd="@dimen/page_padding"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_48_lock_fill0_200"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_page_name"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_center_ad_lock"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:tint="@color/savings" />
+
+            <TextView
+                android:id="@+id/ad_lock_page_name"
+                style="@style/MyHeadline5"
+                android:layout_width="@dimen/ad_lock_max_width"
+                android:layout_marginTop="16dp"
+                android:text="@string/initial_page_name"
+                android:textSize="32sp"
+                android:textAlignment="center"
+                android:textColor="@color/savings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ad_lock_image"
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_image"
+                app:layout_constraintWidth_max="@dimen/ad_lock_max_width" />
+
+            <TextView
+                android:id="@+id/ad_lock_message"
+                style="@style/MyBody1"
+                android:layout_width="0dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="@dimen/page_padding"
+                android:lineSpacingExtra="1dp"
+                android:text="@string/msg_ad_lock"
+                android:textColor="@color/medium_emphasis_text"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_watch"
+                app:layout_constraintStart_toStartOf="@+id/guideline_center_ad_lock"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintWidth_max="@dimen/ad_lock_max_width" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ad_lock_watch"
+                style="@style/Card"
+                android:layout_width="@dimen/ad_lock_max_width"
+                android:layout_height="56dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@color/savings"
+                app:contentPadding="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/ad_lock_premium"
+                app:layout_constraintStart_toStartOf="@+id/ad_lock_message"
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_message"
+                app:layout_constraintVertical_chainStyle="packed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/ad_lock_movie_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@null"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_40_movie_fill0_300"
+                        app:tint="@color/button_text" />
+
+                    <TextView
+                        android:id="@+id/ad_lock_watch_button_text"
+                        style="@style/MyButtonText"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:text="@string/action_watch_ad"
+                        android:textAlignment="center"
+                        android:textColor="@color/button_text"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/ad_lock_progressBar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:indeterminateTint="@color/button_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ad_lock_loader_text"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/ad_lock_loader_text"
+                        style="@style/MyButtonText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/action_load_ad"
+                        android:textColor="@color/button_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/ad_lock_progressBar"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ad_lock_premium"
+                style="@style/Card"
+                android:layout_width="@dimen/ad_lock_max_width"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:contentPadding="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ad_lock_watch"
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_watch"
+                app:strokeColor="@color/savings"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <ImageView
+                        android:id="@+id/ad_lock_premium_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@null"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_40_premium_fill0_300"
+                        app:tint="@color/savings" />
+
+                    <TextView
+                        android:id="@+id/ad_lock_premium_button_text"
+                        style="@style/MyButtonText"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:maxLines="2"
+                        android:text="@string/action_premium"
+                        android:textAlignment="center"
+                        android:textColor="@color/savings"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/ad_lock_premium_error"
+                style="@style/MyBody2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/text_error"
+                android:textSize="@dimen/caption"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/ad_lock_premium"
+                app:layout_constraintStart_toStartOf="@+id/ad_lock_premium"
+                app:layout_constraintTop_toBottomOf="@+id/ad_lock_premium" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_ad_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="ad_lock_page_name,ad_lock_message,ad_lock_watch,ad_lock_premium,ad_lock_premium_error" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

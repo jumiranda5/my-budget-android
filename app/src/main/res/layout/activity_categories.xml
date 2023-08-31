@@ -94,8 +94,10 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/categories_tabs"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/tab_layout_width"
             android:layout_height="match_parent"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
             android:background="@drawable/bg_toolbar"
             android:contentDescription="@string/desc_categories_tabs"
             app:layout_constraintEnd_toEndOf="parent"
