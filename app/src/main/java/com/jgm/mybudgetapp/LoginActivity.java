@@ -49,8 +49,6 @@ import java.util.concurrent.Executor;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // todo: add auth error msg
-
     // Login flow:
     // - check device credentials =>
     //      if ok, proceed to auth prompt.
@@ -76,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI
     private ActivityLoginBinding binding;
     private ImageView mLockIcon;
-    private TextView mProgressText;
+    private TextView mProgressText, mAuthText;
     private Button mLoginButton, mContinueButton, mRetryButton;
     private Group mGroupProgress, mGroupAuthWarning, mGroupIapWarning, mGroupAdsWarning;
 
@@ -90,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         mGroupAuthWarning = binding.groupLoginAuth;
         mGroupIapWarning = binding.groupLoginIap;
         mGroupAdsWarning = binding.groupLoginAds;
+        mAuthText = binding.loginAuthWarning;
     }
 
     @Override
@@ -169,10 +168,11 @@ public class LoginActivity extends AppCompatActivity {
 
     // Error
 
-    private void showAuthError() {
+    private void showAuthError(String msg) {
         mGroupAuthWarning.setVisibility(View.VISIBLE);
         mGroupProgress.setVisibility(View.GONE);
         mLoginButton.setVisibility(View.VISIBLE);
+        mAuthText.setText(msg);
     }
 
     private void showIapError() {
@@ -274,10 +274,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             Log.e(LOG_AUTH, "Biometric features are currently not available.");
-            // todo: removed showAuthError for testing on emulator => don't forget to fix this
-            // showAuthError();
-            showAuthSuccess();
-            connectToGooglePlay();
+            String msg = getString(R.string.auth_credentials_not_configured);
+            showAuthError(msg);
+            // remove showAuthError for testing on emulator
+            // showAuthSuccess();
+            // connectToGooglePlay();
         }
     }
 
@@ -292,7 +293,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                         super.onAuthenticationError(errorCode, errString);
                         Log.e(LOG_AUTH, "onAuthenticationError: " + errString);
-                        showAuthError();
+                        String msg = getString(R.string.auth_fail);
+                        showAuthError(msg);
                     }
 
                     @Override
@@ -307,13 +309,15 @@ public class LoginActivity extends AppCompatActivity {
                     public void onAuthenticationFailed() {
                         super.onAuthenticationFailed();
                         Log.d(LOG_AUTH, "onAuthenticationFailed");
-                        showAuthError();
+                        String msg = getString(R.string.auth_fail);
+                        showAuthError(msg);
                     }
                 });
 
         // Init prompt
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle(getString(R.string.action_login))
+                .setTitle(getString(R.string.title_login))
+                .setDescription(getString(R.string.description_login))
                 .setAllowedAuthenticators(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
                 .build();
 

@@ -20,7 +20,6 @@ import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.PaymentMethod;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconOutlineUtils;
-import com.jgm.mybudgetapp.utils.IconUtils;
 
 import java.util.List;
 
