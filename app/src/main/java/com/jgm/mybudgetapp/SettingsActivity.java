@@ -38,8 +38,6 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsInterface {
 
-    // Todo: hide archive button on add credit card
-
     // Constants
     private static final String LOG_SETTINGS = "debug-settings";
     private static final String STATE_FRAGMENT = "current-fragment";

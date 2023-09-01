@@ -119,6 +119,7 @@ public class CreditCardFormFragment extends Fragment {
         }
         else {
             mToolbarTitle.setText(getString(R.string.title_add_card));
+            mArchive.setVisibility(View.GONE);
             if (savedInstanceState == null) setDefaultOptions();
             else setEditOptions();
         }

@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
         setContentView(binding.getRoot());
         setBinding();
 
-        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
+        isPremium = true; // todo SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
 
         if (savedInstanceState == null) {
             Log.d(LOG_MAIN, "savedInstance is null => init splash screen delay, get date " +
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     protected void onResume() {
         super.onResume();
         Log.i(Tags.LOG_LIFECYCLE, "Main Activity onResume");
-        isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
+        isPremium = true; // todo SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
