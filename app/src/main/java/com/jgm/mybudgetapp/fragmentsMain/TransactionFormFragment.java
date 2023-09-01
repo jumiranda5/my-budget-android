@@ -53,7 +53,6 @@ import com.jgm.mybudgetapp.utils.Tags;
 public class TransactionFormFragment extends Fragment implements Animation.AnimationListener {
 
     // todo: this fragment is a nightmare, specially after screen rotation... (note to self => improve that someday)
-    // todo: prevent saving income with credit card
 
     public TransactionFormFragment() {
         // Required empty public constructor
@@ -438,6 +437,16 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         type = Tags.TYPE_IN;
         mIncomeExpenseGroup.setVisibility(View.VISIBLE);
         mTransferGroup.setVisibility(View.GONE);
+
+        Log.d(LOG, "Payment method: " + selectedMethod.getName());
+        Log.d(LOG, "Payment method: " + selectedMethod.getType());
+
+        // if switching from expense with credit card payment method:
+        if (selectedMethod != null && selectedMethod.getType() == Tags.METHOD_CARD) {
+            selectedMethod = null;
+            transaction.setCardId(0);
+            initMethod();
+        }
     }
 
     private void showTransferForm() {
