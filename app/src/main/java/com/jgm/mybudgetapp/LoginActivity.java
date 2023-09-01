@@ -96,9 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.i(Tags.LOG_LIFECYCLE, "Login Activity onCreate");
 
-        Log.d(LOG, "Set dark/light mode");
-        boolean isDark = SettingsPrefs.getSettingsPrefsBoolean(this, "isDark");
-        switchDarkMode(isDark);
+        initAppOpenCount();
 
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
@@ -127,13 +125,29 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    private void initAppOpenCount() {
+        Log.d(LOG, "Set dark/light mode");
+        int appOpenCount = SettingsPrefs.getSettingsPrefsInteger(this, "appOpenCount");
+        boolean isDark;
+        if (appOpenCount > 0) {
+            isDark = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyDarkMode);
+        }
+        else {
+            isDark = true;
+            SettingsPrefs.setSettingsPrefsBoolean(this, Tags.keyDarkMode, true);
+        }
+        switchDarkMode(isDark);
+        appOpenCount++;
+        SettingsPrefs.setSettingsPrefsInteger(this, "appOpenCount", appOpenCount);
+    }
+
     /* ---------------------------------------------------------------------------------------------
                                                   UI
     --------------------------------------------------------------------------------------------- */
 
     private void switchDarkMode(boolean isDark) {
-        // todo: set initial mode
         Log.d(LOG, "=> switchDarkMode");
+
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (isDark) {
             Log.d(LOG, "Dark Mode");

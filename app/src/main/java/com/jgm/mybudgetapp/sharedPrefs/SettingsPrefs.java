@@ -41,6 +41,16 @@ public class SettingsPrefs {
         editor.apply();
     }
 
+    public static int getSettingsPrefsInteger(Context context, String key) {
+        return getSettingsPrefs(context).getInt(key, 0);
+    }
+
+    public static void setSettingsPrefsInteger(Context context, String key, int value) {
+        SharedPreferences.Editor editor = getSettingsPrefs(context).edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
     public static void clearSettingsPrefs(Context context) {
         SharedPreferences.Editor editor = getSettingsPrefs(context).edit();
         editor.clear();
