@@ -1,24 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="h3">46sp</dimen>
+    <dimen name="h3_shrink">40sp</dimen>
+    <dimen name="tab_text">20sp</dimen>
 
-<!--    &lt;!&ndash; ==================  MAIN ACTIVITY ================== &ndash;&gt;-->
+    <!-- Page -->
+    <dimen name="page_padding">40dp</dimen>
+    <dimen name="page_width_anchor">504dp</dimen>
+    <dimen name="page_width_anchor_large">860dp</dimen>
+    <dimen name="list_max_width">584dp</dimen> <!-- page anchor width + page padding(*2) -->
 
-<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
-<!--    <dimen name="toolbar_month_width">140dp</dimen>-->
-<!--    <dimen name="toolbar_height">64dp</dimen>-->
-<!--    <dimen name="toolbar_button_size">58dp</dimen>-->
-<!--    <dimen name="toolbar_month">20sp</dimen>-->
+    <!-- Tabs width -->
+    <dimen name="tab_layout_width">860dp</dimen>
 
-<!--    &lt;!&ndash; ==================  HOME FRAGMENT ================== &ndash;&gt;-->
+    <!-- ===========================================================================================
+                                            MAIN ACTIVITY
+    ============================================================================================ -->
 
-<!--    <dimen name="home_padding">0dp</dimen>-->
-<!--    <dimen name="land_home_balance_width">400dp</dimen>-->
-<!--    <dimen name="progress_indicator">148dp</dimen>-->
-<!--    <dimen name="land_home_progress_width">220dp</dimen>-->
+    <!-- Toolbar -->
+    <dimen name="toolbar_month_width">176dp</dimen>
+    <dimen name="toolbar_inset_start">72dp</dimen>
+    <dimen name="toolbar_inset_end">56dp</dimen>
 
-<!--    &lt;!&ndash; ==================  ACCOUNTS  ================== &ndash;&gt;-->
+    <!-- Bottom bar -->
+    <dimen name="bottomBar_width">584dp</dimen>
 
-<!--    <dimen name="account_details_margin_top">48dp</dimen>-->
+
+    <!-- ===========================================================================================
+                                            HOME FRAGMENT
+    ============================================================================================ -->
+
+    <!-- Containers -->
+    <dimen name="home_balance_height">224dp</dimen>
+
+
+    <!-- ===========================================================================================
+                                             TRANSACTIONS
+     =========================================================================================== -->
+
+    <dimen name="transactions_day_margin_start">-40dp</dimen>
+
+    <!-- ===========================================================================================
+                                               CATEGORIES
+    ============================================================================================ -->
+
+    <integer name="categories_chart_size_int">344</integer>
+    <dimen name="categories_chart_size">344dp</dimen>
+    <dimen name="categories_page_padding_top_land">64dp</dimen>
+
 
 </resources>

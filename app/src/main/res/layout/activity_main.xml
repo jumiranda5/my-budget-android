@@ -36,6 +36,7 @@
                 style="@style/MySubtitle2"
                 android:layout_marginStart="16dp"
                 android:text="@string/initial_year"
+                android:textSize="@dimen/toolbar_year_size"
                 android:textColor="@color/high_emphasis_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

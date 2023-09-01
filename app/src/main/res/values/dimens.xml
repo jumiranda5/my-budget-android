@@ -10,6 +10,7 @@
     <dimen name="h4">34sp</dimen>
     <dimen name="h5">24sp</dimen>
     <dimen name="h6">20sp</dimen>
+    <dimen name="h6_shrink">16sp</dimen>
     <dimen name="subtitle1">16sp</dimen>
     <dimen name="subtitle2">14sp</dimen>
     <dimen name="body1">16sp</dimen>
@@ -79,6 +80,7 @@
     <dimen name="toolbar_inset_start">0dp</dimen>
     <dimen name="toolbar_inset_end">0dp</dimen>
     <dimen name="toolbar_button_size">56dp</dimen>
+    <dimen name="toolbar_year_size">14sp</dimen>
 
     <!-- Bottom bar -->
     <dimen name="bottomBar_height">56dp</dimen>
@@ -106,6 +108,7 @@
     <dimen name="home_accounts_icon_margin">20dp</dimen>
     <dimen name="home_accounts_text_margin">14dp</dimen>
     <dimen name="home_category_list_margin">40dp</dimen>
+    <dimen name="home_balance_margin">0dp</dimen>
 
     <!-- Text -->
     <dimen name="progress_text_size">20sp</dimen>
@@ -167,6 +170,7 @@
     <dimen name="form_inner_space">24dp</dimen>
     <dimen name="form_extra_margin">8dp</dimen>
 
+    <dimen name="form_amount_value_margin_top">32dp</dimen>
     <dimen name="form_amount_value_margin">32dp</dimen>
 
     <dimen name="input_height">56dp</dimen>
@@ -198,6 +202,7 @@
     <dimen name="categories_chart_list_padding">4dp</dimen>
     <dimen name="categories_chart_list_item_padding">16dp</dimen>
     <dimen name="categories_list_percent_padding_land">0dp</dimen>
+    <dimen name="categories_page_padding_top_land">0dp</dimen>
 
     <!-- ===========================================================================================
                                                  YEAR

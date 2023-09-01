@@ -33,7 +33,7 @@
                 android:id="@+id/categories_donut_chart"
                 android:layout_width="@dimen/categories_chart_size"
                 android:layout_height="@dimen/categories_chart_size"
-                android:layout_marginTop="@dimen/page_padding"
+                android:layout_marginTop="@dimen/categories_page_padding_top_land"
                 android:contentDescription="@null"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_center"
                 app:layout_constraintStart_toStartOf="@+id/categories_pager_anchor"
@@ -55,7 +55,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories_percent_list"
                 style="@style/MainList"
-                android:paddingTop="@dimen/page_padding"
+                android:paddingTop="@dimen/categories_page_padding_top_land"
                 android:paddingBottom="@dimen/page_padding"
                 android:layout_marginStart="@dimen/page_padding"
                 app:layout_constraintBottom_toBottomOf="parent"

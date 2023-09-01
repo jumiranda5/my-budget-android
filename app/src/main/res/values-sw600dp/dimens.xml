@@ -12,7 +12,7 @@
     <!-- Page -->
     <dimen name="page_padding">32dp</dimen>
     <dimen name="page_width_anchor">480dp</dimen>
-    <dimen name="list_max_width">512dp</dimen> <!-- page anchor width + page padding -->
+    <dimen name="list_max_width">544dp</dimen> <!-- page anchor width + page padding(*2) -->
     <dimen name="list_padding_top">32dp</dimen>
 
     <!-- Dialogs -->
@@ -27,11 +27,6 @@
     <!-- Toolbar -->
     <dimen name="toolbar_month_width">140dp</dimen>
 
-    <!-- Bottom bar -->
-    <!--    <dimen name="bottomBar_height">64dp</dimen>-->
-    <!--    <dimen name="bottomBar_icon_size">26dp</dimen>-->
-    <!--    <dimen name="bottomBar_icon_padding">12dp</dimen>-->
-    <!--    <dimen name="bottomBar_action_button_size">52dp</dimen>-->
 
     <!-- ===========================================================================================
                                         ACCOUNTS FRAGMENTS
@@ -54,13 +49,14 @@
     <dimen name="home_section_margin">56dp</dimen>
     <dimen name="home_progress_section_margin">64dp</dimen>
     <dimen name="progress_info_margin">64dp</dimen>
+    <dimen name="home_category_list_margin">72dp</dimen>
 
     <!-- Text -->
     <dimen name="progress_text_size">24sp</dimen>
 
     <!-- Charts -->
-    <integer name="home_pie_size_int">88</integer>
-    <dimen name="home_pie_width">88dp</dimen>
+    <integer name="home_pie_size_int">96</integer>
+    <dimen name="home_pie_width">96dp</dimen>
     <dimen name="progress_indicator">130dp</dimen>
 
     <!-- ===========================================================================================
@@ -75,7 +71,8 @@
      =========================================================================================== -->
 
     <dimen name="form_margin">64dp</dimen>
-    <dimen name="form_amount_value_margin">48dp</dimen>
+    <dimen name="form_amount_value_margin">32dp</dimen>
+    <dimen name="form_amount_value_margin_top">64dp</dimen>
 
 
     <!-- ===========================================================================================
@@ -110,114 +107,6 @@
 
     <dimen name="settings_padding_top">24dp</dimen>
 
-
-<!--    &lt;!&ndash; Text &ndash;&gt;-->
-<!--    <dimen name="h3_shrink">44sp</dimen>-->
-<!--    <dimen name="currency_width_min">104dp</dimen>-->
-<!--    <dimen name="currency_width_max">180dp</dimen>-->
-
-<!--    &lt;!&ndash; ==================  FORMS  ================== &ndash;&gt;-->
-
-<!--    <dimen name="form_padding">64dp</dimen>-->
-
-<!--    &lt;!&ndash; =============  FRAGMENTS WITH 1 LIST  ============= &ndash;&gt;-->
-
-<!--    <dimen name="list_max_width">580dp</dimen>-->
-<!--    <dimen name="list_padding_top">40dp</dimen>-->
-<!--    <dimen name="list_padding_start">32dp</dimen>-->
-
-<!--    &lt;!&ndash; ==================  HOME FRAGMENT ================== &ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; Margins &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="home_inner_space">12dp</dimen>&ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; Text &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="home_income_shrink">20sp</dimen>&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="progress_text_size">24sp</dimen>&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="home_accounts_text_size">16sp</dimen>&ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; Charts &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    <integer name="home_pie_size_int">96</integer>&ndash;&gt;-->
-<!--&lt;!&ndash;    <integer name="home_pie_indicator_int">7</integer>&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="home_pie_width">96dp</dimen>&ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; Page &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="page_padding">40dp</dimen>&ndash;&gt;-->
-<!--&lt;!&ndash;    <dimen name="page_divisor_space">232dp</dimen>&ndash;&gt;-->
-
-
-<!--    &lt;!&ndash; ==================  TRANSACTIONS  ================== &ndash;&gt;-->
-
-<!--    <dimen name="transactions_title_size">44sp</dimen>-->
-<!--    <dimen name="transactions_total_margin">56dp</dimen>-->
-<!--    <dimen name="transactions_total_container_padding">16dp</dimen>-->
-
-<!--    &lt;!&ndash; ==================  ACCOUNTS  ================== &ndash;&gt;-->
-
-<!--    <dimen name="account_details_margin">16dp</dimen>-->
-<!--    <dimen name="account_details_close_margin">24dp</dimen>-->
-<!--    <dimen name="account_details_list_padding">16dp</dimen>-->
-<!--    <dimen name="account_details_list_margin">24dp</dimen>-->
-
-<!--    &lt;!&ndash; ==================  CATEGORIES  ================== &ndash;&gt;-->
-
-<!--    <integer name="categories_chart_size_int">280</integer>-->
-<!--    <dimen name="categories_chart_size">280dp</dimen>-->
-<!--    <dimen name="categories_chart_text_size">26sp</dimen>-->
-<!--    <dimen name="categories_chart_margin">72dp</dimen>-->
-<!--    <dimen name="categories_chart_list_margin">64dp</dimen>-->
-<!--    <dimen name="categories_chart_list_padding">24dp</dimen>-->
-
-
-<!--    &lt;!&ndash; ==================  SETTINGS  ================== &ndash;&gt;-->
-
-<!--    <dimen name="settings_padding">24dp</dimen>-->
-
-<!--    <dimen name="inner_space">20dp</dimen>-->
-
-<!--    &lt;!&ndash; Text &ndash;&gt;-->
-<!--    <dimen name="text_normal">18sp</dimen>-->
-<!--    <dimen name="text_secondary">16sp</dimen>-->
-<!--    <dimen name="text_title">20sp</dimen>-->
-<!--    <dimen name="number_impact">32sp</dimen>-->
-<!--    <dimen name="currency_width_min">112dp</dimen>-->
-<!--    <dimen name="currency_width_max">172dp</dimen>-->
-
-<!--    &lt;!&ndash; Cards &ndash;&gt;-->
-<!--    <dimen name="card_padding">20dp</dimen>-->
-<!--    <dimen name="card_padding_top">16dp</dimen>-->
-
-<!--    &lt;!&ndash; List Items &ndash;&gt;-->
-<!--    <dimen name="item_height">68dp</dimen>-->
-<!--    <dimen name="item_double_height">80dp</dimen>-->
-
-<!--    &lt;!&ndash; Buttons &ndash;&gt;-->
-<!--    <dimen name="icon_button_size">52dp</dimen>-->
-<!--    <dimen name="icon_button_padding">14dp</dimen>-->
-
-
-<!--    &lt;!&ndash; ==================  HOME FRAGMENT ================== &ndash;&gt;-->
-
-<!--    <integer name="home_pie_size_int">88</integer>-->
-<!--    <dimen name="home_padding">16dp</dimen>-->
-<!--    <dimen name="home_inner_margin">16dp</dimen>-->
-<!--    <dimen name="home_label_size">18sp</dimen>-->
-<!--    <dimen name="home_balance_size">36sp</dimen>-->
-<!--    <dimen name="home_balance_height">152dp</dimen>-->
-<!--    <dimen name="home_income_size">22sp</dimen>-->
-<!--    <dimen name="progress_track">8dp</dimen>-->
-<!--    <dimen name="progress_corners">4dp</dimen>-->
-<!--    <dimen name="progress_indicator">132dp</dimen>-->
-<!--    <dimen name="progress_info_margin">40dp</dimen>-->
-<!--    <dimen name="home_pie_width">96dp</dimen>-->
-
-
-<!--    &lt;!&ndash; ==================  TRANSACTIONS  ================== &ndash;&gt;-->
-
-<!--    <dimen name="transactions_title_size">20sp</dimen>-->
-<!--    <dimen name="transactions_title_currency_size">36sp</dimen>-->
-<!--    <dimen name="transactions_total_space">96dp</dimen>-->
-<!--    <dimen name="transactions_total_space_bottom">56dp</dimen>-->
 
 
 </resources>

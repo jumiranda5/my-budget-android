@@ -139,7 +139,7 @@
                 android:id="@+id/add_formatted_price"
                 style="@style/MyHeadline4"
                 android:layout_width="0dp"
-                android:layout_marginTop="@dimen/form_amount_value_margin"
+                android:layout_marginTop="@dimen/form_amount_value_margin_top"
                 android:text="@string/initial_value"
                 app:layout_constraintEnd_toEndOf="@+id/add_amount"
                 app:layout_constraintStart_toStartOf="@+id/add_amount"

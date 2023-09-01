@@ -103,6 +103,9 @@ public class Charts {
             int barMarginBottom = 20 * density;
             int barPadding = 2 * density;
 
+            int sw = context.getResources().getConfiguration().smallestScreenWidthDp;
+            if (sw >= 600) textSize = 10 * density;
+
             // Create year labels with canvas
             Bitmap bitmap = Bitmap.createBitmap(chartWidth, chartHeight, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
