@@ -50,8 +50,6 @@ public class MethodPickerAdapter extends RecyclerView.Adapter<MethodPickerAdapte
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
 
-        // todo: strings
-
         PaymentMethod method = mDataList.get(position);
         Color color = ColorUtils.getColor(method.getColorId());
         Icon icon;
@@ -59,10 +57,10 @@ public class MethodPickerAdapter extends RecyclerView.Adapter<MethodPickerAdapte
         String methodType;
 
         switch (method.getType()) {
-            case 0: methodType = "Cash"; break;
-            case 1: methodType = "Checking"; break;
-            case 2: methodType = "Savings"; break;
-            default: methodType = "Credit Card";
+            case 0: methodType = mContext.getString(R.string.account_cash); break;
+            case 1: methodType = mContext.getString(R.string.account_checking); break;
+            case 2: methodType = mContext.getString(R.string.account_savings); break;
+            default: methodType = mContext.getString(R.string.title_credit_card);
         }
 
         // Set icon to credit card if type = 3
