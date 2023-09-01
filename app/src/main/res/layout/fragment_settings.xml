@@ -226,9 +226,18 @@
                 app:srcCompat="@drawable/ic_48_dangerous_300"
                 app:tint="@color/danger" />
 
+            <ProgressBar
+                android:id="@+id/settings_ads_review_progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/settings_review_ads_consent"
+                app:layout_constraintEnd_toEndOf="@id/settings_review_ads_consent"
+                app:layout_constraintTop_toBottomOf="@+id/settings_privacy_policy" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
     <ProgressBar

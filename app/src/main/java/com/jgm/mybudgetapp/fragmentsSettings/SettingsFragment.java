@@ -58,8 +58,6 @@ import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
 
-    // todo: add consent form loader
-
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -75,7 +73,7 @@ public class SettingsFragment extends Fragment {
 
     // UI
     private NestedScrollView mNestedScrollView;
-    private ProgressBar mProgressBar;
+    private ProgressBar mProgressBar, mProgressBarAds;
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
     private Button mOpenCategories, mOpenCreditCards, mClearDatabase, mReviewConsent, mBuyPremiumAccess;
@@ -95,6 +93,7 @@ public class SettingsFragment extends Fragment {
         mBuyPremiumAccess = binding.settingsPremiumMember;
         mOrderId = binding.settingsPremiumOrder;
         mPremiumIcon = binding.settingsPremiumIcon;
+        mProgressBarAds = binding.settingsAdsReviewProgressBar;
     }
 
     // Interfaces
@@ -242,6 +241,9 @@ public class SettingsFragment extends Fragment {
     private void requestLatestConsentInformation() {
         Log.d(LOG_UMP, "LOADING CONSENT");
 
+        mProgressBarAds.setVisibility(View.VISIBLE);
+        mReviewConsent.setEnabled(false);
+
         // Set tag for underage of consent. false means users are not underage.
         ConsentRequestParameters params = new ConsentRequestParameters
                 .Builder()
@@ -266,6 +268,8 @@ public class SettingsFragment extends Fragment {
                                             loadAndShowError.getErrorCode(),
                                             loadAndShowError.getMessage()));
                                 }
+                                mProgressBarAds.setVisibility(View.GONE);
+                                mReviewConsent.setEnabled(true);
                             }
                     );
                 },
@@ -274,6 +278,8 @@ public class SettingsFragment extends Fragment {
                     Log.w(LOG_UMP, String.format("%s: %s",
                             requestConsentError.getErrorCode(),
                             requestConsentError.getMessage()));
+                    mProgressBarAds.setVisibility(View.GONE);
+                    mReviewConsent.setEnabled(true);
                 });
 
     }
