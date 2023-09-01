@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 
@@ -34,8 +33,6 @@ import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
 public class TransactionDialog extends BottomSheetDialogFragment {
-
-    // Todo: nullPointerException on screen rotation...
 
     public TransactionDialog() {}
     private MainInterface mInterface;
@@ -71,151 +68,158 @@ public class TransactionDialog extends BottomSheetDialogFragment {
         Group deleteItemGroup = view.findViewById(R.id.group_delete_item);
         Group notTransferGroup = view.findViewById(R.id.group_not_transfer);
 
-        // get data from main activity
-        TransactionResponse transaction = mInterface.getSelectedTransactionData();
-        Icon icon = IconUtils.getIcon(transaction.getIconId());
-        Color color = ColorUtils.getColor(transaction.getColorId());
-        int transactionType = transaction.getType();
+        try {
+            // get data from main activity
+            TransactionResponse transaction = mInterface.getSelectedTransactionData();
+            Icon icon = IconUtils.getIcon(transaction.getIconId());
+            Color color = ColorUtils.getColor(transaction.getColorId());
+            int transactionType = transaction.getType();
 
-        // Title and icons
-        categoryIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
-        categoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+            // Title and icons
+            categoryIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+            categoryIcon.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
 
-        String type;
-        if (transactionType == -1) type = mContext.getString(R.string.title_expense);
-        else if (transactionType == 1) type = mContext.getString(R.string.title_income);
-        else type = mContext.getString(R.string.title_transfer);
-        title.setText(type);
+            String type;
+            if (transactionType == -1) type = mContext.getString(R.string.title_expense);
+            else if (transactionType == 1) type = mContext.getString(R.string.title_income);
+            else type = mContext.getString(R.string.title_transfer);
+            title.setText(type);
 
-        // Description
-        String descString = transaction.getDescription();
-        if (transaction.getRepeat() > 1)
-            descString = transaction.getDescription() + " (" + transaction.getRepeatCount() + "/" + transaction.getRepeat() + ")";
-        description.setText(descString);
+            // Description
+            String descString = transaction.getDescription();
+            if (transaction.getRepeat() > 1)
+                descString = transaction.getDescription() + " (" + transaction.getRepeatCount() + "/" + transaction.getRepeat() + ")";
+            description.setText(descString);
 
-        // Amount
-        String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
-        amount.setText(currency[3]);
+            // Amount
+            String[] currency = NumberUtils.getCurrencyFormat(mContext, transaction.getAmount());
+            amount.setText(currency[3]);
 
 
-        if (transactionType == 2) {
-            notTransferGroup.setVisibility(View.GONE);
-        }
-        else {
-            // Category
-            categoryName.setText(transaction.getCategoryName());
+            if (transactionType == 2) {
+                notTransferGroup.setVisibility(View.GONE);
+            }
+            else {
+                // Category
+                categoryName.setText(transaction.getCategoryName());
 
-            // Payment method
-            PaymentMethod paymentMethod = new PaymentMethod(0, 0, "", 0, 0, 0);
+                // Payment method
+                PaymentMethod paymentMethod = new PaymentMethod(0, 0, "", 0, 0, 0);
 
-            if (transaction.getCardId() != null && transaction.getCardId() > 0) {
-                Handler handler = new Handler();
-                AppDatabase.dbExecutor.execute(() -> {
+                if (transaction.getCardId() != null && transaction.getCardId() > 0) {
+                    Handler handler = new Handler();
+                    AppDatabase.dbExecutor.execute(() -> {
 
-                    CreditCard creditCard = AppDatabase.getDatabase(mContext).CardDao()
-                            .getCreditCardById(transaction.getCardId());
+                        CreditCard creditCard = AppDatabase.getDatabase(mContext).CardDao()
+                                .getCreditCardById(transaction.getCardId());
 
-                    handler.post(() -> {
-                        paymentMethod.setId(creditCard.getId());
-                        paymentMethod.setType(Tags.METHOD_CARD);
-                        paymentMethod.setName(creditCard.getName());
-                        paymentMethod.setColorId(creditCard.getColorId());
-                        paymentMethod.setIconId(Tags.CARD_ICON_ID);
-                        paymentMethod.setBillingDay(creditCard.getBillingDay());
+                        handler.post(() -> {
+                            paymentMethod.setId(creditCard.getId());
+                            paymentMethod.setType(Tags.METHOD_CARD);
+                            paymentMethod.setName(creditCard.getName());
+                            paymentMethod.setColorId(creditCard.getColorId());
+                            paymentMethod.setIconId(Tags.CARD_ICON_ID);
+                            paymentMethod.setBillingDay(creditCard.getBillingDay());
 
-                        method.setText(creditCard.getName());
-                        methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_48_credit_card_300));
-                        Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
-                        methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+                            method.setText(creditCard.getName());
+                            methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_48_credit_card_300));
+                            Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
+                            methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+                        });
+
                     });
+                } else if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
+                    Handler handler = new Handler();
+                    AppDatabase.dbExecutor.execute(() -> {
 
-                });
-            } else if (transaction.getAccountId() != null && transaction.getAccountId() > 0) {
-                Handler handler = new Handler();
-                AppDatabase.dbExecutor.execute(() -> {
+                        Account account = AppDatabase.getDatabase(mContext).AccountDao()
+                                .getAccountById(transaction.getAccountId());
 
-                    Account account = AppDatabase.getDatabase(mContext).AccountDao()
-                            .getAccountById(transaction.getAccountId());
+                        handler.post(() -> {
+                            paymentMethod.setId(account.getId());
+                            paymentMethod.setName(account.getName());
+                            paymentMethod.setType(account.getType());
+                            paymentMethod.setColorId(account.getColorId());
+                            paymentMethod.setIconId(account.getIconId());
 
-                    handler.post(() -> {
-                        paymentMethod.setId(account.getId());
-                        paymentMethod.setName(account.getName());
-                        paymentMethod.setType(account.getType());
-                        paymentMethod.setColorId(account.getColorId());
-                        paymentMethod.setIconId(account.getIconId());
+                            method.setText(account.getName());
 
-                        method.setText(account.getName());
+                            if (paymentMethod.getType() == 0)
+                                methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cash_fill0_300));
+                            else if (paymentMethod.getType() == 1)
+                                methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_account_balance_fill0_300));
+                            else
+                                methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_savings_fill0_300));
 
-                        if (paymentMethod.getType() == 0)
-                            methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cash_fill0_300));
-                        else if (paymentMethod.getType() == 1)
-                            methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_account_balance_fill0_300));
-                        else
-                            methodIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_savings_fill0_300));
-
-                        Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
-                        methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+                            Color methodColor = ColorUtils.getColor(paymentMethod.getColorId());
+                            methodIcon.setImageTintList(ContextCompat.getColorStateList(mContext, methodColor.getColor()));
+                        });
                     });
-                });
-            }
-
-            // is paid
-            if (transaction.isPaid()) {
-                paid.setText(mContext.getString(R.string.label_paid));
-                paidIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.check_circle_color));
-            } else {
-                paid.setText(mContext.getString(R.string.label_not_paid));
-                paidIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cancel_fill0_300));
-            }
-
-            // Open edit fragment
-            editBtn.setOnClickListener(v -> {
-                mInterface.openTransactionForm(transaction.getType(), true, transaction, paymentMethod);
-                dismiss();
-            });
-
-            // hide edit and delete buttons if card = -1
-            if (transaction.getCardId() == -1) {
-                deleteBtn.setVisibility(View.GONE);
-                editBtn.setVisibility(View.GONE);
-            }
-        }
-
-        // Dismiss
-        dismissBtn.setOnClickListener(v -> dismiss());
-
-        Log.d("debug-repeat", "Transaction repeat id: " + transaction.getRepeatId());
-
-        if (transaction.getRepeatId() != null && transactionType != 2) {
-            deleteMessage.setText(mContext.getString(R.string.msg_deleting_all_parcels));
-        }
-
-        deleteBtn.setOnClickListener(v -> {
-
-            // Show progressBar to indicate that the item is being deleted
-            textGroup.setVisibility(View.INVISIBLE);
-            deleteItemGroup.setVisibility(View.VISIBLE);
-
-            Handler handler = new Handler(Looper.getMainLooper());
-            AppDatabase.dbExecutor.execute(() -> {
-
-                AppDatabase db = AppDatabase.getDatabase(mContext);
-
-                if (transaction.getRepeatId() == null) {
-                    Log.d(Tags.LOG_DB, "Transaction id to delete: " + transaction.getId());
-                    db.TransactionDao().deleteById(transaction.getId());
-                }
-                else {
-                    Log.d(Tags.LOG_DB, "Transactions repeatId to delete: " + transaction.getRepeatId());
-                    db.TransactionDao().deleteByRepeatId(transaction.getRepeatId());
                 }
 
-                handler.postDelayed(() -> {
-                    mInterface.handleTransactionDeleted(transaction.getId());
+                // is paid
+                if (transaction.isPaid()) {
+                    paid.setText(mContext.getString(R.string.label_paid));
+                    paidIcon.setImageTintList(ContextCompat.getColorStateList(mContext, R.color.check_circle_color));
+                } else {
+                    paid.setText(mContext.getString(R.string.label_not_paid));
+                    paidIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_40_cancel_fill0_300));
+                }
+
+                // Open edit fragment
+                editBtn.setOnClickListener(v -> {
+                    mInterface.openTransactionForm(transaction.getType(), true, transaction, paymentMethod);
                     dismiss();
-                }, 600);
+                });
+
+                // hide edit and delete buttons if card = -1
+                if (transaction.getCardId() == -1) {
+                    deleteBtn.setVisibility(View.GONE);
+                    editBtn.setVisibility(View.GONE);
+                }
+            }
+
+            // Dismiss
+            dismissBtn.setOnClickListener(v -> dismiss());
+
+            Log.d("debug-repeat", "Transaction repeat id: " + transaction.getRepeatId());
+
+            if (transaction.getRepeatId() != null && transactionType != 2) {
+                deleteMessage.setText(mContext.getString(R.string.msg_deleting_all_parcels));
+            }
+
+            deleteBtn.setOnClickListener(v -> {
+
+                // Show progressBar to indicate that the item is being deleted
+                textGroup.setVisibility(View.INVISIBLE);
+                deleteItemGroup.setVisibility(View.VISIBLE);
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                AppDatabase.dbExecutor.execute(() -> {
+
+                    AppDatabase db = AppDatabase.getDatabase(mContext);
+
+                    if (transaction.getRepeatId() == null) {
+                        Log.d(Tags.LOG_DB, "Transaction id to delete: " + transaction.getId());
+                        db.TransactionDao().deleteById(transaction.getId());
+                    }
+                    else {
+                        Log.d(Tags.LOG_DB, "Transactions repeatId to delete: " + transaction.getRepeatId());
+                        db.TransactionDao().deleteByRepeatId(transaction.getRepeatId());
+                    }
+
+                    handler.postDelayed(() -> {
+                        mInterface.handleTransactionDeleted(transaction.getId());
+                        dismiss();
+                    }, 600);
+                });
             });
-        });
+        }
+        catch (Exception e) {
+            Log.e("debug-dialog", e.getMessage());
+            // dismissing because of nullPointerException on screen rotation => transaction return null
+            dismiss();
+        }
 
         return view;
     }

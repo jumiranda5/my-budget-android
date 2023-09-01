@@ -61,6 +61,7 @@ public class MethodPickerDialog extends BottomSheetDialogFragment {
         recyclerView.setLayoutManager(listLayoutManager);
         recyclerView.setHasFixedSize(true);
 
+        // always returns false after screen rotation... todo
         boolean isExpenseMethodDialog = mInterface.getMethodDialogType();
 
         // Create a payment methods list
