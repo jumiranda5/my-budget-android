@@ -33,17 +33,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/page_padding" />
 
-    <!-- todo: remove -->
-    <ImageView
-        android:id="@+id/item_day_calendar"
-        style="@style/ItemIcon"
-        android:contentDescription="@null"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/item_day_title"
-        app:layout_constraintStart_toStartOf="@+id/guideline_day_start"
-        app:layout_constraintTop_toTopOf="@+id/item_day_title"
-        app:srcCompat="@drawable/ic_40_calendar_month_fill1_300" />
-
     <TextView
         android:id="@+id/item_day_title"
         style="@style/DayTitle"

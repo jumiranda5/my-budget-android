@@ -47,11 +47,11 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
     // room db
-    implementation "androidx.room:room-runtime:2.5.1"
-    annotationProcessor "androidx.room:room-compiler:2.5.1"
+    implementation "androidx.room:room-runtime:2.5.2"
+    annotationProcessor "androidx.room:room-compiler:2.5.2"
 
     // Google ads and billing
-    implementation 'com.google.android.gms:play-services-ads:22.2.0'
+    implementation 'com.google.android.gms:play-services-ads:22.3.0'
     implementation 'com.google.android.ump:user-messaging-platform:2.1.0'
     implementation "com.android.billingclient:billing:6.0.1"
     implementation 'com.google.guava:guava:31.1-android' // to use ImmutableList.of on the billingClient implementation

@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">My Budget App</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
     <!-- Login -->
     <string name="iap_connection_error_message">Couldn\'t connect to Google Play. It was not possible to verify if you are a premium user. Check your internet connection and try again. Or continue anyway…</string>
@@ -75,8 +73,6 @@
     <string name="nav_expense">Expense</string>
     <string name="nav_categories">Categories</string>
     <string name="nav_add">Add</string>
-    <string name="nav_year">Year</string>
-    <string name="nav_credit_cards">Credit Cards</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_back">Back</string>
     <string name="nav_close">Close</string>
@@ -98,7 +94,6 @@
     <string name="label_today">Today</string>
 
     <!-- Form -->
-    <string name="action_add">Add</string>
     <string name="action_save">Save</string>
     <string name="action_archive">Archive</string>
     <string name="action_in">In</string>
@@ -148,17 +143,13 @@
     <string name="msg_deleting_all_parcels">Deleting all parcels…</string>
 
     <!-- Accounts -->
-    <string name="title_accounts">Accounts</string>
     <string name="title_add_account">Add Account</string>
     <string name="title_edit_account">Edit Account</string>
-    <string name="desc_add_account">Add new account.</string>
 
     <!-- Settings -->
-    <string name="action_biometric_lock">Biometric Lock</string>
     <string name="action_dark_mode">Dark mode</string>
     <string name="action_menage_categories">Menage Categories</string>
     <string name="action_menage_cards">Menage Credit Cards</string>
-    <string name="action_become_a_premium_user">Become a Premium User</string>
     <string name="action_support">Support</string>
     <string name="action_privacy_policy">Privacy Policy</string>
     <string name="action_reset_database">Reset Database</string>
@@ -169,7 +160,6 @@
     <string name="title_edit_category">Edit Category</string>
     <string name="desc_add_category">Add new category.</string>
     <string name="desc_categories_tabs">Categories tabs</string>
-    <string name="title_expenses">Expenses</string>
 
     <!-- Credit Cards -->
     <string name="credit_cards">Credit Cards</string>
@@ -188,12 +178,13 @@
     <string name="desc_amount">Amount</string>
     <string name="progress_msg_delete">Deleting item…</string>
     <string name="msg_archive_account">Do you want to permanently archive this account? You will not have access to it anymore, but the items related to it will not be affected.</string>
-    <string name="msg_archive_default">Do you want to permanently archive this item?</string>
     <string name="msg_archive_category">Do you want to permanently archive this category? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
-    <string name="msg_item_click">Click on the items to see details.</string>
     <string name="desc_see_more">See more</string>
+    <string name="action_review_ads_consent">Review Ads Consent</string>
+    <string name="test_22">22</string>
+    <string name="test_date">20/06/2023</string>
 
 
 </resources>

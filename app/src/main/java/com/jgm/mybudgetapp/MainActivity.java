@@ -434,7 +434,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
         Log.d(LOG_MAIN, "-- Interface => open account details");
 
         // if editing an item from accounts details fragment, it's necessary to send the account id
-        // to the fragment on back press.// todo: improve this.
+        // to the fragment on back press.
         accountId = id;
 
         openFragment(accountDetailsTag);

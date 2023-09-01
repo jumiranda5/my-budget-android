@@ -387,18 +387,4 @@
         <item name="android:fontFamily">@font/source_sans_3_semi_bold</item>
     </style>
 
-    <!-- ==========================================================
-                               OTHER
-    ============================================================ -->
-
-    <style name="CurrencyButtonText" parent="CurrencySymbol">
-        <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">@dimen/input_icon_size</item>
-        <item name="android:paddingTop">3dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:text">@string/currency_symbol</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-
 </resources>

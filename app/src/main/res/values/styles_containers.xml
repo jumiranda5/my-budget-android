@@ -33,10 +33,6 @@
         <item name="contentInsetEnd">@dimen/toolbar_inset_end</item>
     </style>
 
-    <style name="TransparentToolbar" parent="MainToolbar">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
 
     <!-- ===========================================================================================
                                            BOTTOM NAV

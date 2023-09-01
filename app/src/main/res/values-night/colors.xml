@@ -3,7 +3,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#F3F3F3</color>
+    <color name="colorPrimary">#242529</color>
     <color name="colorSecondary">#767676</color>
     <color name="colorAccent">#13BA7C</color>
     <color name="colorAccentLight">#5913BA7C</color>
@@ -31,7 +31,6 @@
     <!-- Borders -->
     <color name="border">#1F2125</color>
     <color name="border_darker">#1F2125</color>
-    <color name="form_divider">@color/bg_01dp</color>
     <color name="divider">#2A2C30</color>
     <color name="divider_darker">#343539</color>
 

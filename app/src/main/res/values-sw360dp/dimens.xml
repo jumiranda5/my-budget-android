@@ -13,7 +13,6 @@
 
     <!-- Page -->
     <dimen name="inner_space">16dp</dimen>
-    <dimen name="page_divisor_space">224dp</dimen>
     <dimen name="page_padding">24dp</dimen>
 
     <!-- ===========================================================================================
@@ -21,7 +20,6 @@
      =========================================================================================== -->
 
     <dimen name="login_icon_size">140dp</dimen>
-    <dimen name="login_title_size">28sp</dimen>
 
     <!-- ===========================================================================================
                                             MAIN ACTIVITY
@@ -32,8 +30,6 @@
     <!-- Bottom bar -->
     <dimen name="bottomBar_icon_size">26dp</dimen>
     <dimen name="bottomBar_icon_padding">8dp</dimen>
-    <dimen name="bottomBar_action_button_padding">13dp</dimen>
-
 
     <!-- ===========================================================================================
                                            HOME FRAGMENT

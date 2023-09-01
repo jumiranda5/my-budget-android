@@ -94,17 +94,6 @@ public interface TransactionDao {
                                      ACCOUNT FRAGMENT
     ------------------------------------------------------------------------------- */
 
-    // todo: delete
-
-    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
-            "FROM transactions " +
-            "JOIN categories ON transactions.categoryId = categories.id " +
-            "WHERE transactions.accountId = :accountId " +
-            "AND transactions.year = :year " +
-            "AND transactions.month = :month " +
-            "ORDER BY transactions.day ")
-    List<TransactionResponse> getAccountTransactions(int accountId, int month, int year);
-
     @Query("SELECT transactions.id, type, " +
             "   cards.name AS description, SUM(amount) AS amount," +
             "   year, month, day, categoryId, accountId, cardId, paid, 1 AS repeat, repeatCount, repeatId," +
@@ -125,7 +114,7 @@ public interface TransactionDao {
             "   AND transactions.year = :year " +
             "   AND transactions.month = :month " +
             "ORDER BY year, month, day")
-    List<TransactionResponse> getAccountTransactions2(int accountId, int month, int year);
+    List<TransactionResponse> getAccountTransactions(int accountId, int month, int year);
 
     @Query("SELECT SUM(amount) " +
             "FROM transactions " +

@@ -3,7 +3,6 @@
 
     <dimen name="text_normal">16sp</dimen> <!-- used somewhere... todo: find out and remove -->
     <dimen name="bottomBar_button_size">50dp</dimen> <!-- used somewhere... todo: find out and remove -->
-    <dimen name="form_padding">0dp</dimen> <!-- used somewhere... todo: find out and remove -->
 
     <dimen name="h3">42sp</dimen>
     <dimen name="h3_shrink">34sp</dimen>
@@ -34,10 +33,6 @@
     <dimen name="item_height">56dp</dimen>
     <dimen name="item_double_height">72dp</dimen>
     <dimen name="item_end_button_width">56dp</dimen>
-    <dimen name="item_edit_margin">0dp</dimen>
-    <dimen name="item_divisor_margin">12dp</dimen>
-    <dimen name="item_divisor_margin_end">26dp</dimen><!-- 12 + inner_space -->
-    <dimen name="item_currency_padding_end">4dp</dimen>
 
     <!-- Buttons -->
     <dimen name="icon_button_size">48dp</dimen>
@@ -50,7 +45,6 @@
 
     <!-- Page -->
     <dimen name="inner_space">16dp</dimen>
-    <dimen name="page_divisor_space">200dp</dimen>
     <dimen name="page_padding">16dp</dimen>
     <dimen name="page_width_anchor">496dp</dimen>
     <dimen name="page_width_anchor_large">600dp</dimen>
@@ -68,7 +62,6 @@
      =========================================================================================== -->
 
     <dimen name="login_icon_size">124dp</dimen>
-    <dimen name="login_title_size">26sp</dimen>
 
     <!-- ===========================================================================================
                                             MAIN ACTIVITY
@@ -88,7 +81,6 @@
     <dimen name="bottomBar_icon_size">24dp</dimen>
     <dimen name="bottomBar_icon_padding">9dp</dimen>
     <dimen name="bottomBar_action_button_size">48dp</dimen>
-    <dimen name="bottomBar_action_button_padding">13dp</dimen>
 
 
     <!-- ===========================================================================================
@@ -112,7 +104,6 @@
 
     <!-- Text -->
     <dimen name="progress_text_size">20sp</dimen>
-    <dimen name="home_currency_width_min">72dp</dimen>
 
     <!-- Charts -->
     <integer name="home_pie_size_int">80</integer>
@@ -122,9 +113,6 @@
     <dimen name="progress_track">6dp</dimen>
     <dimen name="progress_corners">3dp</dimen>
 
-    <dimen name="land_home_balance_width">0dp</dimen>
-    <dimen name="land_home_progress_width">0dp</dimen>
-
     <!-- ===========================================================================================
                                        ACCOUNTS FRAGMENTS
      =========================================================================================== -->
@@ -132,10 +120,8 @@
     <dimen name="accounts_list_padding_top">16dp</dimen>
     <dimen name="account_details_title_space_top">40dp</dimen>
     <dimen name="account_details_title_space_bottom">72dp</dimen>
-    <dimen name="account_details_margin">16dp</dimen>
     <dimen name="account_details_close_margin">-12dp</dimen>
     <dimen name="account_details_list_padding">0dp</dimen>
-    <dimen name="account_details_list_margin">24dp</dimen>
 
 
     <!-- ===========================================================================================
@@ -146,19 +132,9 @@
     <dimen name="transactions_info_margin_top">48dp</dimen>
     <dimen name="transactions_list_margin">40dp</dimen>
 
-    <dimen name="transactions_title_currency_size">16sp</dimen> <!-- -->
-    <dimen name="transactions_title_size">40sp</dimen> <!-- -->
-
-    <dimen name="transactions_day_margin">24dp</dimen>
-    <dimen name="transactions_day_padding">0dp</dimen>
     <dimen name="transactions_day_margin_start">-16dp</dimen>
     <dimen name="transactions_item_total_margin">32dp</dimen>
-    <dimen name="transactions_item_padding">4dp</dimen> <!-- -->
     <dimen name="transactions_item_padding_end">0dp</dimen>
-    <dimen name="transactions_total_container_height">200dp</dimen> <!-- -->
-    <dimen name="transactions_total_container_padding">16dp</dimen> <!-- -->
-    <dimen name="transactions_total_container_corner">0dp</dimen>
-    <dimen name="transactions_page_padding_top">0dp</dimen>
 
 
     <!-- ===========================================================================================
@@ -201,7 +177,6 @@
     <dimen name="categories_chart_text_padding">24sp</dimen>
     <dimen name="categories_chart_list_padding">4dp</dimen>
     <dimen name="categories_chart_list_item_padding">16dp</dimen>
-    <dimen name="categories_list_percent_padding_land">0dp</dimen>
     <dimen name="categories_page_padding_top_land">0dp</dimen>
 
     <!-- ===========================================================================================

@@ -27,7 +27,7 @@
         android:layout_width="24dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="1dp"
-        android:text="22"
+        android:text="@string/test_22"
         android:textSize="@dimen/caption"
         android:gravity="center"
         android:textColor="@color/income_toggle_icon"

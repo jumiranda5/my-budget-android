@@ -49,7 +49,6 @@
     <dimen name="categories_chart_size">280dp</dimen>
     <dimen name="categories_chart_text_size">30sp</dimen>
     <dimen name="categories_chart_list_item_padding">0dp</dimen>
-    <dimen name="categories_list_percent_padding_land">80dp</dimen>
     <dimen name="categories_page_padding_top_land">40dp</dimen>
 
     <!-- ===========================================================================================

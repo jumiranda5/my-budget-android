@@ -138,26 +138,12 @@
         <item name="android:layout_marginStart">26dp</item>
     </style>
 
-    <style name="MySwitchButton" parent="MainButton">
-        <item name="layout_constraintWidth_min">112dp</item>
-        <item name="layout_constraintWidth_max">160dp</item>
-        <item name="android:textColor">@color/medium_emphasis_text</item>
-        <item name="android:thumb">@drawable/switch_thumb</item>
-        <item name="track">@drawable/switch_track</item>
-    </style>
-
     <style name="FormSwitch" parent="Field">
         <item name="android:paddingStart">12dp</item>
         <item name="android:thumb">@drawable/switch_thumb</item>
         <item name="track">@drawable/switch_track</item>
         <item name="android:letterSpacing">0.06</item>
         <item name="android:textColor">@color/switch_text_color</item>
-    </style>
-
-    <style name="FormSwitchWithIcon" parent="Field">
-        <item name="android:paddingStart">48dp</item>
-        <item name="android:thumb">@drawable/switch_thumb</item>
-        <item name="track">@drawable/switch_track</item>
     </style>
 
 

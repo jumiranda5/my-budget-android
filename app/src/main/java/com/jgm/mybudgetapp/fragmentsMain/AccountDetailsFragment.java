@@ -286,7 +286,7 @@ public class AccountDetailsFragment extends Fragment {
         AppDatabase.dbExecutor.execute(() -> {
 
             Log.d(LOG, "account id: " + accountTotal.getId());
-            transactions = transactionDao.getAccountTransactions2(accountTotal.getId(), date.getMonth(), date.getYear());
+            transactions = transactionDao.getAccountTransactions(accountTotal.getId(), date.getMonth(), date.getYear());
 
             float prevTotal = transactionDao.getAccountAccumulated(
                     accountTotal.getId(), date.getMonth(), date.getYear());
