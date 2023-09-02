@@ -231,4 +231,17 @@ public interface TransactionDao {
             "    WHERE year = :year ")
     YearResponse getYearTotals(int year);
 
+
+    /* ------------------------------------------------------------------------------
+                                     AUTOCOMPLETE
+    ------------------------------------------------------------------------------- */
+
+    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
+            "FROM transactions " +
+            "JOIN categories ON transactions.categoryId = categories.id " +
+            "WHERE transactions.description LIKE :pattern " +
+            "ORDER BY transactions.id ASC " +
+            "LIMIT 3 ")
+    List<TransactionResponse> getAutocompleteResult(String pattern);
+
 }

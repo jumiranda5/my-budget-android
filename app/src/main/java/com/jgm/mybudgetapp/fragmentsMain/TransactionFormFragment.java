@@ -2,6 +2,7 @@ package com.jgm.mybudgetapp.fragmentsMain;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,10 +47,14 @@ import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.room.entity.Transaction;
 import com.jgm.mybudgetapp.utils.ColorUtils;
+import com.jgm.mybudgetapp.utils.HideKeyboard;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionFormFragment extends Fragment implements Animation.AnimationListener {
 
@@ -69,6 +75,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private static final String STATE_METHOD = "METHOD";
     private static final String STATE_METHOD_IN = "METHOD_IN";
     private static final String STATE_METHOD_OUT = "METHOD_OUT";
+    private static final String SPLIT = "%&div&%";
 
     // VARS
     private Transaction transaction;
@@ -87,6 +94,12 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     private PaymentMethod transferAccountOut;
     private Category selectedCategory;
     private boolean isSavedInstanceState = false;
+
+    // Autocomplete
+    private ArrayAdapter<String> searchAdapter;
+    private static final int AUTOCOMPLETE_SEARCH_THRESHOLD = 2;
+    private final ArrayList<String> searchResultList = new ArrayList<>();
+    private boolean dismissAutocomplete = false;
 
     // UI
     private FragmentTransactionFormBinding binding;
@@ -534,14 +547,75 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
                                            DESCRIPTION
      -------------------------------------------------------------------------------------------- */
 
-    // Todo: autocomplete
-
     private void initDescription() {
         Log.d(LOG, "=> initDescription: " + transaction.getDescription());
         String description = transaction.getDescription();
         mDescription.addTextChangedListener(descriptionWatcher);
         transaction.setDescription(description);
         mDescription.setText(description);
+        initAutocomplete();
+    }
+
+    private void initAutocomplete() {
+        searchAdapter = new ArrayAdapter<String>(mContext, R.layout.item_autocomplete,
+                R.id.item_autocomplete_description, searchResultList) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                Log.d("debug-autocomplete", "result size: " + searchResultList.size());
+
+                try {
+                    TextView text1 = view.findViewById(R.id.item_autocomplete_description);
+                    TextView text2 = view.findViewById(R.id.item_autocomplete_category);
+                    ImageView iconImg = view.findViewById(R.id.item_autocomplete_icon);
+
+                    // description + category + category icon + category color + category id
+                    String[] item = searchResultList.get(position).split(SPLIT);
+                    if (item.length == 5) {
+                        String description = item[0];
+                        String categoryName = item[1];
+                        int iconId = Integer.parseInt(item[2]);
+                        int colorId = Integer.parseInt(item[3]);
+                        Icon icon = IconUtils.getIcon(iconId);
+                        Color color = ColorUtils.getColor(colorId);
+                        text1.setText(description);
+                        text2.setText(categoryName);
+                        iconImg.setImageDrawable(ContextCompat.getDrawable(mContext, icon.getIcon()));
+                        iconImg.setImageTintList(ContextCompat.getColorStateList(mContext, color.getColor()));
+                    }
+                }
+                catch (Exception e) {
+                    Log.e("debug-autocomplete", e.getMessage());
+                }
+
+                return view;
+            }
+        };
+
+        mDescription.setAdapter(searchAdapter);
+        mDescription.setOnItemClickListener((parent, view, position, id) -> {
+            Log.d("debug-autocomplete", "view clicked!");
+            // description + category + category icon + category color + category id
+            String[] item = searchResultList.get(position).split(SPLIT);
+            dismissAutocomplete = true;
+            if (item.length == 5) {
+                String description = item[0];
+                String categoryName = item[1];
+                int iconId = Integer.parseInt(item[2]);
+                int colorId = Integer.parseInt(item[3]);
+                int categoryId = Integer.parseInt(item[4]);
+                Category autoCategory = new Category(categoryName, colorId, iconId, true);
+                autoCategory.setId(categoryId);
+                setSelectedCategory(autoCategory);
+                mDescription.setText(description);
+            }
+            HideKeyboard.hide((Activity) mContext);
+            searchResultList.clear();
+            searchAdapter.getFilter().filter("");
+            searchAdapter.clear();
+        });
     }
 
     private final TextWatcher descriptionWatcher = new TextWatcher() {
@@ -555,8 +629,39 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         public void afterTextChanged(Editable editable) {
             String description = mDescription.getText().toString();
             transaction.setDescription(description);
+            if (editable.length() >= AUTOCOMPLETE_SEARCH_THRESHOLD && !dismissAutocomplete)
+                searchTransaction(editable.toString());
+            dismissAutocomplete = false;
         }
     };
+
+    private void searchTransaction(String desc) {
+        Log.d("debug-autocomplete", "!!!!!!!!!! searchTransaction");
+        TransactionDao transactionDao = db.TransactionDao();
+        Handler handler = new Handler(Looper.getMainLooper());
+        AppDatabase.dbExecutor.execute(() -> {
+
+            String pattern = desc + "%";
+            List<TransactionResponse> results = transactionDao.getAutocompleteResult(pattern);
+
+            handler.post(() -> {
+                searchResultList.clear();
+                for (int i = 0; i < results.size(); i++) {
+                    String description = results.get(i).getDescription();
+                    String categoryName = results.get(i).getCategoryName();
+                    int categoryId = results.get(i).getCategoryId();
+                    int categoryIcon = results.get(i).getIconId();
+                    int categoryColor = results.get(i).getColorId();
+                    String item = description + SPLIT + categoryName + SPLIT + categoryIcon + SPLIT
+                            + categoryColor + SPLIT + categoryId;
+                    searchResultList.add(item);
+                }
+                searchAdapter.clear();
+                searchAdapter.addAll(searchResultList);
+                searchAdapter.getFilter().filter("");
+            });
+        });
+    }
 
 
     /* ---------------------------------------------------------------------------------------------

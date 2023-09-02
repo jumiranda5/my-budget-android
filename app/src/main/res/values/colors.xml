@@ -19,13 +19,15 @@
     <color name="bg_form">#F5F5F5</color>
     <color name="bg_00dp">#FAFAFA</color>
     <color name="bg_01dp">#FFFFFF</color>
-    <color name="bg_02dp">#FFFFFF</color> <!-- for night theme -->
+    <color name="bg_02dp">@color/bg_01dp</color>
     <color name="bg_04dp">@color/bg_01dp</color>
-    <color name="bg_input">@color/bg_01dp</color> <!-- for night theme -->
+    <color name="bg_08dp">@color/bg_01dp</color>
+    <color name="bg_input">@color/bg_01dp</color>
     <color name="bg_status_bar">#242529</color> <!-- for night theme -->
     <color name="bg_progress_track">#E0E0E0</color>
     <color name="bg_expense_container">#0FD00B46</color>
     <color name="bg_income_container">#1A0BD072</color>
+    <color name="bg_autocomplete_click">#E0E0E0</color>
 
     <!-- Borders -->
     <color name="border">#EAEAEA</color>

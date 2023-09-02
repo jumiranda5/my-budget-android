@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/ClickableListItem"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:layout_height="64dp"
+    android:clickable="false"
+    android:focusable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/bg_autocomplete_item"
+    android:id="@+id/item_autocomplete_container">
+
+    <ImageView
+        android:id="@+id/item_autocomplete_icon"
+        style="@style/IconNormal"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_category_fill1_300_48" />
+
+    <TextView
+        android:id="@+id/item_autocomplete_description"
+        style="@style/MyBody1"
+        android:layout_width="0dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginStart="@dimen/inner_space"
+        android:text="@string/hint_description"
+        app:layout_constraintBottom_toTopOf="@+id/item_autocomplete_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/item_autocomplete_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/item_autocomplete_category"
+        style="@style/MyBody2"
+        android:layout_width="0dp"
+        android:text="@string/category_default"
+        android:textColor="@color/medium_emphasis_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/item_autocomplete_description"
+        app:layout_constraintTop_toBottomOf="@+id/item_autocomplete_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
