@@ -37,7 +37,6 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "budget_app")
-                            .fallbackToDestructiveMigration() //todo => remove this and handle upgrade
                             .build();
 
 
@@ -46,5 +45,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    /* migration docs: https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=pt-br  */
 
 }

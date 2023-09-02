@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -55,6 +57,11 @@ dependencies {
     implementation 'com.google.android.ump:user-messaging-platform:2.1.0'
     implementation "com.android.billingclient:billing:6.0.1"
     implementation 'com.google.guava:guava:31.1-android' // to use ImmutableList.of on the billingClient implementation
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.2.3')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 
     // Biometric authentication
     implementation "androidx.biometric:biometric:1.1.0"
