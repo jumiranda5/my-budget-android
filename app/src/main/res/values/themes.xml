@@ -73,10 +73,10 @@
     <!-- Splash screen -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
-        <item name="windowSplashScreenBackground">@color/savings</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenBackground">@color/bg_splash_screen</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
         <!-- Set the theme of the Activity that directly follows your splash screen. -->
-        <item name="postSplashScreenTheme">@style/AppTheme</item>
+        <item name="postSplashScreenTheme">@style/AlertDialogTheme</item>
     </style>
 
     <style name="AppTheme" parent="Base.Theme.MyBudgetApp" />

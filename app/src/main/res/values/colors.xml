@@ -16,6 +16,7 @@
     <color name="button_text">#FFFFFF</color>
 
     <!-- Backgrounds -->
+    <color name="bg_splash_screen">#580797</color>
     <color name="bg_form">#F5F5F5</color>
     <color name="bg_00dp">#FAFAFA</color>
     <color name="bg_01dp">#FFFFFF</color>

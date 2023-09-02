@@ -99,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         initAppOpenCount();
 
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
