@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.room.AppDatabase;
-import com.jgm.mybudgetapp.room.dao.CategoryDao;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
@@ -16,7 +15,6 @@ public class Populate {
 
     private final static String LOG_POPULATE = "debug-populate";
 
-    public Populate() {}
 
     // Populate accounts table with default accounts
     public static void initDefaultAccounts(Context context) {

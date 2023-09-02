@@ -1,7 +1,5 @@
 package com.jgm.mybudgetapp.objects;
 
-import java.util.Comparator;
-
 public class CategoryPercent {
 
     private int id;
@@ -67,31 +65,4 @@ public class CategoryPercent {
         this.percent = percent;
     }
 
-
-    // Comparator (Name)
-    public static Comparator<CategoryPercent> CategoryNameComparator = (c1, c2) -> {
-
-        String CategoryName1 = c1.getName().toUpperCase();
-        String CategoryName2 = c2.getName().toUpperCase();
-
-        // Returning in ascending order
-        return CategoryName1.compareTo(CategoryName2);
-
-        // descending order
-        // return CategoryName2.compareTo(CategoryName1);
-    };
-
-    // Comparator (Total)
-    public static Comparator<CategoryPercent> CategoryTotalComparator = new Comparator<CategoryPercent>() {
-
-        // Method
-        public int compare(CategoryPercent c1, CategoryPercent c2) {
-
-            float total1 = c1.getTotal();
-            float total2 = c2.getTotal();
-
-            // For descending order
-            return (int) (total2 - total1);
-        }
-    };
 }

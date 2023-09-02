@@ -2,9 +2,9 @@ package com.jgm.mybudgetapp.objects;
 
 public class Balance {
 
-    private float balance;
-    private float income;
-    private float expenses;
+    private final float balance;
+    private final float income;
+    private final float expenses;
 
     public Balance(float balance, float income, float expenses) {
         this.balance = balance;

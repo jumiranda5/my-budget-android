@@ -97,6 +97,8 @@ public class CreditCardFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.d(LOG, "Credit Card form onViewCreated");
+
         if (savedInstanceState != null) {
             isEdit = savedInstanceState.getBoolean(STATE_EDIT, false);
             String name = savedInstanceState.getString(STATE_NAME, "");
@@ -147,12 +149,10 @@ public class CreditCardFormFragment extends Fragment {
     private void initButtons() {
         mBack.setOnClickListener(v -> mInterface.navigateBack());
 
-        mArchive.setOnClickListener(v-> {
-            mInterface.showConfirmationDialog(
-                    getString(R.string.msg_archive_credit_card),
-                    getString(R.string.action_archive),
-                    R.drawable.ic_40_archive_fill0_300);
-        });
+        mArchive.setOnClickListener(v-> mInterface.showConfirmationDialog(
+                getString(R.string.msg_archive_credit_card),
+                getString(R.string.action_archive),
+                R.drawable.ic_40_archive_fill0_300));
 
         mColorButton.setOnClickListener(v -> mInterface.showColorPickerDialog());
 

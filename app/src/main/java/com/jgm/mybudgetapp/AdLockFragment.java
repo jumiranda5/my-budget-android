@@ -313,9 +313,8 @@ public class AdLockFragment extends Fragment {
                     if (isRewardGranted) {
                         new Handler(Looper.getMainLooper()).post(() -> {
                             setSuccess();
-                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                mInterface.onAdFragmentDismiss(true);
-                            }, LOCK_DELAY);
+                            new Handler(Looper.getMainLooper()).postDelayed(() ->
+                                    mInterface.onAdFragmentDismiss(true), LOCK_DELAY);
                         });
                     }
                     else loadAd();

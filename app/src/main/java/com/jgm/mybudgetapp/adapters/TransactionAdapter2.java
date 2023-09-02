@@ -1,7 +1,6 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.utils.IconOutlineUtils;
-import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
 import java.util.List;

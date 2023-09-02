@@ -37,7 +37,7 @@ public class AccountsFragment extends Fragment {
     private static final String LOG = "debug-accounts";
 
     // List
-    private ArrayList<AccountTotal> accountsList = new ArrayList<>();
+    private final ArrayList<AccountTotal> accountsList = new ArrayList<>();
     private AccountAdapter adapter;
 
     // UI

@@ -290,9 +290,11 @@ public class LoginActivity extends AppCompatActivity {
             Log.e(LOG_AUTH, "Biometric features are currently not available.");
             String msg = getString(R.string.auth_credentials_not_configured);
             showAuthError(msg);
-            // remove showAuthError for testing on emulator
-            // showAuthSuccess();
-            // connectToGooglePlay();
+            /*
+                remove showAuthError for testing on emulator
+                showAuthSuccess();
+                connectToGooglePlay();
+             */
         }
     }
 
@@ -348,9 +350,8 @@ public class LoginActivity extends AppCompatActivity {
     private void initBillingClient() {
         Log.d(LOG_BILLING, "=> initBillingClient");
 
-        PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, purchases) -> {
-            Log.w(LOG_BILLING, "No purchases updates on this activity");
-        };
+        PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, purchases) ->
+                Log.w(LOG_BILLING, "No purchases updates on this activity");
 
         billingClient = BillingClient.newBuilder(this)
                 .setListener(purchasesUpdatedListener)

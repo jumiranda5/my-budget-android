@@ -2,9 +2,9 @@ package com.jgm.mybudgetapp.objects;
 
 public class CategoryItemResponse {
 
-    private String name;
-    private float total;
-    private int count;
+    private final String name;
+    private final float total;
+    private final int count;
 
     public CategoryItemResponse(String name, float total, int count) {
         this.name = name;

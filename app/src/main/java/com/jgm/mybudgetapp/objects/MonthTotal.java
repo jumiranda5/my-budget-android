@@ -2,12 +2,12 @@ package com.jgm.mybudgetapp.objects;
 
 public class MonthTotal {
 
-    private int year;
-    private int monthId;
-    private String monthName;
-    private String monthNameSmall;
-    private float expenses;
-    private float income;
+    private final int year;
+    private final int monthId;
+    private final String monthName;
+    private final String monthNameSmall;
+    private final float expenses;
+    private final float income;
 
     public MonthTotal(
             int year,

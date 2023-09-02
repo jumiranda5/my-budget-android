@@ -4,10 +4,10 @@ import java.util.List;
 
 public class DayGroup {
 
-    private int day;
-    private int month;
-    private int year;
-    private List<TransactionResponse> transactions;
+    private final int day;
+    private final int month;
+    private final int year;
+    private final List<TransactionResponse> transactions;
 
     public DayGroup(int day, int month, int year, List<TransactionResponse> transactions) {
         this.day = day;

@@ -33,21 +33,9 @@
                 style="@style/ToolbarTitle"
                 android:text="@string/credit_cards"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_add_card"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cards_toolbar_close"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Add button - tablets -->
-            <ImageButton
-                android:id="@+id/button_add_card"
-                style="@style/ToolbarButtonWithBg"
-                android:layout_marginEnd="4dp"
-                android:visibility="gone"
-                android:contentDescription="@string/desc_add_category"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_app_add_500" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

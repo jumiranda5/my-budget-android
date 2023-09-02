@@ -43,13 +43,12 @@ public class CreditCardsFragment extends Fragment {
 
     // UI
     private FragmentCreditCardsBinding binding;
-    private ImageButton mAddCard, mBack;
+    private ImageButton mBack;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mAdd;
 
     private void setBinding() {
         mAdd = binding.fabAddCard;
-        mAddCard = binding.buttonAddCard;
         mBack = binding.cardsToolbarClose;
         mRecyclerView = binding.cardsList;
     }

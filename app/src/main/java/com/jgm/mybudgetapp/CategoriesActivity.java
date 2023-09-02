@@ -336,11 +336,6 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
                 BottomSheetDialogFragment categoryDialog = new CategoryDialog();
                 categoryDialog.show(getSupportFragmentManager(), "CATEGORY DIALOG");
 
-//                for (int i = 0; i < items.size(); i++) {
-//                    CategoryItemResponse item = items.get(i);
-//                    Log.d("debug-category", item.getName() + "(" + item.getCount() + ") " + " => " + item.getTotal());
-//                }
-
             });
 
         });
@@ -355,12 +350,6 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     public List<CategoryItemResponse> getCategoryItems() {
         return categoryItems;
     }
-
-    @Override
-    public MyDate getSelectedDate() {
-        return selectedDate;
-    }
-
 
 
     /* =============================================================================================
@@ -402,42 +391,5 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
 
         });
     }
-
-
-//    private void getCategoriesData(int month, int year, int type) {
-//        Log.d(LOG, "=> getCategoriesData");
-//
-//        TransactionDao transactionDao = AppDatabase.getDatabase(this).TransactionDao();
-//        Handler handler = new Handler(Looper.getMainLooper());
-//        AppDatabase.dbExecutor.execute(() -> {
-//
-//            Log.d(LOG, "month: " + month + " | year: " + year);
-//
-//            float accumulated = transactionDao.getAccumulated(month, year);
-//            List<CategoryResponse> categories = transactionDao.getCategoriesWithTotals(month, year, type);
-//
-//            handler.post(() -> {
-//
-//                Log.d(LOG, "data successfully retrieved");
-//
-//                // Set accumulated
-//                CategoryResponse accumulatedCategory = new CategoryResponse(0, accumulated, getString(R.string.label_accumulated), 16, 71);
-//                if (accumulated > 0 && type == Tags.TYPE_IN) {
-//                    categories.add(0, accumulatedCategory);
-//                    categories.sort(ListSort.categoryResponseComparator);
-//                }
-//                else if (accumulated < 0 && type == Tags.TYPE_OUT) {
-//                    categories.add(0, accumulatedCategory);
-//                    categories.sort(ListSort.categoryResponseComparator);
-//                }
-//
-//                if (type == Tags.TYPE_OUT) expensesFragment.setExpensesCategoriesData(categories);
-//                else incomeFragment.setIncomeCategoriesData(categories);
-//
-//            });
-//
-//        });
-//    }
-
 
 }

@@ -8,8 +8,6 @@ import java.util.List;
 
 public class CategoryUtils {
 
-    CategoryUtils() {}
-
     public static ArrayList<CategoryPercent> getCategoriesPercents(List<CategoryResponse> categories) {
         float total = 0.0f;
         ArrayList<CategoryPercent> percents = new ArrayList<>();

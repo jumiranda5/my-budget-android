@@ -1,7 +1,5 @@
 package com.jgm.mybudgetapp.utils;
 
-import static com.jgm.mybudgetapp.utils.Tags.transactionFormTag;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -22,7 +20,6 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 public class MyDateUtils {
-    public MyDateUtils() {}
 
     public static MyDate getCurrentDate(Context context) {
 

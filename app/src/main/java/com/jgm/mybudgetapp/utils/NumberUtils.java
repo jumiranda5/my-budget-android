@@ -10,7 +10,6 @@ import java.math.RoundingMode;
 import java.util.Locale;
 
 public class NumberUtils {
-    public NumberUtils() {}
 
     public static float roundFloat(float value) {
         try {

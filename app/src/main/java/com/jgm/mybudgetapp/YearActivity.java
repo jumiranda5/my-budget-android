@@ -46,8 +46,6 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
 
     private AdLockFragment mAdLock;
 
-    // VARS
-    private MyDate mCurrentDate;
     private int year;
     private TransactionDao transactionDao;
     private boolean isAdFragment;
@@ -96,7 +94,8 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
 
         transactionDao = AppDatabase.getDatabase(this).TransactionDao();
 
-        mCurrentDate = MyDateUtils.getCurrentDate(this);
+        // VARS
+        MyDate mCurrentDate = MyDateUtils.getCurrentDate(this);
 
         if (savedInstanceState == null) year = mCurrentDate.getYear();
         else year = savedInstanceState.getInt(STATE_YEAR);

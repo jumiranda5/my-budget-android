@@ -140,11 +140,10 @@ public class SettingsFragment extends Fragment {
         mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
         mOpenCreditCards.setOnClickListener(v -> mInterface.open(Tags.cardsTag));
         mReviewConsent.setOnClickListener(v -> requestLatestConsentInformation());
-        mClearDatabase.setOnClickListener(v -> {
-            mInterface.showConfirmationDialog(getString(R.string.msg_clear_database),
-                    getString(R.string.action_reset_database),
-                    R.drawable.ic_48_dangerous_300);
-        });
+        mClearDatabase.setOnClickListener(v ->
+                mInterface.showConfirmationDialog(getString(R.string.msg_clear_database),
+                getString(R.string.action_reset_database),
+                R.drawable.ic_48_dangerous_300));
         mBuyPremiumAccess.setEnabled(false);
         mBuyPremiumAccess.setOnClickListener(v -> launchBillingFlow());
     }
@@ -258,21 +257,19 @@ public class SettingsFragment extends Fragment {
         consentInformation.requestConsentInfoUpdate(
                 (SettingsActivity) mContext,
                 params,
-                (ConsentInformation.OnConsentInfoUpdateSuccessListener) () -> {
-                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
-                            (SettingsActivity) mContext,
-                            (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
-                                if (loadAndShowError != null) {
-                                    // Consent gathering failed.
-                                    Log.w(LOG_UMP, String.format("%s: %s",
-                                            loadAndShowError.getErrorCode(),
-                                            loadAndShowError.getMessage()));
-                                }
-                                mProgressBarAds.setVisibility(View.GONE);
-                                mReviewConsent.setEnabled(true);
+                (ConsentInformation.OnConsentInfoUpdateSuccessListener) () ->
+                        UserMessagingPlatform.loadAndShowConsentFormIfRequired((SettingsActivity) mContext,
+                        (ConsentForm.OnConsentFormDismissedListener) loadAndShowError -> {
+                            if (loadAndShowError != null) {
+                                // Consent gathering failed.
+                                Log.w(LOG_UMP, String.format("%s: %s",
+                                        loadAndShowError.getErrorCode(),
+                                        loadAndShowError.getMessage()));
                             }
-                    );
-                },
+                            mProgressBarAds.setVisibility(View.GONE);
+                            mReviewConsent.setEnabled(true);
+                        }
+                ),
                 (ConsentInformation.OnConsentInfoUpdateFailureListener) requestConsentError -> {
                     // Consent gathering failed.
                     Log.w(LOG_UMP, String.format("%s: %s",

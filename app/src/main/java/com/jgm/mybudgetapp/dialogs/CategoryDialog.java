@@ -6,14 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +19,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.CategoryDetailsItemAdapter;
-import com.jgm.mybudgetapp.adapters.ColorAdapter;
 import com.jgm.mybudgetapp.objects.CategoryItemResponse;
 import com.jgm.mybudgetapp.objects.CategoryPercent;
 import com.jgm.mybudgetapp.objects.Color;
@@ -30,7 +27,6 @@ import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
 import com.jgm.mybudgetapp.utils.NumberUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDialog extends BottomSheetDialogFragment {

@@ -5,7 +5,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 
 import java.util.List;

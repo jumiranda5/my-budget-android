@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.jgm.mybudgetapp.R;
@@ -19,8 +18,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Charts {
-
-    public Charts() {}
 
     public static void setCategoriesChart(
             Context context,

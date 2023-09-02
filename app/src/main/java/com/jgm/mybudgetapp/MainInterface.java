@@ -1,6 +1,5 @@
 package com.jgm.mybudgetapp;
 
-import com.jgm.mybudgetapp.objects.AccountTotal;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;

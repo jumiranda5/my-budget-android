@@ -2,11 +2,11 @@ package com.jgm.mybudgetapp.objects;
 
 public class CategoryResponse {
 
-    private int id;
-    private float total;
-    private String category;
-    private int colorId;
-    private int iconId;
+    private final int id;
+    private final float total;
+    private final String category;
+    private final int colorId;
+    private final int iconId;
 
     public CategoryResponse(int id, float total, String category, int colorId, int iconId) {
         this.id = id;

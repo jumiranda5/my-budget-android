@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class ListSort {
 
-    public static Comparator<CategoryResponse> categoryResponseComparator = new Comparator<CategoryResponse>() {
+    public static final Comparator<CategoryResponse> categoryResponseComparator = new Comparator<CategoryResponse>() {
         @Override
         public int compare(CategoryResponse c1, CategoryResponse c2) {
 

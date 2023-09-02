@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.objects.CategoryItemResponse;
 import com.jgm.mybudgetapp.utils.NumberUtils;
@@ -22,12 +21,10 @@ public class CategoryDetailsItemAdapter extends RecyclerView.Adapter<CategoryDet
     private final Context mContext;
     private final List<CategoryItemResponse> mDataList;
     private final LayoutInflater layoutInflater;
-    private final CategoryInterface mInterface;
 
     public CategoryDetailsItemAdapter(Context context, List<CategoryItemResponse> items) {
         mContext = context;
         mDataList = items;
-        mInterface = (CategoryInterface) context;
         layoutInflater = LayoutInflater.from(context);
     }
 

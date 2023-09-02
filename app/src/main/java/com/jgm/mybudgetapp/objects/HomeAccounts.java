@@ -2,9 +2,9 @@ package com.jgm.mybudgetapp.objects;
 
 public class HomeAccounts {
 
-    private float cash;
-    private float checking;
-    private float savings;
+    private final float cash;
+    private final float checking;
+    private final float savings;
 
     public HomeAccounts(float cash, float checking, float savings) {
         this.cash = cash;

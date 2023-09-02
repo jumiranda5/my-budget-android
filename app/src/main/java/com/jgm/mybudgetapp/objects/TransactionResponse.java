@@ -7,23 +7,23 @@ import androidx.annotation.NonNull;
 
 public class TransactionResponse implements Parcelable {
 
-    private int id;
-    private int type;  // in(1)|out(-1)
+    private final int id;
+    private final int type;  // in(1)|out(-1)
     private String description;
     private float amount;
     private int year;
     private int month;
     private int day;
     private int categoryId;
-    private Integer accountId;
+    private final Integer accountId;
     private Integer cardId;
     private boolean paid;
-    private int repeat;
-    private Integer repeatCount;
-    private Long repeatId;
+    private final int repeat;
+    private final Integer repeatCount;
+    private final Long repeatId;
     private String categoryName;
-    private int colorId;
-    private int iconId;
+    private final int colorId;
+    private final int iconId;
 
 
     public TransactionResponse(

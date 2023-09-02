@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.jgm.mybudgetapp.room.entity.Account;
-import com.jgm.mybudgetapp.room.entity.Transaction;
 
 import java.util.List;
 import java.util.Map;

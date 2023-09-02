@@ -1,7 +1,5 @@
 package com.jgm.mybudgetapp.fragmentsMain;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;

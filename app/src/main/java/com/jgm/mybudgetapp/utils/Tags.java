@@ -1,8 +1,6 @@
 package com.jgm.mybudgetapp.utils;
 
 public class Tags {
-
-    public Tags() {}
     
     // Logs
     public static final String LOG_NAV = "debug-nav";

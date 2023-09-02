@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 public class ColorUtils {
 
-    public ColorUtils() {}
-
     private static final Color red = new Color(0, R.color.red, "Red");
     private static final Color pink = new Color(1, R.color.pink, "Pink");
     private static final Color purple = new Color(2, R.color.purple, "Purple");

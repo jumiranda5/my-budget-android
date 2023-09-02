@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.adapters.CategoryPercentAdapter;
 import com.jgm.mybudgetapp.databinding.FragmentCategoriesPagerBinding;
@@ -51,13 +50,11 @@ public class CategoriesIncomeFragment extends Fragment {
 
     // Interfaces
     private Context mContext;
-    private CategoryInterface mInterface;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
-        mInterface = (CategoryInterface) context;
     }
 
     @Override
@@ -68,7 +65,7 @@ public class CategoriesIncomeFragment extends Fragment {
         View view = binding.getRoot();
         bindViews();
 
-        Log.w("debug-categories", "onCreateView - income");
+        Log.w(LOG, "onCreateView - income");
 
         return view;
     }

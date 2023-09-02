@@ -7,14 +7,9 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.DayGroup;
 import com.jgm.mybudgetapp.objects.TransactionResponse;
 
-import java.util.ArrayList;
-
 public class TransactionsUtils {
-
-    public TransactionsUtils() {}
 
     public static void setTotalsTextViews(Context context,
                                           TextView mTotal, TextView mDue, TextView mPaid,

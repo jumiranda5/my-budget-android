@@ -1,19 +1,17 @@
 package com.jgm.mybudgetapp.objects;
 
-import java.util.List;
-
 public class PendingListResponse {
 
     //id, description, SUM(amount) AS total, cardId, year, month, day
 
-    private int id;
-    private int type;
-    private float total;
-    private int cardId;
-    private int month;
-    private int year;
-    private int day;
-    private String description;
+    private final int id;
+    private final int type;
+    private final float total;
+    private final int cardId;
+    private final int month;
+    private final int year;
+    private final int day;
+    private final String description;
     boolean paid;
 
     public PendingListResponse(int id, int type, float total, int cardId, int month, int year, int day, String description, boolean paid) {

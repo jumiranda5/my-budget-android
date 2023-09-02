@@ -2,9 +2,9 @@ package com.jgm.mybudgetapp.objects;
 
 public class MonthResponse {
 
-    private int month;
-    private float income;
-    private float expenses;
+    private final int month;
+    private final float income;
+    private final float expenses;
 
     public MonthResponse(int month, float income, float expenses) {
         this.month = month;

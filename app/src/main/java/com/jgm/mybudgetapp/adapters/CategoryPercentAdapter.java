@@ -1,9 +1,6 @@
 package com.jgm.mybudgetapp.adapters;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jgm.mybudgetapp.CategoryInterface;
 import com.jgm.mybudgetapp.R;
-import com.jgm.mybudgetapp.objects.CategoryItemResponse;
 import com.jgm.mybudgetapp.objects.CategoryPercent;
-import com.jgm.mybudgetapp.objects.CategoryResponse;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
-import com.jgm.mybudgetapp.room.AppDatabase;
-import com.jgm.mybudgetapp.room.dao.TransactionDao;
 import com.jgm.mybudgetapp.utils.ColorUtils;
 import com.jgm.mybudgetapp.utils.IconUtils;
-import com.jgm.mybudgetapp.utils.ListSort;
 
 import java.util.List;
 
@@ -69,9 +61,7 @@ public class CategoryPercentAdapter extends RecyclerView.Adapter<CategoryPercent
         holder.mPercent.setText(percent);
 
         // Open dialog with details
-        holder.mContainer.setOnClickListener(v -> {
-            mInterface.showCategoryDetails(category);
-        });
+        holder.mContainer.setOnClickListener(v -> mInterface.showCategoryDetails(category));
 
     }
 

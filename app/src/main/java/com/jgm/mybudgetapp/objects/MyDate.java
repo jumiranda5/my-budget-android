@@ -2,9 +2,9 @@ package com.jgm.mybudgetapp.objects;
 
 public class MyDate {
 
-    private int year;
-    private int month;
-    private int day;
+    private final int year;
+    private final int month;
+    private final int day;
     private String monthName;
     private String weekday;
 
