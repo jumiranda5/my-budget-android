@@ -161,6 +161,23 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
         super.onResume();
         Log.i(Tags.LOG_LIFECYCLE, "Main Activity onResume");
         isPremium = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyIsPremium);
+        try {
+            boolean shouldRefresh = SettingsPrefs.getSettingsPrefsBoolean(this, Tags.keyRefresh);
+            Log.d(LOG_MAIN, "Should refresh: " + shouldRefresh);
+            if (shouldRefresh) {
+                SettingsPrefs.setSettingsPrefsBoolean(this, Tags.keyRefresh, false);
+                currentFragment = "";
+                resetFragmentStack();
+                openFragment(homeTag);
+                updateBottomNav(homeTag);
+                setToolbarVisibilities(homeTag);
+                setAddButton(homeTag);
+            }
+        }
+        catch (Exception e) {
+            Log.e(LOG_MAIN, e.getMessage());
+            onBackPressed();
+        }
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -211,7 +228,6 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
         settingsButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
         mNextMonth.setOnClickListener(v -> setToolbarNextMonth());
         mPrevMonth.setOnClickListener(v -> setToolbarPrevMonth());
-//        mAdd.setOnClickListener(v -> openTransactionForm(Tags.TYPE_OUT, false, null, null));
     }
 
     private void setToolbarNextMonth() {

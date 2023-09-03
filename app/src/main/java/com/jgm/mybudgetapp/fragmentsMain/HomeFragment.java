@@ -159,25 +159,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            boolean shouldRefresh = SettingsPrefs.getSettingsPrefsBoolean(mContext, Tags.keyRefresh);
-            Log.d(LOG_HOME, "Should refresh home data: " + shouldRefresh);
-            if (shouldRefresh) {
-                SettingsPrefs.setSettingsPrefsBoolean(mContext, Tags.keyRefresh, false);
-                MyDate date = mInterface.getDate();
-                getHomeData(date.getMonth(), date.getYear());
-            }
-        }
-        catch (Exception e) {
-            Log.e(LOG_HOME, e.getMessage());
-            mInterface.navigateBack();
-        }
-
-    }
-
     /* ===============================================================================
                                         NAVIGATION
      =============================================================================== */
