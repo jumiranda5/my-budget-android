@@ -49,5 +49,6 @@ public class Tags {
     public static final String keyIsPremium = "isPremium";
     public static final String keyIapOrder = "iapOrder";
     public static final String keyDarkMode = "isDark";
+    public static final String keyRefresh = "shouldRefresh";
     
 }

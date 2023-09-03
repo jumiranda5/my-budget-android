@@ -36,6 +36,7 @@ import com.jgm.mybudgetapp.objects.MonthTotal;
 import com.jgm.mybudgetapp.objects.MyDate;
 import com.jgm.mybudgetapp.room.AppDatabase;
 import com.jgm.mybudgetapp.room.dao.TransactionDao;
+import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
 import com.jgm.mybudgetapp.utils.CategoryUtils;
 import com.jgm.mybudgetapp.utils.Charts;
 import com.jgm.mybudgetapp.utils.ListSort;
@@ -154,6 +155,25 @@ public class HomeFragment extends Fragment {
             mCardPending.setVisibility(View.GONE);
             MyDate today = MyDateUtils.getCurrentDate(mContext);
             getHomeData(today.getMonth(), today.getYear());
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            boolean shouldRefresh = SettingsPrefs.getSettingsPrefsBoolean(mContext, Tags.keyRefresh);
+            Log.d(LOG_HOME, "Should refresh home data: " + shouldRefresh);
+            if (shouldRefresh) {
+                SettingsPrefs.setSettingsPrefsBoolean(mContext, Tags.keyRefresh, false);
+                MyDate date = mInterface.getDate();
+                getHomeData(date.getMonth(), date.getYear());
+            }
+        }
+        catch (Exception e) {
+            Log.e(LOG_HOME, e.getMessage());
+            mInterface.navigateBack();
         }
 
     }

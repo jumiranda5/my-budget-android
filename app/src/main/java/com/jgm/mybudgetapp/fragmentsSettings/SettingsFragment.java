@@ -216,9 +216,9 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    /* -------------------------------------------------------------------
-                               CLEAR DATABASE
-     ------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------
+                                           CLEAR DATABASE
+     -------------------------------------------------------------------------------------------- */
 
     public void clearDatabase() {
         Log.d(LOG_SETTINGS, "=> Clear database");
@@ -250,6 +250,8 @@ public class SettingsFragment extends Fragment {
                 // end progress
                 mNestedScrollView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
+                SettingsPrefs.setSettingsPrefsBoolean(mContext, Tags.keyRefresh, true);
+                mInterface.navigateBack();
             });
 
         });
