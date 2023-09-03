@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -76,7 +78,8 @@ public class SettingsFragment extends Fragment {
     private ProgressBar mProgressBar, mProgressBarAds;
     private FragmentSettingsBinding binding;
     private SwitchCompat switchDarkMode;
-    private Button mOpenCategories, mOpenCreditCards, mClearDatabase, mReviewConsent, mBuyPremiumAccess;
+    private Button mOpenCategories, mOpenCreditCards, mClearDatabase,
+            mReviewConsent, mBuyPremiumAccess, mPrivacyPolicy, mSupport;
     private ImageButton mBack;
     private TextView mOrderId;
     private ImageView mPremiumIcon;
@@ -94,6 +97,8 @@ public class SettingsFragment extends Fragment {
         mOrderId = binding.settingsPremiumOrder;
         mPremiumIcon = binding.settingsPremiumIcon;
         mProgressBarAds = binding.settingsAdsReviewProgressBar;
+        mPrivacyPolicy = binding.settingsPrivacyPolicy;
+        mSupport = binding.settingsSupport;
     }
 
     // Interfaces
@@ -140,12 +145,31 @@ public class SettingsFragment extends Fragment {
         mOpenCategories.setOnClickListener(v -> mInterface.openCategoriesList(true));
         mOpenCreditCards.setOnClickListener(v -> mInterface.open(Tags.cardsTag));
         mReviewConsent.setOnClickListener(v -> requestLatestConsentInformation());
-        mClearDatabase.setOnClickListener(v ->
-                mInterface.showConfirmationDialog(getString(R.string.msg_clear_database),
-                getString(R.string.action_reset_database),
-                R.drawable.ic_48_dangerous_300));
         mBuyPremiumAccess.setEnabled(false);
         mBuyPremiumAccess.setOnClickListener(v -> launchBillingFlow());
+
+        mClearDatabase.setOnClickListener(v ->
+                mInterface.showConfirmationDialog(getString(R.string.msg_clear_database),
+                        getString(R.string.action_reset_database),
+                        R.drawable.ic_48_dangerous_300));
+
+        mPrivacyPolicy.setOnClickListener(v -> {
+            // todo: add correct link
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://jgm-apps.herokuapp.com/coin/privacy-policy"));
+            startActivity(browserIntent);
+        });
+
+        mSupport.setOnClickListener(v -> {
+            String[] emailTo = {mContext.getString(R.string.support_email)};
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+            intent.putExtra(Intent.EXTRA_EMAIL, emailTo);
+            intent.putExtra(Intent.EXTRA_SUBJECT, mContext.getString(R.string.support_subject));
+            if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        });
     }
 
     private void initDarkModeSwitch() {

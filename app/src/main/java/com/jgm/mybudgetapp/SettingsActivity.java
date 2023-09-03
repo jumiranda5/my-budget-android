@@ -38,6 +38,8 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsInterface {
 
+    // todo: reset database => need to restart main activity data...
+
     // Constants
     private static final String LOG_SETTINGS = "debug-settings";
     private static final String STATE_FRAGMENT = "current-fragment";

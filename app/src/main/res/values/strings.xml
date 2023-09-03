@@ -1,50 +1,28 @@
 <resources>
     <string name="app_name">My Budget App</string>
+    <string name="support_subject">Support - My Budget App</string>
 
-    <!-- Login -->
-    <string name="iap_connection_error_message">Couldn\'t connect to Google Play. It was not possible to verify if you are a premium user. Check your internet connection and try again. Or continue anyway…</string>
-    <string name="ads_initialization_error_message">Couldn\'t initialize ads library. If you are not a premium user, you may not be able to unlock some pages. Check your internet connection and try again. Or continue anyway…</string>
-    <string name="auth_credentials_not_configured">Looks like you haven\'t configured your device credentials yet. To increase security, you can only open this application with your credentials (biometry or pin). Go to your device\'s Settings page to configure it.</string>
-    <string name="auth_fail">Authentication has failed.</string>
-    <string name="title_login">Login with your screen lock</string>
-    <string name="description_login">Use your fingerprint to unlock My Budget App.</string>
-    <string name="title_logged">Authenticated</string>
-    <string name="action_login">Login</string>
-    <string name="action_retry">Retry</string>
-    <string name="action_continue">Continue</string>
-    <string name="msg_loading_iap">Loading Google Play library</string>
-    <string name="msg_loading_ads">Loading Ads library</string>
-    <string name="msg_loading_home">Loading Home Page</string>
-
-    <!-- Ad Lock -->
+    <!-- Test Values -->
     <string name="initial_page_name" translatable="false">Page Name</string>
-    <string name="msg_ad_lock">Unlock this page for 1 hour by watching an ad or unlock all pages permanently by purchasing the premium access.</string>
-    <string name="action_watch_ad">Watch an Ad</string>
-    <string name="action_load_ad">Loading ad…</string>
-    <string name="action_premium">Premium Access</string>
-    <string name="action_buy_premium_access">Buy Premium Access</string>
-    <string name="action_premium_unavailable">Service Unavailable</string>
-    <string name="msg_iap_user_canceled">User canceled the purchase.</string>
-    <string name="msg_iap_user_own_item">You already own this item.</string>
-    <string name="msg_iap_purchase_error">An error has occurred while processing the purchase.</string>
-    <string name="label_order_id">Purchase Id:</string>
-
-    <!-- Settings -->
-    <string name="msg_purchase_id_copied">Purchase ID copied</string>
-
-    <!-- Titles -->
-    <string name="title_form">Form</string>
-    <string name="title_year_balance">Year Balance</string>
-    <string name="title_categories">Categories</string>
-    <string name="title_credit_card">Credit Card</string>
-
+    <string name="initial_1" translatable="false">1</string>
+    <string name="initial_value" translatable="false">$0.00</string>
+    <string name="initial_value_no_symbol" translatable="false">0.00</string>
+    <string name="initial_percent" translatable="false">0%</string>
+    <string name="initial_year" translatable="false">2023</string>
+    <string name="initial_month" translatable="false">January</string>
+    <string name="currency_symbol" translatable="false">$</string>
+    <string name="initial_billing_day" translatable="false">Billing day: 1</string>
+    <string name="test_february" translatable="false">February</string>
+    <string name="test_monday_2" translatable="false">Monday, 2</string>
+    <string name="test_22" translatable="false">22</string>
+    <string name="test_date" translatable="false">20/06/2023</string>
 
     <!-- Default categories -->
     <string name="category_default">Category</string>
     <string name="category_home">Home</string>
     <string name="category_health">Health</string>
     <string name="category_groceries">Groceries</string>
-    <string name="category_transport">Transportation</string>
+    <string name="category_transport">Commute</string>
     <string name="category_leisure">Leisure</string>
     <string name="category_work">Work</string>
     <string name="category_education">Education</string>
@@ -54,17 +32,62 @@
     <string name="account_checking">Checking Account</string>
     <string name="account_savings">Savings</string>
 
-    <!-- Values -->
-    <string name="initial_1">1</string>
-    <string name="initial_value" translatable="false">$0.00</string>
-    <string name="initial_value_no_symbol" translatable="false">0.00</string>
-    <string name="initial_percent" translatable="false">0%</string>
-    <string name="initial_year">2023</string>
-    <string name="initial_month">January</string>
-    <string name="currency_symbol">$</string>
-    <string name="initial_billing_day">Billing day: 1</string>
-    <string name="test_february">February</string>
-    <string name="test_monday_2">Monday, 2</string>
+    <!-- Titles -->
+    <string name="title_logged">Authenticated</string>
+    <string name="title_form">Form</string>
+    <string name="title_year_balance">Year Balance</string>
+    <string name="title_categories">Categories</string>
+    <string name="title_credit_card">Credit Card</string>
+    <string name="title_login">Login with your screen lock</string>
+    <string name="title_transfer">Transfer</string>
+    <string name="title_expense">Expense</string>
+    <string name="title_income">Income</string>
+    <string name="title_pending">Pending</string>
+    <string name="title_add_card">Add Credit Card</string>
+    <string name="title_edit_card">Edit Credit Card</string>
+    <string name="title_categories_list">Categories</string>
+    <string name="title_add_category">Add Category</string>
+    <string name="title_edit_category">Edit Category</string>
+    <string name="title_add_account">Add Account</string>
+    <string name="title_edit_account">Edit Account</string>
+
+    <!-- Buttons -->
+    <string name="action_next_month">Next month</string>
+    <string name="action_prev_month">Previous month</string>
+    <string name="action_login">Login</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_continue">Continue</string>
+    <string name="action_watch_ad">Watch an Ad</string>
+    <string name="action_load_ad">Loading ad…</string>
+    <string name="action_premium">Premium Access</string>
+    <string name="action_buy_premium_access">Buy Premium Access</string>
+    <string name="action_premium_unavailable">Service Unavailable</string>
+    <string name="action_save">Save</string>
+    <string name="action_archive">Archive</string>
+    <string name="action_in">In</string>
+    <string name="action_out">Out</string>
+    <string name="action_transfer">Transfer</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Continue</string>
+    <string name="action_review_ads_consent">Review Ads Consent</string>
+    <string name="action_dark_mode">Dark Mode</string>
+    <string name="action_menage_categories">Menage Categories</string>
+    <string name="action_menage_cards">Menage Credit Cards</string>
+    <string name="action_support">Support</string>
+    <string name="action_privacy_policy">Privacy Policy</string>
+    <string name="action_reset_database">Reset Database</string>
+    <string name="action_edit">Edit</string>
+
+    <!-- Description -->
+    <string name="desc_year_bar_chart">A bar chart with the income and expense of each month.</string>
+    <string name="msg_deleting_all_parcels">Deleting all parcels…</string>
+    <string name="desc_add_category">Add new category.</string>
+    <string name="desc_categories_tabs">Categories tabs</string>
+    <string name="desc_amount">Amount</string>
+    <string name="desc_see_more">See more</string>
+    <string name="desc_increase">Increase</string>
+    <string name="desc_decrease">Decrease</string>
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
@@ -77,8 +100,6 @@
     <string name="nav_back">Back</string>
     <string name="nav_close">Close</string>
     <string name="nav_edit">Edit</string>
-    <string name="action_next_month">Next month.</string>
-    <string name="action_prev_month">Previous month.</string>
 
     <!-- Labels -->
     <string name="label_paid">Paid</string>
@@ -92,13 +113,24 @@
     <string name="label_date_picker_day">Day:</string>
     <string name="label_date_picker_first">First:</string>
     <string name="label_today">Today</string>
+    <string name="label_billing_month">Billing month:</string>
+    <string name="label_not_paid">Not paid</string>
+    <string name="label_edit_all">Edit all parcels</string>
+    <string name="label_repeat">Repeat</string>
+    <string name="label_month">Balance</string>
+    <string name="label_accounts_overview">Accounts Overview</string>
+    <string name="label_categories_income">Income Categories</string>
+    <string name="label_categories_expense">Expense Categories</string>
+    <string name="label_year">Year</string>
+    <string name="label_order_id">Purchase Id:</string>
+    <string name="label_accumulated">Accumulated</string>
+    <string name="label_transfer_from">Transfer from</string>
+    <string name="label_transfer_to">Transfer to</string>
+    <string name="label_due">Due:</string>
+    <string name="label_paid2">Paid:</string>
+    <string name="label_billing_day">Billing day:</string>
 
     <!-- Form -->
-    <string name="action_save">Save</string>
-    <string name="action_archive">Archive</string>
-    <string name="action_in">In</string>
-    <string name="action_out">Out</string>
-    <string name="action_transfer">Transfer</string>
     <string name="hint_account_nickname">Account nickname</string>
     <string name="hint_card_nickname">Card nickname</string>
     <string name="hint_category_name">Category name</string>
@@ -108,17 +140,12 @@
     <string name="hint_description">Description</string>
     <string name="hint_today">Today</string>
     <string name="hint_payment_method">Payment Method</string>
-    <string name="label_billing_month">Billing month:</string>
-    <string name="label_not_paid">Not paid</string>
-    <string name="label_edit_all">Edit all parcels</string>
-    <string name="label_repeat">Repeat</string>
-    <string name="desc_increase">Increase</string>
-    <string name="desc_decrease">Decrease</string>
-    <string name="title_transfer">Transfer</string>
-    <string name="title_expense">Expense</string>
-    <string name="title_income">Income</string>
 
-    <!-- Home -->
+    <!-- Credit Cards -->
+    <string name="credit_cards">Credit Cards</string>
+    <string name="credit_card">Credit Card</string>
+
+    <!-- Messages -->
     <string name="msg_pending">You have 0 outstanding payments.</string>
     <string name="msg_pending_part1">You have</string>
     <string name="msg_pending_part2">outstanding payment.</string>
@@ -126,65 +153,24 @@
     <string name="msg_progress">You used 0% of your budget.</string>
     <string name="msg_progress_part1">You used</string>
     <string name="msg_progress_part2">of your budget.</string>
-    <string name="label_month">Balance</string>
-    <string name="label_accounts_overview">Accounts overview</string>
-    <string name="label_categories_income">Income Categories</string>
-    <string name="label_categories_expense">Expense Categories</string>
-    <string name="label_year">Year</string>
-    <string name="desc_year_bar_chart">A bar chart with the income and expense of each month.</string>
-
-    <!-- Transactions -->
-    <string name="label_accumulated">Accumulated</string>
-    <string name="action_edit">Edit</string>
-    <string name="label_transfer_from">Transfer from</string>
-    <string name="label_transfer_to">Transfer to</string>
-    <string name="label_due">Due:</string>
-    <string name="label_paid2">Paid:</string>
-    <string name="msg_deleting_all_parcels">Deleting all parcels…</string>
-
-    <!-- Accounts -->
-    <string name="title_add_account">Add Account</string>
-    <string name="title_edit_account">Edit Account</string>
-
-    <!-- Settings -->
-    <string name="action_dark_mode">Dark mode</string>
-    <string name="action_menage_categories">Menage Categories</string>
-    <string name="action_menage_cards">Menage Credit Cards</string>
-    <string name="action_support">Support</string>
-    <string name="action_privacy_policy">Privacy Policy</string>
-    <string name="action_reset_database">Reset Database</string>
-
-    <!-- Categories -->
-    <string name="title_categories_list">Categories</string>
-    <string name="title_add_category">Add Category</string>
-    <string name="title_edit_category">Edit Category</string>
-    <string name="desc_add_category">Add new category.</string>
-    <string name="desc_categories_tabs">Categories tabs</string>
-
-    <!-- Credit Cards -->
-    <string name="credit_cards">Credit Cards</string>
-    <string name="credit_card">Credit Card</string>
-    <string name="title_add_card">Add Credit Card</string>
-    <string name="title_edit_card">Edit Credit Card</string>
-    <string name="label_billing_day">Billing day:</string>
-
-    <!-- Pending -->
-    <string name="title_pending">Pending</string>
-
-    <!-- Dialogs -->
-    <string name="action_delete">Delete</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="action_confirm">Continue</string>
-    <string name="desc_amount">Amount</string>
-    <string name="progress_msg_delete">Deleting item…</string>
-    <string name="msg_archive_account">Do you want to permanently archive this account? You will not have access to it anymore, but the items related to it will not be affected.</string>
-    <string name="msg_archive_category">Do you want to permanently archive this category? You will not have access to it anymore, but the items related to it will not be affected.</string>
+    <string name="msg_archive_account">Would you like to permanently archive this account? You will not have access to it anymore, but the items related to it will not be affected.</string>
+    <string name="msg_archive_category">Would you like to permanently archive this category? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
-    <string name="desc_see_more">See more</string>
-    <string name="action_review_ads_consent">Review Ads Consent</string>
-    <string name="test_22">22</string>
-    <string name="test_date">20/06/2023</string>
+    <string name="msg_loading_iap">Loading Google Play library</string>
+    <string name="msg_loading_ads">Loading Ads library</string>
+    <string name="msg_loading_home">Loading Home Page</string>
+    <string name="msg_ad_lock">Unlock this page for 1 hour by watching an ad or unlock all pages permanently by purchasing the premium access.</string>
+    <string name="msg_iap_user_canceled">User canceled the purchase.</string>
+    <string name="msg_iap_user_own_item">You already own this item.</string>
+    <string name="msg_iap_purchase_error">An error has occurred while processing the purchase.</string>
+    <string name="msg_purchase_id_copied">Purchase ID copied</string>
+    <string name="iap_connection_error_message">Couldn\'t connect to Google Play. It was not possible to verify if you are a premium user. Check your internet connection and try again. Or continue anyway…</string>
+    <string name="ads_initialization_error_message">Couldn\'t initialize ads library. If you are not a premium user, you may not be able to unlock some pages. Check your internet connection and try again. Or continue anyway…</string>
+    <string name="auth_credentials_not_configured">Looks like you haven\'t configured your device credentials yet. To increase security, you can only open this application with your credentials (biometry or pin). Go to your device\'s Settings page to configure it.</string>
+    <string name="auth_fail">Authentication has failed.</string>
+    <string name="description_login">Use your fingerprint to unlock My Budget App.</string>
+    <string name="progress_msg_delete">Deleting item…</string>
 
 
 </resources>
