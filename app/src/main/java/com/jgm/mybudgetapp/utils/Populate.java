@@ -93,7 +93,7 @@ public class Populate {
                     Category c1 = new Category(context.getString(R.string.category_home), 2, 6, true);
                     Category c2 = new Category(context.getString(R.string.category_health), 5, 34, true);
                     Category c3 = new Category(context.getString(R.string.category_groceries), 14, 9, true);
-                    Category c4 = new Category(context.getString(R.string.category_transport), 11, 29, true);
+                    Category c4 = new Category(context.getString(R.string.category_transport), 12, 29, true);
                     Category c5 = new Category(context.getString(R.string.category_leisure), 1, 46, true);
                     Category c6 = new Category(context.getString(R.string.category_education), 7, 15, true);
                     Category c7 = new Category(context.getString(R.string.category_work), 4, 11, true);

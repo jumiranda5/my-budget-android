@@ -33,7 +33,6 @@
     <!-- ALERT DIALOG -->
     <style name="ThemeOverlay.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="colorPrimary">@color/high_emphasis_text</item>
-        <item name="fontFamily">@font/source_sans_3_regular</item>
     </style>
 
     <style name="AlertDialogTheme" parent="AppTheme">
