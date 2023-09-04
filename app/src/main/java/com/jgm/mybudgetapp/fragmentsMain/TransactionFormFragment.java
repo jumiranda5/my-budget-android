@@ -451,9 +451,6 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         mIncomeExpenseGroup.setVisibility(View.VISIBLE);
         mTransferGroup.setVisibility(View.GONE);
 
-        Log.d(LOG, "Payment method: " + selectedMethod.getName());
-        Log.d(LOG, "Payment method: " + selectedMethod.getType());
-
         // if switching from expense with credit card payment method:
         if (selectedMethod != null && selectedMethod.getType() == Tags.METHOD_CARD) {
             selectedMethod = null;
