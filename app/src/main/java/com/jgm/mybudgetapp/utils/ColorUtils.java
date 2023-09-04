@@ -24,7 +24,7 @@ public class ColorUtils {
     private static final Color deep_orange = new Color(14, R.color.deep_orange, "Deep orange");
     private static final Color brown = new Color(15, R.color.brown, "Brown");
     private static final Color grey = new Color(16, R.color.grey, "Grey");
-    private static final Color black_white = new Color(17, R.color.black, "Black");
+    private static final Color black_white = new Color(17, R.color.black, "Black/White");
 
     // App colors
     private static final Color expenses = new Color(18, R.color.expense, "Red");
@@ -90,6 +90,39 @@ public class ColorUtils {
             case 22: color = light_grey; break;
             case 23: color = accumulated; break;
             default: color = black_white;
+        }
+
+        return color;
+    }
+
+    public static int getColorNameResource(int id) {
+        int color;
+
+        switch (id) {
+            case 0: color = R.string.desc_color_red; break;
+            case 1: color = R.string.desc_color_pink; break;
+            case 2: color = R.string.desc_color_purple; break;
+            case 3: color = R.string.desc_color_deep_purple; break;
+            case 4: color = R.string.desc_color_indigo; break;
+            case 5: color = R.string.desc_color_blue; break;
+            case 6: color = R.string.desc_color_cyan; break;
+            case 7: color = R.string.desc_color_teal; break;
+            case 8: color = R.string.desc_color_green; break;
+            case 9: color = R.string.desc_color_light_green; break;
+            case 10: color = R.string.desc_color_lime; break;
+            case 11: color = R.string.desc_color_yellow; break;
+            case 12: color = R.string.desc_color_amber; break;
+            case 13: color = R.string.desc_color_orange; break;
+            case 14: color = R.string.desc_color_deep_orange; break;
+            case 15: color = R.string.desc_color_brown; break;
+            case 16: color = R.string.desc_color_grey; break;
+            case 18: color = R.string.desc_color_red; break;
+            case 19: color = R.string.desc_color_green; break;
+            case 20: color = R.string.desc_color_purple; break;
+            case 21: color = R.string.desc_color_green; break;
+            case 22: color = R.string.desc_color_grey; break;
+            case 23: color = R.string.desc_color_grey; break;
+            default: color = R.string.desc_color_black_white;
         }
 
         return color;

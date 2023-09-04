@@ -17,6 +17,7 @@ import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.SettingsInterface;
 import com.jgm.mybudgetapp.objects.Color;
+import com.jgm.mybudgetapp.utils.ColorUtils;
 
 import java.util.List;
 
@@ -55,7 +56,8 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.GridViewHold
 
         Color color = mDataList.get(position);
         int colorRes = color.getColor();
-        String colorName = color.getColorName();
+        int colorNameRes = ColorUtils.getColorNameResource(color.getId());
+        String colorName = mContext.getString(colorNameRes);
 
         holder.mColor.setImageTintList(ContextCompat.getColorStateList(mContext, colorRes));
         holder.mColor.setContentDescription(colorName);

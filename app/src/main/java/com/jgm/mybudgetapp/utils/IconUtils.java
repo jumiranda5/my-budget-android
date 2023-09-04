@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class IconUtils {
 
+    // todo: add icons names to strings file
+
     private static final Icon ic_default = new Icon(0, R.drawable.ic_category_fill1_300_48, "Category");
     private static final Icon ic_cash = new Icon(1, R.drawable.ic_cash_fill1_300_40, "Cash");
     private static final Icon ic_wallet = new Icon(2, R.drawable.ic_account_balance_wallet_fill1_300_40, "Wallet");

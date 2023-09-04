@@ -111,6 +111,7 @@
     <color name="deep_orange">#FF5722</color>
     <color name="brown">#795548</color>
     <color name="grey">#616161</color>
+    <color name="black_white">#000000</color>
 
 
 </resources>

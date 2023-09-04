@@ -11,6 +11,8 @@
     <string name="category_leisure">Lazer</string>
     <string name="category_work">Trabalho</string>
     <string name="category_education">Educação</string>
+    <string name="category_closet">Armário</string>
+    <string name="category_pharmacy">Farmácia</string>
 
     <string name="account_cash">Dinheiro</string>
     <string name="account_checking">Conta Corrente</string>
@@ -71,6 +73,7 @@
     <string name="nav_back">Voltar</string>
     <string name="nav_close">Fechar</string>
     <string name="nav_edit">Editar</string>
+
     <string name="label_paid">Pago</string>
     <string name="label_paid_dots">Pago:</string>
     <string name="label_balance">Balanço</string>
@@ -91,6 +94,7 @@
     <string name="label_categories_income">Receita por Categoria</string>
     <string name="label_categories_expense">Despesa por Categoria</string>
     <string name="label_year">Ano</string>
+
     <string name="hint_account_nickname">Apelido da conta</string>
     <string name="hint_card_nickname">Apelido do cartão</string>
     <string name="hint_category_name">Nome da categoria</string>
@@ -100,6 +104,7 @@
     <string name="hint_description">Descrição</string>
     <string name="hint_today">Hoje</string>
     <string name="hint_payment_method">Método de Pagamento</string>
+
     <string name="msg_pending">Você tem 0 pagamentos pendentes.</string>
     <string name="msg_pending_part1">Você tem</string>
     <string name="msg_pending_part2">pagamento pendente.</string>
@@ -109,18 +114,39 @@
     <string name="msg_progress_part2">do seu orçamento.</string>
     <string name="desc_year_bar_chart">Um gráfico de barras representando receitas e despesas por mês.</string>
     <string name="msg_deleting_all_parcels">Deletando todas as parcelas…</string>
+
     <string name="desc_add_category">Adicionar nova categoria.</string>
     <string name="desc_categories_tabs">Categorias</string>
     <string name="desc_amount">Valor</string>
     <string name="desc_see_more">Ver mais</string>
     <string name="desc_increase">Mais</string>
     <string name="desc_decrease">Menos</string>
+    <string name="desc_color_red">Vermelho</string>
+    <string name="desc_color_pink">Rosa</string>
+    <string name="desc_color_purple">Roxo</string>
+    <string name="desc_color_deep_purple">Roxo Profundo</string>
+    <string name="desc_color_indigo">Índigo</string>
+    <string name="desc_color_blue">Azul</string>
+    <string name="desc_color_cyan">Ciano</string>
+    <string name="desc_color_teal">Teal</string>
+    <string name="desc_color_green">Verde</string>
+    <string name="desc_color_light_green">Verde Claro</string>
+    <string name="desc_color_lime">Limão</string>
+    <string name="desc_color_yellow">Amarelo</string>
+    <string name="desc_color_amber">Âmbar</string>
+    <string name="desc_color_orange">Laranja</string>
+    <string name="desc_color_deep_orange">Laranja profundo</string>
+    <string name="desc_color_brown">Marrom</string>
+    <string name="desc_color_grey">Cinza</string>
+    <string name="desc_color_black_white">Branco para modo escuro, preto para modo claro</string>
+
     <string name="label_order_id">Id da compra:</string>
     <string name="label_accumulated">Acumulado</string>
     <string name="label_transfer_from">Transferência de</string>
     <string name="label_transfer_to">Transferência para</string>
     <string name="label_due">A pagar:</string>
     <string name="label_paid2">Pago:</string>
+
     <string name="msg_archive_account">Você quer arquivar esta conta permanentemente? Você não terá mais acesso a ela, mas seus itens não serão afetados.</string>
     <string name="msg_archive_category">Você quer arquivar esta categoria permanentemente? Você não terá mais acesso a ela, mas seus itens não serão afetados.</string>
     <string name="msg_archive_credit_card">Você quer arquivar este cartão de crédito permanentemente? Você não terá mais acesso a ele, mas seus itens não serão afetados.</string>

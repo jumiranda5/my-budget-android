@@ -26,6 +26,8 @@
     <string name="category_leisure">Leisure</string>
     <string name="category_work">Work</string>
     <string name="category_education">Education</string>
+    <string name="category_closet">Closet</string>
+    <string name="category_pharmacy">Pharmacy</string>
 
     <!-- Default accounts -->
     <string name="account_cash">Cash</string>
@@ -88,6 +90,24 @@
     <string name="desc_see_more">See more</string>
     <string name="desc_increase">Increase</string>
     <string name="desc_decrease">Decrease</string>
+    <string name="desc_color_red">Red</string>
+    <string name="desc_color_pink">Pink</string>
+    <string name="desc_color_purple">Purple</string>
+    <string name="desc_color_deep_purple">Deep Purple</string>
+    <string name="desc_color_indigo">Indigo</string>
+    <string name="desc_color_blue">Blue</string>
+    <string name="desc_color_cyan">Cyan</string>
+    <string name="desc_color_teal">Teal</string>
+    <string name="desc_color_green">Green</string>
+    <string name="desc_color_light_green">Light Green</string>
+    <string name="desc_color_lime">Lime</string>
+    <string name="desc_color_yellow">Yellow</string>
+    <string name="desc_color_amber">Amber</string>
+    <string name="desc_color_orange">Orange</string>
+    <string name="desc_color_deep_orange">Deep Orange</string>
+    <string name="desc_color_brown">Brown</string>
+    <string name="desc_color_grey">Grey</string>
+    <string name="desc_color_black_white">White for dark mode, black for light mode</string>
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
