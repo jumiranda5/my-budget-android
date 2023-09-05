@@ -640,7 +640,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         AppDatabase.dbExecutor.execute(() -> {
 
             String pattern = desc + "%";
-            List<Autocomplete> results = transactionDao.getAutocompleteResult2(pattern);
+            List<Autocomplete> results = transactionDao.getAutocompleteResult(pattern);
 
             handler.post(() -> {
                 searchResultList.clear();
