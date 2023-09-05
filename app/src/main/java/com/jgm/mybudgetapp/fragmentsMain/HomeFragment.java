@@ -153,8 +153,16 @@ public class HomeFragment extends Fragment {
         if (savedInstanceState == null) {
             Log.d(LOG_HOME, "saved instance is null => init home data");
             mCardPending.setVisibility(View.GONE);
-            MyDate today = MyDateUtils.getCurrentDate(mContext);
-            getHomeData(today.getMonth(), today.getYear());
+            MyDate date;
+            try {
+                date = mInterface.getDate();
+                Log.d(LOG_HOME, "date successfully retrieved from activity");
+            }
+            catch (Exception e) {
+                date = MyDateUtils.getCurrentDate(mContext);
+                Log.e(LOG_HOME, e.getMessage());
+            }
+            getHomeData(date.getMonth(), date.getYear());
         }
 
     }

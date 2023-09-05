@@ -689,7 +689,11 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         else btnText = getString(R.string.label_today) + " - " + formattedDate;
 
         mDatePicker.setText(btnText);
-        mDatePicker.setOnClickListener(view -> mInterface.showDatePickerDialog());
+        mDatePicker.setOnClickListener(view -> {
+            long dateMilliseconds = MyDateUtils.getMillisecondsFromDate(selectedDate);
+            Log.w(LOG, "millis: " + dateMilliseconds);
+            mInterface.showDatePickerDialog(dateMilliseconds);
+        });
     }
 
     private void initSelectedDate() {
@@ -954,9 +958,13 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
     }
 
     private void updateIsPaidAccordingToDate() {
+
+        boolean isCurrentMonthAndTodayOrBefore = selectedDate.getMonth() == today.getMonth()
+                && selectedDate.getDay() <= today.getDay();
+        boolean isLastMonth = selectedDate.getMonth() < today.getMonth();
+
         boolean isTodayOrBefore = (selectedDate.getYear() <= today.getYear()
-                && selectedDate.getMonth() <= today.getMonth()
-                && selectedDate.getDay() <= today.getDay());
+                && (isCurrentMonthAndTodayOrBefore || isLastMonth));
 
         if (isTodayOrBefore) {
             mSwitchPaid.setChecked(true);

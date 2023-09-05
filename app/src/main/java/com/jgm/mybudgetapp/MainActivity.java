@@ -610,11 +610,11 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     }
 
     @Override
-    public void showDatePickerDialog() {
+    public void showDatePickerDialog(long dateMilliseconds) {
         Log.d(LOG_MAIN, "-- Interface => showDatePickerDialog");
-        // todo: set selected date on edit form...
+
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setSelection(dateMilliseconds)
                 .build();
 
         datePicker.show(getSupportFragmentManager(), "datePicker");

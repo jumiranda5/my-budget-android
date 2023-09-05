@@ -32,7 +32,7 @@ public interface MainInterface {
     void handleColorSelection(Color color);
     void showIconPickerDialog();
     void handleIconSelection(Icon icon);
-    void showDatePickerDialog();
+    void showDatePickerDialog(long dateMilliseconds);
     void showMethodPickerDialog(boolean isExpense, TransactionResponse item, int position);
     boolean getMethodDialogType();
     void setSelectedPaymentMethod(PaymentMethod paymentMethod);

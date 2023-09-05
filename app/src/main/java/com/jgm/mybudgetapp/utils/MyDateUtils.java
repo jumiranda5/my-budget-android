@@ -118,6 +118,17 @@ public class MyDateUtils {
         return myDate;
     }
 
+    public static long getMillisecondsFromDate(MyDate date) {
+        long milliseconds;
+
+        LocalDateTime localDate = LocalDate.of(date.getYear(), date.getMonth(), date.getDay())
+                .atStartOfDay(ZoneId.systemDefault())
+                .toLocalDateTime();
+        milliseconds = localDate.toInstant(ZoneOffset.UTC).toEpochMilli();
+
+        return milliseconds;
+    }
+
     public static String[] getDayOfWeek(Context context, int day, int month, int year) {
 
         Locale locale = context.getResources().getConfiguration().getLocales().get(0);
