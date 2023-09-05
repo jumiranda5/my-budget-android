@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.jgm.mybudgetapp.objects.Autocomplete;
 import com.jgm.mybudgetapp.objects.Balance;
 import com.jgm.mybudgetapp.objects.Card;
 import com.jgm.mybudgetapp.objects.CategoryItemResponse;
@@ -236,7 +237,7 @@ public interface TransactionDao {
                                      AUTOCOMPLETE
     ------------------------------------------------------------------------------- */
 
-    @Query("SELECT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
+    @Query("SELECT DISTINCT transactions.*, categories.name AS categoryName, categories.colorId, categories.iconId " +
             "FROM transactions " +
             "JOIN categories ON transactions.categoryId = categories.id " +
             "WHERE transactions.description LIKE :pattern " +
@@ -244,4 +245,12 @@ public interface TransactionDao {
             "LIMIT 3 ")
     List<TransactionResponse> getAutocompleteResult(String pattern);
 
+    @Query("SELECT DISTINCT transactions.description, transactions.categoryId," +
+            "               categories.name AS categoryName, categories.colorId, categories.iconId  " +
+            "FROM transactions " +
+            "JOIN categories ON transactions.categoryId = categories.id " +
+            "WHERE transactions.description LIKE :pattern " +
+            "ORDER BY transactions.id ASC " +
+            "LIMIT 3 ")
+    List<Autocomplete> getAutocompleteResult2(String pattern);
 }

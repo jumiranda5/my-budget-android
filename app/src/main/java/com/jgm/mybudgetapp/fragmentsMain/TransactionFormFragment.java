@@ -36,6 +36,7 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 import com.jgm.mybudgetapp.MainInterface;
 import com.jgm.mybudgetapp.R;
 import com.jgm.mybudgetapp.databinding.FragmentTransactionFormBinding;
+import com.jgm.mybudgetapp.objects.Autocomplete;
 import com.jgm.mybudgetapp.objects.Color;
 import com.jgm.mybudgetapp.objects.Icon;
 import com.jgm.mybudgetapp.objects.MyDate;
@@ -639,7 +640,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
         AppDatabase.dbExecutor.execute(() -> {
 
             String pattern = desc + "%";
-            List<TransactionResponse> results = transactionDao.getAutocompleteResult(pattern);
+            List<Autocomplete> results = transactionDao.getAutocompleteResult2(pattern);
 
             handler.post(() -> {
                 searchResultList.clear();

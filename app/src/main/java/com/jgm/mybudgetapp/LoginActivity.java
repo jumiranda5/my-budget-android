@@ -299,12 +299,12 @@ public class LoginActivity extends AppCompatActivity {
         else {
             Log.e(LOG_AUTH, "Biometric features are currently not available.");
             String msg = getString(R.string.auth_credentials_not_configured);
-            showAuthError(msg);
-            /*
+            //showAuthError(msg);
+
                 // remove showAuthError for testing on emulator
                 showAuthSuccess();
                 connectToGooglePlay();
-            */
+
         }
     }
 
