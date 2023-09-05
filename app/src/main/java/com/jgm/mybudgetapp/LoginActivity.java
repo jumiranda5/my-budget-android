@@ -18,6 +18,7 @@ import androidx.core.splashscreen.SplashScreen;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -282,8 +283,16 @@ public class LoginActivity extends AppCompatActivity {
     // Check if the device supports biometric authentication
     private void checkDeviceCredentials() {
         BiometricManager biometricManager = BiometricManager.from(this);
-        if (biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
-                == BiometricManager.BIOMETRIC_SUCCESS) {
+
+        int canAuthenticateResponse;
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            canAuthenticateResponse = biometricManager.canAuthenticate(BIOMETRIC_STRONG);
+        }
+        else {
+            canAuthenticateResponse = biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
+        }
+
+        if (canAuthenticateResponse == BiometricManager.BIOMETRIC_SUCCESS) {
             Log.d(LOG_AUTH, "App can authenticate using biometrics.");
             initAuthPrompt();
         }
@@ -292,10 +301,10 @@ public class LoginActivity extends AppCompatActivity {
             String msg = getString(R.string.auth_credentials_not_configured);
             showAuthError(msg);
             /*
-                remove showAuthError for testing on emulator
+                // remove showAuthError for testing on emulator
                 showAuthSuccess();
                 connectToGooglePlay();
-             */
+            */
         }
     }
 

@@ -53,8 +53,8 @@
     <dimen name="form_margin">48dp</dimen>
     <dimen name="form_inner_space">32dp</dimen>
 
-    <dimen name="form_amount_value_margin_top">40dp</dimen>
-    <dimen name="form_amount_value_margin">40dp</dimen>
+    <dimen name="form_amount_value_margin_top">48dp</dimen>
+    <dimen name="form_amount_value_margin">24dp</dimen>
 
     <dimen name="input_height">60dp</dimen>
     <dimen name="input_padding">14dp</dimen>

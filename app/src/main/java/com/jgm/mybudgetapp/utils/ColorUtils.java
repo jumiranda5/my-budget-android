@@ -24,7 +24,7 @@ public class ColorUtils {
     private static final Color deep_orange = new Color(14, R.color.deep_orange, "Deep orange");
     private static final Color brown = new Color(15, R.color.brown, "Brown");
     private static final Color grey = new Color(16, R.color.grey, "Grey");
-    private static final Color black_white = new Color(17, R.color.black, "Black/White");
+    private static final Color black_white = new Color(17, R.color.black_white, "Black/White");
 
     // App colors
     private static final Color expenses = new Color(18, R.color.expense, "Red");

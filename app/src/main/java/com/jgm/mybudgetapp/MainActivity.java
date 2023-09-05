@@ -36,6 +36,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
 import com.jgm.mybudgetapp.dialogs.IconPickerDialog;
@@ -1032,8 +1033,25 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
 
     @Override
     public void onAdFragmentDismiss(boolean isRewardGranted) {
-        onBackPressed();
-        // if reward was not granted = back press again to close form page
-        if (!isRewardGranted) onBackPressed();
+        try {
+            onBackPressed();
+            // if reward was not granted = back press again to close form page
+            if (!isRewardGranted) onBackPressed();
+        }
+        catch (Exception e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
+        }
     }
+
+    /*
+    onAdFragmentDismiss error on Moto G20
+    Fatal Exception: java.lang.IllegalStateException: FragmentManager has been destroyed
+       at androidx.fragment.app.FragmentManager.enqueueAction(FragmentManager.java:1878)
+       at androidx.fragment.app.BackStackRecord.commitInternal(BackStackRecord.java:329)
+       at androidx.fragment.app.BackStackRecord.commit(BackStackRecord.java:294)
+       at com.jgm.mybudgetapp.MainActivity.destroyFragment(MainActivity.java:889)
+       at com.jgm.mybudgetapp.MainActivity.onBackPressed(MainActivity.java:921)
+       at com.jgm.mybudgetapp.MainActivity.onAdFragmentDismiss(MainActivity.java:1035)
+       at com.jgm.mybudgetapp.AdLockFragment$2.lambda$onAdDismissedFullScreenContent$0(AdLockFragment.java:317)
+     */
 }

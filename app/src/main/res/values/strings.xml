@@ -83,7 +83,6 @@
 
     <!-- Description -->
     <string name="desc_year_bar_chart">A bar chart with the income and expense of each month.</string>
-    <string name="msg_deleting_all_parcels">Deleting all parcels…</string>
     <string name="desc_add_category">Add new category.</string>
     <string name="desc_categories_tabs">Categories tabs</string>
     <string name="desc_amount">Amount</string>
@@ -146,7 +145,7 @@
     <string name="label_accumulated">Accumulated</string>
     <string name="label_transfer_from">Transfer from</string>
     <string name="label_transfer_to">Transfer to</string>
-    <string name="label_due">Due:</string>
+    <string name="label_due">Unpaid:</string>
     <string name="label_paid2">Paid:</string>
     <string name="label_billing_day">Billing day:</string>
 
@@ -156,7 +155,7 @@
     <string name="hint_category_name">Category name</string>
     <string name="hint_color">Color</string>
     <string name="hint_icon">Icon</string>
-    <string name="hint_amount">0.0 (amount in decimals)</string>
+    <string name="hint_amount">0.0 (amount)</string>
     <string name="hint_description">Description</string>
     <string name="hint_today">Today</string>
     <string name="hint_payment_method">Payment Method</string>
@@ -166,6 +165,7 @@
     <string name="credit_card">Credit Card</string>
 
     <!-- Messages -->
+    <string name="msg_deleting_all_parcels">Deleting all parcels…</string>
     <string name="msg_pending">You have 0 outstanding payments.</string>
     <string name="msg_pending_part1">You have</string>
     <string name="msg_pending_part2">outstanding payment.</string>
@@ -177,6 +177,7 @@
     <string name="msg_archive_category">Would you like to permanently archive this category? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_archive_credit_card">Would you like to permanently archive this credit card? You will not have access to it anymore, but the items related to it will not be affected.</string>
     <string name="msg_clear_database">This will delete everything you stored on this application\'s database. Are you sure you want to proceed?</string>
+
     <string name="msg_loading_iap">Loading Google Play library</string>
     <string name="msg_loading_ads">Loading Ads library</string>
     <string name="msg_loading_home">Loading Home Page</string>

@@ -41,7 +41,7 @@
     <string name="action_login">Entrar</string>
     <string name="action_retry">Tentar Novamente</string>
     <string name="action_continue">Continuar</string>
-    <string name="action_watch_ad">Assistir um anúncio</string>
+    <string name="action_watch_ad">Assistir a um anúncio</string>
     <string name="action_load_ad">Carregando anúncio…</string>
     <string name="action_premium">Acesso Premium</string>
     <string name="action_buy_premium_access">Comprar Acesso Premium</string>
@@ -55,7 +55,7 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_confirm">Continuar</string>
     <string name="action_review_ads_consent">Consentimento de Anúncios</string>
-    <string name="action_dark_mode">Modo Noturno</string>
+    <string name="action_dark_mode">Modo Escuro</string>
     <string name="action_menage_categories">Gerenciar Categorias</string>
     <string name="action_menage_cards">Gerenciar Cartões de Crédito</string>
     <string name="action_support">Suporte</string>
@@ -76,8 +76,8 @@
 
     <string name="label_paid">Pago</string>
     <string name="label_paid_dots">Pago:</string>
-    <string name="label_balance">Balanço</string>
-    <string name="label_balance_dots">Balanço:</string>
+    <string name="label_balance">Saldo</string>
+    <string name="label_balance_dots">Saldo:</string>
     <string name="label_income">Receita</string>
     <string name="label_income_dots">Receita:</string>
     <string name="label_expense">Despesa</string>
@@ -89,32 +89,30 @@
     <string name="label_not_paid">Não pago</string>
     <string name="label_edit_all">Editar todas as parcelas</string>
     <string name="label_repeat">Repetir</string>
-    <string name="label_month">Balanço</string>
+    <string name="label_month">Saldo</string>
     <string name="label_accounts_overview">Resumo das Contas</string>
     <string name="label_categories_income">Receita por Categoria</string>
     <string name="label_categories_expense">Despesa por Categoria</string>
     <string name="label_year">Ano</string>
+    <string name="label_order_id">ID da compra:</string>
+    <string name="label_accumulated">Acumulado</string>
+    <string name="label_transfer_from">Transferência de</string>
+    <string name="label_transfer_to">Transferência para</string>
+    <string name="label_due">A pagar:</string>
+    <string name="label_paid2">Pago:</string>
+    <string name="label_billing_day">Dia da fatura:</string>
 
     <string name="hint_account_nickname">Apelido da conta</string>
     <string name="hint_card_nickname">Apelido do cartão</string>
     <string name="hint_category_name">Nome da categoria</string>
     <string name="hint_color">Cor</string>
     <string name="hint_icon">Ícone</string>
-    <string name="hint_amount">0.0 (valor em decimais)</string>
+    <string name="hint_amount">0.0 (valor)</string>
     <string name="hint_description">Descrição</string>
     <string name="hint_today">Hoje</string>
     <string name="hint_payment_method">Método de Pagamento</string>
 
-    <string name="msg_pending">Você tem 0 pagamentos pendentes.</string>
-    <string name="msg_pending_part1">Você tem</string>
-    <string name="msg_pending_part2">pagamento pendente.</string>
-    <string name="msg_pending_part2_plural">pagamentos pendentes.</string>
-    <string name="msg_progress">Você usou 0% do seu orçamento.</string>
-    <string name="msg_progress_part1">Você usou</string>
-    <string name="msg_progress_part2">do seu orçamento.</string>
     <string name="desc_year_bar_chart">Um gráfico de barras representando receitas e despesas por mês.</string>
-    <string name="msg_deleting_all_parcels">Deletando todas as parcelas…</string>
-
     <string name="desc_add_category">Adicionar nova categoria.</string>
     <string name="desc_categories_tabs">Categorias</string>
     <string name="desc_amount">Valor</string>
@@ -140,18 +138,19 @@
     <string name="desc_color_grey">Cinza</string>
     <string name="desc_color_black_white">Branco para modo escuro, preto para modo claro</string>
 
-    <string name="label_order_id">Id da compra:</string>
-    <string name="label_accumulated">Acumulado</string>
-    <string name="label_transfer_from">Transferência de</string>
-    <string name="label_transfer_to">Transferência para</string>
-    <string name="label_due">A pagar:</string>
-    <string name="label_paid2">Pago:</string>
-
+    <string name="msg_deleting_all_parcels">Deletando todas as parcelas…</string>
+    <string name="msg_pending">Você tem 0 pagamentos pendentes.</string>
+    <string name="msg_pending_part1">Você tem</string>
+    <string name="msg_pending_part2">pagamento pendente.</string>
+    <string name="msg_pending_part2_plural">pagamentos pendentes.</string>
+    <string name="msg_progress">Você usou 0% do seu orçamento.</string>
+    <string name="msg_progress_part1">Você usou</string>
+    <string name="msg_progress_part2">do seu orçamento.</string>
     <string name="msg_archive_account">Você quer arquivar esta conta permanentemente? Você não terá mais acesso a ela, mas seus itens não serão afetados.</string>
     <string name="msg_archive_category">Você quer arquivar esta categoria permanentemente? Você não terá mais acesso a ela, mas seus itens não serão afetados.</string>
     <string name="msg_archive_credit_card">Você quer arquivar este cartão de crédito permanentemente? Você não terá mais acesso a ele, mas seus itens não serão afetados.</string>
     <string name="msg_clear_database">Isto irá deletar tudo o que você armazenou na base de dados deste aplicativo. Tem certeza que deseja continuar?</string>
-    <string name="progress_msg_delete">Deletando item</string>
+
     <string name="msg_loading_iap">Carregando biblioteca do Google Play</string>
     <string name="msg_loading_ads">Carregando biblioteca de anúncios</string>
     <string name="msg_loading_home">Carregando página inicial</string>
@@ -159,13 +158,15 @@
     <string name="msg_iap_user_canceled">A compra foi cancelada pelo usuário.</string>
     <string name="msg_iap_user_own_item">Você já possui este item.</string>
     <string name="msg_iap_purchase_error">Ocorreu um erro ao processar a compra.</string>
-    <string name="iap_connection_error_message">Não foi possível conectar ao Google Play.</string>
+    <string name="msg_purchase_id_copied">ID da compra copiado</string>
+    <string name="iap_connection_error_message">Não foi possível conectar ao Google Play. Não foi possível verificar se você é um usuário premium. Verifique sua conexão com a Internet e tente novamente. Ou continue mesmo assim…</string>
     <string name="ads_initialization_error_message">Não foi possível inicializar a biblioteca de anúncios. Se você não for um usuário premium, talvez não consiga desbloquear algumas páginas. Verifique sua conexão com a Internet e tente novamente. Ou continue mesmo assim…</string>
     <string name="auth_credentials_not_configured">Parece que você ainda não configurou as credenciais do seu dispositivo. Para aumentar a segurança, você só pode abrir este aplicativo com suas credenciais (biometria ou pin). Vá para a página Configurações do seu dispositivo para configurá-lo.</string>
     <string name="auth_fail">A autenticação falhou.</string>
     <string name="description_login">Use a sua impressão digital para desbloquear \"Meu Orçamento\".</string>
-    <string name="msg_purchase_id_copied">ID da compra copiado</string>
+    <string name="progress_msg_delete">Deletando item…</string>
+
     <string name="credit_cards">Cartões de Crédito</string>
     <string name="credit_card">Cartão de Crédito</string>
-    <string name="label_billing_day">Dia da fatura</string>
+
 </resources>

@@ -146,8 +146,8 @@
     <dimen name="form_inner_space">24dp</dimen>
     <dimen name="form_extra_margin">8dp</dimen>
 
-    <dimen name="form_amount_value_margin_top">32dp</dimen>
-    <dimen name="form_amount_value_margin">32dp</dimen>
+    <dimen name="form_amount_value_margin_top">40dp</dimen>
+    <dimen name="form_amount_value_margin">16dp</dimen>
 
     <dimen name="input_height">56dp</dimen>
     <dimen name="input_max_width">360dp</dimen>
