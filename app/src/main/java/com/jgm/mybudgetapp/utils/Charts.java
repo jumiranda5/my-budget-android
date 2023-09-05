@@ -175,7 +175,7 @@ public class Charts {
                                    int start, int barWidth, int barPadding, int barMarginBottom) {
 
         float barPercent = NumberUtils.roundFloat(value / barPercentValue);
-        float barHeight = NumberUtils.roundFloat(((barPercent/100) * chartHeight) + 2f);
+        float barHeight = NumberUtils.roundFloat((barPercent/100) * (chartHeight - barMarginBottom));
         if (barHeight == 0.0f) barHeight = 2f;
         float barStart = start + barPadding;
         float barTop = (chartHeight - barHeight) - barMarginBottom;

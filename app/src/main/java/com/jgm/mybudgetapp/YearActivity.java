@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.jgm.mybudgetapp.adapters.YearMonthAdapter;
 import com.jgm.mybudgetapp.databinding.ActivityYearBinding;
 import com.jgm.mybudgetapp.objects.MonthResponse;
@@ -346,11 +347,20 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
     @Override
     public void onAdFragmentDismiss(boolean isRewardGranted) {
         Log.d(LOG, "onAdFragmentDismiss");
-        if (isRewardGranted) {
-            destroyAdLockFragment();
-            getYearData();
-            isAdFragment = false;
+        try {
+            if (isRewardGranted) {
+                destroyAdLockFragment();
+                getYearData();
+                isAdFragment = false;
+            }
+            else onBackPressed();
         }
-        else onBackPressed();
+        catch (Exception e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
+        }
     }
+
+    /*
+        Same crash from main activity (onAdFragmentDismiss)
+     */
 }
