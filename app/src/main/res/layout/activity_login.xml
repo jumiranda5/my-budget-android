@@ -37,10 +37,10 @@
                 android:id="@+id/login_anchor"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintWidth_max="@dimen/page_width_anchor"
                 app:layout_constraintEnd_toStartOf="@+id/guideline_login_end"
                 app:layout_constraintStart_toStartOf="@+id/guideline_login_start"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="@dimen/page_width_anchor" />
 
             <!-- Main -->
 
@@ -56,6 +56,34 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 app:srcCompat="@drawable/ic_48_lock_fill0_200"
                 app:tint="@color/savings" />
+
+            <!-- For testing -->
+            <EditText
+                android:id="@+id/login_test_input"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="11"
+                android:hint="@string/test_login"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/login_test_button"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@+id/guideline_login_start"
+                app:layout_constraintTop_toBottomOf="@+id/login_anchor" />
+
+            <ImageButton
+                android:id="@+id/login_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                android:contentDescription="@string/title_login"
+                app:layout_constraintBottom_toBottomOf="@+id/login_test_input"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_login_end"
+                app:layout_constraintStart_toEndOf="@+id/login_test_input"
+                app:layout_constraintTop_toTopOf="@+id/login_test_input"
+                app:srcCompat="@drawable/ic_app_done_all_24" />
 
             <!-- Progress -->
 
@@ -85,8 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:maxWidth="240dp"
                 android:fontFamily="@font/source_sans_3_regular"
+                android:maxWidth="240dp"
                 android:text="@string/msg_loading_home"
                 app:layout_constraintBottom_toTopOf="@+id/login_button"
                 app:layout_constraintEnd_toEndOf="parent"

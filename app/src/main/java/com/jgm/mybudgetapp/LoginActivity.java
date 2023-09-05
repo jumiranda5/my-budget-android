@@ -25,6 +25,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
 import com.jgm.mybudgetapp.databinding.ActivityLoginBinding;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
+import com.jgm.mybudgetapp.utils.HideKeyboard;
 import com.jgm.mybudgetapp.utils.Populate;
 import com.jgm.mybudgetapp.utils.Tags;
 
@@ -78,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mProgressText, mAuthText;
     private Button mLoginButton, mContinueButton, mRetryButton;
     private Group mGroupProgress, mGroupAuthWarning, mGroupIapWarning, mGroupAdsWarning;
+    private EditText mTestPassword;
+    private ImageButton mTestLogin;
 
     private void setBinding() {
         mLockIcon = binding.loginIcon;
@@ -90,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
         mGroupIapWarning = binding.groupLoginIap;
         mGroupAdsWarning = binding.groupLoginAds;
         mAuthText = binding.loginAuthWarning;
+        mTestPassword = binding.loginTestInput;
+        mTestLogin = binding.loginTestButton;
     }
 
     @Override
@@ -299,13 +306,35 @@ public class LoginActivity extends AppCompatActivity {
         else {
             Log.e(LOG_AUTH, "Biometric features are currently not available.");
             String msg = getString(R.string.auth_credentials_not_configured);
-            //showAuthError(msg);
-
-                // remove showAuthError for testing on emulator
-                showAuthSuccess();
-                connectToGooglePlay();
-
+            showAuthError(msg);
+            allowTesting();
         }
+    }
+
+    private void allowTesting() {
+        final int[] clickCount = {0};
+        mAuthText.setOnClickListener(v -> {
+            clickCount[0]++;
+            if (clickCount[0] == 7) {
+                clickCount[0] = 0;
+                mTestPassword.setVisibility(View.VISIBLE);
+                mTestLogin.setVisibility(View.VISIBLE);
+                mTestLogin.setOnClickListener(v2 -> {
+                    String pwd = mTestPassword.getText().toString().trim().toLowerCase();
+                    HideKeyboard.hide(this);
+                    if (pwd.equals(getString(R.string.test))) {
+                        mTestPassword.setVisibility(View.GONE);
+                        mTestLogin.setVisibility(View.GONE);
+                        showAuthSuccess();
+                        connectToGooglePlay();
+                    }
+                    else {
+                        mTestPassword.setText("");
+                        mTestPassword.setHint("Wrong password");
+                    }
+                });
+            }
+        });
     }
 
     // Show the prompt
