@@ -15,7 +15,7 @@
     <string name="category_pharmacy">Pharmacie</string>
 
     <string name="account_cash">Espèces</string>
-    <string name="account_checking">Compte courant</string>
+    <string name="account_checking">Compte Courant</string>
     <string name="account_savings">Épargnes</string>
 
     <string name="title_logged">Authentifié</string>

@@ -45,6 +45,7 @@ import com.jgm.mybudgetapp.utils.NumberUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -57,12 +58,12 @@ public class HomeFragment extends Fragment {
 
     // UI
     private FragmentHomeBinding binding;
-    private MaterialCardView mCardIncome, mCardExpenses, mCardAccounts,
+    private MaterialCardView mCardIncome, mCardExpenses, mCardSavings, mCardAccounts,
             mCardIncomeCategories, mCardExpensesCategories, mCardYear, mCardPending;
     private ImageView mIncomeChart, mExpensesChart, mYearChart;
     private RecyclerView mIncomeCategoryListView, mExpensesCategoryListView;
-    private TextView mBalance, mIncome, mExpenses, mAccumulated,
-            mIncomeSymbol, mExpensesSymbol, mAccumulatedSymbol,
+    private TextView mBalance, mIncome, mExpenses, mSavingsTransfer, mAccumulated,
+            mIncomeSymbol, mExpensesSymbol, mSavingsTransferSymbol, mAccumulatedSymbol,
             mCash, mChecking, mSavings, mCashSymbol, mCheckingSymbol, mSavingsSymbol,
             mPendingMsg, mProgress, mProgressText, mYearLabel;
     private CircularProgressIndicator mBalanceProgress;
@@ -76,14 +77,17 @@ public class HomeFragment extends Fragment {
         mBalance = binding.homeMonthBalance;
         mIncome = binding.homeIncome;
         mExpenses = binding.homeExpenses;
+        mSavingsTransfer = binding.homeSavingsBalance;
         mAccumulated = binding.homeAccumulated;
         mIncomeSymbol = binding.homeIncomeCurrencySymbol;
         mExpensesSymbol = binding.homeExpenseCurrencySymbol;
+        mSavingsTransferSymbol = binding.homeSavingsBalanceCurrencySymbol;
         mAccumulatedSymbol = binding.homeAccumulatedCurrencySymbol;
 
         // Cards
         mCardIncome = binding.homeCardIncome;
         mCardExpenses = binding.homeCardExpenses;
+        mCardSavings = binding.homeCardSavings;
         mCardAccounts = binding.homeCardAccounts;
         mCardIncomeCategories = binding.homeCardIncomeCategories;
         mCardExpensesCategories = binding.homeCardExpensesCategories;
@@ -175,6 +179,7 @@ public class HomeFragment extends Fragment {
         mCardPending.setOnClickListener(v -> mInterface.openPendingFragment());
         mCardIncome.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.transactionsInTag));
         mCardExpenses.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.transactionsOutTag));
+        mCardSavings.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.accountsTag));
         mCardAccounts.setOnClickListener(v -> mInterface.openBottomNavFragment(Tags.accountsTag));
         mCardExpensesCategories.setOnClickListener(v -> mInterface.openCategoriesActivity(1));
         mCardIncomeCategories.setOnClickListener(v -> mInterface.openCategoriesActivity(0));
@@ -205,6 +210,7 @@ public class HomeFragment extends Fragment {
             List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
             List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
             List<MonthResponse> yearBalance = transactionDao.getYearBalance(year);
+            float savings = transactionDao.getSavingsTransfer(month, year);
 
             handler.post(() -> {
                 Log.d(LOG_HOME, "Data successfully retrieved");
@@ -221,7 +227,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 setPendingMessage(pendingCount);
-                setBalanceData(balance, accumulated);
+                setBalanceData(balance, accumulated, savings);
                 setAccountsData(homeAccounts);
                 setIncomeCategories(incomeCategories);
                 setExpensesCategories(expensesCategories);
@@ -251,15 +257,16 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setBalanceData(Balance balance, float accumulated) {
+    private void setBalanceData(Balance balance, float accumulated, float savings) {
 
         Log.d(LOG_HOME, "== setBalanceData: \n" +
                 "balance = " + balance.getBalance() + "\n" +
                 "accumulated: " + accumulated + "\n" +
                 "income: " + balance.getIncome() + "\n" +
-                "expenses: " + balance.getExpenses());
+                "expenses: " + balance.getExpenses() + "\n" +
+                "savings: " + savings);
 
-        float monthBalance = balance.getBalance() + accumulated;
+        float monthBalance = balance.getBalance() + accumulated - savings;
         float monthExpenses = balance.getExpenses();
         float monthIncome = balance.getIncome();
 
@@ -282,18 +289,26 @@ public class HomeFragment extends Fragment {
             mAccumulated.setTextColor(ContextCompat.getColor(mContext, R.color.income));
             mAccumulatedSymbol.setTextColor(ContextCompat.getColor(mContext, R.color.income));
         }
+        mSavingsTransfer.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+        mSavingsTransferSymbol.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
+
+        // if adding to savings => remove from balance / else add to balance
+        savings = savings * -1;
 
         String formattedBalance = NumberUtils.getCurrencyFormat(mContext, monthBalance)[2];
         String[] formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome);
         String[] formattedExpenses = NumberUtils.getCurrencyFormat(mContext, monthExpenses);
         String[] formattedAccumulated = NumberUtils.getCurrencyFormat(mContext, accumulated);
+        String[] formattedSavings = NumberUtils.getCurrencyFormat(mContext, savings);
 
         mBalance.setText(formattedBalance);
         mExpenses.setText(formattedExpenses[1]);
         mIncome.setText(formattedIncome[1]);
+        mSavingsTransfer.setText(formattedSavings[1]);
         mAccumulated.setText(formattedAccumulated[1]);
         mExpensesSymbol.setText(formattedExpenses[0]);
         mIncomeSymbol.setText(formattedIncome[0]);
+        mSavingsTransferSymbol.setText(formattedSavings[0]);
         mAccumulatedSymbol.setText(formattedAccumulated[0]);
 
         setIncomeProgress(monthIncome, monthExpenses, accumulated);

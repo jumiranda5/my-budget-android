@@ -279,6 +279,59 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Savings -->
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/home_card_savings"
+                style="@style/ClickableCardHomeItem"
+                android:layout_marginTop="0dp"
+                app:layout_constraintEnd_toEndOf="@+id/home_anchor"
+                app:layout_constraintStart_toStartOf="@+id/home_anchor"
+                app:layout_constraintTop_toBottomOf="@+id/home_card_expenses">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/HomeCardContainer">
+
+                    <TextView
+                        android:id="@+id/home_savings_balance_label"
+                        style="@style/HomeBalanceItemLabel"
+                        android:text="@string/account_savings"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/home_savings_balance_currency_symbol"
+                        app:layout_constraintStart_toEndOf="@+id/home_savings_balance_icon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/home_savings_balance_icon"
+                        style="@style/ItemIcon"
+                        android:layout_height="22dp"
+                        android:contentDescription="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_40_swap_vert_400"
+                        app:tint="@color/savings" />
+
+                    <TextView
+                        android:id="@+id/home_savings_balance_currency_symbol"
+                        style="@style/CurrencySymbolMedium"
+                        android:textColor="@color/savings"
+                        android:textSize="@dimen/body1"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/home_savings_balance"
+                        app:layout_constraintEnd_toStartOf="@id/home_savings_balance" />
+
+                    <TextView
+                        android:id="@+id/home_savings_balance"
+                        style="@style/CurrencySpaceMedium"
+                        android:textColor="@color/savings"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- Expense progress -->
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -287,7 +340,7 @@
                 android:layout_marginTop="@dimen/home_progress_section_margin"
                 android:contentDescription="@null"
                 app:layout_constraintStart_toStartOf="@+id/home_anchor"
-                app:layout_constraintTop_toBottomOf="@id/home_card_expenses" />
+                app:layout_constraintTop_toBottomOf="@id/home_card_savings" />
 
             <TextView
                 android:id="@+id/home_month_progress_text"

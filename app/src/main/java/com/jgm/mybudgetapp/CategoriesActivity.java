@@ -43,8 +43,6 @@ import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity implements CategoryInterface, AdInterface {
 
-    // Todo: add try/catch to onAdsFragmentDismiss
-
     private static final String STATE_DAY = "day";
     private static final String STATE_MONTH = "month";
     private static final String STATE_YEAR = "year";

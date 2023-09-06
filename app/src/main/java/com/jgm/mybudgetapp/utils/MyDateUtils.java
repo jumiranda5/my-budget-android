@@ -90,6 +90,10 @@ public class MyDateUtils {
         String monthFull = monthObj.getDisplayName(TextStyle.FULL, locale);
         String monthShort = monthObj.getDisplayName(TextStyle.SHORT, locale);
 
+        if (monthShort.length() > 3) {
+            monthShort = monthShort.substring(0, 3);
+        }
+
         String month_full_upper = monthFull.substring(0, 1).toUpperCase() + monthFull.substring(1);
         String month_short_upper = monthShort.substring(0, 1).toUpperCase() + monthShort.substring(1);
 
