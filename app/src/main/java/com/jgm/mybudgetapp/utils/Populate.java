@@ -90,7 +90,7 @@ public class Populate {
                     ArrayList<Category> list = new ArrayList<>();
 
                     Category c0 = new Category(context.getString(R.string.category_default), 16, 0, false);
-                    Category c1 = new Category(context.getString(R.string.category_home), 2, 6, true);
+                    Category c1 = new Category(context.getString(R.string.category_home), 3, 6, true);
                     Category c2 = new Category(context.getString(R.string.category_health), 5, 34, true);
                     Category c3 = new Category(context.getString(R.string.category_groceries), 14, 9, true);
                     Category c4 = new Category(context.getString(R.string.category_transport), 10, 29, true);
@@ -98,7 +98,7 @@ public class Populate {
                     Category c6 = new Category(context.getString(R.string.category_education), 7, 15, true);
                     Category c7 = new Category(context.getString(R.string.category_work), 4, 11, true);
                     Category c8 = new Category(context.getString(R.string.category_pharmacy), 6, 10, true);
-                    Category c9 = new Category(context.getString(R.string.category_closet), 1, 17, true);
+                    Category c9 = new Category(context.getString(R.string.category_closet), 2, 17, true);
 
                     list.add(c0);
                     list.add(c1);

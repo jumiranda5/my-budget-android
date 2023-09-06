@@ -32,7 +32,7 @@ public class NumberUtils {
         format.setMaximumFractionDigits(currency.getDefaultFractionDigits());
 
         String valueString = format.format(value);
-        String number = valueString.replaceAll("([^0-9|.,])", "");
+        String number = valueString.replaceAll("([^0-9|.,\\s])", "");
         String stringAbsolute = valueString.replace("-", "");
 
         if (value < 0) currencySymbol = "-" + currencySymbol;
