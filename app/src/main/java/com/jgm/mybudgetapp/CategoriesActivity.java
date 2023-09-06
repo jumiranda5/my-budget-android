@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.jgm.mybudgetapp.adapters.CategoriesPagerAdapter;
 import com.jgm.mybudgetapp.databinding.ActivityCategoriesBinding;
 import com.jgm.mybudgetapp.dialogs.CategoryDialog;
@@ -41,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity implements CategoryInterface, AdInterface {
+
+    // Todo: add try/catch to onAdsFragmentDismiss
 
     private static final String STATE_DAY = "day";
     private static final String STATE_MONTH = "month";
@@ -305,11 +308,16 @@ public class CategoriesActivity extends AppCompatActivity implements CategoryInt
     public void onAdFragmentDismiss(boolean isRewardGranted) {
         Log.d(LOG, "dismiss ad fragment. isRewardGranted: " + isRewardGranted);
         isAdFragment = false;
-        if (isRewardGranted) {
-            destroyAdLockFragment();
-            loadTabs(tab);
+        try {
+            if (isRewardGranted) {
+                destroyAdLockFragment();
+                loadTabs(tab);
+            }
+            else onBackPressed();
         }
-        else onBackPressed();
+        catch (Exception e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
+        }
     }
 
     // Fragments

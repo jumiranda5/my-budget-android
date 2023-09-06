@@ -347,11 +347,11 @@ public class YearActivity extends AppCompatActivity implements AdInterface {
     @Override
     public void onAdFragmentDismiss(boolean isRewardGranted) {
         Log.d(LOG, "onAdFragmentDismiss");
+        isAdFragment = false;
         try {
             if (isRewardGranted) {
                 destroyAdLockFragment();
                 getYearData();
-                isAdFragment = false;
             }
             else onBackPressed();
         }
