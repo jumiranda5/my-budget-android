@@ -684,9 +684,10 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
             String weekday = MyDateUtils.getDayOfWeek(mContext, day, month, year)[0];
             btnText = weekday + " - " + formattedDate;
             if (transaction.getRepeat() > 1) btnText = setDateTextForAllParcels();
-            mDatePicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
         }
         else btnText = getString(R.string.label_today) + " - " + formattedDate;
+
+        mDatePicker.setTextColor(ContextCompat.getColor(mContext, R.color.high_emphasis_text));
 
         mDatePicker.setText(btnText);
         mDatePicker.setOnClickListener(view -> {

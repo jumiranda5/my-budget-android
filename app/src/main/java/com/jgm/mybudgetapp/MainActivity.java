@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,7 @@ import com.jgm.mybudgetapp.objects.TransactionResponse;
 import com.jgm.mybudgetapp.room.entity.Account;
 import com.jgm.mybudgetapp.room.entity.Category;
 import com.jgm.mybudgetapp.sharedPrefs.SettingsPrefs;
+import com.jgm.mybudgetapp.utils.HideKeyboard;
 import com.jgm.mybudgetapp.utils.MyDateUtils;
 import com.jgm.mybudgetapp.utils.Tags;
 
@@ -501,7 +503,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void openCategoriesList(boolean isEdit) {
         Log.d(LOG_MAIN, "-- Interface => open categories list");
-
+        HideKeyboard.hide(MainActivity.this);
         openFragment(categoriesListTag);
         updateBottomNav(categoriesListTag);
         setToolbarVisibilities(categoriesListTag);
@@ -581,6 +583,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void showColorPickerDialog() {
         Log.d(LOG_MAIN, "-- Interface => Show color picker dialog");
+        HideKeyboard.hide(MainActivity.this);
         BottomSheetDialogFragment colorPicker = new ColorPickerDialog();
         colorPicker.show(getSupportFragmentManager(), "colorPicker");
     }
@@ -599,6 +602,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void showIconPickerDialog() {
         Log.d(LOG_MAIN, "-- Interface => showIconPickerDialog");
+        HideKeyboard.hide(MainActivity.this);
         BottomSheetDialogFragment iconPicker = new IconPickerDialog();
         iconPicker.show(getSupportFragmentManager(), "iconPicker");
     }
@@ -612,6 +616,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void showDatePickerDialog(long dateMilliseconds) {
         Log.d(LOG_MAIN, "-- Interface => showDatePickerDialog");
+
+        HideKeyboard.hide(MainActivity.this);
 
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setSelection(dateMilliseconds)
@@ -629,6 +635,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
     @Override
     public void showMethodPickerDialog(boolean isExpense, TransactionResponse item, int position) {
         Log.d(LOG_MAIN, "-- Interface => showMethodPickerDialog");
+        HideKeyboard.hide(MainActivity.this);
         isExpenseMethodDialog = isExpense;
         transactionDialogItem = item;
         transactionDialogItemPosition = position;
