@@ -1185,6 +1185,7 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
                 transaction.setRepeatCount(i+1);
 
                 // if not first parcel => isPaid = false
+                // todo... only set paid to false if future
                 transaction.setPaid(false);
 
                 if (isNewCard) {

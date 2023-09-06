@@ -83,6 +83,8 @@ public class PendingFragment extends Fragment {
     private void initRecyclerView(List<PendingListResponse> response) {
         LinearLayoutManager listLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(listLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setItemViewCacheSize(20);
         adapter = new PendingAdapter(mContext, response);
         mRecyclerView.setAdapter(adapter);
     }

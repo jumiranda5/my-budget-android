@@ -3,6 +3,7 @@ package com.jgm.mybudgetapp.adapters;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,9 +86,10 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
         holder.mPaid.setChecked(item.isPaid());
         AppDatabase db = AppDatabase.getDatabase(mContext);
         holder.mPaid.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int pos = holder.getAdapterPosition();
             if (item.getCardId() > 0) {
                 holder.mPaid.setChecked(false); // set to true after method picker
-                mInterface.showMethodPickerDialog(false, null, position);
+                mInterface.showMethodPickerDialog(false, null, pos);
             }
             else {
                 Handler handler = new Handler(Looper.getMainLooper());
@@ -95,8 +97,8 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
                     db.TransactionDao().updatePaid(item.getId(), isChecked);
                     handler.post(() -> {
                         item.setPaid(true);
-                        notifyItemChanged(position);
-                        remove(position);
+                        notifyItemChanged(pos);
+                        remove(pos);
                     });
                 });
             }
@@ -134,9 +136,9 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ListView
     }
 
     private void remove(int position) {
+        Log.d("debug-list", "removing position: " + position);
         mDataList.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
     }
 
     @Override
