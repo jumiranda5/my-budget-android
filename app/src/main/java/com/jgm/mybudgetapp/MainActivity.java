@@ -435,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
             openFragment(tag);
             setAddButton(tag);
             setToolbarVisibilities(tag);
-            bottomNavContainer.setVisibility(View.VISIBLE);
+            updateBottomNav(tag);
         }
 
     }
