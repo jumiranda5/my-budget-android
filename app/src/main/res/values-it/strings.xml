@@ -127,6 +127,7 @@
     <string name="label_due">Non pagato:</string>
     <string name="label_paid2">Pagato:</string>
     <string name="label_billing_day">Giorno di fatturazione:</string>
+    <string name="label_savings">Risparmio (Trasferimento)</string>
 
     <string name="hint_account_nickname">Nickname dell\'account</string>
     <string name="hint_card_nickname">Nickname della carta</string>
@@ -164,7 +165,7 @@
     <string name="msg_purchase_id_copied">ID acquisto copiato</string>
     <string name="iap_connection_error_message">Impossibile connettersi a Google Play. Non è stato possibile verificare se sei un utente premium. Controlla la connessione Internet e riprova. Oppure continua comunque…</string>
     <string name="ads_initialization_error_message">Impossibile inizializzare la libreria annunci. Se non sei un utente premium, potresti non essere in grado di sbloccare alcune pagine. Controlla la connessione Internet e riprova. Oppure continua comunque…</string>
-    <string name="auth_credentials_not_configured">Sembra che tu non abbia ancora configurato le credenziali del tuo dispositivo. Per aumentare la sicurezza, puoi aprire questa applicazione solo con le tue credenziali (biometria o pin). Vai alla pagina Impostazioni del tuo dispositivo per configurarlo.</string>
+    <string name="auth_credentials_not_configured">Sembra che tu non abbia ancora configurato le credenziali del tuo dispositivo. Puoi aprire questa applicazione solo con le tue credenziali (biometria o pin). Vai alla pagina Impostazioni del tuo dispositivo per configurarlo.</string>
     <string name="auth_fail">Autenticazione fallita.</string>
     <string name="description_login">Usa la tua impronta digitale per sbloccare \"Il Mio Bilancio\".</string>
     <string name="progress_msg_delete">Eliminazione elemento…</string>

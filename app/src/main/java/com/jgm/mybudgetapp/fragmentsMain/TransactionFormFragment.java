@@ -1184,9 +1184,11 @@ public class TransactionFormFragment extends Fragment implements Animation.Anima
                 transaction.setYear(nextDate[1]);
                 transaction.setRepeatCount(i+1);
 
-                // if not first parcel => isPaid = false
-                // todo... only set paid to false if future
-                transaction.setPaid(false);
+                // set paid to false if future
+                boolean isFuture = transaction.getMonth() > today.getMonth() ||
+                        (transaction.getMonth() == today.getMonth() &&
+                                transaction.getDay() > today.getDay());
+                if (isFuture) transaction.setPaid(false);
 
                 if (isNewCard) {
                     Log.d(LOG, "isNewCard... get transaction with same card and month...");

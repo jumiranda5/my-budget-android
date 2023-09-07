@@ -127,6 +127,7 @@
     <string name="label_due">Non payé:</string>
     <string name="label_paid2">Payé:</string>
     <string name="label_billing_day">Jour de facturation:</string>
+    <string name="label_savings">Épargnes (Transfert)</string>
 
     <string name="hint_account_nickname">Pseudo du compte</string>
     <string name="hint_card_nickname">Pseudo de la carte</string>
@@ -163,7 +164,7 @@
     <string name="msg_purchase_id_copied">ID d\'achat copié</string>
     <string name="iap_connection_error_message">Impossible de se connecter à Google Play. Il n\'a pas été possible de vérifier si vous êtes un utilisateur premium. Vérifiez votre connexion Internet et réessayez. Ou continuez quand même…</string>
     <string name="ads_initialization_error_message">Impossible d\'initialiser la bibliothèque d\'annonces. Si vous n\'êtes pas un utilisateur premium, vous ne pourrez peut-être pas déverrouiller certaines pages. Vérifiez votre connexion Internet et réessayez. Ou continuez quand même…</string>
-    <string name="auth_credentials_not_configured">Il semble que vous n\'ayez pas encore configuré les informations d\'identification de votre appareil. Pour augmenter la sécurité, vous ne pouvez ouvrir cette application qu\'avec vos informations d\'identification (biométrie ou code PIN). Accédez à la page Paramètres de votre appareil pour le configurer.</string>
+    <string name="auth_credentials_not_configured">Il semble que vous n\'ayez pas encore configuré les informations d\'identification de votre appareil. Vous ne pouvez ouvrir cette application qu\'avec vos informations d\'identification (biométrie ou code PIN). Accédez à la page Paramètres de votre appareil pour le configurer.</string>
     <string name="auth_fail">L\'authentification a échoué.</string>
     <string name="description_login">Utilisez votre empreinte digitale pour déverrouiller «Mon budget».</string>
     <string name="progress_msg_delete">Suppression de l\'élément…</string>

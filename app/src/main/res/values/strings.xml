@@ -149,6 +149,7 @@
     <string name="label_due">Unpaid:</string>
     <string name="label_paid2">Paid:</string>
     <string name="label_billing_day">Billing day:</string>
+    <string name="label_savings">Savings (transfer)</string>
 
     <!-- Form -->
     <string name="hint_account_nickname">Account nickname</string>
@@ -189,7 +190,7 @@
     <string name="msg_purchase_id_copied">Purchase ID copied</string>
     <string name="iap_connection_error_message">Couldn\'t connect to Google Play. It was not possible to verify if you are a premium user. Check your internet connection and try again. Or continue anyway…</string>
     <string name="ads_initialization_error_message">Couldn\'t initialize ads library. If you are not a premium user, you may not be able to unlock some pages. Check your internet connection and try again. Or continue anyway…</string>
-    <string name="auth_credentials_not_configured">Looks like you haven\'t configured your device credentials yet. To increase security, you can only open this application with your credentials (biometry or pin). Go to your device\'s Settings page to configure it.</string>
+    <string name="auth_credentials_not_configured">Looks like you haven\'t configured your device credentials yet. You can only open this application with your credentials (biometry or pin). Go to your device\'s Settings page to configure it.</string>
     <string name="auth_fail">Authentication has failed.</string>
     <string name="description_login">Use your fingerprint to unlock My Budget App.</string>
     <string name="progress_msg_delete">Deleting item…</string>

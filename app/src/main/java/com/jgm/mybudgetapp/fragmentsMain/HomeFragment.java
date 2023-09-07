@@ -210,7 +210,8 @@ public class HomeFragment extends Fragment {
             List<CategoryResponse> incomeCategories = transactionDao.getCategoriesWithTotals(month, year, 1);
             List<CategoryResponse> expensesCategories = transactionDao.getCategoriesWithTotals(month, year, -1);
             List<MonthResponse> yearBalance = transactionDao.getYearBalance(year);
-            float savings = transactionDao.getSavingsTransfer(month, year);
+            float savings = transactionDao.getMonthSavings(month, year);
+
 
             handler.post(() -> {
                 Log.d(LOG_HOME, "Data successfully retrieved");
@@ -291,9 +292,6 @@ public class HomeFragment extends Fragment {
         }
         mSavingsTransfer.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
         mSavingsTransferSymbol.setTextColor(ContextCompat.getColor(mContext, R.color.savings));
-
-        // if adding to savings => remove from balance / else add to balance
-        savings = savings * -1;
 
         String formattedBalance = NumberUtils.getCurrencyFormat(mContext, monthBalance)[2];
         String[] formattedIncome = NumberUtils.getCurrencyFormat(mContext, monthIncome);

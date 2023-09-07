@@ -101,6 +101,7 @@
     <string name="label_due">A pagar:</string>
     <string name="label_paid2">Pago:</string>
     <string name="label_billing_day">Dia da fatura:</string>
+    <string name="label_savings">Poupança (transferência)</string>
 
     <string name="hint_account_nickname">Apelido da conta</string>
     <string name="hint_card_nickname">Apelido do cartão</string>
@@ -161,7 +162,7 @@
     <string name="msg_purchase_id_copied">ID da compra copiado</string>
     <string name="iap_connection_error_message">Não foi possível conectar ao Google Play. Não foi possível verificar se você é um usuário premium. Verifique sua conexão com a Internet e tente novamente. Ou continue mesmo assim…</string>
     <string name="ads_initialization_error_message">Não foi possível inicializar a biblioteca de anúncios. Se você não for um usuário premium, talvez não consiga desbloquear algumas páginas. Verifique sua conexão com a Internet e tente novamente. Ou continue mesmo assim…</string>
-    <string name="auth_credentials_not_configured">Parece que você ainda não configurou as credenciais do seu dispositivo. Para aumentar a segurança, você só pode abrir este aplicativo com suas credenciais (biometria ou pin). Vá para a página Configurações do seu dispositivo para configurá-lo.</string>
+    <string name="auth_credentials_not_configured">Parece que você ainda não configurou as credenciais do seu dispositivo. Você só pode abrir este aplicativo com suas credenciais (biometria ou pin). Vá para a página Configurações do seu dispositivo para configurá-lo.</string>
     <string name="auth_fail">A autenticação falhou.</string>
     <string name="description_login">Use a sua impressão digital para desbloquear \"Meu Orçamento\".</string>
     <string name="progress_msg_delete">Deletando item…</string>

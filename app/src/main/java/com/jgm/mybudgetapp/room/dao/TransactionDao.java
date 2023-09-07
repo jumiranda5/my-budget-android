@@ -181,6 +181,12 @@ public interface TransactionDao {
             "WHERE year = :year AND month = :month")
     Balance getHomeBalance(int month, int year);
 
+    @Query("SELECT SUM (amount) AS savings " +
+            "FROM transactions " +
+            "INNER JOIN accounts ON transactions.accountId = accounts.id " +
+            "WHERE accounts.type = 2 AND year = :year AND month = :month")
+    float getMonthSavings(int month, int year);
+
     @Query("SELECT SUM(amount) " +
             "FROM transactions " +
             "INNER JOIN accounts ON transactions.accountId = accounts.id " +

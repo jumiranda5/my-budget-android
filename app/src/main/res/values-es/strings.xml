@@ -101,6 +101,7 @@
     <string name="label_due">A pagar:</string>
     <string name="label_paid2">Pagado:</string>
     <string name="label_billing_day">Día de facturación:</string>
+    <string name="label_savings">Ahorros (transferencia)</string>
 
     <string name="hint_account_nickname">Apodo de la cuenta</string>
     <string name="hint_card_nickname">Apodo de la tarjeta</string>
@@ -133,7 +134,7 @@
     <string name="msg_purchase_id_copied">ID de compra copiado</string>
     <string name="iap_connection_error_message">No se pudo conectar a Google Play. No fue posible verificar si eres un usuario premium. Verifique su conexión a Internet e inténtelo nuevamente. O continuar de todos modos…</string>
     <string name="ads_initialization_error_message">No se pudo inicializar la biblioteca de anuncios. Si no eres un usuario premium, es posible que no puedas desbloquear algunas páginas. Verifique su conexión a Internet e inténtelo nuevamente. O continuar de todos modos…</string>
-    <string name="auth_credentials_not_configured">Parece que aún no has configurado las credenciales de tu dispositivo. Para aumentar la seguridad, sólo puedes abrir esta aplicación con tus credenciales (biometría o pin). Vaya a la página de Configuración de su dispositivo para configurarlo.</string>
+    <string name="auth_credentials_not_configured">Parece que aún no has configurado las credenciales de tu dispositivo. Sólo puedes abrir esta aplicación con tus credenciales (biometría o pin). Vaya a la página de Configuración de su dispositivo para configurarlo.</string>
     <string name="auth_fail">Error de autenticación.</string>
     <string name="progress_msg_delete">Eliminando elemento…</string>
     <string name="description_login">Utilice su huella digital para desbloquear \"Mi presupuesto\".</string>
