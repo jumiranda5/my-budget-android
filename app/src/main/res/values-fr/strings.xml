@@ -124,8 +124,10 @@
     <string name="label_accumulated">Accumulé</string>
     <string name="label_transfer_from">Transfert depuis</string>
     <string name="label_transfer_to">Transférer vers</string>
-    <string name="label_due">Non payé:</string>
-    <string name="label_paid2">Payé:</string>
+    <string name="label_due">Non payé: </string>
+    <string name="label_paid2">Payé: </string>
+    <string name="label_received">Reçu: </string>
+    <string name="label_receivables">Non reçu: </string>
     <string name="label_billing_day">Jour de facturation:</string>
     <string name="label_savings">Épargnes (Transfert)</string>
 

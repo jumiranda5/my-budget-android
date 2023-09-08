@@ -11,7 +11,7 @@ import com.jgm.mybudgetapp.objects.TransactionResponse;
 
 public class TransactionsUtils {
 
-    public static void setTotalsTextViews(Context context,
+    public static void setTotalsTextViews(Context context, int type,
                                           TextView mTotal, TextView mDue, TextView mPaid,
                                           float total, float due, float paid) {
         // Set total in currency format
@@ -19,16 +19,27 @@ public class TransactionsUtils {
         String totalCurrencyPositive = totalCurrency.replace("-", "");
         mTotal.setText(totalCurrencyPositive);
 
+        String dueLabel;
+        String paidLabel;
+        if (type == Tags.TYPE_OUT) {
+            dueLabel = context.getString(R.string.label_due);
+            paidLabel = context.getString(R.string.label_paid2);
+        }
+        else {
+            dueLabel = context.getString(R.string.label_receivables);
+            paidLabel = context.getString(R.string.label_received);
+        }
+
         // Set due in currency format
         String dueCurrency = NumberUtils.getCurrencyFormat(context, due)[2];
         String dueCurrencyPositive = dueCurrency.replace("-", "");
-        String dueText = context.getString(R.string.label_due) + " " + dueCurrencyPositive;
+        String dueText = dueLabel + " " + dueCurrencyPositive;
         mDue.setText(dueText);
 
         // Set paid in currency format
         String paidCurrency = NumberUtils.getCurrencyFormat(context, paid)[2];
         String paidCurrencyPositive = paidCurrency.replace("-", "");
-        String paidText = context.getString(R.string.label_paid2) + " " + paidCurrencyPositive;
+        String paidText = paidLabel + " " + paidCurrencyPositive;
         mPaid.setText(paidText);
     }
 

@@ -98,8 +98,10 @@
     <string name="label_accumulated">Acumulado</string>
     <string name="label_transfer_from">Transferir desde</string>
     <string name="label_transfer_to">Transferir a</string>
-    <string name="label_due">A pagar:</string>
-    <string name="label_paid2">Pagado:</string>
+    <string name="label_due">A pagar: </string>
+    <string name="label_paid2">Pagado: </string>
+    <string name="label_received">Recibió: </string>
+    <string name="label_receivables">No recibido: </string>
     <string name="label_billing_day">Día de facturación:</string>
     <string name="label_savings">Ahorros (transferencia)</string>
 

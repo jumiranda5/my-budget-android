@@ -50,5 +50,6 @@ public class Tags {
     public static final String keyIapOrder = "iapOrder";
     public static final String keyDarkMode = "isDark";
     public static final String keyRefresh = "shouldRefresh";
+    public static final String keyStartCount = "appStartCount";
     
 }

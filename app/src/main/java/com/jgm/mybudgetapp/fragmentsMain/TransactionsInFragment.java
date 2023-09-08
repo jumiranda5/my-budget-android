@@ -153,7 +153,7 @@ public class TransactionsInFragment extends Fragment {
         }
 
         // set textViews
-        TransactionsUtils.setTotalsTextViews(mContext, mTotal, mDue, mPaid, total, due, paid);
+        TransactionsUtils.setTotalsTextViews(mContext, Tags.TYPE_IN, mTotal, mDue, mPaid, total, due, paid);
 
         // set icons colors
         TransactionsUtils.setDueAndPaidIconColor(mContext, mPaidIcon, mDueIcon, paid, due);
@@ -203,7 +203,7 @@ public class TransactionsInFragment extends Fragment {
         }
 
         // Set total in currency format
-        TransactionsUtils.setTotalsTextViews(mContext, mTotal, mDue, mPaid, total, due, paid);
+        TransactionsUtils.setTotalsTextViews(mContext, Tags.TYPE_IN, mTotal, mDue, mPaid, total, due, paid);
         TransactionsUtils.setDueAndPaidIconColor(mContext, mPaidIcon, mDueIcon, paid, due);
 
         // init list view

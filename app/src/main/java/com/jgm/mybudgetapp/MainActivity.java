@@ -21,7 +21,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,11 +31,15 @@ import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.jgm.mybudgetapp.databinding.ActivityMainBinding;
 import com.jgm.mybudgetapp.dialogs.ColorPickerDialog;
@@ -141,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
                     "and populate accounts and categories tables if empty");
             selectedDate = MyDateUtils.getCurrentDate(this);
             setFragment(homeTag);
+            setShouldStartReview();
         }
         else {
             // Set toolbar date
@@ -1061,4 +1065,51 @@ public class MainActivity extends AppCompatActivity implements MainInterface, Ad
        at com.jgm.mybudgetapp.MainActivity.onAdFragmentDismiss(MainActivity.java:1035)
        at com.jgm.mybudgetapp.AdLockFragment$2.lambda$onAdDismissedFullScreenContent$0(AdLockFragment.java:317)
      */
+
+
+    /* =============================================================================================
+                                           IN-APP REVIEW
+    ============================================================================================= */
+
+    private void setShouldStartReview() {
+
+        // get app start count
+        int appStartCount = SettingsPrefs.getSettingsPrefsInteger(this, Tags.keyStartCount);
+
+        // update counter
+        appStartCount++;
+        SettingsPrefs.setSettingsPrefsInteger(this, Tags.keyStartCount, appStartCount);
+
+        // set start review condition
+        Log.d("debug-review", "App start count = " + appStartCount);
+
+        if (appStartCount == 30 ||
+                appStartCount == 40 ||
+                appStartCount == 50 ||
+                appStartCount == 60 ||
+                appStartCount == 70) loadReview();
+
+    }
+
+    private void loadReview() {
+        try{
+            ReviewManager manager = ReviewManagerFactory.create(this);
+            Task<ReviewInfo> request = manager.requestReviewFlow();
+            request.addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // We can get the ReviewInfo object
+                    ReviewInfo reviewInfo = task.getResult();
+                    Task<Void> flow = manager.launchReviewFlow(MainActivity.this, reviewInfo);
+                    flow.addOnCompleteListener(task2 -> {
+                        // The flow has finished. The API does not indicate whether the user
+                        // reviewed or not, or even whether the review dialog was shown. Thus, no
+                        // matter the result, we continue our app flow.
+                    });
+                }
+            });
+        }
+        catch (Exception e) {
+            Log.e(LOG_MAIN, e.getMessage());
+        }
+    }
 }

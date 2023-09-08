@@ -179,6 +179,7 @@
             <TextView
                 android:id="@+id/login_auth_warning"
                 style="@style/LoginError"
+                android:layout_marginTop="32dp"
                 android:text="@string/auth_credentials_not_configured"
                 app:layout_constraintBottom_toTopOf="@+id/login_iap_warning"
                 app:layout_constraintEnd_toEndOf="@id/login_anchor"

@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -293,7 +294,11 @@ public class LoginActivity extends AppCompatActivity {
 
         int canAuthenticateResponse;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-            canAuthenticateResponse = biometricManager.canAuthenticate(BIOMETRIC_STRONG);
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            boolean isSecure = keyguardManager.isDeviceSecure();
+            Log.w(LOG_AUTH, "API 29 isDeviceSecure: " + isSecure);
+            if (isSecure) canAuthenticateResponse = BiometricManager.BIOMETRIC_SUCCESS;
+            else canAuthenticateResponse = 11;
         }
         else {
             canAuthenticateResponse = biometricManager.canAuthenticate(BIOMETRIC_STRONG | DEVICE_CREDENTIAL);
@@ -347,7 +352,74 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                         super.onAuthenticationError(errorCode, errString);
-                        Log.e(LOG_AUTH, "onAuthenticationError: " + errString);
+                        Log.e(LOG_AUTH, "onAuthenticationError: " + errorCode + " / " + errString);
+
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS) {
+                            mLoginButton.setOnClickListener(v -> tryAuthWithPinOnOlderApis());
+                            allowTesting();
+                        }
+
+                        String msg = getString(R.string.auth_fail);
+                        showAuthError(msg);
+
+                    }
+
+                    @Override
+                    public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        Log.d(LOG_AUTH, "Successfully authenticated.");
+                        showAuthSuccess();
+                        connectToGooglePlay();
+                    }
+
+                    @Override
+                    public void onAuthenticationFailed() {
+                        super.onAuthenticationFailed();
+                        Log.d(LOG_AUTH, "onAuthenticationFailed");
+                        String msg = getString(R.string.auth_fail);
+                        showAuthError(msg);
+                    }
+                });
+
+        try {
+            // Init prompt
+            BiometricPrompt.PromptInfo promptInfo;
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                        .setTitle(getString(R.string.title_login))
+                        .setDescription(getString(R.string.description_login))
+                        .setNegativeButtonText(getString(R.string.action_cancel))
+                        .build();
+            }
+            else {
+                promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                        .setTitle(getString(R.string.title_login))
+                        .setDescription(getString(R.string.description_login))
+                        .setAllowedAuthenticators(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
+                        .build();
+            }
+            biometricPrompt.authenticate(promptInfo);
+            showAuthLoading();
+        }
+        catch (Exception e) {
+            Log.e(LOG_AUTH, "BiometricPrompt error: " + e);
+            showAuthError(getString(R.string.auth_fail));
+        }
+
+    }
+
+    private void tryAuthWithPinOnOlderApis() {
+        // reset login button
+        initBillingClient();
+
+        Log.d(LOG_AUTH, "=> Init auth prompt 2");
+        Executor executor = ContextCompat.getMainExecutor(this);
+        BiometricPrompt biometricPrompt2 = new BiometricPrompt(LoginActivity.this, executor,
+                new BiometricPrompt.AuthenticationCallback() {
+                    @Override
+                    public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                        super.onAuthenticationError(errorCode, errString);
+                        Log.e(LOG_AUTH, "onAuthenticationError: " + errorCode + " / " + errString);
                         String msg = getString(R.string.auth_fail);
                         showAuthError(msg);
                     }
@@ -369,18 +441,24 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-        // Init prompt
-        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle(getString(R.string.title_login))
-                .setDescription(getString(R.string.description_login))
-                .setAllowedAuthenticators(BIOMETRIC_STRONG | DEVICE_CREDENTIAL)
-                .build();
-
-        biometricPrompt.authenticate(promptInfo);
-        showAuthLoading();
-
+        try {
+            // Init prompt
+            BiometricPrompt.PromptInfo promptInfo;
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                        .setTitle(getString(R.string.title_login))
+                        .setDescription(getString(R.string.description_login))
+                        .setDeviceCredentialAllowed(true)
+                        .build();
+                biometricPrompt2.authenticate(promptInfo);
+                showAuthLoading();
+            }
+        }
+        catch (Exception e) {
+            Log.e(LOG_AUTH, "BiometricPrompt error: " + e);
+            showAuthError(getString(R.string.auth_fail));
+        }
     }
-
 
     /* ---------------------------------------------------------------------------------------------
                                            IN APP PURCHASE
