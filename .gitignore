@@ -14,5 +14,6 @@
 .cxx
 local.properties
 google-services.json
+private_key.pepk
 
 /app/src/main/res/values/keys.xml
